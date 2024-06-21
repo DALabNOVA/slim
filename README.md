@@ -1,12 +1,12 @@
 # SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation)
 
-SLIM is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
+*slim-gsgp* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
 
 ## Installation
 
 To install the library, use the following command:
 ```sh
-pip install slim
+pip install slimGSGP
 ```
 Additionally, make sure to install all required dependencies:
 ```sh
@@ -18,10 +18,10 @@ pip install -r requirements.txt
 To use the GP algorithm, you can use the following example:
 
 ```python
-from slim.main_gp import gp  # import the slim library
+from slimGSGP.main_gp import gp  # import the slimGSGP library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
+from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slimGSGP.utils.utils import train_test_split  # import the train-test split function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -51,11 +51,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the GSGP algorithm, you can use the following example:
 
 ```python
-from slim.main_gsgp import gsgp  # import the slim library
+from slimGSGP.main_gsgp import gsgp  # import the slimGSGP library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
+from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slimGSGP.utils.utils import train_test_split  # import the train-test split function
+from slimGSGP.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -70,7 +70,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 final_tree = gsgp(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
                   dataset_name='ppb', pop_size=100, n_iter=100,
-                  ms = generate_random_uniform(0,1))
+                  ms=generate_random_uniform(0, 1))
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test)
@@ -83,11 +83,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the SLIM GSGP algorithm, you can use the following example:
 
 ```python
-from slim.main_slim import slim  # import the slim library
+from slimGSGP.main_slim import slim  # import the slimGSGP library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
+from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slimGSGP.utils.utils import train_test_split  # import the train-test split function
+from slimGSGP.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)

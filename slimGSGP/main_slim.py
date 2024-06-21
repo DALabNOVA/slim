@@ -8,7 +8,8 @@ import uuid
 from slimGSGP.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
 from slimGSGP.config.slim_config import *
 from slimGSGP.utils.logger import log_settings
-from slimGSGP.utils.utils import get_terminals, check_slim_version, validate_inputs
+from slimGSGP.utils.utils import get_terminals, check_slim_version, validate_inputs, generate_random_uniform
+from slimGSGP.algorithms.SLIM_GSGP.operators.mutators import inflate_mutation
 from typing import Callable
 
 ELITES = {}
