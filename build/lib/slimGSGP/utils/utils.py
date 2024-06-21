@@ -3,9 +3,9 @@ import random
 
 import numpy as np
 import torch
-from slimGSGP.algorithms.GP.representations.tree_utils import (create_full_random_tree,
-                                                               create_grow_random_tree)
-from slimGSGP.algorithms.GSGP.representations.tree import Tree
+from slim.algorithms.GP.representations.tree_utils import (create_full_random_tree,
+                                                           create_grow_random_tree)
+from slim.algorithms.GSGP.representations.tree import Tree
 from sklearn.metrics import root_mean_squared_error
 
 
@@ -495,11 +495,11 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
 
 def check_slim_version(slim_version):
     """
-    Validate the slimGSGP version given as input bu the users and assign the correct values to the parameters op, sig and trees
+    Validate the slim version given as input bu the users and assign the correct values to the parameters op, sig and trees
     Parameters
     ----------
     slim_version : str
-        Name of the slimGSGP version.
+        Name of the slim version.
 
     Returns
     -------

@@ -5,9 +5,9 @@ Mutation Functions for Genetic Programming using PyTorch.
 import random
 
 import torch
-from slimGSGP.algorithms.GSGP.representations.tree import Tree
-from slimGSGP.algorithms.SLIM_GSGP.representations.individual import Individual
-from slimGSGP.utils.utils import get_random_tree
+from slim.algorithms.GSGP.representations.tree import Tree
+from slim.algorithms.SLIM_GSGP.representations.individual import Individual
+from slim.utils.utils import get_random_tree
 
 
 def two_trees_delta(operator="sum"):

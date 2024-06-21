@@ -3,8 +3,8 @@ Individual Class and Utility Functions for Genetic Programming using PyTorch.
 """
 
 import torch
-from slimGSGP.algorithms.GSGP.representations.tree_utils import apply_tree
-from slimGSGP.utils.utils import  check_slim_version
+from slim.algorithms.GSGP.representations.tree_utils import apply_tree
+from slim.utils.utils import  check_slim_version
 
 
 class Individual:
@@ -138,7 +138,7 @@ class Individual:
 
     def predict(self, data, slim_version):
         """
-            Predict the output for the given input data using the model's collection of trees and specified slimGSGP version.
+            Predict the output for the given input data using the model's collection of trees and specified slim version.
 
             Parameters
             ----------
@@ -148,8 +148,8 @@ class Individual:
                 different observation and each column represents a feature.
 
             slim_version : bool
-                A flag to indicate whether to use a slimGSGP version of the model for prediction.
-                The exact meaning of slimGSGP version is determined by the `check_slim_version` function.
+                A flag to indicate whether to use a slim version of the model for prediction.
+                The exact meaning of slim version is determined by the `check_slim_version` function.
 
             Returns
             -------

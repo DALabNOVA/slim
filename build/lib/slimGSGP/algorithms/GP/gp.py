@@ -3,11 +3,11 @@ import time
 
 import numpy as np
 import torch
-from slimGSGP.algorithms.GP.representations.population import Population
-from slimGSGP.algorithms.GP.representations.tree import Tree
-from slimGSGP.utils.diversity import niche_entropy
-from slimGSGP.utils.logger import logger
-from slimGSGP.utils.utils import verbose_reporter
+from slim.algorithms.GP.representations.population import Population
+from slim.algorithms.GP.representations.tree import Tree
+from slim.utils.diversity import niche_entropy
+from slim.utils.logger import logger
+from slim.utils.utils import verbose_reporter
 
 
 class GP:

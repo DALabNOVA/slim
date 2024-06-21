@@ -5,12 +5,12 @@ logging the results for further analysis.
 import time
 import uuid
 
-from slimGSGP.algorithms.GP.gp import GP
-from slimGSGP.algorithms.GP.operators.mutators import mutate_tree_subtree
-from slimGSGP.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
-from slimGSGP.config.gp_config import *
-from slimGSGP.utils.logger import log_settings
-from slimGSGP.utils.utils import get_terminals, validate_inputs
+from slim.algorithms.GP.gp import GP
+from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
+from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
+from slim.config.gp_config import *
+from slim.utils.logger import log_settings
+from slim.utils.utils import get_terminals, validate_inputs
 
 
 # todo: would not be better to first log the settings and then perform the algorithm?
@@ -122,7 +122,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
 if __name__ == "__main__":
     from datasets.data_loader import load_ppb
-    from slimGSGP.utils.utils import train_test_split
+    from slim.utils.utils import train_test_split
 
     X, y = load_ppb(X_y=True)
 

@@ -1,12 +1,12 @@
-from slimGSGP.algorithms.GP.operators.initializers import rhh
-from slimGSGP.algorithms.GP.operators.selection_algorithms import \
+from slim.algorithms.GP.operators.initializers import rhh
+from slim.algorithms.GP.operators.selection_algorithms import \
     tournament_selection_min
-from slimGSGP.algorithms.GSGP.operators.crossover_operators import geometric_crossover
-from slimGSGP.algorithms.GSGP.operators.mutators import standard_geometric_mutation
+from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
+from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation
 from datasets.data_loader import *
-from slimGSGP.evaluators.fitness_functions import rmse
-from slimGSGP.utils.utils import (generate_random_uniform, get_best_min,
-                                  protected_div)
+from slim.evaluators.fitness_functions import rmse
+from slim.utils.utils import (generate_random_uniform, get_best_min,
+                              protected_div)
 
 FUNCTIONS = {
     'add': {'function': torch.add, 'arity': 2},

@@ -7,14 +7,14 @@ import time
 
 import numpy as np
 import torch
-from slimGSGP.algorithms.GP.representations.tree import Tree as GP_Tree
-from slimGSGP.algorithms.GSGP.representations.population import Population
-from slimGSGP.algorithms.GSGP.representations.tree import Tree
-from slimGSGP.algorithms.GSGP.representations.tree_utils import (
+from slim.algorithms.GP.representations.tree import Tree as GP_Tree
+from slim.algorithms.GSGP.representations.population import Population
+from slim.algorithms.GSGP.representations.tree import Tree
+from slim.algorithms.GSGP.representations.tree_utils import (
     nested_depth_calculator, nested_nodes_calculator)
-from slimGSGP.utils.diversity import gsgp_pop_div_from_vectors
-from slimGSGP.utils.logger import logger
-from slimGSGP.utils.utils import get_random_tree, verbose_reporter
+from slim.utils.diversity import gsgp_pop_div_from_vectors
+from slim.utils.logger import logger
+from slim.utils.utils import get_random_tree, verbose_reporter
 
 
 class GSGP:

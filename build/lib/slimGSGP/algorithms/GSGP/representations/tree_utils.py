@@ -2,8 +2,8 @@
 Utility functions for Tree Evaluation and Mutation in Genetic Programming.
 """
 
-from slimGSGP.algorithms.GP.representations.tree import Tree
-from slimGSGP.algorithms.GP.representations.tree_utils import bound_value
+from slim.algorithms.GP.representations.tree import Tree
+from slim.algorithms.GP.representations.tree_utils import bound_value
 
 
 def apply_tree(tree, inputs):

@@ -4,10 +4,10 @@ logging the results for further analysis.
 """
 import uuid
 
-from slimGSGP.algorithms.GSGP.gsgp import GSGP
-from slimGSGP.config.gsgp_config import *
-from slimGSGP.utils.logger import log_settings
-from slimGSGP.utils.utils import get_terminals, validate_inputs
+from slim.algorithms.GSGP.gsgp import GSGP
+from slim.config.gsgp_config import *
+from slim.utils.logger import log_settings
+from slim.utils.utils import get_terminals, validate_inputs
 from typing import Callable
 
 
@@ -115,7 +115,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 if __name__ == "__main__":
     from datasets.data_loader import load_ppb
-    from slimGSGP.utils.utils import train_test_split
+    from slim.utils.utils import train_test_split
 
     X, y = load_ppb(X_y=True)
 

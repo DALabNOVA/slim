@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='slimGSGP',
-    version='0.1',
+    name='gsgp_slim',
+    version='0.1.1',
     packages=find_packages(),
     install_requires=[
         'numpy',

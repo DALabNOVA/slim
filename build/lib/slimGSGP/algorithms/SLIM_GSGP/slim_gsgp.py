@@ -7,13 +7,13 @@ import time
 
 import numpy as np
 import torch
-from slimGSGP.algorithms.GP.representations.tree import Tree as GP_Tree
-from slimGSGP.algorithms.GSGP.representations.tree import Tree
-from slimGSGP.algorithms.SLIM_GSGP.representations.individual import Individual
-from slimGSGP.algorithms.SLIM_GSGP.representations.population import Population
-from slimGSGP.utils.diversity import gsgp_pop_div_from_vectors
-from slimGSGP.utils.logger import logger
-from slimGSGP.utils.utils import verbose_reporter
+from slim.algorithms.GP.representations.tree import Tree as GP_Tree
+from slim.algorithms.GSGP.representations.tree import Tree
+from slim.algorithms.SLIM_GSGP.representations.individual import Individual
+from slim.algorithms.SLIM_GSGP.representations.population import Population
+from slim.utils.diversity import gsgp_pop_div_from_vectors
+from slim.utils.logger import logger
+from slim.utils.utils import verbose_reporter
 
 
 class SLIM_GSGP:

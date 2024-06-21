@@ -1,12 +1,12 @@
 # SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation)
 
-*slim-gsgp* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
+*gsgp_slim* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
 
 ## Installation
 
 To install the library, use the following command:
 ```sh
-pip install slimGSGP
+pip install gsgp_slim
 ```
 Additionally, make sure to install all required dependencies:
 ```sh
@@ -18,10 +18,10 @@ pip install -r requirements.txt
 To use the GP algorithm, you can use the following example:
 
 ```python
-from slimGSGP.main_gp import gp  # import the slimGSGP library
+from slim.main_gp import gp  # import the slim library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slimGSGP.utils.utils import train_test_split  # import the train-test split function
+from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim.utils.utils import train_test_split  # import the train-test split function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -51,11 +51,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the GSGP algorithm, you can use the following example:
 
 ```python
-from slimGSGP.main_gsgp import gsgp  # import the slimGSGP library
+from slim.main_gsgp import gsgp  # import the slim library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slimGSGP.utils.utils import train_test_split  # import the train-test split function
-from slimGSGP.utils.utils import generate_random_uniform  # import the mutation step function
+from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim.utils.utils import train_test_split  # import the train-test split function
+from slim.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -83,11 +83,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the SLIM GSGP algorithm, you can use the following example:
 
 ```python
-from slimGSGP.main_slim import slim  # import the slimGSGP library
+from slim.main_slim import slim  # import the slim library
 from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slimGSGP.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slimGSGP.utils.utils import train_test_split  # import the train-test split function
-from slimGSGP.utils.utils import generate_random_uniform  # import the mutation step function
+from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim.utils.utils import train_test_split  # import the train-test split function
+from slim.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)

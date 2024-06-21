@@ -5,10 +5,10 @@ logging the results for further analysis.
 import time
 import uuid
 
-from slimGSGP.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
-from slimGSGP.config.slim_config import *
-from slimGSGP.utils.logger import log_settings
-from slimGSGP.utils.utils import get_terminals, check_slim_version, validate_inputs
+from slim.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
+from slim.config.slim_config import *
+from slim.utils.logger import log_settings
+from slim.utils.utils import get_terminals, check_slim_version, validate_inputs
 from typing import Callable
 
 ELITES = {}
@@ -21,7 +21,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          dataset_name: str = None, slim_version: str = "SLIM+SIG2", pop_size: int = 100,
          n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
          ms: Callable = generate_random_uniform(0, 1), p_inflate: float = 0.5,
-         log_path: str = os.path.join(os.getcwd(), "log", "slimGSGP.csv"), seed: int = 1):
+         log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"), seed: int = 1):
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets
 
@@ -132,7 +132,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 if __name__ == "__main__":
     from datasets.data_loader import load_ppb
-    from slimGSGP.utils.utils import train_test_split, show_individual
+    from slim.utils.utils import train_test_split, show_individual
 
     X, y = load_ppb(X_y=True)
 

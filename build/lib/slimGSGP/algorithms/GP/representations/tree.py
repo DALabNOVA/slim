@@ -2,8 +2,8 @@
 Tree class implementation for representing tree structures in genetic programming.
 """
 
-from slimGSGP.algorithms.GP.representations.tree_utils import (bound_value, flatten,
-                                                               tree_depth)
+from slim.algorithms.GP.representations.tree_utils import (bound_value, flatten,
+                                                           tree_depth)
 
 
 class Tree:

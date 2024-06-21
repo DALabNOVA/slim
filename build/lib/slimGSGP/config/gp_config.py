@@ -1,12 +1,12 @@
-from slimGSGP.algorithms.GP.operators.crossover_operators import crossover_trees
-from slimGSGP.algorithms.GP.operators.initializers import rhh
-from slimGSGP.algorithms.GP.operators.selection_algorithms import \
+from slim.algorithms.GP.operators.crossover_operators import crossover_trees
+from slim.algorithms.GP.operators.initializers import rhh
+from slim.algorithms.GP.operators.selection_algorithms import \
     tournament_selection_min
 
 from datasets.data_loader import *
-from slimGSGP.evaluators.fitness_functions import rmse
-from slimGSGP.utils.utils import (get_best_max, get_best_min,
-                                  protected_div)
+from slim.evaluators.fitness_functions import rmse
+from slim.utils.utils import (get_best_max, get_best_min,
+                              protected_div)
 
 # Define functions and constants
 # todo use only one dictionary for the parameters of each algorithm
