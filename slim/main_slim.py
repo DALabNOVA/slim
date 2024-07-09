@@ -132,19 +132,24 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+    from datasets.data_loader import load_merged_data
     from slim.utils.utils import train_test_split, show_individual
 
-    X, y = load_ppb(X_y=True)
+    for ds in ["toxicity"]:
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
-    X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
+        for s in range(3):
 
-    algorithm = "SLIM+SIG2"
+            X, y = load_merged_data(ds, X_y=True)
 
-    final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                      dataset_name='ppb', slim_version=algorithm, pop_size=100, n_iter=2)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4, seed=s)
+            X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5, seed=s)
 
-    print(show_individual(final_tree, operator='sum'))
-    predictions = final_tree.predict(data=X_test, slim_version=algorithm)
-    print(float(rmse(y_true=y_test, y_pred=predictions)))
+            for algorithm in ["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1","SLIM*SIG1"]:
+
+                final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
+                                  dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=1000, seed=s,
+                                  log_path=os.path.join(os.getcwd(), "log", f"slim_time_{ds}_{algorithm}-confirmer.csv"))
+
+                print(show_individual(final_tree, operator='sum'))
+                predictions = final_tree.predict(data=X_test, slim_version=algorithm)
+                print(float(rmse(y_true=y_test, y_pred=predictions)))

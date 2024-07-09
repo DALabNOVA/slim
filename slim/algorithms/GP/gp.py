@@ -77,6 +77,7 @@ class GP:
         n_elites=1,
         tree_pruner=None,
         depth_calculator=None,
+        n_jobs = 1
     ):
         """
         Execute the Genetic Programming algorithm.
@@ -100,6 +101,7 @@ class GP:
             n_elites (int): Number of elites.
             tree_pruner (function): Function to prune trees.
             depth_calculator (function): Function to calculate tree depth.
+            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
         """
         if test_elite and (X_test is None or y_test is None):
             raise Exception('If test_elite is True you need to provide a test dataset')
@@ -114,7 +116,7 @@ class GP:
         population = Population(
             [Tree(tree) for tree in self.initializer(**self.pi_init)]
         )
-        population.evaluate(ffunction, X=X_train, y=y_train)
+        population.evaluate(ffunction, X=X_train, y=y_train, n_jobs=n_jobs)
 
         end = time.time()
         self.elites, self.elite = self.find_elit_func(population, n_elites)
@@ -146,6 +148,7 @@ class GP:
                 elitism,
                 X_train,
                 y_train,
+                n_jobs=n_jobs
             )
             population = offs_pop
             end = time.time()
@@ -179,6 +182,7 @@ class GP:
         elitism,
         X_train,
         y_train,
+        n_jobs=1
     ):
         """
         Evolve the population for one generation.
@@ -191,6 +195,7 @@ class GP:
             elitism (bool): Whether to use elitism.
             X_train (torch.Tensor): Training data features.
             y_train (torch.Tensor): Training data labels.
+            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
 
         Returns:
             Population: Evolved population.
@@ -244,7 +249,7 @@ class GP:
             offs_pop = offs_pop[: population.size]
 
         offs_pop = Population(offs_pop)
-        offs_pop.evaluate(ffunction, X=X_train, y=y_train)
+        offs_pop.evaluate(ffunction, X=X_train, y=y_train, n_jobs=n_jobs)
         return offs_pop, start
 
     def log_initial_population(self, population, elapsed_time, log, log_path, run_info):

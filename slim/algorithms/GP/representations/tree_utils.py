@@ -319,3 +319,57 @@ def tree_depth(FUNCTIONS):
             return 1 + max(left_depth, right_depth)
 
     return depth
+
+
+def _execute_tree(repr_, X, FUNCTIONS, TERMINALS, CONSTANTS):
+
+    """
+    Evaluates a tree genotype on input vectors.
+
+    ----
+    Check how to have FUNCTIONS, TERMINALS, CONSTANTS imported here instead of
+    being passed as argument at each _execute_tree(...) call.
+
+    Parameters
+    ----------
+    repr_ : object
+        Representation of the tree structure.
+
+    FUNCTIONS : dict
+        Dictionary of allowed functions in the tree.
+
+    TERMINALS : dict
+        Dictionary of terminal symbols allowed in the tree.
+
+    CONSTANTS : dict
+        Dictionary of constant values allowed in the tree.
+
+    Returns
+    -------
+    float
+        Output of the evaluated tree.
+    """
+    if isinstance(repr_, tuple):  # If it's a function node
+        function_name = repr_[0]
+        if FUNCTIONS[function_name]["arity"] == 2:
+            left_subtree, right_subtree = repr_[1], repr_[2]
+            left_result = _execute_tree(left_subtree, X, FUNCTIONS, TERMINALS,
+                                        CONSTANTS)  # Tree(left_subtree).apply_tree(inputs)
+            right_result = _execute_tree(right_subtree, X, FUNCTIONS, TERMINALS,
+                                         CONSTANTS)  # Tree(right_subtree).apply_tree(inputs)
+            output = FUNCTIONS[function_name]["function"](
+                left_result, right_result
+            )
+        else:
+            left_subtree = repr_[1]
+            left_result = _execute_tree(left_subtree, X, FUNCTIONS, TERMINALS,
+                                        CONSTANTS)  # Tree(left_subtree).apply_tree(inputs)
+            output = FUNCTIONS[function_name]["function"](left_result)
+
+        return bound_value(output, -1e12, 1e12)
+
+    else:  # If it's a terminal node
+        if repr_ in TERMINALS:
+            return X[:, TERMINALS[repr_]]
+        elif repr_ in CONSTANTS:
+            return CONSTANTS

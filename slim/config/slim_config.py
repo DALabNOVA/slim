@@ -1,4 +1,4 @@
-from slim.algorithms.GP.operators.initializers import rhh
+from slim.initializers.initializers import rhh
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.SLIM_GSGP.operators.mutators import (deflate_mutation)
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import \

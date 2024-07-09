@@ -6,6 +6,43 @@ from slim.algorithms.GP.representations.tree import Tree
 from slim.algorithms.GP.representations.tree_utils import bound_value
 
 
+def _execute_tree(individual, inputs, testing=False, logistic=False):
+
+    """
+    Calculate the semantics for the tree.
+
+    Args:
+        inputs: Input data for calculating semantics.
+        testing: Boolean indicating if the calculation is for testing semantics.
+        logistic: Boolean indicating if a logistic function should be applied.
+
+    Returns:
+        None
+    """
+    if testing and individual.test_semantics is None:
+        if isinstance(individual.structure, tuple):
+            individual.test_semantics = (
+                torch.sigmoid(apply_tree(individual, inputs))
+                if logistic
+                else apply_tree(individual, inputs)
+            )
+        else:
+            individual.test_semantics = individual.structure[0](
+                *individual.structure[1:], testing=True
+            )
+    elif individual.train_semantics is None:
+        if isinstance(individual.structure, tuple):
+            individual.train_semantics = (
+                torch.sigmoid(apply_tree(individual, inputs))
+                if logistic
+                else apply_tree(individual, inputs)
+            )
+        else:
+            individual.train_semantics = individual.structure[0](
+                *individual.structure[1:], testing=False
+            )
+
+
 def apply_tree(tree, inputs):
     """
     Evaluates the tree on input vectors.

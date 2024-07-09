@@ -17,7 +17,7 @@ from slim.utils.utils import get_terminals, validate_inputs
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
        dataset_name: str = None, pop_size: int = 100, n_iter: int = 1000, p_xo: float = 0.8,
        elitism: bool = True, n_elites: int = 1, max_depth: int = 17, init_depth: int = 6,
-       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42):
+       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42, n_jobs: int = 1):
     """
     Main function to execute the StandardGP algorithm on specified datasets
 
@@ -50,7 +50,9 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     log_path : str, optional
         The path where is created the log directory where results are saved.
     seed : int, optional
-        Seed for the randomness
+        Seed for the randomness.
+    n_jobs: int, optional
+        The number of jobs for the joblib library Parallel parallelization.
 
     Returns
     -------
@@ -98,6 +100,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     else:
         gp_solve_parameters["test_elite"] = False
 
+    gp_solve_parameters["n_jobs"] = n_jobs
+
     optimizer = GP(pi_init=gp_pi_init, **gp_parameters, seed=seed)
     optimizer.solve(
         X_train=X_train,
@@ -131,7 +135,7 @@ if __name__ == "__main__":
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='ppb', pop_size=100, n_iter=10)
+                    dataset_name='ppb', pop_size=100, n_iter=100)
 
     final_tree.print_tree_representation()
     predictions = final_tree.predict(X_test)

@@ -12,7 +12,6 @@ from slim.config.gp_config import *
 from slim.utils.logger import log_settings
 from slim.utils.utils import get_terminals, validate_inputs
 
-
 # todo: would not be better to first log the settings and then perform the algorithm?
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
        dataset_name: str = None, pop_size: int = 100, n_iter: int = 1000, p_xo: float = 0.8,
@@ -131,7 +130,7 @@ if __name__ == "__main__":
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='ppb', pop_size=100, n_iter=10)
+                    dataset_name='ppb', pop_size=100, n_iter=1000)
 
     final_tree.print_tree_representation()
     predictions = final_tree.predict(X_test)
