@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'slim'
-copyright = '2024, Rosenfeld, L et al. (2024)'
+copyright = '2024, Rosenfeld, L et al.'
 author = 'Rosenfeld, L et al. (2024)'
 
 # The full version, including alpha/beta/rc tags
