@@ -135,20 +135,24 @@ if __name__ == "__main__":
     from datasets.data_loader import load_merged_data
     from slim.utils.utils import train_test_split, show_individual
 
-    for ds in ["toxicity"]:
+    slim_gsgp_parameters["copy_parent"] = True
+    for ds in ["resid_build_sale_price"]:
 
-        for s in range(3):
+        for s in range(30):
 
             X, y = load_merged_data(ds, X_y=True)
 
             X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4, seed=s)
             X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5, seed=s)
 
-            for algorithm in ["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1","SLIM*SIG1"]:
+            #X_train, X_val, y_train, y_val = train_test_split(X, y, p_test=0.3, seed=s)
+
+            for algorithm in ["SLIM*SIG1"]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                                  dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=1000, seed=s,
-                                  log_path=os.path.join(os.getcwd(), "log", f"slim_time_{ds}_{algorithm}-confirmer.csv"))
+                                  dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.1,
+                                  ms=  generate_random_uniform(0, 10) ,log_path=os.path.join(os.getcwd(),
+                                                                "log", f"slim_postgrid_{ds}-size.csv"))
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)
