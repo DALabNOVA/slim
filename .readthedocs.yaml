@@ -17,7 +17,7 @@ dependencies:
   - wheel=0.41.2=py310hecd8cb5_0
   - xz=5.4.6=h6c40b1e_0
   - zlib=1.2.13=h4dc903c_0
-  - pip:
+  - pip
     - contourpy==1.2.1
     - cycler==0.12.1
     - dill==0.3.8
@@ -49,4 +49,27 @@ dependencies:
     - tqdm==4.66.2
     - typing-extensions==4.10.0
     - tzdata==2024.1
-prefix: /opt/anaconda3/envs/SlimShady
+prefix:
+
+# Required
+
+version: 1
+
+
+# Set the OS, Python version and other tools you might need
+
+build:
+
+  os: ubuntu-22.04
+
+  tools:
+
+    python: "3.10"
+
+    # You can also specify other tool versions:
+
+    # nodejs: "20"
+
+    # rust: "1.70"
+
+    # golang: "1.20"
