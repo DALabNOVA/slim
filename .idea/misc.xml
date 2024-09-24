@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="slim" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="slim" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (SlimShady)" project-jdk-type="Python SDK" />
 </project>

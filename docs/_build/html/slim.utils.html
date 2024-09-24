@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim.utils package &mdash; Slim 1.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+  <title>slim.utils package &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -15,9 +15,9 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -46,8 +46,6 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="datasets.html">datasets package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
@@ -94,21 +92,138 @@
            <div itemprop="articleBody">
              
   <section id="slim-utils-package">
-<h1>slim.utils package<a class="headerlink" href="#slim-utils-package" title="Permalink to this heading"></a></h1>
+<h1>slim.utils package<a class="headerlink" href="#slim-utils-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="slim-utils-diversity-module">
-<h2>slim.utils.diversity module<a class="headerlink" href="#slim-utils-diversity-module" title="Permalink to this heading"></a></h2>
+<section id="module-slim.utils.diversity">
+<span id="slim-utils-diversity-module"></span><h2>slim.utils.diversity module<a class="headerlink" href="#module-slim.utils.diversity" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.diversity.gsgp_pop_div_from_vectors">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.diversity.</span></span><span class="sig-name descname"><span class="pre">gsgp_pop_div_from_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sem_vectors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/utils/diversity.html#gsgp_pop_div_from_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.diversity.gsgp_pop_div_from_vectors" title="Link to this definition"></a></dt>
+<dd><p>Calculate the diversity of a population from semantic vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sem_vectors</strong> (<em>torch.Tensor</em>) – Tensor of semantic vectors.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average pairwise distance between semantic vectors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.diversity.niche_entropy">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.diversity.</span></span><span class="sig-name descname"><span class="pre">niche_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repr_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_niches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/utils/diversity.html#niche_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.diversity.niche_entropy" title="Link to this definition"></a></dt>
+<dd><p>Calculate the niche entropy of a population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repr</strong> (<em>list</em>) – List of individuals in the population.</p></li>
+<li><p><strong>n_niches</strong> (<em>int</em>) – Number of niches to divide the population into.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entropy of the distribution of individuals across niches.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="slim-utils-logger-module">
-<h2>slim.utils.logger module<a class="headerlink" href="#slim-utils-logger-module" title="Permalink to this heading"></a></h2>
+<section id="module-slim.utils.logger">
+<span id="slim-utils-logger-module"></span><h2>slim.utils.logger module<a class="headerlink" href="#module-slim.utils.logger" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.logger.drop_experiment_from_logger">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.logger.</span></span><span class="sig-name descname"><span class="pre">drop_experiment_from_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/slim/utils/logger.html#drop_experiment_from_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.logger.drop_experiment_from_logger" title="Link to this definition"></a></dt>
+<dd><p>Remove an experiment from the logger CSV file. If the given experiment_id is -1, the last saved experiment is removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment_id</strong> (<em>str</em><em> or </em><em>int</em>) – The experiment id to be removed. If -1, the most recent experiment is removed.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – Path to the file containing the logging information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.logger.log_settings">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.logger.</span></span><span class="sig-name descname"><span class="pre">log_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UUID</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/slim/utils/logger.html#log_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.logger.log_settings" title="Link to this definition"></a></dt>
+<dd><p>Log the settings to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV file.</p></li>
+<li><p><strong>settings_dict</strong> (<em>dict</em>) – Dictionary of settings.</p></li>
+<li><p><strong>unique_run_id</strong> (<em>str</em>) – Unique identifier for the run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.logger.logger">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.logger.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_val_fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/slim/utils/logger.html#logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.logger.logger" title="Link to this definition"></a></dt>
+<dd><p>Logs information into a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV file.</p></li>
+<li><p><strong>generation</strong> (<em>int</em>) – Current generation number.</p></li>
+<li><p><strong>pop_val_fitness</strong> (<em>float</em>) – Population’s validation fitness value.</p></li>
+<li><p><strong>timing</strong> (<em>float</em>) – Time taken for the process.</p></li>
+<li><p><strong>nodes</strong> (<em>int</em>) – Count of nodes in the population.</p></li>
+<li><p><strong>additional_infos</strong> (<em>list</em><em>, </em><em>optional</em>) – Population’s test fitness value(s) and diversity measurements. Defaults to None.</p></li>
+<li><p><strong>run_info</strong> (<em>list</em><em>, </em><em>optional</em>) – Information about the run. Defaults to None.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – The seed used in random, numpy, and torch libraries. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.utils.logger.merge_settings">
+<span class="sig-prename descclassname"><span class="pre">slim.utils.logger.</span></span><span class="sig-name descname"><span class="pre">merge_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sd1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/slim/utils/logger.html#merge_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.logger.merge_settings" title="Link to this definition"></a></dt>
+<dd><p>Merge multiple settings dictionaries into one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sd1</strong> (<em>dict</em>) – First settings dictionary.</p></li>
+<li><p><strong>sd2</strong> (<em>dict</em>) – Second settings dictionary.</p></li>
+<li><p><strong>sd3</strong> (<em>dict</em>) – Third settings dictionary.</p></li>
+<li><p><strong>sd4</strong> (<em>dict</em>) – Fourth settings dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Merged settings dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="slim-utils-utils-module">
-<h2>slim.utils.utils module<a class="headerlink" href="#slim-utils-utils-module" title="Permalink to this heading"></a></h2>
+<h2>slim.utils.utils module<a class="headerlink" href="#slim-utils-utils-module" title="Link to this heading"></a></h2>
 </section>
 <section id="module-slim.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.utils" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.utils" title="Link to this heading"></a></h2>
 </section>
 </section>
 
@@ -122,7 +237,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Rosenfeld, L et al.</p>
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

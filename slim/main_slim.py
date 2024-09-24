@@ -99,6 +99,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_solve_parameters["n_elites"] = n_elites
     slim_gsgp_solve_parameters["n_iter"] = n_iter
     slim_gsgp_solve_parameters['run_info'] = [slim_version, UNIQUE_RUN_ID, dataset_name]
+
     if X_test is not None and y_test is not None:
         slim_gsgp_solve_parameters["test_elite"] = True
     else:
@@ -132,19 +133,32 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+
+    from datasets.data_loader import load_ppb, load_merged_data
     from slim.utils.utils import train_test_split, show_individual
 
-    X, y = load_ppb(X_y=True)
+    X, y = load_merged_data("concrete",X_y=True)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
-    X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
+    for s in range(30):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.3)
+        #X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 
-    algorithm = "SLIM+SIG2"
+        ### needed parameters:
+        algorithm = "SLIM+SIG1"
 
-    final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                      dataset_name='ppb', slim_version=algorithm, pop_size=100, n_iter=2)
+        slim_gsgp_parameters["copy_parent"] = True
+        slim_gsgp_solve_parameters["max_depth"] = None
 
-    print(show_individual(final_tree, operator='sum'))
-    predictions = final_tree.predict(data=X_test, slim_version=algorithm)
-    print(float(rmse(y_true=y_test, y_pred=predictions)))
+        final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
+                          dataset_name='concrete', slim_version=algorithm, pop_size=200, n_iter=2000,
+                          log_path=os.path.join(os.getcwd(), "log", "best_concrete_rmse.csv"), #change
+                          ms=generate_random_uniform(0, 3), # change
+                          p_inflate=0.9,  # change
+                          seed=s
+                          )
+
+        """
+        print(show_individual(final_tree, operator='sum'))
+        predictions = final_tree.predict(data=X_test, slim_version=algorithm)
+        print(float(rmse(y_true=y_test, y_pred=predictions)))
+        """
