@@ -20,9 +20,7 @@
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim.algorithms package" href="slim.algorithms.html" />
-    <link rel="prev" title="slim" href="modules.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,32 +43,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">slim package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.utils.html">slim.utils package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-slim.main_gp">slim.main_gp module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#slim.main_gp.gp"><code class="docutils literal notranslate"><span class="pre">gp()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#slim-main-gsgp-module">slim.main_gsgp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-slim.main_slim">slim.main_slim module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#slim.main_slim.slim"><code class="docutils literal notranslate"><span class="pre">slim()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-slim">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -87,7 +66,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
       <li class="breadcrumb-item active">slim package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/slim.rst.txt" rel="nofollow"> View page source</a>
@@ -104,70 +82,85 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.html#module-slim.algorithms.GP.gp">slim.algorithms.GP.gp module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.html#module-slim.algorithms.GP">Module contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html">slim.algorithms.GP.operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.crossover_operators">slim.algorithms.GP.operators.crossover_operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.mutators">slim.algorithms.GP.operators.mutators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim-algorithms-gp-operators-selection-algorithms">slim.algorithms.GP.operators.selection_algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.html#module-slim.algorithms.GSGP.gsgp">slim.algorithms.GSGP.gsgp module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.html#module-slim.algorithms.GSGP">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html">slim.algorithms.GP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.population">slim.algorithms.GP.representations.population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree">slim.algorithms.GP.representations.tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree_utils">slim.algorithms.GP.representations.tree_utils</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#module-slim.algorithms.SLIM_GSGP.slim_gsgp">slim.algorithms.SLIM_GSGP.slim_gsgp module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#module-slim.algorithms.SLIM_GSGP">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.html#module-slim.algorithms.GP.gp">slim.algorithms.GP.gp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.html#slim.algorithms.GP.gp.GP"><code class="docutils literal notranslate"><span class="pre">GP</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.html#module-slim.algorithms">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.operators.html">slim.algorithms.GSGP.operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.operators.html#module-slim.algorithms.GSGP.operators.crossover_operators">slim.algorithms.GSGP.operators.crossover_operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.operators.html#module-slim.algorithms.GSGP.operators.mutators">slim.algorithms.GSGP.operators.mutators</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim.config.html">slim.config package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config.gp_config">slim.config.gp_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#slim-config-gsgp-config-module">slim.config.gsgp_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#slim-config-slim-config-module">slim.config.slim_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.representations.html">slim.algorithms.GSGP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.representations.html#module-slim.algorithms.GSGP.representations.population">slim.algorithms.GSGP.representations.population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.representations.html#module-slim.algorithms.GSGP.representations.tree">slim.algorithms.GSGP.representations.tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.representations.html#module-slim.algorithms.GSGP.representations.tree_utils">slim.algorithms.GSGP.representations.tree_utils</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#module-slim.evaluators.fitness_functions">slim.evaluators.fitness_functions module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae_int"><code class="docutils literal notranslate"><span class="pre">mae_int()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.rmse"><code class="docutils literal notranslate"><span class="pre">rmse()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.signed_errors"><code class="docutils literal notranslate"><span class="pre">signed_errors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.html#module-slim.algorithms.GSGP.gsgp">slim.algorithms.GSGP.gsgp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GSGP.html#slim.algorithms.GSGP.gsgp.GSGP"><code class="docutils literal notranslate"><span class="pre">GSGP</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#module-slim.evaluators">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.diversity">slim.utils.diversity module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.operators.html">slim.algorithms.SLIM_GSGP.operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.operators.html#module-slim.algorithms.SLIM_GSGP.operators.mutators">slim.algorithms.SLIM_GSGP.operators.mutators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.operators.html#module-slim.algorithms.SLIM_GSGP.operators.selection_algorithms">slim.algorithms.SLIM_GSGP.operators.selection_algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.representations.html">slim.algorithms.SLIM_GSGP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.representations.html#module-slim.algorithms.SLIM_GSGP.representations.individual">slim.algorithms.SLIM_GSGP.representations.individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.representations.html#module-slim.algorithms.SLIM_GSGP.representations.population">slim.algorithms.SLIM_GSGP.representations.population</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#module-slim.algorithms.SLIM_GSGP.slim_gsgp">slim.algorithms.SLIM_GSGP.slim_gsgp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#slim.algorithms.SLIM_GSGP.slim_gsgp.SLIM_GSGP"><code class="docutils literal notranslate"><span class="pre">SLIM_GSGP</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae_int"><code class="docutils literal notranslate"><span class="pre">mae_int()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.rmse"><code class="docutils literal notranslate"><span class="pre">rmse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.signed_errors"><code class="docutils literal notranslate"><span class="pre">signed_errors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.diversity">slim.utils.diversity</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.diversity.gsgp_pop_div_from_vectors"><code class="docutils literal notranslate"><span class="pre">gsgp_pop_div_from_vectors()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.diversity.niche_entropy"><code class="docutils literal notranslate"><span class="pre">niche_entropy()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.logger">slim.utils.logger module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.logger">slim.utils.logger</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.logger.drop_experiment_from_logger"><code class="docutils literal notranslate"><span class="pre">drop_experiment_from_logger()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.logger.log_settings"><code class="docutils literal notranslate"><span class="pre">log_settings()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.logger.logger"><code class="docutils literal notranslate"><span class="pre">logger()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.logger.merge_settings"><code class="docutils literal notranslate"><span class="pre">merge_settings()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.utils">slim.utils.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.utils">slim.utils.utils</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.check_slim_version"><code class="docutils literal notranslate"><span class="pre">check_slim_version()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.generate_random_uniform"><code class="docutils literal notranslate"><span class="pre">generate_random_uniform()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.get_best_max"><code class="docutils literal notranslate"><span class="pre">get_best_max()</span></code></a></li>
@@ -185,7 +178,6 @@
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.verbose_reporter"><code class="docutils literal notranslate"><span class="pre">verbose_reporter()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -231,8 +223,42 @@ logging the results for further analysis.</p>
 </dd></dl>
 
 </section>
-<section id="slim-main-gsgp-module">
-<h2>slim.main_gsgp module<a class="headerlink" href="#slim-main-gsgp-module" title="Link to this heading"></a></h2>
+<section id="module-slim.main_gsgp">
+<span id="slim-main-gsgp-module"></span><h2>slim.main_gsgp module<a class="headerlink" href="#module-slim.main_gsgp" title="Link to this heading"></a></h2>
+<p>This script runs the StandardGSGP algorithm on various datasets and configurations,
+logging the results for further analysis.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.main_gsgp.gsgp">
+<span class="sig-prename descclassname"><span class="pre">slim.main_gsgp.</span></span><span class="sig-name descname"><span class="pre">gsgp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train:</span> <span class="pre">~torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train:</span> <span class="pre">~torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test:</span> <span class="pre">~torch.Tensor</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test:</span> <span class="pre">~torch.Tensor</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_xo:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_elites:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_depth:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">generate_random_uniform.&lt;locals&gt;.generate_num&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'/Users/jimmy/Documents/Refresh/SLIMSHADY/slim/docs/log/gsgp.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/main_gsgp.html#gsgp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.main_gsgp.gsgp" title="Link to this definition"></a></dt>
+<dd><p>Main function to execute the Standard GSGP algorithm on specified datasets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>(</em><em>torch.Tensor</em><em>)</em>) – Training input data.</p></li>
+<li><p><strong>y_train</strong> (<em>(</em><em>torch.Tensor</em><em>)</em>) – Training output data.</p></li>
+<li><p><strong>X_test</strong> (<em>(</em><em>torch.Tensor</em><em>)</em><em>, </em><em>optional</em>) – Testing input data.</p></li>
+<li><p><strong>y_test</strong> (<em>(</em><em>torch.Tensor</em><em>)</em><em>, </em><em>optional</em>) – Testing output data.</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset name, for logging purposes</p></li>
+<li><p><strong>pop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The population size for the genetic programming algorithm (default is 100).</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of iterations for the genetic programming algorithm (default is 100).</p></li>
+<li><p><strong>p_xo</strong> (<em>float</em><em>, </em><em>optional</em>) – The probability of crossover in the genetic programming algorithm. Must be a number between 0 and 1 (default is 0.8).</p></li>
+<li><p><strong>elitism</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicate the presence or absence of elitism.</p></li>
+<li><p><strong>n_elites</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of elites.</p></li>
+<li><p><strong>init_depth</strong> (<em>int</em><em>, </em><em>optional</em>) – The depth value for the initial GP trees population.</p></li>
+<li><p><strong>ms</strong> (<em>Callable</em><em>, </em><em>optional</em>) – A function that will generate the mutation step</p></li>
+<li><p><strong>log_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path where is created the log directory where results are saved.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for the randomness</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the best individual at the last generation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree" title="slim.algorithms.GP.representations.tree.Tree">Tree</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-slim.main_slim">
 <span id="slim-main-slim-module"></span><h2>slim.main_slim module<a class="headerlink" href="#module-slim.main_slim" title="Link to this heading"></a></h2>
@@ -280,10 +306,7 @@ logging the results for further analysis.</p>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="slim" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="slim.algorithms.html" class="btn btn-neutral float-right" title="slim.algorithms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

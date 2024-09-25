@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim.algorithms.GSGP.operators package &mdash; Slim 0.0.1 documentation</title>
+  <title>slim.algorithms.GSGP.operators &mdash; Slim 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim.algorithms.GSGP.representations package" href="slim.algorithms.GSGP.representations.html" />
-    <link rel="prev" title="slim.algorithms.GSGP package" href="slim.algorithms.GSGP.html" /> 
+    <link rel="next" title="slim.algorithms.GSGP.representations" href="slim.algorithms.GSGP.representations.html" />
+    <link rel="prev" title="slim.algorithms.GSGP" href="slim.algorithms.GSGP.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,25 +46,26 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.utils.html">slim.utils package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">slim.algorithms.GSGP.operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.GSGP.operators.crossover_operators">slim.algorithms.GSGP.operators.crossover_operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.GSGP.operators.mutators">slim.algorithms.GSGP.operators.mutators</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#slim-main-gsgp-module">slim.main_gsgp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.representations.html">slim.algorithms.GSGP.representations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.html#module-slim.algorithms.GSGP.gsgp">slim.algorithms.GSGP.gsgp</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -81,11 +82,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
-          <li class="breadcrumb-item"><a href="slim.html">slim package</a></li>
-          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms package</a></li>
-          <li class="breadcrumb-item"><a href="slim.algorithms.GSGP.html">slim.algorithms.GSGP package</a></li>
-      <li class="breadcrumb-item active">slim.algorithms.GSGP.operators package</li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GSGP.operators</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/slim.algorithms.GSGP.operators.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -95,13 +94,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slim-algorithms-gsgp-operators-package">
-<h1>slim.algorithms.GSGP.operators package<a class="headerlink" href="#slim-algorithms-gsgp-operators-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
+  <section id="slim-algorithms-gsgp-operators">
+<h1>slim.algorithms.GSGP.operators<a class="headerlink" href="#slim-algorithms-gsgp-operators" title="Link to this heading"></a></h1>
 <section id="module-slim.algorithms.GSGP.operators.crossover_operators">
-<span id="slim-algorithms-gsgp-operators-crossover-operators-module"></span><h2>slim.algorithms.GSGP.operators.crossover_operators module<a class="headerlink" href="#module-slim.algorithms.GSGP.operators.crossover_operators" title="Link to this heading"></a></h2>
+<span id="slim-algorithms-gsgp-operators-crossover-operators"></span><h2>slim.algorithms.GSGP.operators.crossover_operators<a class="headerlink" href="#module-slim.algorithms.GSGP.operators.crossover_operators" title="Link to this heading"></a></h2>
 <p>Geometric crossover implementation for genetic programming trees.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="slim.algorithms.GSGP.operators.crossover_operators.geometric_crossover">
@@ -127,7 +123,7 @@
 
 </section>
 <section id="module-slim.algorithms.GSGP.operators.mutators">
-<span id="slim-algorithms-gsgp-operators-mutators-module"></span><h2>slim.algorithms.GSGP.operators.mutators module<a class="headerlink" href="#module-slim.algorithms.GSGP.operators.mutators" title="Link to this heading"></a></h2>
+<span id="slim-algorithms-gsgp-operators-mutators"></span><h2>slim.algorithms.GSGP.operators.mutators<a class="headerlink" href="#module-slim.algorithms.GSGP.operators.mutators" title="Link to this heading"></a></h2>
 <p>Geometric Mutation Functions for Tree Structures using PyTorch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="slim.algorithms.GSGP.operators.mutators.product_one_trees_geometric_mutation">
@@ -208,17 +204,14 @@
 </dd></dl>
 
 </section>
-<section id="module-slim.algorithms.GSGP.operators">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.algorithms.GSGP.operators" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="slim.algorithms.GSGP.html" class="btn btn-neutral float-left" title="slim.algorithms.GSGP package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="slim.algorithms.GSGP.representations.html" class="btn btn-neutral float-right" title="slim.algorithms.GSGP.representations package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slim.algorithms.GSGP.html" class="btn btn-neutral float-left" title="slim.algorithms.GSGP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.algorithms.GSGP.representations.html" class="btn btn-neutral float-right" title="slim.algorithms.GSGP.representations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

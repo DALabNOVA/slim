@@ -20,14 +20,6 @@ slim.utils.logger module
    :undoc-members:
    :show-inheritance:
 
-slim.utils.tste module
-----------------------
-
-.. automodule:: slim.utils.tste
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 slim.utils.utils module
 -----------------------
 

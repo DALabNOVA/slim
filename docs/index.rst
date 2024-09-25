@@ -187,7 +187,13 @@ Specific for *slim*
    :maxdepth: 2
    :caption: Contents:
 
-   modules
-   slim_gsgp
+   slim.algorithms
+   slim.evaluators
+   slim.initializers
+   slim.selectors
+   slim.utils
+   slim_main_files
+
+
 
 

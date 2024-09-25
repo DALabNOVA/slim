@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim.utils package &mdash; Slim 0.0.1 documentation</title>
+  <title>slim.utils &mdash; Slim 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim.algorithms.GP.slim_gsgp module" href="slim_gsgp.html" />
-    <link rel="prev" title="slim.evaluators package" href="slim.evaluators.html" /> 
+    <link rel="next" title="slim main files" href="slim_main_files.html" />
+    <link rel="prev" title="slim.selectors" href="slim.selectors.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,25 +46,44 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">slim.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">slim.utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-slim.utils.diversity">slim.utils.diversity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.diversity.gsgp_pop_div_from_vectors"><code class="docutils literal notranslate"><span class="pre">gsgp_pop_div_from_vectors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.diversity.niche_entropy"><code class="docutils literal notranslate"><span class="pre">niche_entropy()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#slim-main-gsgp-module">slim.main_gsgp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-slim.utils.logger">slim.utils.logger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.logger.drop_experiment_from_logger"><code class="docutils literal notranslate"><span class="pre">drop_experiment_from_logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.logger.log_settings"><code class="docutils literal notranslate"><span class="pre">log_settings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.logger.logger"><code class="docutils literal notranslate"><span class="pre">logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.logger.merge_settings"><code class="docutils literal notranslate"><span class="pre">merge_settings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-slim.utils.utils">slim.utils.utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.check_slim_version"><code class="docutils literal notranslate"><span class="pre">check_slim_version()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.generate_random_uniform"><code class="docutils literal notranslate"><span class="pre">generate_random_uniform()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.get_best_max"><code class="docutils literal notranslate"><span class="pre">get_best_max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.get_best_min"><code class="docutils literal notranslate"><span class="pre">get_best_min()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.get_random_tree"><code class="docutils literal notranslate"><span class="pre">get_random_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.get_terminals"><code class="docutils literal notranslate"><span class="pre">get_terminals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.gs_rmse"><code class="docutils literal notranslate"><span class="pre">gs_rmse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.gs_size"><code class="docutils literal notranslate"><span class="pre">gs_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.mean_"><code class="docutils literal notranslate"><span class="pre">mean_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.protected_div"><code class="docutils literal notranslate"><span class="pre">protected_div()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.show_individual"><code class="docutils literal notranslate"><span class="pre">show_individual()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.tensor_dimensioned_sum"><code class="docutils literal notranslate"><span class="pre">tensor_dimensioned_sum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.train_test_split"><code class="docutils literal notranslate"><span class="pre">train_test_split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.validate_inputs"><code class="docutils literal notranslate"><span class="pre">validate_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim.utils.utils.verbose_reporter"><code class="docutils literal notranslate"><span class="pre">verbose_reporter()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -81,9 +100,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
-          <li class="breadcrumb-item"><a href="slim.html">slim package</a></li>
-      <li class="breadcrumb-item active">slim.utils package</li>
+      <li class="breadcrumb-item active">slim.utils</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/slim.utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -93,13 +110,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slim-utils-package">
-<h1>slim.utils package<a class="headerlink" href="#slim-utils-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
+  <section id="slim-utils">
+<h1>slim.utils<a class="headerlink" href="#slim-utils" title="Link to this heading"></a></h1>
 <section id="module-slim.utils.diversity">
-<span id="slim-utils-diversity-module"></span><h2>slim.utils.diversity module<a class="headerlink" href="#module-slim.utils.diversity" title="Link to this heading"></a></h2>
+<span id="slim-utils-diversity"></span><h2>slim.utils.diversity<a class="headerlink" href="#module-slim.utils.diversity" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="slim.utils.diversity.gsgp_pop_div_from_vectors">
 <span class="sig-prename descclassname"><span class="pre">slim.utils.diversity.</span></span><span class="sig-name descname"><span class="pre">gsgp_pop_div_from_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sem_vectors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/utils/diversity.html#gsgp_pop_div_from_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.diversity.gsgp_pop_div_from_vectors" title="Link to this definition"></a></dt>
@@ -139,7 +153,7 @@
 
 </section>
 <section id="module-slim.utils.logger">
-<span id="slim-utils-logger-module"></span><h2>slim.utils.logger module<a class="headerlink" href="#module-slim.utils.logger" title="Link to this heading"></a></h2>
+<span id="slim-utils-logger"></span><h2>slim.utils.logger<a class="headerlink" href="#module-slim.utils.logger" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="slim.utils.logger.drop_experiment_from_logger">
 <span class="sig-prename descclassname"><span class="pre">slim.utils.logger.</span></span><span class="sig-name descname"><span class="pre">drop_experiment_from_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/slim/utils/logger.html#drop_experiment_from_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.logger.drop_experiment_from_logger" title="Link to this definition"></a></dt>
@@ -222,7 +236,7 @@
 
 </section>
 <section id="module-slim.utils.utils">
-<span id="slim-utils-utils-module"></span><h2>slim.utils.utils module<a class="headerlink" href="#module-slim.utils.utils" title="Link to this heading"></a></h2>
+<span id="slim-utils-utils"></span><h2>slim.utils.utils<a class="headerlink" href="#module-slim.utils.utils" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="slim.utils.utils.check_slim_version">
 <span class="sig-prename descclassname"><span class="pre">slim.utils.utils.</span></span><span class="sig-name descname"><span class="pre">check_slim_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slim_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/utils/utils.html#check_slim_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.utils.utils.check_slim_version" title="Link to this definition"></a></dt>
@@ -537,17 +551,14 @@ AssertionError: If any of the conditions are not met.</p>
 </dd></dl>
 
 </section>
-<section id="module-slim.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.utils" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="slim.evaluators.html" class="btn btn-neutral float-left" title="slim.evaluators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="slim_gsgp.html" class="btn btn-neutral float-right" title="slim.algorithms.GP.slim_gsgp module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slim.selectors.html" class="btn btn-neutral float-left" title="slim.selectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim_main_files.html" class="btn btn-neutral float-right" title="slim main files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

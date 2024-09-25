@@ -1,9 +1,9 @@
 """
 This script sets up the configuration dictionaries for the execution of the GSGP algorithm
 """
-from slim.algorithms.GP.operators.initializers import rhh
-from slim.algorithms.GP.operators.selection_algorithms import \
-    tournament_selection_min
+from slim.initializers.initializers import rhh
+from slim.selectors.selection_algorithms import tournament_selection_min
+
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation
 from datasets.data_loader import *

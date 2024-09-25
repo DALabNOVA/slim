@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim.algorithms.SLIM_GSGP.representations package &mdash; Slim 0.0.1 documentation</title>
+  <title>slim.algorithms.SLIM_GSGP.representations &mdash; Slim 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim.config package" href="slim.config.html" />
-    <link rel="prev" title="slim.algorithms.SLIM_GSGP.operators package" href="slim.algorithms.SLIM_GSGP.operators.html" /> 
+    <link rel="next" title="slim.evaluators" href="slim.evaluators.html" />
+    <link rel="prev" title="slim.algorithms.SLIM_GSGP.operators" href="slim.algorithms.SLIM_GSGP.operators.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,25 +46,26 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.utils.html">slim.utils package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.operators.html">slim.algorithms.SLIM_GSGP.operators</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">slim.algorithms.SLIM_GSGP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.SLIM_GSGP.representations.individual">slim.algorithms.SLIM_GSGP.representations.individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.SLIM_GSGP.representations.population">slim.algorithms.SLIM_GSGP.representations.population</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#slim-main-gsgp-module">slim.main_gsgp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#module-slim.algorithms.SLIM_GSGP.slim_gsgp">slim.algorithms.SLIM_GSGP.slim_gsgp</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -81,11 +82,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
-          <li class="breadcrumb-item"><a href="slim.html">slim package</a></li>
-          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms package</a></li>
-          <li class="breadcrumb-item"><a href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP package</a></li>
-      <li class="breadcrumb-item active">slim.algorithms.SLIM_GSGP.representations package</li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.SLIM_GSGP.representations</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/slim.algorithms.SLIM_GSGP.representations.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -95,13 +94,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slim-algorithms-slim-gsgp-representations-package">
-<h1>slim.algorithms.SLIM_GSGP.representations package<a class="headerlink" href="#slim-algorithms-slim-gsgp-representations-package" title="Link to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
+  <section id="slim-algorithms-slim-gsgp-representations">
+<h1>slim.algorithms.SLIM_GSGP.representations<a class="headerlink" href="#slim-algorithms-slim-gsgp-representations" title="Link to this heading"></a></h1>
 <section id="module-slim.algorithms.SLIM_GSGP.representations.individual">
-<span id="slim-algorithms-slim-gsgp-representations-individual-module"></span><h2>slim.algorithms.SLIM_GSGP.representations.individual module<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.individual" title="Link to this heading"></a></h2>
+<span id="slim-algorithms-slim-gsgp-representations-individual"></span><h2>slim.algorithms.SLIM_GSGP.representations.individual<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.individual" title="Link to this heading"></a></h2>
 <p>Individual Class and Utility Functions for Genetic Programming using PyTorch.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual">
@@ -205,7 +201,7 @@ function applied, and training semantics are updated for both trees.</p></li>
 
 </section>
 <section id="module-slim.algorithms.SLIM_GSGP.representations.population">
-<span id="slim-algorithms-slim-gsgp-representations-population-module"></span><h2>slim.algorithms.SLIM_GSGP.representations.population module<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.population" title="Link to this heading"></a></h2>
+<span id="slim-algorithms-slim-gsgp-representations-population"></span><h2>slim.algorithms.SLIM_GSGP.representations.population<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.population" title="Link to this heading"></a></h2>
 <p>Population Class for Evolutionary Computation using PyTorch.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population">
@@ -271,17 +267,14 @@ function applied, and training semantics are updated for both trees.</p></li>
 </dd></dl>
 
 </section>
-<section id="module-slim.algorithms.SLIM_GSGP.representations">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="slim.algorithms.SLIM_GSGP.operators.html" class="btn btn-neutral float-left" title="slim.algorithms.SLIM_GSGP.operators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="slim.config.html" class="btn btn-neutral float-right" title="slim.config package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slim.algorithms.SLIM_GSGP.operators.html" class="btn btn-neutral float-left" title="slim.algorithms.SLIM_GSGP.operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.evaluators.html" class="btn btn-neutral float-right" title="slim.evaluators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

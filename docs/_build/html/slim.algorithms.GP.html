@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim.algorithms.GP package &mdash; Slim 0.0.1 documentation</title>
+  <title>slim.algorithms.GP &mdash; Slim 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim.algorithms.GP.operators package" href="slim.algorithms.GP.operators.html" />
-    <link rel="prev" title="slim.algorithms package" href="slim.algorithms.html" /> 
+    <link rel="next" title="slim.algorithms.GP.operators" href="slim.algorithms.GP.operators.html" />
+    <link rel="prev" title="slim.algorithms" href="slim.algorithms.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,25 +46,25 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="slim.utils.html">slim.utils package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#slim-main-gsgp-module">slim.main_gsgp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">slim.algorithms.GP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html">slim.algorithms.GP.operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html">slim.algorithms.GP.representations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-slim.algorithms.GP.gp">slim.algorithms.GP.gp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slim.algorithms.GP.gp.GP"><code class="docutils literal notranslate"><span class="pre">GP</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -81,10 +81,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
-          <li class="breadcrumb-item"><a href="slim.html">slim package</a></li>
-          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms package</a></li>
-      <li class="breadcrumb-item active">slim.algorithms.GP package</li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GP</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/slim.algorithms.GP.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -94,36 +92,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slim-algorithms-gp-package">
-<h1>slim.algorithms.GP package<a class="headerlink" href="#slim-algorithms-gp-package" title="Link to this heading"></a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+  <section id="slim-algorithms-gp">
+<h1>slim.algorithms.GP<a class="headerlink" href="#slim-algorithms-gp" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.operators.html">slim.algorithms.GP.operators package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.crossover_operators">slim.algorithms.GP.operators.crossover_operators module</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.operators.html">slim.algorithms.GP.operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.crossover_operators">slim.algorithms.GP.operators.crossover_operators</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.crossover_operators.crossover_trees"><code class="docutils literal notranslate"><span class="pre">crossover_trees()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim-algorithms-gp-operators-initializers-module">slim.algorithms.GP.operators.initializers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.mutators">slim.algorithms.GP.operators.mutators module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.mutators">slim.algorithms.GP.operators.mutators</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.mutators.mutate_tree_node"><code class="docutils literal notranslate"><span class="pre">mutate_tree_node()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.mutators.mutate_tree_subtree"><code class="docutils literal notranslate"><span class="pre">mutate_tree_subtree()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim-algorithms-gp-operators-selection-algorithms-module">slim.algorithms.GP.operators.selection_algorithms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim-algorithms-gp-operators-selection-algorithms">slim.algorithms.GP.operators.selection_algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.representations.html">slim.algorithms.GP.representations package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.population">slim.algorithms.GP.representations.population module</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.representations.html">slim.algorithms.GP.representations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.population">slim.algorithms.GP.representations.population</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population"><code class="docutils literal notranslate"><span class="pre">Population</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population.evaluate"><code class="docutils literal notranslate"><span class="pre">Population.evaluate()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree">slim.algorithms.GP.representations.tree module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree">slim.algorithms.GP.representations.tree</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.repr_"><code class="docutils literal notranslate"><span class="pre">Tree.repr_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.FUNCTIONS"><code class="docutils literal notranslate"><span class="pre">Tree.FUNCTIONS</span></code></a></li>
@@ -148,7 +142,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree_utils">slim.algorithms.GP.representations.tree_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree_utils">slim.algorithms.GP.representations.tree_utils</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.bound_value"><code class="docutils literal notranslate"><span class="pre">bound_value()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.create_full_random_tree"><code class="docutils literal notranslate"><span class="pre">create_full_random_tree()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.create_grow_random_tree"><code class="docutils literal notranslate"><span class="pre">create_grow_random_tree()</span></code></a></li>
@@ -159,17 +153,12 @@
 <li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.tree_pruning"><code class="docutils literal notranslate"><span class="pre">tree_pruning()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</section>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
 <section id="module-slim.algorithms.GP.gp">
-<span id="slim-algorithms-gp-gp-module"></span><h2>slim.algorithms.GP.gp module<a class="headerlink" href="#module-slim.algorithms.GP.gp" title="Link to this heading"></a></h2>
+<span id="slim-algorithms-gp-gp"></span><h2>slim.algorithms.GP.gp<a class="headerlink" href="#module-slim.algorithms.GP.gp" title="Link to this heading"></a></h2>
 <p>Genetic Programming (GP) module.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP">
@@ -277,17 +266,14 @@ float: Start time of evolution.</p>
 </dd></dl>
 
 </section>
-<section id="module-slim.algorithms.GP">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.algorithms.GP" title="Link to this heading"></a></h2>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="slim.algorithms.html" class="btn btn-neutral float-left" title="slim.algorithms package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="slim.algorithms.GP.operators.html" class="btn btn-neutral float-right" title="slim.algorithms.GP.operators package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slim.algorithms.html" class="btn btn-neutral float-left" title="slim.algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.algorithms.GP.operators.html" class="btn btn-neutral float-right" title="slim.algorithms.GP.operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,10 +1,7 @@
-slim.algorithms.SLIM\_GSGP.representations package
+slim.algorithms.SLIM\_GSGP.representations
 ==================================================
 
-Submodules
-----------
-
-slim.algorithms.SLIM\_GSGP.representations.individual module
+slim.algorithms.SLIM\_GSGP.representations.individual
 ------------------------------------------------------------
 
 .. automodule:: slim.algorithms.SLIM_GSGP.representations.individual
@@ -12,18 +9,10 @@ slim.algorithms.SLIM\_GSGP.representations.individual module
    :undoc-members:
    :show-inheritance:
 
-slim.algorithms.SLIM\_GSGP.representations.population module
+slim.algorithms.SLIM\_GSGP.representations.population
 ------------------------------------------------------------
 
 .. automodule:: slim.algorithms.SLIM_GSGP.representations.population
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim.algorithms.SLIM_GSGP.representations
    :members:
    :undoc-members:
    :show-inheritance:

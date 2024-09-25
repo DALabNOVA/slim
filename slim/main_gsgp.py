@@ -2,6 +2,7 @@
 This script runs the StandardGSGP algorithm on various datasets and configurations,
 logging the results for further analysis.
 """
+
 import uuid
 
 from slim.algorithms.GSGP.gsgp import GSGP

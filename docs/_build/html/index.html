@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="slim" href="modules.html" /> 
+    <link rel="next" title="slim.algorithms" href="slim.algorithms.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,8 +45,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">slim</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
 </ul>
 
         </div>
@@ -241,11 +245,43 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">slim</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slim.html">slim package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mae_int"><code class="docutils literal notranslate"><span class="pre">mae_int()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.rmse"><code class="docutils literal notranslate"><span class="pre">rmse()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#slim.evaluators.fitness_functions.signed_errors"><code class="docutils literal notranslate"><span class="pre">signed_errors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.grow"><code class="docutils literal notranslate"><span class="pre">grow()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.rhh"><code class="docutils literal notranslate"><span class="pre">rhh()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selectors.html">slim.selectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.selectors.html#slim.selectors.selection_algorithms.tournament_selection_max"><code class="docutils literal notranslate"><span class="pre">tournament_selection_max()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.selectors.html#slim.selectors.selection_algorithms.tournament_selection_min"><code class="docutils literal notranslate"><span class="pre">tournament_selection_min()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.diversity">slim.utils.diversity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.logger">slim.utils.logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.utils">slim.utils.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_gp">slim.main_gp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_gsgp">slim.main_gsgp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_slim">slim.main_slim</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -256,7 +292,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-right" title="slim" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slim.algorithms.html" class="btn btn-neutral float-right" title="slim.algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
