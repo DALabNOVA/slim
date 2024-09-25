@@ -1,21 +1,12 @@
-slim.selectors package
+slim.selectors
 ======================
 
-Submodules
-----------
-
-slim.selectors.selection\_algorithms module
--------------------------------------------
-
-.. automodule:: slim.selectors.selection_algorithms
+.. automodule:: slim.selectors
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: slim.selectors
+.. automodule:: slim.selectors.selection_algorithms
    :members:
    :undoc-members:
    :show-inheritance:

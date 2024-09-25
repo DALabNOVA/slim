@@ -1,10 +1,8 @@
-slim.algorithms.GP.operators package
+slim.algorithms.GP.operators
 ====================================
 
-Submodules
-----------
 
-slim.algorithms.GP.operators.crossover\_operators module
+slim.algorithms.GP.operators.crossover\_operators
 --------------------------------------------------------
 
 .. automodule:: slim.algorithms.GP.operators.crossover_operators
@@ -12,18 +10,10 @@ slim.algorithms.GP.operators.crossover\_operators module
    :undoc-members:
    :show-inheritance:
 
-slim.algorithms.GP.operators.mutators module
+slim.algorithms.GP.operators.mutators
 --------------------------------------------
 
 .. automodule:: slim.algorithms.GP.operators.mutators
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim.algorithms.GP.operators
    :members:
    :undoc-members:
    :show-inheritance:

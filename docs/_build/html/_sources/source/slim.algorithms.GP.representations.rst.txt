@@ -1,10 +1,7 @@
-slim.algorithms.GP.representations package
+slim.algorithms.GP.representations
 ==========================================
 
-Submodules
-----------
-
-slim.algorithms.GP.representations.population module
+slim.algorithms.GP.representations.population
 ----------------------------------------------------
 
 .. automodule:: slim.algorithms.GP.representations.population
@@ -12,7 +9,7 @@ slim.algorithms.GP.representations.population module
    :undoc-members:
    :show-inheritance:
 
-slim.algorithms.GP.representations.tree module
+slim.algorithms.GP.representations.tree
 ----------------------------------------------
 
 .. automodule:: slim.algorithms.GP.representations.tree
@@ -20,18 +17,10 @@ slim.algorithms.GP.representations.tree module
    :undoc-members:
    :show-inheritance:
 
-slim.algorithms.GP.representations.tree\_utils module
+slim.algorithms.GP.representations.tree\_utils
 -----------------------------------------------------
 
 .. automodule:: slim.algorithms.GP.representations.tree_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim.algorithms.GP.representations
    :members:
    :undoc-members:
    :show-inheritance:

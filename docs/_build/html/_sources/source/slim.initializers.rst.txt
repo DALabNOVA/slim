@@ -1,4 +1,4 @@
-slim.initializers package
+slim.initializers
 =========================
 
 .. automodule:: slim.initializers.initializers

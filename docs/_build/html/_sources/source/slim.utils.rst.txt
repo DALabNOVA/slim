@@ -1,10 +1,7 @@
-slim.utils package
+slim.utils
 ==================
 
-Submodules
-----------
-
-slim.utils.diversity module
+slim.utils.diversity
 ---------------------------
 
 .. automodule:: slim.utils.diversity
@@ -12,7 +9,7 @@ slim.utils.diversity module
    :undoc-members:
    :show-inheritance:
 
-slim.utils.logger module
+slim.utils.logger
 ------------------------
 
 .. automodule:: slim.utils.logger
@@ -20,18 +17,10 @@ slim.utils.logger module
    :undoc-members:
    :show-inheritance:
 
-slim.utils.utils module
+slim.utils.utils
 -----------------------
 
 .. automodule:: slim.utils.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim.utils
    :members:
    :undoc-members:
    :show-inheritance:
