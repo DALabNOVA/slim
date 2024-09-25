@@ -1,8 +1,5 @@
-slim package
+slim
 ============
-
-Subpackages
------------
 
 .. toctree::
    :maxdepth: 4
@@ -12,10 +9,7 @@ Subpackages
    slim.evaluators
    slim.utils
 
-Submodules
-----------
-
-slim.main\_gp module
+slim.main\_gp
 --------------------
 
 .. automodule:: slim.main_gp
@@ -23,7 +17,7 @@ slim.main\_gp module
    :undoc-members:
    :show-inheritance:
 
-slim.main\_gsgp module
+slim.main\_gsgp
 ----------------------
 
 .. automodule:: slim.main_gsgp
@@ -31,18 +25,10 @@ slim.main\_gsgp module
    :undoc-members:
    :show-inheritance:
 
-slim.main\_slim module
+slim.main\_slim
 ----------------------
 
 .. automodule:: slim.main_slim
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim
    :members:
    :undoc-members:
    :show-inheritance:

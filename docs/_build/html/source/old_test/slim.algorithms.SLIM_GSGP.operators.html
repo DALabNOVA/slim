@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.SLIM_GSGP.operators &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.selectors.html">slim.selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">slim.algorithms.SLIM_GSGP.operators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/old_test/slim.algorithms.SLIM_GSGP.operators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-algorithms-slim-gsgp-operators">
+<h1>slim.algorithms.SLIM_GSGP.operators<a class="headerlink" href="#slim-algorithms-slim-gsgp-operators" title="Link to this heading"></a></h1>
+<section id="module-slim.algorithms.SLIM_GSGP.operators.mutators">
+<span id="slim-algorithms-slim-gsgp-operators-mutators"></span><h2>slim.algorithms.SLIM_GSGP.operators.mutators<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.operators.mutators" title="Link to this heading"></a></h2>
+<p>Mutation Functions for Genetic Programming using PyTorch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.mutators.deflate_mutation">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.mutators.</span></span><span class="sig-name descname"><span class="pre">deflate_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/mutators.html#deflate_mutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.mutators.deflate_mutation" title="Link to this definition"></a></dt>
+<dd><p>Perform deflate mutation on an individual.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual</strong> – The individual to be mutated.</p></li>
+<li><p><strong>reconstruct</strong> – Boolean indicating if the individual should be reconstructed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The mutated individual.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../slim.algorithms.SLIM_GSGP.representations.html#slim.algorithms.SLIM_GSGP.representations.individual.Individual" title="slim.algorithms.SLIM_GSGP.representations.individual.Individual">Individual</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.mutators.inflate_mutation">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.mutators.</span></span><span class="sig-name descname"><span class="pre">inflate_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TERMINALS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CONSTANTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_trees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_tree_sigmoid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/mutators.html#inflate_mutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.mutators.inflate_mutation" title="Link to this definition"></a></dt>
+<dd><p>Generate an inflate mutation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FUNCTIONS</strong> (<em>list</em>) – List of functions used in the mutation.</p></li>
+<li><p><strong>TERMINALS</strong> (<em>list</em>) – List of terminals used in the mutation.</p></li>
+<li><p><strong>CONSTANTS</strong> (<em>list</em>) – List of constants used in the mutation.</p></li>
+<li><p><strong>two_trees</strong> (<em>bool</em>) – Boolean indicating if two trees should be used.</p></li>
+<li><p><strong>operator</strong> (<em>str</em>) – The operator to be used in the mutation.</p></li>
+<li><p><strong>single_tree_sigmoid</strong> (<em>bool</em>) – Boolean indicating if sigmoid should be applied to a single tree.</p></li>
+<li><p><strong>sig</strong> (<em>bool</em>) – Boolean indicating if sigmoid should be applied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An inflate mutation function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.mutators.one_tree_delta">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.mutators.</span></span><span class="sig-name descname"><span class="pre">one_tree_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/mutators.html#one_tree_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.mutators.one_tree_delta" title="Link to this definition"></a></dt>
+<dd><p>Generate a function for one-tree delta mutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> (<em>str</em>) – The operator to be used in the mutation (“sum” or other).</p></li>
+<li><p><strong>sig</strong> (<em>bool</em>) – Boolean indicating if sigmoid should be applied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A mutation function for one tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.mutators.two_trees_delta">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.mutators.</span></span><span class="sig-name descname"><span class="pre">two_trees_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/mutators.html#two_trees_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.mutators.two_trees_delta" title="Link to this definition"></a></dt>
+<dd><p>Generate a function for two-tree delta mutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<em>str</em>) – The operator to be used in the mutation (“sum” or other).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A mutation function for two trees.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.SLIM_GSGP.operators.selection_algorithms">
+<span id="slim-algorithms-slim-gsgp-operators-selection-algorithms"></span><h2>slim.algorithms.SLIM_GSGP.operators.selection_algorithms<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.operators.selection_algorithms" title="Link to this heading"></a></h2>
+<p>Tournament Selection Functions for Genetic Programming using PyTorch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.selection_algorithms.tournament_selection_max_slim">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.selection_algorithms.</span></span><span class="sig-name descname"><span class="pre">tournament_selection_max_slim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/selection_algorithms.html#tournament_selection_max_slim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.selection_algorithms.tournament_selection_max_slim" title="Link to this definition"></a></dt>
+<dd><p>Performs tournament selection to select an individual with the lowest fitness from a population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pool_size</strong> (<em>int</em>) – Number of individuals participating in the tournament.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Function to execute tournament selection for minimum fitness.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.operators.selection_algorithms.tournament_selection_min_slim">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.operators.selection_algorithms.</span></span><span class="sig-name descname"><span class="pre">tournament_selection_min_slim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/slim/algorithms/SLIM_GSGP/operators/selection_algorithms.html#tournament_selection_min_slim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.operators.selection_algorithms.tournament_selection_min_slim" title="Link to this definition"></a></dt>
+<dd><p>Performs tournament selection to select an individual with the lowest fitness from a population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pool_size</strong> (<em>int</em>) – Number of individuals participating in the tournament.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Function to execute tournament selection for minimum fitness.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
