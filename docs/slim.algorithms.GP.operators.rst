@@ -17,11 +17,3 @@ slim.algorithms.GP.operators.mutators
    :members:
    :undoc-members:
    :show-inheritance:
-
-slim.algorithms.GP.operators.selection\_algorithms
----------------------------------------------------------
-
-.. automodule:: slim.algorithms.GP.operators.selection_algorithms
-   :members:
-   :undoc-members:
-   :show-inheritance:
