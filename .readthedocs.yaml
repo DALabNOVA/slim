@@ -11,3 +11,5 @@ python:
 
 sphinx:
   configuration: docs/conf.py
+  options:
+    build: -vv  # or -vv for even more verbosity

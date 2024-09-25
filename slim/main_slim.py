@@ -12,6 +12,7 @@ from slim.utils.utils import get_terminals, check_slim_version, validate_inputs,
 from slim.algorithms.SLIM_GSGP.operators.mutators import inflate_mutation
 from typing import Callable
 
+
 ELITES = {}
 UNIQUE_RUN_ID = uuid.uuid1()
 
