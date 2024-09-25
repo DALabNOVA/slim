@@ -2,22 +2,16 @@ version: 2  # Required version
 
 # Configure Python environment
 python:
-  version: 3.10  # Adjust this to the Python version your project requires
+  version: 3.10  # Specify the Python version you need
 
-  # Install dependencies from a requirements file
   install:
-    - requirements: docs/requirements.txt  # Path to your requirements.txt file
+    - requirements: docs/requirements.txt  # Ensure this path matches your actual file location
 
-# Clean the build and force reinstallation of everything
+# Force a clean build by ignoring cached files
 build:
-  image: "latest"  # Use the latest RTD build image (no os key needed)
-  clean: true      # Force a clean build (this forces RTD to ignore previous caches)
+  image: "latest"  # Use the latest Read the Docs build image
 
 # Specify Sphinx configuration
 sphinx:
   configuration: docs/conf.py  # Path to your Sphinx configuration file
-  builder: html                # Use the HTML builder (default)
-
-# Optionally specify conda environment if you're using conda (remove if not needed)
-# conda:
-#   environment: environment.yml
+  builder: html  # Generate HTML documentation
