@@ -1,34 +1,23 @@
 version: 2  # Required version
 
-# Specify the build configuration for RTD
-build:
-  # Always force a full clean build by ignoring cached files
-  clean: true
-
+# Configure Python environment
 python:
-  version: 3.10 # Specify the Python version you want to use
+  version: 3.10  # Adjust this to the Python version your project requires
 
-  # Install the project dependencies using requirements.txt
+  # Install dependencies from a requirements file
   install:
     - requirements: docs/requirements.txt  # Path to your requirements.txt file
 
-  # Force a full reinstallation of all dependencies
-  system_packages: false  # Avoid using cached system packages
-  
-  # Additional pip packages to install, if necessary
-  extra_requirements:
-    - docs  # For example, if you have an extras_require for docs in setup.py
+# Clean the build and force reinstallation of everything
+build:
+  image: "latest"  # Use the latest RTD build image (no os key needed)
+  clean: true      # Force a clean build (this forces RTD to ignore previous caches)
 
-# Add environment variables if needed (optional)
-# env:
-#   MY_ENV_VAR: value
-
-# Always trigger a full rebuild without caching
+# Specify Sphinx configuration
 sphinx:
   configuration: docs/conf.py  # Path to your Sphinx configuration file
-  builder: html  # Specify the builder, e.g., html, latexpdf, etc.
+  builder: html                # Use the HTML builder (default)
 
-# Optionally specify conda (if you use conda for environment management)
+# Optionally specify conda environment if you're using conda (remove if not needed)
 # conda:
-#   environment: environment.yml  # If you have a conda environment file
-
+#   environment: environment.yml
