@@ -1,16 +1,18 @@
-version: 2  # The version of the RTD configuration format
+version: 2  # Configuration version
 
 python:
-  version: 3.10 # Your desired Python version
+  version: 3.10
 
   install:
-    - requirements: docs/requirements.txt  # Path to your requirements file
+    - requirements: docs/requirements.txt  # Path to requirements.txt
 
 sphinx:
-  configuration: docs/conf.py  # Path to your conf.py file for Sphinx
+  configuration: docs/conf.py  # Path to Sphinx configuration file (conf.py)
 
 build:
-  image: latest  # Use the latest RTD build image
+  tools:
+    python: "3.10"
 
+# Pass Sphinx options (like verbosity) through environment variables
 env:
-  - SPHINXOPTS=-v  # Enable verbose mode for Sphinx (-vv for even more detail)
+  - SPHINXOPTS=-vv
