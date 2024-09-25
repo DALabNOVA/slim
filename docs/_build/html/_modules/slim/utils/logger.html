@@ -85,7 +85,7 @@
 
 
 <div class="viewcode-block" id="log_settings">
-<a class="viewcode-back" href="../../../source/slim.utils.html#slim.utils.logger.log_settings">[docs]</a>
+<a class="viewcode-back" href="../../../slim.utils.html#slim.utils.logger.log_settings">[docs]</a>
 <span class="k">def</span> <span class="nf">log_settings</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">settings_dict</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">unique_run_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log the settings to a CSV file.</span>
@@ -110,7 +110,7 @@
 
 
 <div class="viewcode-block" id="merge_settings">
-<a class="viewcode-back" href="../../../source/slim.utils.html#slim.utils.logger.merge_settings">[docs]</a>
+<a class="viewcode-back" href="../../../slim.utils.html#slim.utils.logger.merge_settings">[docs]</a>
 <span class="k">def</span> <span class="nf">merge_settings</span><span class="p">(</span><span class="n">sd1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sd2</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sd3</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sd4</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Merge multiple settings dictionaries into one.</span>
@@ -129,7 +129,7 @@
 
 
 <div class="viewcode-block" id="logger">
-<a class="viewcode-back" href="../../../source/slim.utils.html#slim.utils.logger.logger">[docs]</a>
+<a class="viewcode-back" href="../../../slim.utils.html#slim.utils.logger.logger">[docs]</a>
 <span class="k">def</span> <span class="nf">logger</span><span class="p">(</span>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">generation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -175,7 +175,7 @@
 
 
 <div class="viewcode-block" id="drop_experiment_from_logger">
-<a class="viewcode-back" href="../../../source/slim.utils.html#slim.utils.logger.drop_experiment_from_logger">[docs]</a>
+<a class="viewcode-back" href="../../../slim.utils.html#slim.utils.logger.drop_experiment_from_logger">[docs]</a>
 <span class="k">def</span> <span class="nf">drop_experiment_from_logger</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">,</span> <span class="n">log_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Remove an experiment from the logger CSV file. If the given experiment_id is -1, the last saved experiment is removed.</span>

@@ -1,5 +1,5 @@
 from slim.initializers.initializers import rhh
-from slim.selectors.selection_algorithms import \
+from slim.selection.selection_algorithms import \
     tournament_selection_min
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation

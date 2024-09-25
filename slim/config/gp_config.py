@@ -3,7 +3,7 @@ This script sets up the configuration dictionaries for the execution of the GP a
 """
 from slim.algorithms.GP.operators.crossover_operators import crossover_trees
 from slim.initializers.initializers import rhh
-from slim.selectors.selection_algorithms import \
+from slim.selection.selection_algorithms import \
     tournament_selection_min
 
 from datasets.data_loader import *
