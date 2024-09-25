@@ -1,11 +1,3 @@
-.. Slim documentation master file, created by
-   sphinx-quickstart on Mon Sep 23 14:06:53 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Slim documentation
-==================
-
 SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation)
 ========================================================================
 
@@ -181,13 +173,3 @@ Specific for *slim*
 * **slim_version**: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
 * **ms**: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
 * **p_inflate**: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   modules
-   slim_gsgp
-
-
