@@ -8,7 +8,6 @@ build:
 python:
   install:
     - requirements: docs/requirements.txt
-  system_packages: false  # Avoid using cached system packages for a fresh build
 
 sphinx:
   configuration: docs/conf.py
