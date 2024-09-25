@@ -6,6 +6,12 @@ python:
   install:
     - requirements: docs/requirements.txt
 
+build:
+  # This tells RTD to ignore previous builds and start fresh each time
+  clean: true
+  os: ubuntu-22.04
+
+
 sphinx:
   configuration: docs/conf.py
   builder: html
