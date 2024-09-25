@@ -36,6 +36,7 @@ gsgp_solve_parameters = {
     "test_elite": True,
     "run_info": None,
     "ffunction": rmse,
+    "max_depth": 100,
     "reconstruct": True,
 }
 

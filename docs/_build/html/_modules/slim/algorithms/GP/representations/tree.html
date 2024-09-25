@@ -77,8 +77,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">slim.algorithms.GP.representations.tree_utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">bound_value</span><span class="p">,</span> <span class="n">flatten</span><span class="p">,</span>
-                                                           <span class="n">tree_depth</span><span class="p">)</span>
-
+                                                           <span class="n">tree_depth</span><span class="p">,</span> <span class="n">_execute_tree</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Tree">
 <a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree">[docs]</a>
@@ -169,26 +168,35 @@
 <span class="sd">        float</span>
 <span class="sd">            Output of the evaluated tree.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
-            <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                <span class="n">left_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-                <span class="n">right_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-                <span class="n">output</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span>
-                    <span class="n">left_result</span><span class="p">,</span> <span class="n">right_result</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">left_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">left_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-                <span class="n">output</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span><span class="n">left_result</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">bound_value</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e12</span><span class="p">,</span> <span class="mf">1e12</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">]]</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span></div>
+        <span class="k">return</span> <span class="n">_execute_tree</span><span class="p">(</span>
+            <span class="n">repr_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+            <span class="n">FUNCTIONS</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">,</span>
+            <span class="n">TERMINALS</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span><span class="p">,</span>
+            <span class="n">CONSTANTS</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span>
+        <span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; if isinstance(self.repr_, tuple):  # If it&#39;s a function node</span>
+<span class="sd">            function_name = self.repr_[0]</span>
+<span class="sd">            if Tree.FUNCTIONS[function_name][&quot;arity&quot;] == 2:</span>
+<span class="sd">                left_subtree, right_subtree = self.repr_[1], self.repr_[2]</span>
+<span class="sd">                left_result = Tree(left_subtree).apply_tree(inputs)</span>
+<span class="sd">                right_result = Tree(right_subtree).apply_tree(inputs)</span>
+<span class="sd">                output = Tree.FUNCTIONS[function_name][&quot;function&quot;](</span>
+<span class="sd">                    left_result, right_result</span>
+<span class="sd">                )</span>
+<span class="sd">            else:</span>
+<span class="sd">                left_subtree = self.repr_[1]</span>
+<span class="sd">                left_result = Tree(left_subtree).apply_tree(inputs)</span>
+<span class="sd">                output = Tree.FUNCTIONS[function_name][&quot;function&quot;](left_result)</span>
+
+<span class="sd">            return bound_value(output, -1e12, 1e12)</span>
+<span class="sd">        else:  # If it&#39;s a terminal node</span>
+<span class="sd">            if self.repr_ in self.TERMINALS:</span>
+<span class="sd">                return inputs[:, self.TERMINALS[self.repr_]]</span>
+<span class="sd">            elif self.repr_ in self.CONSTANTS:</span>
+<span class="sd">                return self.CONSTANTS &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="Tree.evaluate">

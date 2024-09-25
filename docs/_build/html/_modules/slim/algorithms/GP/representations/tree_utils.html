@@ -417,6 +417,60 @@
 
     <span class="k">return</span> <span class="n">depth</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">_execute_tree</span><span class="p">(</span><span class="n">repr_</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluates a tree genotype on input vectors.</span>
+
+<span class="sd">    ----</span>
+<span class="sd">    Check how to have FUNCTIONS, TERMINALS, CONSTANTS imported here instead of</span>
+<span class="sd">    being passed as argument at each _execute_tree(...) call.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    repr_ : object</span>
+<span class="sd">        Representation of the tree structure.</span>
+
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of allowed functions in the tree.</span>
+
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree.</span>
+
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Output of the evaluated tree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
+        <span class="n">function_name</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">left_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                        <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># Tree(left_subtree).apply_tree(inputs)</span>
+            <span class="n">right_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                         <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># Tree(right_subtree).apply_tree(inputs)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span>
+                <span class="n">left_result</span><span class="p">,</span> <span class="n">right_result</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">left_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                        <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># Tree(left_subtree).apply_tree(inputs)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span><span class="n">left_result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">bound_value</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e12</span><span class="p">,</span> <span class="mf">1e12</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
+        <span class="k">if</span> <span class="n">repr_</span> <span class="ow">in</span> <span class="n">TERMINALS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">TERMINALS</span><span class="p">[</span><span class="n">repr_</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">repr_</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CONSTANTS</span>
 </pre></div>
 
            </div>

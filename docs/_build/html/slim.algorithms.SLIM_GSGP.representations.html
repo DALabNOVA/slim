@@ -57,7 +57,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gsgp">slim.main_gsgp module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#slim-main-gsgp-module">slim.main_gsgp module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
 </ul>
@@ -230,7 +230,27 @@ function applied, and training semantics are updated for both trees.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Evaluate the population using a fitness function.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> – Fitness function to evaluate the individuals.</p></li>
+<li><p><strong>y</strong> – Expected output (target) values as a torch tensor.</p></li>
+<li><p><strong>operator</strong> – Operator to apply to the semantics (“sum” or “prod”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate_no_parall">
+<span class="sig-name descname"><span class="pre">evaluate_no_parall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.evaluate_no_parall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate_no_parall" title="Link to this definition"></a></dt>
 <dd><blockquote>
 <div><p>Evaluate the population using a fitness function.</p>
 </div></blockquote>

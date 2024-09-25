@@ -159,6 +159,7 @@
         <span class="n">n_elites</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">tree_pruner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">depth_calculator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Execute the Genetic Programming algorithm.</span>
@@ -182,6 +183,7 @@
 <span class="sd">            n_elites (int): Number of elites.</span>
 <span class="sd">            tree_pruner (function): Function to prune trees.</span>
 <span class="sd">            depth_calculator (function): Function to calculate tree depth.</span>
+<span class="sd">            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">test_elite</span> <span class="ow">and</span> <span class="p">(</span><span class="n">X_test</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y_test</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;If test_elite is True you need to provide a test dataset&#39;</span><span class="p">)</span>
@@ -196,7 +198,7 @@
         <span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span>
             <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">initializer</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">pi_init</span><span class="p">)]</span>
         <span class="p">)</span>
-        <span class="n">population</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+        <span class="n">population</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
 
         <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elites</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">elite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_elit_func</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">n_elites</span><span class="p">)</span>
@@ -228,6 +230,7 @@
                 <span class="n">elitism</span><span class="p">,</span>
                 <span class="n">X_train</span><span class="p">,</span>
                 <span class="n">y_train</span><span class="p">,</span>
+                <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
             <span class="p">)</span>
             <span class="n">population</span> <span class="o">=</span> <span class="n">offs_pop</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -264,6 +267,7 @@
         <span class="n">elitism</span><span class="p">,</span>
         <span class="n">X_train</span><span class="p">,</span>
         <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evolve the population for one generation.</span>
@@ -276,6 +280,7 @@
 <span class="sd">            elitism (bool): Whether to use elitism.</span>
 <span class="sd">            X_train (torch.Tensor): Training data features.</span>
 <span class="sd">            y_train (torch.Tensor): Training data labels.</span>
+<span class="sd">            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Population: Evolved population.</span>
@@ -329,7 +334,7 @@
             <span class="n">offs_pop</span> <span class="o">=</span> <span class="n">offs_pop</span><span class="p">[:</span> <span class="n">population</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
 
         <span class="n">offs_pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">offs_pop</span><span class="p">)</span>
-        <span class="n">offs_pop</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+        <span class="n">offs_pop</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">offs_pop</span><span class="p">,</span> <span class="n">start</span></div>
 
 

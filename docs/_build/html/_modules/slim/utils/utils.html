@@ -639,6 +639,43 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid SLIM configuration&#39;</span><span class="p">)</span></div>
 
+<span class="k">def</span> <span class="nf">_evaluate_slim_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate the individual using a fitness function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ffunction: Fitness function to evaluate the individual.</span>
+<span class="sd">        y: Expected output (target) values as a torch tensor.</span>
+<span class="sd">        testing: Boolean indicating if the evaluation is for testing semantics.</span>
+<span class="sd">        operator: Operator to apply to the semantics (&quot;sum&quot; or &quot;prod&quot;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span><span class="p">:</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">prod</span>
+
+    <span class="k">if</span> <span class="n">testing</span><span class="p">:</span>
+        <span class="n">individual</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="n">ffunction</span><span class="p">(</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span>
+                <span class="n">operator</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="o">-</span><span class="mf">1000000000000.0</span><span class="p">,</span>
+                <span class="mf">1000000000000.0</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">ffunction</span><span class="p">(</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span>
+                <span class="n">operator</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="o">-</span><span class="mf">1000000000000.0</span><span class="p">,</span>
+                <span class="mf">1000000000000.0</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
 </pre></div>
 
            </div>

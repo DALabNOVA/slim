@@ -75,7 +75,8 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Population Class for Evolutionary Computation using PyTorch.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">_evaluate_slim_individual</span>
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 
 <div class="viewcode-block" id="Population">
 <a class="viewcode-back" href="../../../../../source/slim.algorithms.SLIM_GSGP.representations.html#slim.algorithms.SLIM_GSGP.representations.population.Population">[docs]</a>
@@ -143,9 +144,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Population.evaluate">
-<a class="viewcode-back" href="../../../../../source/slim.algorithms.SLIM_GSGP.representations.html#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate">[docs]</a>
-    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Population.evaluate_no_parall">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.SLIM_GSGP.representations.html#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate_no_parall">[docs]</a>
+    <span class="k">def</span> <span class="nf">evaluate_no_parall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">         Evaluate the population using a fitness function.</span>
 
@@ -157,11 +158,31 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="p">[</span>
             <span class="n">individual</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span>
         <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span> <span class="o">=</span> <span class="p">[</span><span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Population.evaluate">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.SLIM_GSGP.representations.html#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate">[docs]</a>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         Evaluate the population using a fitness function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ffunction: Fitness function to evaluate the individuals.</span>
+<span class="sd">            y: Expected output (target) values as a torch tensor.</span>
+<span class="sd">            operator: Operator to apply to the semantics (&quot;sum&quot; or &quot;prod&quot;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="n">_evaluate_slim_individual</span><span class="p">)(</span><span class="n">individual</span><span class="p">,</span> <span class="n">ffunction</span><span class="o">=</span><span class="n">ffunction</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="n">operator</span>
+            <span class="p">)</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fit</span> <span class="o">=</span> <span class="p">[</span><span class="n">individual</span><span class="o">.</span><span class="n">fitness</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">]</span></div>
 </div>

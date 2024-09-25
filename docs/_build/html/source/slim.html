@@ -109,7 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="slim.config.html">slim.config package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="slim.config.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config.gp_config">slim.config.gp_config module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config.gsgp_config">slim.config.gsgp_config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.config.html#slim-config-gsgp-config-module">slim.config.gsgp_config module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config.slim_config">slim.config.slim_config module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slim.config.html#module-slim.config">Module contents</a></li>
 </ul>
@@ -141,6 +141,7 @@
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.logger.merge_settings"><code class="docutils literal notranslate"><span class="pre">merge_settings()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#slim-utils-tste-module">slim.utils.tste module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.utils">slim.utils.utils module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.check_slim_version"><code class="docutils literal notranslate"><span class="pre">check_slim_version()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="slim.utils.html#slim.utils.utils.generate_random_uniform"><code class="docutils literal notranslate"><span class="pre">generate_random_uniform()</span></code></a></li>
@@ -205,42 +206,8 @@ logging the results for further analysis.</p>
 </dd></dl>
 
 </section>
-<section id="module-slim.main_gsgp">
-<span id="slim-main-gsgp-module"></span><h2>slim.main_gsgp module<a class="headerlink" href="#module-slim.main_gsgp" title="Link to this heading"></a></h2>
-<p>This script runs the StandardGSGP algorithm on various datasets and configurations,
-logging the results for further analysis.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="slim.main_gsgp.gsgp">
-<span class="sig-prename descclassname"><span class="pre">slim.main_gsgp.</span></span><span class="sig-name descname"><span class="pre">gsgp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train:</span> <span class="pre">~torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train:</span> <span class="pre">~torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test:</span> <span class="pre">~torch.Tensor</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test:</span> <span class="pre">~torch.Tensor</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_xo:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_elites:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_depth:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">generate_random_uniform.&lt;locals&gt;.generate_num&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'/Users/jimmy/Documents/Refresh/SLIMSHADY/slim/docs/log/gsgp.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/main_gsgp.html#gsgp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.main_gsgp.gsgp" title="Link to this definition"></a></dt>
-<dd><p>Main function to execute the Standard GSGP algorithm on specified datasets</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X_train</strong> (<em>(</em><em>torch.Tensor</em><em>)</em>) – Training input data.</p></li>
-<li><p><strong>y_train</strong> (<em>(</em><em>torch.Tensor</em><em>)</em>) – Training output data.</p></li>
-<li><p><strong>X_test</strong> (<em>(</em><em>torch.Tensor</em><em>)</em><em>, </em><em>optional</em>) – Testing input data.</p></li>
-<li><p><strong>y_test</strong> (<em>(</em><em>torch.Tensor</em><em>)</em><em>, </em><em>optional</em>) – Testing output data.</p></li>
-<li><p><strong>dataset_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset name, for logging purposes</p></li>
-<li><p><strong>pop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The population size for the genetic programming algorithm (default is 100).</p></li>
-<li><p><strong>n_iter</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of iterations for the genetic programming algorithm (default is 100).</p></li>
-<li><p><strong>p_xo</strong> (<em>float</em><em>, </em><em>optional</em>) – The probability of crossover in the genetic programming algorithm. Must be a number between 0 and 1 (default is 0.8).</p></li>
-<li><p><strong>elitism</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicate the presence or absence of elitism.</p></li>
-<li><p><strong>n_elites</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of elites.</p></li>
-<li><p><strong>init_depth</strong> (<em>int</em><em>, </em><em>optional</em>) – The depth value for the initial GP trees population.</p></li>
-<li><p><strong>ms</strong> (<em>Callable</em><em>, </em><em>optional</em>) – A function that will generate the mutation step</p></li>
-<li><p><strong>log_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path where is created the log directory where results are saved.</p></li>
-<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for the randomness</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns the best individual at the last generation.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree" title="slim.algorithms.GP.representations.tree.Tree">Tree</a></p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="slim-main-gsgp-module">
+<h2>slim.main_gsgp module<a class="headerlink" href="#slim-main-gsgp-module" title="Link to this heading"></a></h2>
 </section>
 <section id="module-slim.main_slim">
 <span id="slim-main-slim-module"></span><h2>slim.main_slim module<a class="headerlink" href="#module-slim.main_slim" title="Link to this heading"></a></h2>
