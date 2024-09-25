@@ -1,11 +1,11 @@
-from slim.algorithms.GP.operators.initializers import rhh
-from slim.algorithms.GP.operators.selection_algorithms import \
+from slim.initializers.initializers import rhh
+from slim.selectors.selection_algorithms import \
     tournament_selection_min
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation
 from datasets.data_loader import *
 from slim.evaluators.fitness_functions import rmse
-from slim.utils.utils import (generate_random_uniform, get_best_min,
+from slim.utils.utils import (get_best_min,
                               protected_div)
 
 FUNCTIONS = {

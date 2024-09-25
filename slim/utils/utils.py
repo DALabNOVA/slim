@@ -520,3 +520,40 @@ def check_slim_version(slim_version):
         return "mul", True, False
     else:
         raise Exception('Invalid SLIM configuration')
+def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator="sum"):
+    """
+    Evaluate the individual using a fitness function.
+
+    Args:
+        ffunction: Fitness function to evaluate the individual.
+        y: Expected output (target) values as a torch tensor.
+        testing: Boolean indicating if the evaluation is for testing semantics.
+        operator: Operator to apply to the semantics ("sum" or "prod").
+
+    Returns:
+        None
+    """
+    if operator == "sum":
+        operator = torch.sum
+    else:
+        operator = torch.prod
+
+    if testing:
+        individual.test_fitness = ffunction(
+            y,
+            torch.clamp(
+                operator(individual.test_semantics, dim=0),
+                -1000000000000.0,
+                1000000000000.0,
+            ),
+        )
+
+    else:
+        individual.fitness = ffunction(
+            y,
+            torch.clamp(
+                operator(individual.train_semantics, dim=0),
+                -1000000000000.0,
+                1000000000000.0,
+            ),
+        )

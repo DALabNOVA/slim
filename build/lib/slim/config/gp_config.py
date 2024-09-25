@@ -1,6 +1,6 @@
 from slim.algorithms.GP.operators.crossover_operators import crossover_trees
-from slim.algorithms.GP.operators.initializers import rhh
-from slim.algorithms.GP.operators.selection_algorithms import \
+from slim.initializers.initializers import rhh
+from slim.selectors.selection_algorithms import \
     tournament_selection_min
 
 from datasets.data_loader import *

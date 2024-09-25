@@ -1,7 +1,8 @@
 """
 Population Class for Evolutionary Computation using PyTorch.
 """
-
+from slim.utils.utils import _evaluate_slim_individual
+from joblib import Parallel, delayed
 
 class Population:
     def __init__(self, population):
@@ -64,7 +65,7 @@ class Population:
         """
         return self.population[item]
 
-    def evaluate(self, ffunction, y, operator="sum"):
+    def evaluate_no_parall(self, ffunction, y, operator="sum"):
         """
          Evaluate the population using a fitness function.
 
@@ -76,10 +77,27 @@ class Population:
         Returns:
             None
         """
-
         [
             individual.evaluate(ffunction, y, operator=operator)
             for individual in self.population
         ]
+
+        self.fit = [individual.fitness for individual in self.population]
+
+    def evaluate(self, ffunction, y, operator="sum", n_jobs=1):
+        """
+         Evaluate the population using a fitness function.
+
+        Args:
+            ffunction: Fitness function to evaluate the individuals.
+            y: Expected output (target) values as a torch tensor.
+            operator: Operator to apply to the semantics ("sum" or "prod").
+
+        Returns:
+            None
+        """
+        Parallel(n_jobs=n_jobs)(
+            delayed(_evaluate_slim_individual)(individual, ffunction=ffunction, y=y, operator=operator
+            ) for individual in self.population)
 
         self.fit = [individual.fitness for individual in self.population]

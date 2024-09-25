@@ -1,8 +1,4 @@
-"""
-This script sets up the configuration dictionaries for the execution of the SLIM-GSGP algorithm
-"""
-
-from slim.algorithms.GP.operators.initializers import rhh
+from slim.initializers.initializers import rhh
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.SLIM_GSGP.operators.mutators import (deflate_mutation)
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import \
@@ -38,7 +34,7 @@ slim_gsgp_solve_parameters = {
     "verbose": 1,
     "run_info": None,
     "ffunction": rmse,
-    "max_depth": None,
+    "max_depth": 100,
     "reconstruct": True
 }
 

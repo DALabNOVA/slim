@@ -3,8 +3,7 @@ Tree class implementation for representing tree structures in genetic programmin
 """
 
 from slim.algorithms.GP.representations.tree_utils import (bound_value, flatten,
-                                                           tree_depth)
-
+                                                           tree_depth, _execute_tree)
 
 class Tree:
     """
@@ -88,7 +87,16 @@ class Tree:
         float
             Output of the evaluated tree.
         """
-        if isinstance(self.repr_, tuple):  # If it's a function node
+
+        return _execute_tree(
+            repr_=self.repr_,
+            X=inputs,
+            FUNCTIONS=self.FUNCTIONS,
+            TERMINALS=self.TERMINALS,
+            CONSTANTS=self.CONSTANTS
+        )
+
+        """ if isinstance(self.repr_, tuple):  # If it's a function node
             function_name = self.repr_[0]
             if Tree.FUNCTIONS[function_name]["arity"] == 2:
                 left_subtree, right_subtree = self.repr_[1], self.repr_[2]
@@ -107,7 +115,7 @@ class Tree:
             if self.repr_ in self.TERMINALS:
                 return inputs[:, self.TERMINALS[self.repr_]]
             elif self.repr_ in self.CONSTANTS:
-                return self.CONSTANTS
+                return self.CONSTANTS """
 
     def evaluate(self, ffunction, X, y, testing=False, new_data = False):
         """

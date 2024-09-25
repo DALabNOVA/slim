@@ -6,7 +6,6 @@ import torch
 from slim.algorithms.GSGP.representations.tree_utils import apply_tree
 from slim.utils.utils import  check_slim_version
 
-
 class Individual:
     """
     Initialize an Individual with a collection of trees and semantics.

@@ -2,8 +2,8 @@
 This script sets up the configuration dictionaries for the execution of the GP algorithm
 """
 from slim.algorithms.GP.operators.crossover_operators import crossover_trees
-from slim.algorithms.GP.operators.initializers import rhh
-from slim.algorithms.GP.operators.selection_algorithms import \
+from slim.initializers.initializers import rhh
+from slim.selectors.selection_algorithms import \
     tournament_selection_min
 
 from datasets.data_loader import *
@@ -40,7 +40,8 @@ gp_solve_parameters = {
     "run_info": None,
     "max_": False,
     "ffunction": rmse,
-    "tree_pruner": None
+    "tree_pruner": None,
+    "n_jobs": 1
 }
 
 # GP parameters
