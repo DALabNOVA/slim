@@ -10,8 +10,6 @@ Subpackages
    slim.algorithms
    slim.config
    slim.evaluators
-   slim.initializers
-   slim.selectors
    slim.utils
 
 Submodules

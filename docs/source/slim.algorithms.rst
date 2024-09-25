@@ -1,8 +1,5 @@
-slim.algorithms package
+slim.algorithms
 =======================
-
-Subpackages
------------
 
 .. toctree::
    :maxdepth: 4
@@ -10,11 +7,3 @@ Subpackages
    slim.algorithms.GP
    slim.algorithms.GSGP
    slim.algorithms.SLIM_GSGP
-
-Module contents
----------------
-
-.. automodule:: slim.algorithms
-   :members:
-   :undoc-members:
-   :show-inheritance:

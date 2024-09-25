@@ -1,10 +1,7 @@
-slim.algorithms.SLIM\_GSGP.operators package
+slim.algorithms.SLIM\_GSGP.operators
 ============================================
 
-Submodules
-----------
-
-slim.algorithms.SLIM\_GSGP.operators.mutators module
+slim.algorithms.SLIM\_GSGP.operators.mutators
 ----------------------------------------------------
 
 .. automodule:: slim.algorithms.SLIM_GSGP.operators.mutators
@@ -12,18 +9,10 @@ slim.algorithms.SLIM\_GSGP.operators.mutators module
    :undoc-members:
    :show-inheritance:
 
-slim.algorithms.SLIM\_GSGP.operators.selection\_algorithms module
+slim.algorithms.SLIM\_GSGP.operators.selection\_algorithms
 -----------------------------------------------------------------
 
 .. automodule:: slim.algorithms.SLIM_GSGP.operators.selection_algorithms
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: slim.algorithms.SLIM_GSGP.operators
    :members:
    :undoc-members:
    :show-inheritance:
