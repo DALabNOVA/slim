@@ -24,46 +24,29 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          ms: Callable = generate_random_uniform(0, 1), p_inflate: float = 0.5,
          log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"), seed: int = 1):
     """
-    Main function to execute the SLIM GSGP algorithm on specified datasets
+    Main function to execute the SLIM GSGP algorithm on specified datasets.
 
-    Parameters
-    ----------
-    X_train: (torch.Tensor)
-        Training input data.
-    y_train: (torch.Tensor)
-        Training output data.
-    X_test: (torch.Tensor), optional
-        Testing input data.
-    y_test: (torch.Tensor), optional
-        Testing output data.
-    dataset_name : str, optional
-        Dataset name, for logging purposes
-    slim_version : list
-        The version of SLIM-GSGP that needs to be run
-    pop_size : int, optional
-        The population size for the genetic programming algorithm (default is 100).
-    n_iter : int, optional
-        The number of iterations for the genetic programming algorithm (default is 100).
-    elitism : bool, optional
-        Indicate the presence or absence of elitism.
-    n_elites : int, optional
-        The number of elites.
-    init_depth : int, optional
-        The depth value for the initial GP trees population.
-    ms : Callable, optional
-        A function that will generate the mutation step
-    p_inflate : float, optional
-        Probability to apply the inflate mutation
-    log_path : str, optional
-        The path where is created the log directory where results are saved.
-    seed : int, optional
-        Seed for the randomness
+    Args:
+        X_train (torch.Tensor): Training input data.
+        y_train (torch.Tensor): Training output data.
+        X_test (torch.Tensor, optional): Testing input data. Defaults to None.
+        y_test (torch.Tensor, optional): Testing output data. Defaults to None.
+        dataset_name (str, optional): Name of the dataset for logging purposes. Defaults to None.
+        slim_version (list): The version of SLIM-GSGP to be run.
+        pop_size (int, optional): Population size for the genetic programming algorithm. Defaults to 100.
+        n_iter (int, optional): Number of iterations for the genetic programming algorithm. Defaults to 100.
+        elitism (bool, optional): Whether to use elitism. Defaults to False.
+        n_elites (int, optional): Number of elites. Defaults to 0.
+        init_depth (int, optional): Depth of the initial GP trees population. Defaults to None.
+        ms (Callable, optional): Function that generates the mutation step. Defaults to None.
+        p_inflate (float, optional): Probability to apply the inflate mutation. Defaults to None.
+        log_path (str, optional): Path where the log directory and results are saved. Defaults to None.
+        seed (int, optional): Seed for randomness. Defaults to None.
 
-    Returns
-    -------
-      Tree
-        Returns the best individual at the last generation.
+    Returns:
+        Tree: The best individual at the last generation.
     """
+
     op, sig, trees = check_slim_version(slim_version=slim_version)
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,

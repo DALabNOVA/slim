@@ -1,5 +1,5 @@
 """
-Genetic Programming (GP) and Geometric Semantic Genetic Programming (GSGP) modules.
+Geometric Semantic Genetic Programming (GSGP) module.
 """
 
 import random

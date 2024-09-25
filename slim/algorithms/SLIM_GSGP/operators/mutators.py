@@ -9,16 +9,20 @@ from slim.algorithms.GSGP.representations.tree import Tree
 from slim.algorithms.SLIM_GSGP.representations.individual import Individual
 from slim.utils.utils import get_random_tree
 
-
+# two tree function
 def two_trees_delta(operator="sum"):
     """
     Generate a function for two-tree delta mutation.
 
-    Args:
-        operator: The operator to be used in the mutation ("sum" or other).
+    Parameters
+    ----------
+    operator : str
+        The operator to be used in the mutation ("sum" or other).
 
-    Returns:
-        Function: A mutation function for two trees.
+    Returns
+    -------
+    function
+        A mutation function for two trees.
     """
 
     def tt_delta(tr1, tr2, ms, testing):
@@ -50,12 +54,17 @@ def one_tree_delta(operator="sum", sig=False):
     """
     Generate a function for one-tree delta mutation.
 
-    Args:
-        operator: The operator to be used in the mutation ("sum" or other).
-        sig: Boolean indicating if sigmoid should be applied.
+    Parameters
+    ----------
+    operator : str
+        The operator to be used in the mutation ("sum" or other).
+    sig : bool
+        Boolean indicating if sigmoid should be applied.
 
-    Returns:
-        Function: A mutation function for one tree.
+    Returns
+    -------
+    function
+        A mutation function for one tree.
     """
 
     def ot_delta(tr1, ms, testing):
@@ -128,29 +137,32 @@ def one_tree_delta(operator="sum", sig=False):
     return ot_delta
 
 
-def inflate_mutation(
-    FUNCTIONS,
-    TERMINALS,
-    CONSTANTS,
-    two_trees=True,
-    operator="sum",
-    single_tree_sigmoid=False,
-    sig=False,
-):
+def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum",single_tree_sigmoid=False,sig=False):
+
     """
     Generate an inflate mutation function.
 
-    Args:
-        FUNCTIONS: List of functions used in the mutation.
-        TERMINALS: List of terminals used in the mutation.
-        CONSTANTS: List of constants used in the mutation.
-        two_trees: Boolean indicating if two trees should be used.
-        operator: The operator to be used in the mutation.
-        single_tree_sigmoid: Boolean indicating if sigmoid should be applied to single tree.
-        sig: Boolean indicating if sigmoid should be applied.
+    Parameters
+    ----------
+    FUNCTIONS : list
+        List of functions used in the mutation.
+    TERMINALS : list
+        List of terminals used in the mutation.
+    CONSTANTS : list
+        List of constants used in the mutation.
+    two_trees : bool
+        Boolean indicating if two trees should be used.
+    operator : str
+        The operator to be used in the mutation.
+    single_tree_sigmoid : bool
+        Boolean indicating if sigmoid should be applied to a single tree.
+    sig : bool
+        Boolean indicating if sigmoid should be applied.
 
-    Returns:
-        Function: An inflate mutation function.
+    Returns
+    -------
+    function
+        An inflate mutation function.
     """
 
     def inflate(

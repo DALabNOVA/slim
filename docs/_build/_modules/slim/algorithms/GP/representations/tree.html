@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.GP.representations.tree &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">slim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GP.representations.tree</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for slim.algorithms.GP.representations.tree</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tree class implementation for representing tree structures in genetic programming.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">slim.algorithms.GP.representations.tree_utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">bound_value</span><span class="p">,</span> <span class="n">flatten</span><span class="p">,</span>
+                                                           <span class="n">tree_depth</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Tree">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree">[docs]</a>
+<span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a tree structure for genetic programming.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    repr_ : object</span>
+<span class="sd">        Representation of the tree structure.</span>
+
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of allowed functions in the tree.</span>
+
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree.</span>
+
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree.</span>
+
+<span class="sd">    depth : int</span>
+<span class="sd">        Depth of the tree structure.</span>
+
+<span class="sd">    fitness : float</span>
+<span class="sd">        Fitness value of the tree.</span>
+
+<span class="sd">    test_fitness : float</span>
+<span class="sd">        Test fitness value of the tree.</span>
+
+<span class="sd">    node_count : int</span>
+<span class="sd">        Number of nodes in the tree.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    __init__(repr_)</span>
+<span class="sd">        Initializes a Tree object.</span>
+
+<span class="sd">    apply_tree(inputs)</span>
+<span class="sd">        Evaluates the tree on input vectors.</span>
+
+<span class="sd">    evaluate(ffunction, X, y, testing=False)</span>
+<span class="sd">        Evaluates the tree given a fitness function and data.</span>
+
+<span class="sd">    print_tree_representation(indent=&quot;&quot;)</span>
+<span class="sd">        Prints the tree representation with indentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TERMINALS</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">FUNCTIONS</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">CONSTANTS</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Tree.__init__">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repr_</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Tree object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        repr_ : object</span>
+<span class="sd">            Representation of the tree structure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FUNCTIONS</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">TERMINALS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">CONSTANTS</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span> <span class="o">=</span> <span class="n">repr_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">tree_depth</span><span class="p">(</span><span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">)(</span><span class="n">repr_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Tree.apply_tree">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.apply_tree">[docs]</a>
+    <span class="k">def</span> <span class="nf">apply_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates the tree on input vectors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        inputs : tuple</span>
+<span class="sd">            Input vectors.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Output of the evaluated tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
+            <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">left_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="n">right_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span>
+                    <span class="n">left_result</span><span class="p">,</span> <span class="n">right_result</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">left_result</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span><span class="n">left_result</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">bound_value</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e12</span><span class="p">,</span> <span class="mf">1e12</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TERMINALS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">]]</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONSTANTS</span></div>
+
+
+<div class="viewcode-block" id="Tree.evaluate">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.evaluate">[docs]</a>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ffunction</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">new_data</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates the tree given a fitness function, input data (X), and target data (y).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ffunction : function</span>
+<span class="sd">            Fitness function to evaluate the individual.</span>
+<span class="sd">        X : torch.Tensor</span>
+<span class="sd">            The input data (which can be training or testing).</span>
+<span class="sd">        y : torch.Tensor</span>
+<span class="sd">            The expected output (target) values.</span>
+<span class="sd">        testing : bool, optional</span>
+<span class="sd">            Flag indicating if the data is testing data. Default is False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Attributes a fitness value to the tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">ffunction</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">testing</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="n">ffunction</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">ffunction</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree.predict">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Predict the output for the given input data.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            X : array-like or DataFrame</span>
+<span class="sd">                The input data to predict. It should be in the form of an array-like structure</span>
+<span class="sd">                (e.g., list, numpy array) or a pandas DataFrame, where each row represents a</span>
+<span class="sd">                different observation and each column represents a feature.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            array-like</span>
+<span class="sd">                The predicted output for the input data. The exact form and type of the output</span>
+<span class="sd">                depend on the implementation of the `apply_tree` method, but typically it would</span>
+<span class="sd">                be an array or list of predicted values corresponding to each observation in X.</span>
+
+<span class="sd">            Notes</span>
+<span class="sd">            -----</span>
+<span class="sd">            This function delegates the actual prediction task to the `apply_tree` method,</span>
+<span class="sd">            which is assumed to be another method in the same class. The `apply_tree` method</span>
+<span class="sd">            should be defined to handle the specifics of how predictions are made based on</span>
+<span class="sd">            the tree structure used in this model.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree.print_tree_representation">
+<a class="viewcode-back" href="../../../../../source/slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.print_tree_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints the tree representation with indentation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indent : str, optional</span>
+<span class="sd">            Indentation for tree structure representation. Default is an empty string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
+            <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">function_name</span><span class="si">}</span><span class="s2">(&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

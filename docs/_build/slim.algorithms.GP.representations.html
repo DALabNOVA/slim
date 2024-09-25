@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.GP.representations package &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slim.algorithms.GSGP package" href="slim.algorithms.GSGP.html" />
+    <link rel="prev" title="slim.algorithms.GP.operators package" href="slim.algorithms.GP.operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">slim</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="slim.html">slim package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="slim.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.config.html">slim.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.evaluators.html">slim.evaluators package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.utils.html">slim.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gp">slim.main_gp module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_gsgp">slim.main_gsgp module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim.main_slim">slim.main_slim module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.html#module-slim">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">slim</a></li>
+          <li class="breadcrumb-item"><a href="slim.html">slim package</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms package</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.GP.html">slim.algorithms.GP package</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GP.representations package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/slim.algorithms.GP.representations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-algorithms-gp-representations-package">
+<h1>slim.algorithms.GP.representations package<a class="headerlink" href="#slim-algorithms-gp-representations-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-slim.algorithms.GP.representations.population">
+<span id="slim-algorithms-gp-representations-population-module"></span><h2>slim.algorithms.GP.representations.population module<a class="headerlink" href="#module-slim.algorithms.GP.representations.population" title="Link to this heading"></a></h2>
+<p>Population class implementation for evaluating genetic programming individuals.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.population.Population">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.population.</span></span><span class="sig-name descname"><span class="pre">Population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/population.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.population.Population" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.population.Population.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/population.html#Population.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.population.Population.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the population given a certain fitness function, input data (X), and target data (y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>function</em>) – Fitness function to evaluate the individual.</p></li>
+<li><p><strong>X</strong> (<em>torch.Tensor</em>) – The input data (which can be training or testing).</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – The expected output (target) values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Attributes a fitness tensor to the population.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GP.representations.tree">
+<span id="slim-algorithms-gp-representations-tree-module"></span><h2>slim.algorithms.GP.representations.tree module<a class="headerlink" href="#module-slim.algorithms.GP.representations.tree" title="Link to this heading"></a></h2>
+<p>Tree class implementation for representing tree structures in genetic programming.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repr_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a tree structure for genetic programming.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.repr_">
+<span class="sig-name descname"><span class="pre">repr_</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.repr_" title="Link to this definition"></a></dt>
+<dd><p>Representation of the tree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.FUNCTIONS">
+<span class="sig-name descname"><span class="pre">FUNCTIONS</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.FUNCTIONS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of allowed functions in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.TERMINALS">
+<span class="sig-name descname"><span class="pre">TERMINALS</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.TERMINALS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of terminal symbols allowed in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.CONSTANTS">
+<span class="sig-name descname"><span class="pre">CONSTANTS</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.CONSTANTS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of constant values allowed in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.depth" title="Link to this definition"></a></dt>
+<dd><p>Depth of the tree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.fitness">
+<span class="sig-name descname"><span class="pre">fitness</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.fitness" title="Link to this definition"></a></dt>
+<dd><p>Fitness value of the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.test_fitness">
+<span class="sig-name descname"><span class="pre">test_fitness</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.test_fitness" title="Link to this definition"></a></dt>
+<dd><p>Test fitness value of the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.node_count">
+<span class="sig-name descname"><span class="pre">node_count</span></span><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.node_count" title="Link to this definition"></a></dt>
+<dd><p>Number of nodes in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repr_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes a Tree object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.apply_tree">
+<span class="sig-name descname"><span class="pre">apply_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.apply_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.apply_tree" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree on input vectors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree given a fitness function and data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.print_tree_representation">
+<span class="sig-name descname"><span class="pre">print_tree_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.print_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.print_tree_representation" title="Link to this definition"></a></dt>
+<dd><p>Prints the tree representation with indentation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">FUNCTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">TERMINALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">apply_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.apply_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree on input vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputs</strong> (<em>tuple</em>) – Input vectors.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output of the evaluated tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree given a fitness function, input data (X), and target data (y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>function</em>) – Fitness function to evaluate the individual.</p></li>
+<li><p><strong>X</strong> (<em>torch.Tensor</em>) – The input data (which can be training or testing).</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – The expected output (target) values.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag indicating if the data is testing data. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Attributes a fitness value to the tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree.Tree.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree.Tree.predict" title="Link to this definition"></a></dt>
+<dd><p>Predict the output for the given input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em><em> or </em><em>DataFrame</em>) – The input data to predict. It should be in the form of an array-like structure
+(e.g., list, numpy array) or a pandas DataFrame, where each row represents a
+different observation and each column represents a feature.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output for the input data. The exact form and type of the output
+depend on the implementation of the <cite>apply_tree</cite> method, but typically it would
+be an array or list of predicted values corresponding to each observation in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function delegates the actual prediction task to the <cite>apply_tree</cite> method,
+which is assumed to be another method in the same class. The <cite>apply_tree</cite> method
+should be defined to handle the specifics of how predictions are made based on
+the tree structure used in this model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">print_tree_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree.html#Tree.print_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Prints the tree representation with indentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indent</strong> (<em>str</em><em>, </em><em>optional</em>) – Indentation for tree structure representation. Default is an empty string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GP.representations.tree_utils">
+<span id="slim-algorithms-gp-representations-tree-utils-module"></span><h2>slim.algorithms.GP.representations.tree_utils module<a class="headerlink" href="#module-slim.algorithms.GP.representations.tree_utils" title="Link to this heading"></a></h2>
+<p>Utility functions and tree operations for genetic programming.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.bound_value">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">bound_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#bound_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.bound_value" title="Link to this definition"></a></dt>
+<dd><p>Constrains the values within a specific range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector</strong> (<em>torch.Tensor</em>) – Input tensor to be bounded.</p></li>
+<li><p><strong>min_val</strong> (<em>float</em>) – Minimum value for bounding.</p></li>
+<li><p><strong>max_val</strong> (<em>float</em>) – Maximum value for bounding.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tensor with values bounded between min_val and max_val.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.create_full_random_tree">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">create_full_random_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TERMINALS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CONSTANTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#create_full_random_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.create_full_random_tree" title="Link to this definition"></a></dt>
+<dd><p>Generates a full random tree with a specified depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth</strong> (<em>int</em>) – Maximum depth of the tree to be created.</p></li>
+<li><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p></li>
+<li><p><strong>TERMINALS</strong> (<em>dict</em>) – Dictionary of terminal symbols allowed in the tree.</p></li>
+<li><p><strong>CONSTANTS</strong> (<em>dict</em>) – Dictionary of constant values allowed in the tree.</p></li>
+<li><p><strong>p_c</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of choosing a function node. Default is 0.3.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated full tree based on the specified parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.create_grow_random_tree">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">create_grow_random_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TERMINALS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CONSTANTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#create_grow_random_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.create_grow_random_tree" title="Link to this definition"></a></dt>
+<dd><p>Generates a random tree using the Grow method with a specified depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth</strong> (<em>int</em>) – Maximum depth of the tree to be created.</p></li>
+<li><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p></li>
+<li><p><strong>TERMINALS</strong> (<em>dict</em>) – Dictionary of terminal symbols allowed in the tree.</p></li>
+<li><p><strong>CONSTANTS</strong> (<em>dict</em>) – Dictionary of constant values allowed in the tree.</p></li>
+<li><p><strong>p_c</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of choosing a constant node. Default is 0.3.</p></li>
+<li><p><strong>first_call</strong> (<em>bool</em><em>, </em><em>optional</em>) – Variable that controls whether or not the function is being called for the first time. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated tree according to the specified parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.flatten">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#flatten"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.flatten" title="Link to this definition"></a></dt>
+<dd><p>Flattens a nested tuple structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>tuple</em>) – Input nested tuple data structure.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>object</em> – Flattened data element by element.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.random_subtree">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">random_subtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#random_subtree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.random_subtree" title="Link to this definition"></a></dt>
+<dd><p>Selects a random subtree from a given tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that selects a random subtree from the input tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.substitute_subtree">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">substitute_subtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#substitute_subtree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.substitute_subtree" title="Link to this definition"></a></dt>
+<dd><p>Substitutes a specific subtree in a tree with a new subtree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that substitutes a subtree in the input tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.tree_depth">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">tree_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#tree_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.tree_depth" title="Link to this definition"></a></dt>
+<dd><p>Calculates the depth of a given tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that calculates the depth of the input tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GP.representations.tree_utils.tree_pruning">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">tree_pruning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">TERMINALS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CONSTANTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FUNCTIONS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GP/representations/tree_utils.html#tree_pruning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.representations.tree_utils.tree_pruning" title="Link to this definition"></a></dt>
+<dd><p>Reduces both sides of a tree to a specific depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TERMINALS</strong> (<em>dict</em>) – Dictionary of terminal symbols allowed in the tree.</p></li>
+<li><p><strong>CONSTANTS</strong> (<em>dict</em>) – Dictionary of constant values allowed in the tree.</p></li>
+<li><p><strong>FUNCTIONS</strong> (<em>dict</em>) – Dictionary of functions allowed in the tree.</p></li>
+<li><p><strong>p_c</strong> (<em>float</em><em>, </em><em>optional</em>) – Probability of choosing a constant node. Default is 0.3.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function that prunes the tree to the specified depth.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GP.representations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.algorithms.GP.representations" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="slim.algorithms.GP.operators.html" class="btn btn-neutral float-left" title="slim.algorithms.GP.operators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.algorithms.GSGP.html" class="btn btn-neutral float-right" title="slim.algorithms.GSGP package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,3 +1,7 @@
+"""
+This script sets up the configuration dictionaries for the execution of the SLIM-GSGP algorithm
+"""
+
 from slim.algorithms.GP.operators.initializers import rhh
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.SLIM_GSGP.operators.mutators import (deflate_mutation)

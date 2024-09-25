@@ -5,25 +5,29 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
 import os
 import sys
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath('../'))
 
 project = 'Slim'
-copyright = '2024, Rosenfeld, L et al'
-author = 'Rosenfeld, L et al'
-release = '1.0.0'
+copyright = '2024, Rosenfeld, et al.,'
+author = 'Rosenfeld, et al.,'
+release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc"]
+extensions = ["sphinx.ext.todo", "sphinx.ext.viewcode", 'sphinx.ext.autodoc',
+'sphinx.ext.napoleon']
+
+
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
+# display todos by setting to true
+# todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

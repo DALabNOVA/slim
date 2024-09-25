@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.GP package &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">slim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slim_gsgp.html">slim.algorithms.GP.slim_gsgp module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GP package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/slim.algorithms.GP.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-algorithms-gp-package">
+<h1>slim.algorithms.GP package<a class="headerlink" href="#slim-algorithms-gp-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.operators.html">slim.algorithms.GP.operators package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.crossover_operators">slim.algorithms.GP.operators.crossover_operators module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.crossover_operators.crossover_trees"><code class="docutils literal notranslate"><span class="pre">crossover_trees()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.initializers">slim.algorithms.GP.operators.initializers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.initializers.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.initializers.grow"><code class="docutils literal notranslate"><span class="pre">grow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.initializers.rhh"><code class="docutils literal notranslate"><span class="pre">rhh()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.mutators">slim.algorithms.GP.operators.mutators module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.mutators.mutate_tree_node"><code class="docutils literal notranslate"><span class="pre">mutate_tree_node()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.mutators.mutate_tree_subtree"><code class="docutils literal notranslate"><span class="pre">mutate_tree_subtree()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators.selection_algorithms">slim.algorithms.GP.operators.selection_algorithms module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.selection_algorithms.tournament_selection_max"><code class="docutils literal notranslate"><span class="pre">tournament_selection_max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.operators.html#slim.algorithms.GP.operators.selection_algorithms.tournament_selection_min"><code class="docutils literal notranslate"><span class="pre">tournament_selection_min()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.operators.html#module-slim.algorithms.GP.operators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.GP.representations.html">slim.algorithms.GP.representations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.population">slim.algorithms.GP.representations.population module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population"><code class="docutils literal notranslate"><span class="pre">Population</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population.evaluate"><code class="docutils literal notranslate"><span class="pre">Population.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree">slim.algorithms.GP.representations.tree module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.repr_"><code class="docutils literal notranslate"><span class="pre">Tree.repr_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.FUNCTIONS"><code class="docutils literal notranslate"><span class="pre">Tree.FUNCTIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.TERMINALS"><code class="docutils literal notranslate"><span class="pre">Tree.TERMINALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.CONSTANTS"><code class="docutils literal notranslate"><span class="pre">Tree.CONSTANTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.depth"><code class="docutils literal notranslate"><span class="pre">Tree.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.fitness"><code class="docutils literal notranslate"><span class="pre">Tree.fitness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.test_fitness"><code class="docutils literal notranslate"><span class="pre">Tree.test_fitness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.node_count"><code class="docutils literal notranslate"><span class="pre">Tree.node_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.__init__"><code class="docutils literal notranslate"><span class="pre">Tree.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.apply_tree"><code class="docutils literal notranslate"><span class="pre">Tree.apply_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.evaluate"><code class="docutils literal notranslate"><span class="pre">Tree.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.print_tree_representation"><code class="docutils literal notranslate"><span class="pre">Tree.print_tree_representation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id0"><code class="docutils literal notranslate"><span class="pre">Tree.CONSTANTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id1"><code class="docutils literal notranslate"><span class="pre">Tree.FUNCTIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id2"><code class="docutils literal notranslate"><span class="pre">Tree.TERMINALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id3"><code class="docutils literal notranslate"><span class="pre">Tree.apply_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id4"><code class="docutils literal notranslate"><span class="pre">Tree.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree.predict"><code class="docutils literal notranslate"><span class="pre">Tree.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim.algorithms.GP.representations.html#id5"><code class="docutils literal notranslate"><span class="pre">Tree.print_tree_representation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations.tree_utils">slim.algorithms.GP.representations.tree_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.bound_value"><code class="docutils literal notranslate"><span class="pre">bound_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.create_full_random_tree"><code class="docutils literal notranslate"><span class="pre">create_full_random_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.create_grow_random_tree"><code class="docutils literal notranslate"><span class="pre">create_grow_random_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.random_subtree"><code class="docutils literal notranslate"><span class="pre">random_subtree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.substitute_subtree"><code class="docutils literal notranslate"><span class="pre">substitute_subtree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.tree_depth"><code class="docutils literal notranslate"><span class="pre">tree_depth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree_utils.tree_pruning"><code class="docutils literal notranslate"><span class="pre">tree_pruning()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.representations.html#module-slim.algorithms.GP.representations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-slim.algorithms.GP.gp">
+<span id="slim-algorithms-gp-gp-module"></span><h2>slim.algorithms.GP.gp module<a class="headerlink" href="#module-slim.algorithms.GP.gp" title="Link to this heading"></a></h2>
+<p>Genetic Programming (GP) module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.GP.gp.</span></span><span class="sig-name descname"><span class="pre">GP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pi_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">find_elit_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_xo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/algorithms/GP/gp.html#GP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.gp.GP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP.evolve_population">
+<span class="sig-name descname"><span class="pre">evolve_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_calculator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/algorithms/GP/gp.html#GP.evolve_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.gp.GP.evolve_population" title="Link to this definition"></a></dt>
+<dd><p>Evolve the population for one generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population</strong> (<a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population" title="slim.algorithms.GP.representations.population.Population"><em>Population</em></a>) – Current population.</p></li>
+<li><p><strong>ffunction</strong> (<em>function</em>) – Fitness function.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em>) – Maximum depth of the tree.</p></li>
+<li><p><strong>depth_calculator</strong> (<em>function</em>) – Function to calculate tree depth.</p></li>
+<li><p><strong>elitism</strong> (<em>bool</em>) – Whether to use elitism.</p></li>
+<li><p><strong>X_train</strong> (<em>torch.Tensor</em>) – Training data features.</p></li>
+<li><p><strong>y_train</strong> (<em>torch.Tensor</em>) – Training data labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Evolved population.
+float: Start time of evolution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population" title="slim.algorithms.GP.representations.population.Population">Population</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP.log_generation">
+<span class="sig-name descname"><span class="pre">log_generation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/algorithms/GP/gp.html#GP.log_generation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.gp.GP.log_generation" title="Link to this definition"></a></dt>
+<dd><p>Log the results for the current generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>generation</strong> (<em>int</em>) – Current generation number.</p></li>
+<li><p><strong>population</strong> (<a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population" title="slim.algorithms.GP.representations.population.Population"><em>Population</em></a>) – Current population.</p></li>
+<li><p><strong>elapsed_time</strong> (<em>float</em>) – Time taken for the process.</p></li>
+<li><p><strong>log</strong> (<em>int</em>) – Logging level.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – Path to save logs.</p></li>
+<li><p><strong>run_info</strong> (<em>list</em>) – Information about the current run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP.log_initial_population">
+<span class="sig-name descname"><span class="pre">log_initial_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/algorithms/GP/gp.html#GP.log_initial_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.gp.GP.log_initial_population" title="Link to this definition"></a></dt>
+<dd><p>Log the initial population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population</strong> (<a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.population.Population" title="slim.algorithms.GP.representations.population.Population"><em>Population</em></a>) – The population to log.</p></li>
+<li><p><strong>elapsed_time</strong> (<em>float</em>) – Time taken for the process.</p></li>
+<li><p><strong>log</strong> (<em>int</em>) – Logging level.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – Path to save logs.</p></li>
+<li><p><strong>run_info</strong> (<em>list</em>) – Information about the current run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GP.gp.GP.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curr_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_elite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffunction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_elites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_pruner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/slim/algorithms/GP/gp.html#GP.solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GP.gp.GP.solve" title="Link to this definition"></a></dt>
+<dd><p>Execute the Genetic Programming algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>torch.Tensor</em>) – Training data features.</p></li>
+<li><p><strong>X_test</strong> (<em>torch.Tensor</em>) – Test data features.</p></li>
+<li><p><strong>y_train</strong> (<em>torch.Tensor</em>) – Training data labels.</p></li>
+<li><p><strong>y_test</strong> (<em>torch.Tensor</em>) – Test data labels.</p></li>
+<li><p><strong>curr_dataset</strong> (<em>str</em>) – Current dataset name.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em>) – Number of iterations.</p></li>
+<li><p><strong>elitism</strong> (<em>bool</em>) – Whether to use elitism.</p></li>
+<li><p><strong>log</strong> (<em>int</em>) – Logging level.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – Verbosity level.</p></li>
+<li><p><strong>test_elite</strong> (<em>bool</em>) – Whether to test elite individuals.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – Path to save logs.</p></li>
+<li><p><strong>run_info</strong> (<em>list</em>) – Information about the current run.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em>) – Maximum depth of the tree.</p></li>
+<li><p><strong>max</strong> (<em>bool</em>) – Whether to maximize the fitness function.</p></li>
+<li><p><strong>ffunction</strong> (<em>function</em>) – Fitness function.</p></li>
+<li><p><strong>n_elites</strong> (<em>int</em>) – Number of elites.</p></li>
+<li><p><strong>tree_pruner</strong> (<em>function</em>) – Function to prune trees.</p></li>
+<li><p><strong>depth_calculator</strong> (<em>function</em>) – Function to calculate tree depth.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GP">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-slim.algorithms.GP" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

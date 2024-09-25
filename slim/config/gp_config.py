@@ -1,3 +1,6 @@
+"""
+This script sets up the configuration dictionaries for the execution of the GP algorithm
+"""
 from slim.algorithms.GP.operators.crossover_operators import crossover_trees
 from slim.algorithms.GP.operators.initializers import rhh
 from slim.algorithms.GP.operators.selection_algorithms import \

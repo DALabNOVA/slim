@@ -1,3 +1,7 @@
+"""
+Genetic Programming (GP) module.
+"""
+
 import random
 import time
 
