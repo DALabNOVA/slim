@@ -10,6 +10,7 @@ build:
   # This tells RTD to ignore previous builds and start fresh each time
   clean: true
   os: ubuntu-22.04
+  tools:
 
 
 sphinx:
