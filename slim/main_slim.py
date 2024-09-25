@@ -16,8 +16,6 @@ ELITES = {}
 UNIQUE_RUN_ID = uuid.uuid1()
 
 
-# todo: would not be better to first log the settings and then perform the algorithm?
-# todo: update how the name is saved and make it coherent with the paper
 def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None, slim_version: str = "SLIM+SIG2", pop_size: int = 100,
          n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
