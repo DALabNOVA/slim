@@ -1,12 +1,12 @@
 slim.selectors
 ======================
 
-.. automodule:: slim.selectors
+.. automodule:: slim.selection
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: slim.selectors.selection_algorithms
+.. automodule:: slim.selection.selection_algorithms
    :members:
    :undoc-members:
    :show-inheritance:
