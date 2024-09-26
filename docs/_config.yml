@@ -1,0 +1,3 @@
+# _config.yml
+url: "https://dalabnova.github.io/slim/"
+baseurl: ""  # Leave this empty for root custom domain
