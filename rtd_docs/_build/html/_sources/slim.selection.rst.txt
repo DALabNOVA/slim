@@ -1,4 +1,4 @@
-slim.selectors
+slim.selection
 ======================
 
 .. automodule:: slim.selection

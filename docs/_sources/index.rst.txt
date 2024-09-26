@@ -190,7 +190,7 @@ Specific for *slim*
    slim.algorithms
    slim.evaluators
    slim.initializers
-   slim.selectors
+   slim.selection
    slim.utils
    slim_main_files
 
