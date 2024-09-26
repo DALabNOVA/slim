@@ -47,4 +47,4 @@ autodoc_default_options = {
     'no-cache': True
 }
 
-html_baseurl = 'https://dalabnova.github.io/slim/'
+html_baseurl = "https://docs.slim.io/"
