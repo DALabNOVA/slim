@@ -46,3 +46,5 @@ autodoc_default_options = {
     'show-inheritance': True,
     'no-cache': True
 }
+
+html_baseurl = 'https://dalabnova.github.io/slim/'
