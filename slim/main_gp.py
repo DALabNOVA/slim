@@ -120,17 +120,17 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+    from datasets.data_loader import load_merged_data
     from slim.utils.utils import train_test_split
 
-    X, y = load_ppb(X_y=True)
+    X, y = load_merged_data("resid_build_sale_price", X_y=True)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
     X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='ppb', pop_size=100, n_iter=1000)
+                    dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000)
 
     final_tree.print_tree_representation()
     predictions = final_tree.predict(X_test)

@@ -134,7 +134,7 @@ if __name__ == "__main__":
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
                                   dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.1,
                                   ms=  generate_random_uniform(0, 10) ,log_path=os.path.join(os.getcwd(),
-                                                                "log", f"slim_postgrid_{ds}-size.csv_test_ignore"))
+                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"))
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)

@@ -215,3 +215,5 @@ class Individual:
         return torch.clamp(
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
+
+# todo: put print_tree_representation here
