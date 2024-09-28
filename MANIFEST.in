@@ -1,3 +1,4 @@
 include README.md
 include LICENSE
 recursive-include slim/slim/datasets *
+recursive-include slim/datasets *
