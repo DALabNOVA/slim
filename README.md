@@ -19,7 +19,7 @@ To use the GP algorithm, you can use the following example:
 
 ```python
 from slim.main_gp import gp  # import the slim library
-from slim.datasets import load_ppb  # import the loader for the dataset PPB
+from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
 
@@ -52,7 +52,7 @@ To use the GSGP algorithm, you can use the following example:
 
 ```python
 from slim.main_gsgp import gsgp  # import the slim library
-from slim.datasets import load_ppb  # import the loader for the dataset PPB
+from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
 from slim.utils.utils import generate_random_uniform  # import the mutation step function
@@ -84,7 +84,7 @@ To use the SLIM GSGP algorithm, you can use the following example:
 
 ```python
 from slim.main_slim import slim  # import the slim library
-from slim.datasets import load_ppb  # import the loader for the dataset PPB
+from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
 from slim.utils.utils import generate_random_uniform  # import the mutation step function
