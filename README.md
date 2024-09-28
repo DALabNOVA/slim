@@ -108,7 +108,7 @@ final_tree = slim(X_train=X_train, y_train=y_train,
 final_tree.print_tree_representation()
 
 # Get the prediction of the best individual on the test set
-predictions = final_tree.predict(X_test)
+predictions = final_tree.predict(X_test, slim_version='SLIM+SIG2')
 
 # Compute and print the RMSE on the test set
 print(float(rmse(y_true=y_test, y_pred=predictions)))
