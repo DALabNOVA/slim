@@ -4,11 +4,11 @@ logging the results for further analysis.
 """
 
 import uuid
-
+import os
 from slim.algorithms.GSGP.gsgp import GSGP
 from slim.config.gsgp_config import *
 from slim.utils.logger import log_settings
-from slim.utils.utils import get_terminals, validate_inputs
+from slim.utils.utils import get_terminals, validate_inputs, generate_random_uniform
 from typing import Callable
 
 
@@ -115,7 +115,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb, load_merged_data
+    from slim.datasets.data_loader import load_merged_data
     from slim.utils.utils import train_test_split
 
     X, y = load_merged_data("resid_build_sale_price", X_y=True)

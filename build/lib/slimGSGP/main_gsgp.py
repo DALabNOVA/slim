@@ -114,7 +114,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+    from slim.datasets import load_ppb
     from slim.utils.utils import train_test_split
 
     X, y = load_ppb(X_y=True)

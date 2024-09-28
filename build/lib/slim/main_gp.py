@@ -2,7 +2,6 @@
 This script runs the StandardGP algorithm on various datasets and configurations,
 logging the results for further analysis.
 """
-import time
 import uuid
 
 from slim.algorithms.GP.gp import GP
@@ -125,7 +124,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+    from slim.datasets import load_ppb
     from slim.utils.utils import train_test_split
 
     X, y = load_ppb(X_y=True)

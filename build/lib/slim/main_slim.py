@@ -2,7 +2,6 @@
 This script runs the SLIM_GSGP algorithm on various datasets and configurations,
 logging the results for further analysis.
 """
-import time
 import uuid
 
 from slim.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
@@ -131,7 +130,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_ppb
+    from slim.datasets import load_ppb
     from slim.utils.utils import train_test_split, show_individual
 
     X, y = load_ppb(X_y=True)

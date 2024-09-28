@@ -6,10 +6,10 @@ from slim.initializers.initializers import rhh
 from slim.selection.selection_algorithms import \
     tournament_selection_min
 
-from datasets.data_loader import *
 from slim.evaluators.fitness_functions import rmse
 from slim.utils.utils import (get_best_max, get_best_min,
                               protected_div)
+import torch
 
 # Define functions and constants
 # todo use only one dictionary for the parameters of each algorithm

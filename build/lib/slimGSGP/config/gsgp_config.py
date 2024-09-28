@@ -3,7 +3,6 @@ from slim.selection.selection_algorithms import \
     tournament_selection_min
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation
-from datasets.data_loader import *
 from slim.evaluators.fitness_functions import rmse
 from slim.utils.utils import (get_best_min,
                               protected_div)

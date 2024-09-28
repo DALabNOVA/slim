@@ -2,9 +2,8 @@
 This script runs the StandardGP algorithm on various datasets and configurations,
 logging the results for further analysis.
 """
-import time
 import uuid
-
+import os
 from slim.algorithms.GP.gp import GP
 from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
 from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
@@ -120,7 +119,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
 
 if __name__ == "__main__":
-    from datasets.data_loader import load_merged_data
+    from slim.datasets.data_loader import load_merged_data
     from slim.utils.utils import train_test_split
 
     X, y = load_merged_data("resid_build_sale_price", X_y=True)

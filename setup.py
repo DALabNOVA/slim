@@ -8,7 +8,8 @@ setup(
         'numpy',
         'pandas',
         'torch',
-        'scipy'
+        'scipy',
+        'scikit-learn'
     ],
     entry_points={
         'console_scripts': [
@@ -16,8 +17,8 @@ setup(
             # 'command-name = mylibrary.module:function',
         ],
     },
-    author= 'Liah Rosenfeld, Davide Farinati, Diogo Rasteiro, Gloria Pietropolli',
-    author_email='lrosenfeld@novaims.unl.pt, dfarinati@novaims.unl.pt, drasteiro@novaims.unl.pt, gloria.pietropolli@phd.units.it',
+    author= 'Davide Farinati, Diogo Rasteiro, Gloria Pietropolli, Karina Brotto Rebulli, Leonardo Vanneschi, Liah Rosenfeld, Sara Silva',
+    author_email='dfarinati@novaims.unl.pt, drasteiro@novaims.unl.pt, gloria.pietropolli@phd.units.it, karina.brottorebuli@unito.it, lvanneschi@novaims.unl.pt, lrosenfeld@novaims.unl.pt, sgsilva@fc.ul.pt',
     description='Semantic Learning algorithm based on Inflate and deflate Mutation (SLIM GSGP)',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

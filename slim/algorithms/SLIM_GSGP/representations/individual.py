@@ -216,4 +216,25 @@ class Individual:
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-# todo: put print_tree_representation here
+    def print_tree_representation(self, indent=""):
+        """
+        Prints the tree representation with indentation.
+
+        Parameters
+        ----------
+        indent : str, optional
+            Indentation for tree structure representation. Default is an empty string.
+        """
+        if isinstance(self.structure, tuple):  # If it's a function node
+            function_name = self.structure[0]
+            print(indent + f"{function_name}(")
+            if Tree.FUNCTIONS[function_name]["arity"] == 2:
+                left_subtree, right_subtree = self.structure[1], self.structure[2]
+                Tree(left_subtree).print_tree_representation(indent + "  ")
+                Tree(right_subtree).print_tree_representation(indent + "  ")
+            else:
+                left_subtree = self.structure[1]
+                Tree(left_subtree).print_tree_representation(indent + "  ")
+            print(indent + ")")
+        else:  # If it's a terminal node
+            print(indent + f"{self.structure}")
