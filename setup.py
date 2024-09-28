@@ -4,6 +4,10 @@ setup(
     name='gsgp_slim',
     version='0.1.1',
     packages=find_packages(),
+    include_package_data=True,  # Ensure non-code files are included
+    package_data={
+        'slim': ['datasets/data/*.txt'],  # Specify the data files to include
+    },
     install_requires=[
         'numpy',
         'pandas',
