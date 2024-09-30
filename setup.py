@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gsgp_slim',
-    version='0.1.1',
+    version='0.1.2',
     packages=find_packages(),
     include_package_data=True,  # Ensure non-code files are included
     package_data={
