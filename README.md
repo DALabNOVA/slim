@@ -69,8 +69,8 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 # Apply the Standard GSGP algorithm
 final_tree = gsgp(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
-                  dataset_name='ppb', pop_size=100, n_iter=100,
-                  ms=generate_random_uniform(0, 1))
+                  dataset_name='ppb', pop_size=100, n_iter=100, 
+                  reconstruct=True, ms=generate_random_uniform(0, 1))
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test)
