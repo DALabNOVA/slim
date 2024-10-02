@@ -80,6 +80,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_solve_parameters["n_elites"] = n_elites
     slim_gsgp_solve_parameters["n_iter"] = n_iter
     slim_gsgp_solve_parameters['run_info'] = [slim_version, UNIQUE_RUN_ID, dataset_name]
+
     if X_test is not None and y_test is not None:
         slim_gsgp_solve_parameters["test_elite"] = True
     else:
@@ -117,6 +118,7 @@ if __name__ == "__main__":
     from slim.utils.utils import train_test_split, show_individual
 
     slim_gsgp_parameters["copy_parent"] = True
+
     for ds in ["resid_build_sale_price"]:
 
         for s in range(30):
@@ -132,7 +134,7 @@ if __name__ == "__main__":
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
                                   dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.1,
-                                  ms=  generate_random_uniform(0, 10) ,log_path=os.path.join(os.getcwd(),
+                                  ms =  generate_random_uniform(0, 10) ,log_path=os.path.join(os.getcwd(),
                                                                 "log", f"TEST_slim_postgrid_{ds}-size.csv"))
 
                 print(show_individual(final_tree, operator='sum'))

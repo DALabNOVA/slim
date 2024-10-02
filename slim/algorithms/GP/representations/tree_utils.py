@@ -372,4 +372,4 @@ def _execute_tree(repr_, X, FUNCTIONS, TERMINALS, CONSTANTS):
         if repr_ in TERMINALS:
             return X[:, TERMINALS[repr_]]
         elif repr_ in CONSTANTS:
-            return CONSTANTS
+            return CONSTANTS[repr_](None)

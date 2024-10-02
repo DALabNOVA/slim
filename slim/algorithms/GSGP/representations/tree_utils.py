@@ -76,7 +76,7 @@ def apply_tree(tree, inputs):
             output = inputs[:, tree.TERMINALS[tree.structure]]
             return output
         elif tree.structure in list(tree.CONSTANTS.keys()):
-            output = tree.CONSTANTS
+            output = tree.CONSTANTS[tree.structure](None)
             return output
 
 

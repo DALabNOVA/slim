@@ -5,13 +5,13 @@ Initializers operator implementation.
 from slim.algorithms.GP.representations.tree_utils import (create_full_random_tree,
                                                            create_grow_random_tree)
 
-def grow(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, p_terminal=0.5):
+def grow(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, p_terminal=0.5):
     """
     Generates a list of individuals with random trees for a GM4OS population using the Grow method.
 
     Parameters
     ----------
-    size : int
+    init_pop_size : int
         The total number of individuals to be generated for the population.
     depth : int
         The maximum depth of the trees.
@@ -34,18 +34,18 @@ def grow(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, p_terminal=0.5):
     """
 
     return [
-        create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
-        for _ in range(size)
+        create_grow_random_tree(init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
+        for _ in range(init_pop_size)
     ]
 
 
-def full(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
+def full(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     """
     Generates a list of individuals with random trees for a GM4OS population using the Full method.
 
     Parameters
     ----------
-    size : int
+    init_pop_size : int
         The total number of individuals to be generated for the population.
     depth : int
         The maximum depth of the trees.
@@ -68,8 +68,8 @@ def full(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     """
 
     return [
-        create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
-        for _ in range(2, size + 1)
+        create_full_random_tree(init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
+        for _ in range(2, init_pop_size + 1)
     ]
 
 
@@ -79,9 +79,9 @@ def rhh(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
 
     Parameters
     ----------
-    size : int
+    init_pop_size : int
         The total number of individuals to be generated for the population.
-    depth : int
+    init_depth : int
         The maximum depth of the trees.
     FUNCTIONS : list
         The list of functions allowed in the trees.

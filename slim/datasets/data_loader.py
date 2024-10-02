@@ -89,7 +89,9 @@ def load_preloaded(dataset_name, seed = 1, training=True, X_y=False):
 
 """
 
-Taken from GPOL.
+Adapted from GPOL.
+
+TODO: add citation
 
 """
 def load_airfoil(X_y=False):
@@ -118,6 +120,7 @@ def load_airfoil(X_y=False):
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
     """
+
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "airfoil.txt")
     )

@@ -2,13 +2,13 @@
 This script sets up the configuration dictionaries for the execution of the GSGP algorithm
 """
 import torch
-from slim.initializers.initializers import rhh
-from slim.selection.selection_algorithms import tournament_selection_min
+from slim.initializers.initializers import rhh, grow, full
+from slim.selection.selection_algorithms import tournament_selection_min, tournament_selection_max
 
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.GSGP.operators.mutators import standard_geometric_mutation
-from slim.evaluators.fitness_functions import rmse
-from slim.utils.utils import (get_best_min,
+from slim.evaluators.fitness_functions import *
+from slim.utils.utils import (get_best_min, get_best_max,
                               protected_div)
 
 FUNCTIONS = {
@@ -36,7 +36,7 @@ gsgp_solve_parameters = {
     "test_elite": True,
     "run_info": None,
     "ffunction": rmse,
-    "reconstruct": True,
+    "reconstruct": False
 }
 
 # GSGP parameters
@@ -55,3 +55,16 @@ gsgp_pi_init = {
     "p_c": 0
 }
 
+fitness_function_options = {
+    "rmse": rmse,
+    "mse": mse,
+    "mae": mae,
+    "mae_int": mae_int,
+    "signed_errors": signed_errors
+}
+
+initializer_options = {
+    "rhh": rhh,
+    "grow": grow,
+    "full": full
+}
