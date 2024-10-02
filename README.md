@@ -70,7 +70,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 final_tree = gsgp(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
                   dataset_name='ppb', pop_size=100, n_iter=100, 
-                  reconstruct=True, ms=generate_random_uniform(0, 1))
+                  reconstruct=True, ms_lower=0, ms_upper=1)
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test)
@@ -102,7 +102,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 final_tree = slim(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
                   dataset_name='ppb', slim_version='SLIM+SIG2', pop_size=100, n_iter=100,
-                  ms=generate_random_uniform(0, 1), p_inflate=0.5)
+                  ms_lower=0, ms_upper=1, p_inflate=0.5)
 
 # Show the best individual structure at the last generation
 final_tree.print_tree_representation()

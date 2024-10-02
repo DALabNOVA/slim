@@ -14,7 +14,7 @@ from typing import Callable
 # todo: would not be better to first log the settings and then perform the algorithm?
 def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None, pop_size: int = 100, n_iter: int = 100, p_xo: float = 0.0, elitism: bool = True,
-         n_elites: int = 1, init_depth: int = 8, ms: Callable = generate_random_uniform(0, 1),
+         n_elites: int = 1, init_depth: int = 8, ms_lower: float = 0, ms_upper: float = 1,
          log_path: str = os.path.join(os.getcwd(), "log", "gsgp.csv"),
          seed: int = 1,
          log: int = 1,
@@ -77,6 +77,12 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         validate_functions_dictionary(tree_functions)
     if tree_constants != CONSTANTS:
         validate_constants_dictionary(tree_constants)
+
+    # Checking that both ms bounds are numerical
+    assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
+        "Both ms_lower and ms_upper must be either int or float"
+    # If so, create the ms callable
+    ms = generate_random_uniform(ms_lower, ms_upper)
 
     # assuring the p_xo is valid
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"

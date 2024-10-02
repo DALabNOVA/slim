@@ -19,7 +19,7 @@ UNIQUE_RUN_ID = uuid.uuid1()
 def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None, slim_version: str = "SLIM+SIG2", pop_size: int = 100,
          n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
-         ms: Callable = generate_random_uniform(0, 1), p_inflate: float = 0.5,
+         ms_lower: float = 0, ms_upper: float = 1, p_inflate: float = 0.5,
          log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"), seed: int = 1):
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets.
@@ -46,6 +46,13 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     """
 
     op, sig, trees = check_slim_version(slim_version=slim_version)
+
+    # Checking that both ms bounds are numerical
+    assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
+        "Both ms_lower and ms_upper must be either int or float"
+    # If so, create the ms callable
+    ms = generate_random_uniform(ms_lower, ms_upper)
+
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
