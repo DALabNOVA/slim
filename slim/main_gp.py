@@ -24,8 +24,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        n_jobs: int = 1,
        prob_const: float = 0.2,
        tree_functions: dict = FUNCTIONS,
-       tree_constants: dict = CONSTANTS
-       ):
+       tree_constants: dict = CONSTANTS):
     """
     Main function to execute the StandardGP algorithm on specified datasets
 
@@ -136,6 +135,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     )
     gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=FUNCTIONS)
     gp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
+    gp_solve_parameters["n_jobs"] = n_jobs
 
     if X_test is not None and y_test is not None:
         gp_solve_parameters["test_elite"] = True
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000, prob_const=0, fitness_function="no")
+                    dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000, prob_const=0, fitness_function="rmse", n_jobs=2)
 
     final_tree.print_tree_representation()
     predictions = final_tree.predict(X_test)

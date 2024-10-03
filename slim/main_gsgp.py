@@ -201,7 +201,7 @@ if __name__ == "__main__":
     final_tree = gsgp(X_train=X_train, y_train=y_train,
                       X_test=X_val, y_test=y_val,
                       dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000, log_path=os.path.join(os.getcwd(),
-                                                                "log", f"TESTING_GSGP.csv"), fitness_function="rmse")
+                                                                "log", f"TESTING_GSGP.csv"), fitness_function="rmse", n_jobs=2)
 
     predictions = final_tree.predict(X_test)
     print(float(rmse(y_true=y_test, y_pred=predictions)))
