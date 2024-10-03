@@ -305,7 +305,9 @@ def deflate_mutation(individual, reconstruct):
     Returns:
         Individual: The mutated individual.
     """
+
     mut_point = random.randint(1, individual.size - 1)
+
     offs = Individual(
         collection=(
             [

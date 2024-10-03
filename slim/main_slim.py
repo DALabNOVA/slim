@@ -65,7 +65,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path)
+                    log_path=log_path, prob_const=prob_const)
 
     # verifying that the given tree functions and tree constants dictionaries are valid
     if tree_functions != FUNCTIONS:
@@ -78,9 +78,6 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         "Both ms_lower and ms_upper must be either int or float"
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
-
-    # assuring the prob_const is valid
-    assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
@@ -200,7 +197,8 @@ if __name__ == "__main__":
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
                                   dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
-                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"))
+                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"),
+                                  max_depth=9, reconstruct=True)
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)
