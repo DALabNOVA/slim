@@ -134,7 +134,7 @@ class GSGP:
             ]
         )
 
-        population.calculate_semantics(X_train)
+        population.calculate_semantics(X_train, n_jobs=n_jobs)
         if test_elite:
             population.calculate_semantics(X_test, testing=True)
         population.evaluate(ffunction, y=y_train)

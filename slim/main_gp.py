@@ -9,13 +9,23 @@ from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
 from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
 from slim.config.gp_config import *
 from slim.utils.logger import log_settings
-from slim.utils.utils import get_terminals, validate_inputs
+from slim.utils.utils import get_terminals, validate_inputs, validate_constants_dictionary, validate_functions_dictionary
 
 # todo: would not be better to first log the settings and then perform the algorithm?
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
        dataset_name: str = None, pop_size: int = 100, n_iter: int = 1000, p_xo: float = 0.8,
        elitism: bool = True, n_elites: int = 1, max_depth: int = 17, init_depth: int = 6,
-       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42):
+       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42,
+       log: int = 1,
+       verbose: int = 1,
+       minimization: bool = True,
+       fitness_function: str = "rmse",
+       initializer: str = "rhh",
+       n_jobs: int = 1,
+       prob_const: float = 0.2,
+       tree_functions: dict = FUNCTIONS,
+       tree_constants: dict = CONSTANTS
+       ):
     """
     Main function to execute the StandardGP algorithm on specified datasets
 
@@ -59,8 +69,32 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
                     log_path=log_path)
+
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
+
     assert isinstance(max_depth, int), "Input must be a int"
+
+    # creating a list with the valid available fitness functions
+    valid_fitnesses = list(fitness_function_options)
+
+    # assuring the chosen fitness_function is valid
+    assert fitness_function.lower() in fitness_function_options.keys(), \
+        "fitness function must be: " + f"{', '.join(valid_fitnesses[:-1])} or {valid_fitnesses[-1]}" \
+            if len(valid_fitnesses) > 1 else valid_fitnesses[0]
+
+    # creating a list with the valid available initializers
+    valid_initializers = list(initializer_options)
+
+    # assuring the chosen initializer is valid
+    assert initializer.lower() in initializer_options.keys(), \
+        "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
+            if len(valid_initializers) > 1 else valid_initializers[0]
+
+    if tree_functions != FUNCTIONS:
+        validate_functions_dictionary(tree_functions)
+    if tree_constants != CONSTANTS:
+        validate_constants_dictionary(tree_constants)
+
 
     if not elitism:
         n_elites = 0
@@ -70,18 +104,28 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     algo = "StandardGP"
     gp_solve_parameters['run_info'] = [algo, unique_run_id, dataset_name]
 
+    # GP PI INIT
     TERMINALS = get_terminals(X_train)
     gp_pi_init["TERMINALS"] = TERMINALS
-    gp_pi_init["init_pop_size"] = pop_size
+    gp_pi_init["FUNCTIONS"] = tree_functions
+    gp_pi_init["CONSTANTS"] = tree_constants
+    gp_pi_init["p_c"] = prob_const
+
+    gp_pi_init["init_pop_size"] = pop_size # TODO: why init pop_size != than rest?
     gp_pi_init["init_depth"] = init_depth
 
+    # GP PARAMETERS
     gp_parameters["p_xo"] = p_xo
     gp_parameters["p_m"] = 1 - gp_parameters["p_xo"]
     gp_parameters["pop_size"] = pop_size
     gp_parameters["mutator"] = mutate_tree_subtree(
         gp_pi_init['init_depth'], TERMINALS, CONSTANTS, FUNCTIONS, p_c=gp_pi_init['p_c']
     )
+    gp_parameters["initializer"] = initializer_options[initializer]
 
+    # GP SOLVE PARAMETERS
+    gp_solve_parameters["log"] = log
+    gp_solve_parameters["verbose"] = verbose
     gp_solve_parameters["log_path"] = log_path
     gp_solve_parameters["elitism"] = elitism
     gp_solve_parameters["n_elites"] = n_elites
@@ -91,10 +135,20 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         TERMINALS=TERMINALS, CONSTANTS=CONSTANTS, FUNCTIONS=FUNCTIONS, p_c=gp_pi_init["p_c"]
     )
     gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=FUNCTIONS)
+    gp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
+
     if X_test is not None and y_test is not None:
         gp_solve_parameters["test_elite"] = True
     else:
         gp_solve_parameters["test_elite"] = False
+
+    if minimization:
+        gp_parameters["selector"] = tournament_selection_min(2)
+        gp_parameters["find_elit_func"] = get_best_min
+    else:
+        gp_parameters["selector"] = tournament_selection_max(2)
+        gp_parameters["find_elit_func"] = get_best_max
+
 
     optimizer = GP(pi_init=gp_pi_init, **gp_parameters, seed=seed)
     optimizer.solve(
@@ -129,7 +183,7 @@ if __name__ == "__main__":
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000)
+                    dataset_name='resid_build_sale_price', pop_size=100, n_iter=1000, prob_const=0, fitness_function="no")
 
     final_tree.print_tree_representation()
     predictions = final_tree.predict(X_test)

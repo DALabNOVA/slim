@@ -6,7 +6,7 @@ from slim.initializers.initializers import rhh, grow, full
 from slim.selection.selection_algorithms import \
     tournament_selection_min
 
-from slim.evaluators.fitness_functions import rmse
+from slim.evaluators.fitness_functions import *
 from slim.utils.utils import (get_best_max, get_best_min,
                               protected_div)
 import torch
@@ -38,7 +38,7 @@ gp_solve_parameters = {
     "verbose": 1,
     "test_elite": True,
     "run_info": None,
-    "max_": False,
+    "minimization": True,
     "ffunction": rmse,
     "tree_pruner": None,
     "n_jobs": 1
@@ -50,11 +50,25 @@ gp_parameters = {
     "selector": tournament_selection_min(2),
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
-    "find_elit_func": get_best_max if gp_solve_parameters["max_"] else get_best_min
+    "find_elit_func": get_best_min if gp_solve_parameters["minimization"] else get_best_max
 }
 
 gp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
     "p_c": 0
+}
+
+fitness_function_options = {
+    "rmse": rmse,
+    "mse": mse,
+    "mae": mae,
+    "mae_int": mae_int,
+    "signed_errors": signed_errors
+}
+
+initializer_options = {
+    "rhh": rhh,
+    "grow": grow,
+    "full": full
 }
