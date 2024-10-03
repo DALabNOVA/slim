@@ -493,8 +493,9 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     assert isinstance(n_elites, int), "Input must be a int"
     assert isinstance(init_depth, int), "Input must be a int"
     assert isinstance(log_path, str), "Input must be a str"
+
     # assuring the prob_const is valid
-    assert isinstance(prob_const, float),"Input must be a float."
+    assert isinstance(prob_const, float) or isinstance(prob_const, int), "Input must be a float (or int in probability = 1 or 0)"
 
     assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
 
