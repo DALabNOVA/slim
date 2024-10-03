@@ -52,7 +52,7 @@ gsgp_parameters = {
 gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0
+    "p_c": 0.2
 }
 
 fitness_function_options = {

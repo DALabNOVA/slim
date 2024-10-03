@@ -1,5 +1,5 @@
 import torch
-from slim.initializers.initializers import rhh
+from slim.initializers.initializers import rhh, grow, full
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 from slim.algorithms.SLIM_GSGP.operators.mutators import (deflate_mutation)
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import \
@@ -40,7 +40,7 @@ slim_gsgp_solve_parameters = {
 
 # SLIM GSGP parameters
 slim_gsgp_parameters = {
-    "initializer": rhh,
+    "initializer": full,
     "selector": tournament_selection_min_slim(2),
     "crossover": geometric_crossover,
     "ms": None,
@@ -58,6 +58,6 @@ slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
 slim_gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0
+    "p_c": 1
 }
 
