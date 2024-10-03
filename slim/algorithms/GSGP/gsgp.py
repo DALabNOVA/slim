@@ -92,6 +92,7 @@ class GSGP:
         ffunction=None,
         reconstruct=False,
         n_elites=1,
+        n_jobs=1
     ):
         """
         Execute the GSGP algorithm.
@@ -134,9 +135,9 @@ class GSGP:
             ]
         )
 
-        population.calculate_semantics(X_train)
+        population.calculate_semantics(X_train, n_jobs=n_jobs)
         if test_elite:
-            population.calculate_semantics(X_test, testing=True)
+            population.calculate_semantics(X_test, testing=True, n_jobs=n_jobs)
         population.evaluate(ffunction, y=y_train)
 
         end = time.time()
