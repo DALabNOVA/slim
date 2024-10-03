@@ -42,7 +42,6 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
                 *individual.structure[1:], testing=False
             )
 
-
 def apply_tree(tree, inputs):
     """
     Evaluates the tree on input vectors.
