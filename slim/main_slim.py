@@ -176,6 +176,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         unique_run_id=UNIQUE_RUN_ID
     )
 
+    optimizer.elite.version = slim_version
     return optimizer.elite
 
 

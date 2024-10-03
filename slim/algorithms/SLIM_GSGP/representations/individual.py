@@ -135,7 +135,7 @@ class Individual:
             )
 
 
-    def predict(self, data, slim_version):
+    def predict(self, data, slim_version=None):
         """
             Predict the output for the given input data using the model's collection of trees and specified slim version.
 
@@ -146,10 +146,9 @@ class Individual:
                 (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
                 different observation and each column represents a feature.
 
-            slim_version : bool
-                A flag to indicate whether to use a slim version of the model for prediction.
-                The exact meaning of slim version is determined by the `check_slim_version` function.
-
+            slim_version : str or None
+                A string to verify which version of slim to use for predictions. If None is passed, the
+                function will try to retrieve it from the object's parameters
             Returns
             -------
             Tensor
@@ -178,6 +177,8 @@ class Individual:
             This function relies on PyTorch for tensor operations, including `torch.sigmoid`,
             `torch.sum`, `torch.prod`, `torch.stack`, and `torch.clamp`.
             """
+        if slim_version is None:
+            slim_version = self.version
         operator, sig, trees = check_slim_version(slim_version=slim_version)
 
         semantics = []
