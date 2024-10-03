@@ -107,6 +107,7 @@ class SLIM_GSGP:
         max_depth=17,
         n_elites=1,
         reconstruct=True,
+        n_jobs = 1
     ):
         """
         Solve the optimization problem using SLIM_GSGP.
@@ -159,11 +160,16 @@ class SLIM_GSGP:
         )
 
         population.calculate_semantics(X_train)
-        population.evaluate(ffunction, y=y_train, operator=self.operator)
 
+        population.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
+
+        print(population.fit)
         end = time.time()
 
         self.elites, self.elite = self.find_elit_func(population, n_elites)
+
+        print("FITNESS",self.elite.fitness)
+
 
         if test_elite:
             population.calculate_semantics(X_test, testing=True)
@@ -385,7 +391,7 @@ class SLIM_GSGP:
             offs_pop = Population(offs_pop)
             offs_pop.calculate_semantics(X_train)
 
-            offs_pop.evaluate(ffunction, y=y_train, operator=self.operator)
+            offs_pop.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
             population = offs_pop
 
             self.population = population

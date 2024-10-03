@@ -47,7 +47,7 @@ def merge_settings(sd1: dict, sd2: dict, sd3: dict, sd4: dict) -> dict:
 def logger(
     path: str,
     generation: int,
-    pop_val_fitness: float,
+    elite_fit: float,
     timing: float,
     nodes: int,
     additional_infos: list = None,
@@ -60,7 +60,7 @@ def logger(
     Args:
         path (str): Path to the CSV file.
         generation (int): Current generation number.
-        pop_val_fitness (float): Population's validation fitness value.
+        elite_fit (float): Elite's validation fitness value.
         timing (float): Time taken for the process.
         nodes (int): Count of nodes in the population.
         additional_infos (list, optional): Population's test fitness value(s) and diversity measurements. Defaults to None.
@@ -75,7 +75,7 @@ def logger(
     with open(path, "a", newline="") as file:
         writer = csv.writer(file)
         infos = copy(run_info) if run_info is not None else []
-        infos.extend([seed, generation, float(pop_val_fitness), timing, nodes])
+        infos.extend([seed, generation, float(elite_fit), timing, nodes])
 
         if additional_infos is not None:
             try:

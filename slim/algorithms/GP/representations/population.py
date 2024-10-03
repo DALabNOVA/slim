@@ -51,5 +51,6 @@ class Population:
         )
         # Evaluate fitnesses
         self.fit = [ffunction(y, y_pred_ind) for y_pred_ind in y_pred]
+
         # Assign individuals' fitness
         [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
