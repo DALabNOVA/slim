@@ -68,7 +68,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path)
+                    log_path=log_path, prob_const=prob_const)
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 

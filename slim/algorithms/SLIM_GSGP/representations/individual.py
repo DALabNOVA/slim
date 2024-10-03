@@ -217,10 +217,13 @@ class Individual:
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-    def print_tree_representation(tree, operator):
+    def get_tree_representation(self, operator=None):
+        if operator is None:
+            operator = self.version
+
         op = "+" if operator == "sum" else "*"
 
         return f" {op} ".join([str(t.structure) if isinstance(t.structure,
                                                               tuple) else f'f({t.structure[1].structure})' if len(
             t.structure) == 3
-        else f'f({t.structure[1].structure} - {t.structure[2].structure})' for t in tree.collection])
+        else f'f({t.structure[1].structure} - {t.structure[2].structure})' for t in self.collection])

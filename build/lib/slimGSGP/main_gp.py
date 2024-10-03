@@ -132,6 +132,6 @@ if __name__ == "__main__":
                     X_test=X_val, y_test=y_val,
                     dataset_name='ppb', pop_size=100, n_iter=10)
 
-    final_tree.print_tree_representation()
+    final_tree.get_tree_representation()
     predictions = final_tree.predict(X_test)
     print(float(rmse(y_true=y_test, y_pred=predictions)))

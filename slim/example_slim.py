@@ -20,10 +20,9 @@ final_tree = slim(X_train=X_train, y_train=y_train,
                   ms_lower=0, ms_upper=1, p_inflate=0.5, reconstruct=True)
 
 # Show the best individual structure at the last generation
-final_tree.print_tree_representation()
-
+print(final_tree.get_tree_representation())
 # Get the prediction of the best individual on the test set
-predictions = final_tree.predict(X_test)
+predictions = final_tree.predict(X_test, slim_version='SLIM+SIG2')
 
 # Compute and print the RMSE on the test set
 print(float(rmse(y_true=y_test, y_pred=predictions)))
