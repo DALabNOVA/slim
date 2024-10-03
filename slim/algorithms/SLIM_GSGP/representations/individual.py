@@ -134,7 +134,6 @@ class Individual:
                 ),
             )
 
-
     def predict(self, data, slim_version=None):
         """
             Predict the output for the given input data using the model's collection of trees and specified slim version.

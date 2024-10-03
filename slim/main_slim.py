@@ -15,6 +15,7 @@ from typing import Callable
 ELITES = {}
 UNIQUE_RUN_ID = uuid.uuid1()
 
+
 def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None, slim_version: str = "SLIM+SIG2", pop_size: int = 100,
          n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
@@ -46,10 +47,12 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         elitism (bool, optional): Whether to use elitism. Defaults to False.
         n_elites (int, optional): Number of elites. Defaults to 0.
         init_depth (int, optional): Depth of the initial GP trees population. Defaults to None.
-        ms (Callable, optional): Function that generates the mutation step. Defaults to None.
+        ms_lower (float, optional): Lower bound for the mutation step. Defaults to 0
+        ms_upper (float, optional): Lower bound for the mutation step. Defaults to 1
         p_inflate (float, optional): Probability to apply the inflate mutation. Defaults to None.
         log_path (str, optional): Path where the log directory and results are saved. Defaults to None.
         seed (int, optional): Seed for randomness. Defaults to None.
+        log (int, optional): Logging level.
 
     Returns:
         Tree: The best individual at the last generation.
