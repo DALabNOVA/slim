@@ -460,7 +460,8 @@ def gs_size(y_true, y_pred):
     return y_pred[1]
 
 
-def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path):
+def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path,
+                    prob_const):
     """
     Validates the inputs based on the specified conditions.
 
@@ -475,6 +476,7 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     max_depth (int): Maximum depth.
     init_depth (int): Initial depth.
     log_path (str): Path for logging.
+    prob_const (float): probability for constant
 
     Raises:
     AssertionError: If any of the conditions are not met.
@@ -491,7 +493,10 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     assert isinstance(n_elites, int), "Input must be a int"
     assert isinstance(init_depth, int), "Input must be a int"
     assert isinstance(log_path, str), "Input must be a str"
+    # assuring the prob_const is valid
+    assert isinstance(prob_const, float),"Input must be a float."
 
+    assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
 
 def check_slim_version(slim_version):
     """
