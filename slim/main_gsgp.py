@@ -25,7 +25,8 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          minimization: bool = True,
          prob_const: float = 0.2,
          tree_functions: dict = FUNCTIONS,
-         tree_constants: dict = CONSTANTS):
+         tree_constants: dict = CONSTANTS,
+         n_jobs: int = 1):
     """
     Main function to execute the Standard GSGP algorithm on specified datasets
 
@@ -153,6 +154,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     gsgp_solve_parameters["log_path"] = log_path
     gsgp_solve_parameters["elitism"] = elitism
     gsgp_solve_parameters["n_elites"] = n_elites
+    gsgp_solve_parameters["n_jobs"] = n_jobs
 
     if X_test is not None and y_test is not None:
         gsgp_solve_parameters["test_elite"] = True
