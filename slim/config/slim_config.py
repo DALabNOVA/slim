@@ -4,7 +4,7 @@ from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossov
 from slim.algorithms.SLIM_GSGP.operators.mutators import (deflate_mutation)
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import \
     tournament_selection_min_slim
-from slim.evaluators.fitness_functions import rmse
+from slim.evaluators.fitness_functions import *
 from slim.utils.utils import (get_best_min, protected_div)
 
 # Define functions and constants
@@ -61,3 +61,17 @@ slim_gsgp_pi_init = {
     "p_c": 1
 }
 
+
+fitness_function_options = {
+    "rmse": rmse,
+    "mse": mse,
+    "mae": mae,
+    "mae_int": mae_int,
+    "signed_errors": signed_errors
+}
+
+initializer_options = {
+    "rhh": rhh,
+    "grow": grow,
+    "full": full
+}

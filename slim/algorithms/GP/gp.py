@@ -76,7 +76,7 @@ class GP:
         log_path=None,
         run_info=None,
         max_depth=None,
-        max_=False,
+        minimization=True,
         ffunction=None,
         n_elites=1,
         tree_pruner=None,
@@ -100,7 +100,7 @@ class GP:
             log_path (str): Path to save logs.
             run_info (list): Information about the current run.
             max_depth (int): Maximum depth of the tree.
-            max_ (bool): Whether to maximize the fitness function.
+            maximization (bool): Whether to maximize the fitness function.
             ffunction (function): Fitness function.
             n_elites (int): Number of elites.
             tree_pruner (function): Function to prune trees.
