@@ -118,7 +118,7 @@ class GP:
 
         # Initialize the population
         population = Population(
-            [Tree(tree) for tree in self.initializer(**self.pi_init)]
+            [Tree(tree, FUNCTIONS) for tree in self.initializer(**self.pi_init)]
         )
         population.evaluate(ffunction, X=X_train, y=y_train, n_jobs=n_jobs)
 
@@ -247,7 +247,7 @@ class GP:
 
                 offspring = [offs1]
 
-            offs_pop.extend([Tree(child) for child in offspring])
+            offs_pop.extend([Tree(child, FUNCTIONS) for child in offspring])
 
         if len(offs_pop) > population.size:
             offs_pop = offs_pop[: population.size]

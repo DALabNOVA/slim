@@ -56,12 +56,13 @@ class Tree:
     FUNCTIONS = None
     CONSTANTS = None
 
-    def __init__(self, repr_):
+    def __init__(self, repr_, FUNCTIONS):
         """
         Initializes a Tree object.
 
         Parameters
         ----------
+        FUNCTIONS
         repr_ : object
             Representation of the tree structure.
         """
@@ -70,12 +71,12 @@ class Tree:
         self.CONSTANTS = Tree.CONSTANTS
 
         self.repr_ = repr_
-        self.depth = tree_depth(Tree.FUNCTIONS)(repr_)
+        self.depth = tree_depth(FUNCTIONS)(repr_)
         self.fitness = None
         self.test_fitness = None
         self.node_count = len(list(flatten(self.repr_)))
 
-    def apply_tree(self, inputs):
+    def apply_tree(self, inputs, FUNCTIONS, TERMINALS, CONSTANTS):
         """
         Evaluates the tree on input vectors.
 
@@ -89,13 +90,12 @@ class Tree:
         float
             Output of the evaluated tree.
         """
-
         return _execute_tree(
             repr_=self.repr_,
             X=inputs,
-            FUNCTIONS=self.FUNCTIONS,
-            TERMINALS=self.TERMINALS,
-            CONSTANTS=self.CONSTANTS
+            FUNCTIONS=FUNCTIONS,
+            TERMINALS=TERMINALS,
+            CONSTANTS=CONSTANTS
         )
 
         """ if isinstance(self.repr_, tuple):  # If it's a function node
@@ -189,11 +189,11 @@ class Tree:
             print(indent + f"{function_name}(")
             if Tree.FUNCTIONS[function_name]["arity"] == 2:
                 left_subtree, right_subtree = self.repr_[1], self.repr_[2]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
-                Tree(right_subtree).print_tree_representation(indent + "  ")
+                Tree(left_subtree, FUNCTIONS).print_tree_representation(indent + "  ")
+                Tree(right_subtree, FUNCTIONS).print_tree_representation(indent + "  ")
             else:
                 left_subtree = self.repr_[1]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
+                Tree(left_subtree, FUNCTIONS).print_tree_representation(indent + "  ")
             print(indent + ")")
         else:  # If it's a terminal node
             print(indent + f"{self.repr_}")

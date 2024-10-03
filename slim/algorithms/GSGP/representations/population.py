@@ -2,6 +2,7 @@
 Population Class for Evolutionary Computation with Tree Structures using PyTorch.
 """
 
+from multiprocessing import Manager
 from joblib import Parallel, delayed
 from slim.algorithms.GSGP.representations.tree_utils import _execute_tree
 
@@ -18,7 +19,7 @@ class Population:
         self.size = len(pop)
         self.nodes_count = sum([ind.nodes for ind in pop])
 
-    def calculate_semantics(self, inputs, testing=False, logistic=False, n_jobs=1):
+    def calculate_semantics(self, inputs, FUNCTIONS, TERMINALS, CONSTANTS, testing=False, logistic=False, n_jobs=1):
         """
         Calculate the semantics for each individual in the population.
 
@@ -31,17 +32,19 @@ class Population:
         """
 
         # Calculate semantics for each individual in the population in a parallelized fashion
-        Parallel(n_jobs=n_jobs)(
-            delayed(_execute_tree)(individual, inputs=inputs, testing=testing, logistic=logistic
+        new_semantics = Parallel(n_jobs=n_jobs)(
+            delayed(_execute_tree)(individual, inputs=inputs, testing=testing, logistic=logistic,
+                            FUNCTIONS=FUNCTIONS, TERMINALS=TERMINALS, CONSTANTS=CONSTANTS
             ) for individual in self.population
         )
-
         # Store the semantics based on whether it's for testing or training
         if testing:
+            [self.population[i].__setattr__('test_semantics', f) for i, f in enumerate(new_semantics)]
             self.test_semantics = [
                 individual.test_semantics for individual in self.population
             ]
         else:
+            [self.population[i].__setattr__('train_semantics', f) for i, f in enumerate(new_semantics)]
             self.train_semantics = [
                 individual.train_semantics for individual in self.population
             ]

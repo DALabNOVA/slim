@@ -21,8 +21,8 @@ def apply_tree(tree, inputs):
         function_name = tree.structure[0]
         if tree.FUNCTIONS[function_name]["arity"] == 2:
             left_subtree, right_subtree = tree.structure[1], tree.structure[2]
-            left_subtree = Tree(left_subtree)
-            right_subtree = Tree(right_subtree)
+            left_subtree = Tree(left_subtree, FUNCTIONS)
+            right_subtree = Tree(right_subtree, FUNCTIONS)
             left_result = left_subtree.apply_tree(inputs)
             right_result = right_subtree.apply_tree(inputs)
             output = tree.FUNCTIONS[function_name]["function"](
@@ -30,7 +30,7 @@ def apply_tree(tree, inputs):
             )
         else:
             left_subtree = tree.structure[1]
-            left_subtree = Tree(left_subtree)
+            left_subtree = Tree(left_subtree, FUNCTIONS)
             left_result = left_subtree.apply_tree(inputs)
             output = tree.FUNCTIONS[function_name]["function"](left_result)
         return bound_value(output, -1000000000000.0, 10000000000000.0)

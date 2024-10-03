@@ -6,7 +6,7 @@ from slim.algorithms.GP.representations.tree import Tree
 from slim.algorithms.GP.representations.tree_utils import bound_value
 
 
-def _execute_tree(individual, inputs, testing=False, logistic=False):
+def _execute_tree(individual, inputs, FUNCTIONS, TERMINALS, CONSTANTS, testing=False, logistic=False):
 
     """
     Calculate the semantics for the tree.
@@ -21,28 +21,28 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
     """
     if testing and individual.test_semantics is None:
         if isinstance(individual.structure, tuple):
-            individual.test_semantics = (
-                torch.sigmoid(apply_tree(individual, inputs))
+            return (
+                torch.sigmoid(apply_tree(individual, inputs), FUNCTIONS, TERMINALS, CONSTANTS)
                 if logistic
-                else apply_tree(individual, inputs)
+                else apply_tree(individual, inputs, FUNCTIONS, TERMINALS, CONSTANTS)
             )
         else:
-            individual.test_semantics = individual.structure[0](
+            return individual.structure[0](
                 *individual.structure[1:], testing=True
             )
     elif individual.train_semantics is None:
         if isinstance(individual.structure, tuple):
-            individual.train_semantics = (
-                torch.sigmoid(apply_tree(individual, inputs))
+            return (
+                torch.sigmoid(apply_tree(individual, inputs, FUNCTIONS, TERMINALS, CONSTANTS))
                 if logistic
-                else apply_tree(individual, inputs)
+                else apply_tree(individual, inputs, FUNCTIONS, TERMINALS, CONSTANTS)
             )
         else:
-            individual.train_semantics = individual.structure[0](
+            return individual.structure[0](
                 *individual.structure[1:], testing=False
             )
 
-def apply_tree(tree, inputs):
+def apply_tree(tree, inputs, FUNCTIONS, TERMINALS, CONSTANTS):
 
     """
     Evaluates the tree on input vectors.
@@ -59,17 +59,17 @@ def apply_tree(tree, inputs):
         function_name = tree.structure[0]
         if tree.FUNCTIONS[function_name]["arity"] == 2:
             left_subtree, right_subtree = tree.structure[1], tree.structure[2]
-            left_subtree = Tree(left_subtree)
-            right_subtree = Tree(right_subtree)
-            left_result = left_subtree.apply_tree(inputs)
-            right_result = right_subtree.apply_tree(inputs)
+            left_subtree = Tree(left_subtree, FUNCTIONS)
+            right_subtree = Tree(right_subtree, FUNCTIONS)
+            left_result = left_subtree.apply_tree(inputs, FUNCTIONS, TERMINALS, CONSTANTS)
+            right_result = right_subtree.apply_tree(inputs, FUNCTIONS, TERMINALS, CONSTANTS)
             output = tree.FUNCTIONS[function_name]["function"](
                 left_result, right_result
             )
         else:
             left_subtree = tree.structure[1]
-            left_subtree = Tree(left_subtree)
-            left_result = left_subtree.apply_tree(inputs)
+            left_subtree = Tree(left_subtree, FUNCTIONS)
+            left_result = left_subtree.apply_tree(inputs, FUNCTIONS, TERMINALS, CONSTANTS)
             output = tree.FUNCTIONS[function_name]["function"](left_result)
         return bound_value(output, -1000000000000.0, 10000000000000.0)
     else:  # If it's a terminal node

@@ -135,9 +135,11 @@ class GSGP:
             ]
         )
 
-        population.calculate_semantics(X_train, n_jobs=n_jobs)
+        population.calculate_semantics(X_train,self.pi_init["FUNCTIONS"], self.pi_init["TERMINALS"],
+                                       self.pi_init["CONSTANTS"], n_jobs=n_jobs)
         if test_elite:
-            population.calculate_semantics(X_test, testing=True, n_jobs=n_jobs)
+            population.calculate_semantics(X_test, self.pi_init["FUNCTIONS"], self.pi_init["TERMINALS"],
+                                       self.pi_init["CONSTANTS"], testing=True, n_jobs=n_jobs)
         population.evaluate(ffunction, y=y_train)
 
         end = time.time()
