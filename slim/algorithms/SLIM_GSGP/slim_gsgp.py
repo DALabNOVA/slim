@@ -107,8 +107,7 @@ class SLIM_GSGP:
         max_depth=17,
         n_elites=1,
         reconstruct=True,
-        n_jobs = 1
-    ):
+        n_jobs = 1):
         """
         Solve the optimization problem using SLIM_GSGP.
 
@@ -134,12 +133,15 @@ class SLIM_GSGP:
         if test_elite and (X_test is None or y_test is None):
             raise Exception('If test_elite is True you need to provide a test dataset')
 
+        # setting the seeds
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
         random.seed(self.seed)
 
+        # starting time count
         start = time.time()
 
+        # creating the initial population
         population = Population(
             [
                 Individual(
@@ -159,24 +161,25 @@ class SLIM_GSGP:
             ]
         )
 
+        # calculating initial population semantics
         population.calculate_semantics(X_train)
 
+        # evaluating the initial population
         population.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
 
-        print(population.fit)
         end = time.time()
 
+        # setting up the elite(s)
         self.elites, self.elite = self.find_elit_func(population, n_elites)
 
-        print("FITNESS",self.elite.fitness)
-
-
+        # calculating the testing semantics and the elite's testing fitness if test_elite is true
         if test_elite:
             population.calculate_semantics(X_test, testing=True)
             self.elite.evaluate(
                 ffunction, y=y_test, testing=True, operator=self.operator
             )
 
+        # logging the results based on the log level
         if log != 0:
             if log == 2:
                 gen_diversity = (
@@ -260,6 +263,7 @@ class SLIM_GSGP:
                 seed=self.seed,
             )
 
+        # displaying the results on console if verbose level is more than 0
         if verbose != 0:
             verbose_reporter(
                 curr_dataset,
@@ -270,20 +274,37 @@ class SLIM_GSGP:
                 self.elite.nodes_count,
             )
 
+        # begining the evolution process
         for it in range(1, n_iter + 1, 1):
+            # starting an empty offspring population
             offs_pop, start = [], time.time()
+
+            # adding the elite to the offspring population, if applicable
             if elitism:
                 offs_pop.extend(self.elites)
+
+            # filling the offspring population
             while len(offs_pop) < self.pop_size:
+
+                # choosing between crossover and mutation
+
                 if random.random() < self.p_xo:
+
                     p1, p2 = self.selector(population), self.selector(population)
                     while p1 == p2:
+                        # choosing parents
                         p1, p2 = self.selector(population), self.selector(population)
-                    pass  # implement crossover
+                    pass  # future work on slim implementations should invent crossover
                 else:
+                    # so, mutation was selected. Now delation or inflation is selected.
                     if random.random() < self.p_deflate:
+
+                        # selecting the parent to deflate
                         p1 = self.selector(population, deflate=False)
+
+                        # if the parent has only one block, it cannot be deflated
                         if p1.size == 1:
+                            # if copy parent is set to true, the parent who cannot be deflated will be copied as the offspring
                             if self.copy_parent:
                                 off1 = Individual(
                                     collection=p1.collection if reconstruct else None,
@@ -305,6 +326,7 @@ class SLIM_GSGP:
                                     p1.size,
                                 )
                             else:
+                                # if we choose to not copy the parent, we inflate it instead
                                 ms_ = self.ms()
                                 off1 = self.inflate_mutator(
                                     p1,
@@ -317,12 +339,21 @@ class SLIM_GSGP:
                                 )
 
                         else:
+                            # if the size of the parent is more than 1, normal deflation can occur
                             off1 = self.deflate_mutator(p1, reconstruct=reconstruct)
 
+                    # inflation mutation was selected
                     else:
+
+                        # selecting a parent to inflate
                         p1 = self.selector(population, deflate=False)
+
+                        # determining the random mutation step
                         ms_ = self.ms()
+
+                        # if the chosen parent is already at maximum depth and therefore cannot be inflated
                         if max_depth is not None and p1.depth == max_depth:
+                            # if copy parent is set to true, the parent who cannot be inflated will be copied as the offspring
                             if self.copy_parent:
                                 off1 = Individual(
                                     collection=p1.collection if reconstruct else None,
@@ -343,11 +374,13 @@ class SLIM_GSGP:
                                     p1.depth,
                                     p1.size,
                                 )
+
+                            # if copy parent is false, the parent is deflated instead of inflated
                             else:
                                 off1 = self.deflate_mutator(p1, reconstruct=reconstruct)
 
+                        # so the chosen individual can be normally inflated
                         else:
-
                             off1 = self.inflate_mutator(
                                 p1,
                                 ms_,
@@ -358,7 +391,9 @@ class SLIM_GSGP:
                                 reconstruct=reconstruct,
                             )
 
+                        # if offspring resulting from inflation exceedes the max depth
                         if max_depth is not None and off1.depth > max_depth:
+                            # if copy parent is set to true, the offspring is discarded and the parent is chosen instead
                             if self.copy_parent:
                                 off1 = Individual(
                                     collection=p1.collection if reconstruct else None,
@@ -380,25 +415,35 @@ class SLIM_GSGP:
                                     p1.size,
                                 )
                             else:
+                                # otherwise, deflate the parent
                                 off1 = self.deflate_mutator(p1, reconstruct=reconstruct)
 
+                    # adding the new offspring to the offspring population
                     offs_pop.append(off1)
 
+            # removing any excess individuals from the offspring population
             if len(offs_pop) > population.size:
 
                 offs_pop = offs_pop[: population.size]
 
+            # turning the offspring population into a Population
             offs_pop = Population(offs_pop)
+            # calculating the offspring population semantics
             offs_pop.calculate_semantics(X_train)
 
+            # evaluating the offspring population
             offs_pop.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
-            population = offs_pop
 
+            # replacing the current population with the offspring population P = P'
+            population = offs_pop
             self.population = population
 
             end = time.time()
 
+            # setting the new elite(s)
             self.elites, self.elite = self.find_elit_func(population, n_elites)
+
+            # calculating the testing semantics and the elite's testing fitness if test_elite is true
 
             if test_elite:
                 self.elite.calculate_semantics(X_test, testing=True)
@@ -406,6 +451,7 @@ class SLIM_GSGP:
                     ffunction, y=y_test, testing=True, operator=self.operator
                 )
 
+            # logging the results based on the log level
             if log != 0:
 
                 if log == 2:
@@ -493,6 +539,7 @@ class SLIM_GSGP:
                     seed=self.seed,
                 )
 
+            # displaying the results on consule if verbose level is more than 0
             if verbose != 0:
                 verbose_reporter(
                     run_info[-1],

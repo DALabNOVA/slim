@@ -105,6 +105,3 @@ class Population:
         # Assign individuals' fitness
         [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
 
-
-
-
