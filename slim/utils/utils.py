@@ -626,3 +626,13 @@ def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator=
                 1000000000000.0,
             ),
         )
+
+        # if testing is false, return the value so that training parallelization has effect
+        return ffunction(
+                y,
+                torch.clamp(
+                    operator(individual.train_semantics, dim=0),
+                    -1000000000000.0,
+                    1000000000000.0,
+                ),
+            )

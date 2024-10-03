@@ -96,8 +96,12 @@ class Population:
         Returns:
             None
         """
-        Parallel(n_jobs=n_jobs)(
+        fits = Parallel(n_jobs=n_jobs)(
             delayed(_evaluate_slim_individual)(individual, ffunction=ffunction, y=y, operator=operator
             ) for individual in self.population)
 
-        self.fit = [individual.fitness for individual in self.population]
+        self.fit = fits
+
+        # Assign individuals' fitness
+        [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
+

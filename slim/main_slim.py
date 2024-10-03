@@ -31,7 +31,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          tree_functions: dict = FUNCTIONS,
          tree_constants: dict = CONSTANTS,
          copy_parent: bool = False,
-         max_depth: int = None):
+         max_depth: int = None,
+         n_jobs: int = 1):
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets.
 
@@ -138,6 +139,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
     slim_gsgp_solve_parameters["reconstruct"] = reconstruct
     slim_gsgp_solve_parameters["max_depth"] = max_depth
+    slim_gsgp_solve_parameters["n_jobs"] = n_jobs
 
     if X_test is not None and y_test is not None:
         slim_gsgp_solve_parameters["test_elite"] = True
@@ -202,7 +204,7 @@ if __name__ == "__main__":
                                   dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
                                                                 "log", f"TEST_slim_postgrid_{ds}-size.csv"),
-                                  max_depth=9, reconstruct=True)
+                                  max_depth=20, reconstruct=True, n_jobs=2)
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)
