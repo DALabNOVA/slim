@@ -36,7 +36,8 @@ gsgp_solve_parameters = {
     "test_elite": True,
     "run_info": None,
     "ffunction": rmse,
-    "reconstruct": False
+    "reconstruct": False,
+    "n_jobs": 1
 }
 
 # GSGP parameters
