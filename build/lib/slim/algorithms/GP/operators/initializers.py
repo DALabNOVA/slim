@@ -6,7 +6,7 @@ from slim.algorithms.GP.representations.tree_utils import (create_full_random_tr
                                                            create_grow_random_tree)
 
 
-def grow(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, p_terminal=0.5):
+def grow(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     """
     Generates a list of individuals with random trees for a GM4OS population using the Grow method.
 
@@ -16,16 +16,12 @@ def grow(size, depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, p_terminal=0.5):
         The total number of individuals to be generated for the population.
     depth : int
         The maximum depth of the trees.
-    FUNCTIONS : list
-        The list of functions allowed in the trees.
-    TERMINALS : list
-        The list of terminal symbols allowed in the trees.
-    CONSTANTS : list
-        The list of constant values allowed in the trees.
-    input_set_size : int
-        The size of the input set for each individual.
-    umbalanced_obs_ind : list
-        The list of unbalanced observation indices used in creating the random input set.
+    FUNCTIONS : dict
+        The functions allowed in the trees.
+    TERMINALS : dict
+        The terminal symbols allowed in the trees.
+    CONSTANTS : dict
+        The constant values allowed in the trees.
     p_c : float, optional
         The probability of choosing a constant node during tree creation. Default is 0.3.
     Returns

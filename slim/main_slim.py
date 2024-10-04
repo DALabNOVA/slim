@@ -198,7 +198,7 @@ if __name__ == "__main__":
             for algorithm in ["SLIM*SIG1"]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                                  dataset_name=ds, slim_version=algorithm, pop_size=100, n_iter=2000, seed=s, p_inflate=0.2,
+                                  dataset_name=ds, slim_version=algorithm, max_depth=5, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
                                                                 "log", f"TEST_slim_postgrid_{ds}-size.csv"))
 
