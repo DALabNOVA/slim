@@ -3,12 +3,10 @@ This script sets up the configuration dictionaries for the execution of the GP a
 """
 from slim.algorithms.GP.operators.crossover_operators import crossover_trees
 from slim.initializers.initializers import rhh, grow, full
-from slim.selection.selection_algorithms import \
-    tournament_selection_min
+from slim.selection.selection_algorithms import tournament_selection_min
 
 from slim.evaluators.fitness_functions import *
-from slim.utils.utils import (get_best_max, get_best_min,
-                              protected_div)
+from slim.utils.utils import get_best_min, protected_div
 import torch
 
 # Define functions and constants
@@ -38,7 +36,7 @@ gp_solve_parameters = {
     "verbose": 1,
     "test_elite": True,
     "run_info": None,
-    "minimization": True,
+    # "minimization": True,
     "ffunction": rmse,
     "tree_pruner": None,
     "n_jobs": 1
@@ -50,7 +48,7 @@ gp_parameters = {
     "selector": tournament_selection_min(2),
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
-    "find_elit_func": get_best_min if gp_solve_parameters["minimization"] else get_best_max
+    "find_elit_func": get_best_min # if gp_solve_parameters["minimization"] else get_best_max
 }
 
 gp_pi_init = {

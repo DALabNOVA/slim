@@ -18,7 +18,7 @@ def tournament_selection_max(pool_size):
 
     Returns
     -------
-    function
+    Callable
         Function to execute tournament selection.
     """
 
@@ -40,7 +40,7 @@ def tournament_selection_min(pool_size):
 
     Returns
     -------
-    function
+    Callable
         Function to execute tournament selection for minimum fitness.
     """
 

@@ -15,12 +15,12 @@ def grow(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
         The total number of individuals to be generated for the population.
     init_depth : int
         The maximum depth of the trees.
-    FUNCTIONS : list
-        The list of functions allowed in the trees.
-    TERMINALS : list
-        The list of terminal symbols allowed in the trees.
-    CONSTANTS : list
-        The list of constant values allowed in the trees.
+    FUNCTIONS : dict
+        The dictionary of functions allowed in the trees.
+    TERMINALS : dict
+        The dictionary of terminal symbols allowed in the trees.
+    CONSTANTS : dict
+        The dictionary of constant values allowed in the trees.
     p_c : float, optional
         The probability of choosing a constant node during tree creation. Default is 0.3.
     Returns
@@ -45,12 +45,12 @@ def full(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
         The total number of individuals to be generated for the population.
     init_depth : int
         The maximum depth of the trees.
-    FUNCTIONS : list
-        The list of functions allowed in the trees.
-    TERMINALS : list
-        The list of terminal symbols allowed in the trees.
-    CONSTANTS : list
-        The list of constant values allowed in the trees.
+    FUNCTIONS : dict
+        The dictionary of functions allowed in the trees.
+    TERMINALS : dict
+        The dictionary of terminal symbols allowed in the trees.
+    CONSTANTS : dict
+        The dictionary of constant values allowed in the trees.
     p_c : float, optional
         The probability of choosing a constant node during tree creation. Default is 0.3.
     Returns
@@ -73,14 +73,14 @@ def rhh(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     ----------
     init_pop_size : int
         The total number of individuals to be generated for the population.
-    depth : int
+    init_depth : int
         The maximum depth of the trees.
-    FUNCTIONS : list
-        The list of functions allowed in the trees.
-    TERMINALS : list
-        The list of terminal symbols allowed in the trees.
-    CONSTANTS : list
-        The list of constant values allowed in the trees.
+    FUNCTIONS : dict
+        The dictionary of functions allowed in the trees.
+    TERMINALS : dict
+        The dictionary of terminal symbols allowed in the trees.
+    CONSTANTS : dict
+        The dictionary of constant values allowed in the trees.
     p_c : float, optional
         The probability of choosing a constant node during tree creation. Default is 0.3.
     Returns
