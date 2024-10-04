@@ -95,6 +95,8 @@ class Tree:
             ffunction: Fitness function to evaluate the individual.
             y: Expected output (target) values as a torch tensor.
             testing: Boolean indicating if the evaluation is for testing semantics.
+            X: input data used for calculation. Optional inside the evolution process as only the semantics are needed,
+                but necessary outside of it.
 
         Returns:
             None

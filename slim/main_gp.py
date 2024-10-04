@@ -8,8 +8,10 @@ from slim.algorithms.GP.gp import GP
 from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
 from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
 from slim.config.gp_config import *
+from slim.selection.selection_algorithms import tournament_selection_max, tournament_selection_min
 from slim.utils.logger import log_settings
-from slim.utils.utils import get_terminals, validate_inputs, validate_constants_dictionary, validate_functions_dictionary
+from slim.utils.utils import (get_terminals, validate_inputs, validate_constants_dictionary,
+                              validate_functions_dictionary, get_best_max, get_best_min)
 
 # todo: would not be better to first log the settings and then perform the algorithm?
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,

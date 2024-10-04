@@ -7,8 +7,11 @@ import os
 from slim.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
 from slim.config.slim_config import *
 from slim.utils.logger import log_settings
-from slim.utils.utils import get_terminals, check_slim_version, validate_inputs, generate_random_uniform
+from slim.utils.utils import (get_terminals, check_slim_version, validate_inputs, generate_random_uniform,
+                              validate_constants_dictionary, validate_functions_dictionary, get_best_min, get_best_max)
 from slim.algorithms.SLIM_GSGP.operators.mutators import inflate_mutation
+from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import (tournament_selection_max_slim,
+                                                                      tournament_selection_min_slim)
 from typing import Callable
 
 
@@ -60,12 +63,6 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     """
 
     op, sig, trees = check_slim_version(slim_version=slim_version)
-
-    # Checking that both ms bounds are numerical
-    assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
-        "Both ms_lower and ms_upper must be either int or float"
-    # If so, create the ms callable
-    ms = generate_random_uniform(ms_lower, ms_upper)
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
@@ -147,12 +144,12 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         slim_gsgp_solve_parameters["test_elite"] = False
 
         # TODO: probably remove this option since maximization doesnt make sense here... but it will in classification...
-        if minimization:
-            slim_gsgp_parameters["selector"] = tournament_selection_min(2)
-            slim_gsgp_parameters["find_elit_func"] = get_best_min
-        else:
-            slim_gsgp_parameters["selector"] = tournament_selection_max(2)
-            slim_gsgp_parameters["find_elit_func"] = get_best_max
+    if minimization:
+        slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)
+        slim_gsgp_parameters["find_elit_func"] = get_best_min
+    else:
+        slim_gsgp_parameters["selector"] = tournament_selection_max_slim(2)
+        slim_gsgp_parameters["find_elit_func"] = get_best_max
 
     optimizer = SLIM_GSGP(
         pi_init=slim_gsgp_pi_init,

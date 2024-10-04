@@ -144,12 +144,12 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
 
     Parameters
     ----------
-    FUNCTIONS : list
-        List of functions used in the mutation.
-    TERMINALS : list
-        List of terminals used in the mutation.
-    CONSTANTS : list
-        List of constants used in the mutation.
+    FUNCTIONS : dict
+        The dictionary of functions used in the mutation.
+    TERMINALS : dict
+        The dictionary of terminals used in the mutation.
+    CONSTANTS : dict
+        The dictionary of constants used in the mutation.
     two_trees : bool
         Boolean indicating if two trees should be used.
     operator : str

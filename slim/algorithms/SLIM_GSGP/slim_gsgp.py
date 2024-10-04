@@ -78,6 +78,7 @@ class SLIM_GSGP:
         self.seed = seed
         self.operator = operator
         self.copy_parent = copy_parent
+        self.two_trees = two_trees
         self.settings_dict = settings_dict
         self.find_elit_func = find_elit_func
 
@@ -128,6 +129,7 @@ class SLIM_GSGP:
             max_depth: Maximum depth for trees.
             n_elites: Number of elite individuals.
             reconstruct: Boolean indicating if reconstruction is needed.
+            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
         """
 
         if test_elite and (X_test is None or y_test is None):
@@ -300,7 +302,7 @@ class SLIM_GSGP:
                     if random.random() < self.p_deflate:
 
                         # selecting the parent to deflate
-                        p1 = self.selector(population, deflate=False)
+                        p1 = self.selector(population)
 
                         # if the parent has only one block, it cannot be deflated
                         if p1.size == 1:
@@ -346,7 +348,7 @@ class SLIM_GSGP:
                     else:
 
                         # selecting a parent to inflate
-                        p1 = self.selector(population, deflate=False)
+                        p1 = self.selector(population)
 
                         # determining the random mutation step
                         ms_ = self.ms()

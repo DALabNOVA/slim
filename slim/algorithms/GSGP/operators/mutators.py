@@ -15,6 +15,7 @@ def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing,
         random_tree_2: The second random tree for mutation.
         ms: Mutation strength.
         testing: Boolean indicating if the operation is on test semantics.
+        new_data: Boolean indicating if new data is being used.
 
     Returns:
         Mutated semantics as a torch tensor.
@@ -55,6 +56,7 @@ def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_d
         random_tree_1: The random tree for mutation.
         ms: Mutation strength.
         testing: Boolean indicating if the operation is on test semantics.
+        new_data: Boolean indicating if new data is being used.
 
     Returns:
         Mutated semantics as a torch tensor.
@@ -97,9 +99,7 @@ def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_d
             )
 
 
-def product_two_trees_geometric_mutation(
-    tree, random_tree_1, random_tree_2, ms, testing
-):
+def product_two_trees_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing):
     """
     Apply product-based geometric mutation on tree semantics using two random trees.
 

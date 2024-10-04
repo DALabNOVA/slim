@@ -113,6 +113,7 @@ class GSGP:
             ffunction (function): Fitness function.
             reconstruct (bool): Whether to reconstruct trees.
             n_elites (int): Number of elites.
+            n_jobs (int): The maximum number of concurrently running jobs for joblib parallelization.
         """
         if test_elite and (X_test is None or y_test is None):
             raise Exception('If test_elite is True you need to provide a test dataset')

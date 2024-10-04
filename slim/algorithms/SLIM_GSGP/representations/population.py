@@ -92,6 +92,7 @@ class Population:
             ffunction: Fitness function to evaluate the individuals.
             y: Expected output (target) values as a torch tensor.
             operator: Operator to apply to the semantics ("sum" or "prod").
+            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
 
         Returns:
             None

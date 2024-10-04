@@ -4,7 +4,7 @@ Utility functions for Tree Evaluation and Mutation in Genetic Programming.
 
 from slim.algorithms.GP.representations.tree import Tree
 from slim.algorithms.GP.representations.tree_utils import bound_value
-
+import torch
 
 def _execute_tree(individual, inputs, testing=False, logistic=False):
 
@@ -52,7 +52,7 @@ def apply_tree(tree, inputs):
         inputs: Input vectors x and y.
 
     Returns:
-        float: Output of the evaluated tree.
+        torch.Tensor: Output of the evaluated tree.
     """
 
     if isinstance(tree.structure, tuple):  # If it's a function node

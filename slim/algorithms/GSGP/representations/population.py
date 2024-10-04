@@ -25,6 +25,8 @@ class Population:
         Args:
             inputs: Input data for calculating semantics.
             testing: Boolean indicating if the calculation is for testing semantics.
+            logistic: Boolean indicating whether to apply a logistic function to the semantics.
+            n_jobs: the maximum number of concurrently running jobs for joblib parallelization.
 
         Returns:
             None
