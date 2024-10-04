@@ -12,7 +12,6 @@ from slim.utils.utils import (get_terminals, check_slim_version, validate_inputs
 from slim.algorithms.SLIM_GSGP.operators.mutators import inflate_mutation
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import (tournament_selection_max_slim,
                                                                       tournament_selection_min_slim)
-from typing import Callable
 
 
 ELITES = {}
@@ -31,7 +30,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          initializer: str = "rhh",
          minimization: bool = True,
          prob_const: float = 0.2,
-         tree_functions: dict = FUNCTIONS,
+         tree_functions: dict = FUNCTIONS.keys(),
          tree_constants: dict = CONSTANTS,
          copy_parent: bool = False,
          max_depth: int = None,
@@ -69,10 +68,10 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
                     log_path=log_path, prob_const=prob_const)
 
     # verifying that the given tree functions and tree constants dictionaries are valid
-    if tree_functions != FUNCTIONS:
-        validate_functions_dictionary(tree_functions)
-    if tree_constants != CONSTANTS:
-        validate_constants_dictionary(tree_constants)
+    # if tree_functions != FUNCTIONS:
+    #     validate_functions_dictionary(tree_functions)
+    # if tree_constants != CONSTANTS:
+    #     validate_constants_dictionary(tree_constants)
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
@@ -108,8 +107,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters["copy_parent"] = copy_parent
 
     slim_gsgp_pi_init["TERMINALS"] = TERMINALS
-    slim_gsgp_pi_init["FUNCTIONS"] = tree_functions
-    slim_gsgp_pi_init["CONSTANTS"] = tree_constants
+    slim_gsgp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
+    slim_gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
 
     slim_gsgp_pi_init["init_pop_size"] = pop_size
     slim_gsgp_pi_init["init_depth"] = init_depth
@@ -118,9 +117,9 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
     slim_gsgp_parameters["pop_size"] = pop_size
     slim_gsgp_parameters["inflate_mutator"] = inflate_mutation(
-        FUNCTIONS=FUNCTIONS,
-        TERMINALS=TERMINALS,
-        CONSTANTS=CONSTANTS,
+        FUNCTIONS= slim_gsgp_pi_init["FUNCTIONS"],
+        TERMINALS= slim_gsgp_pi_init["TERMINALS"],
+        CONSTANTS= slim_gsgp_pi_init["CONSTANTS"],
         two_trees=slim_gsgp_parameters['two_trees'],
         operator=slim_gsgp_parameters['operator'],
         sig=sig
