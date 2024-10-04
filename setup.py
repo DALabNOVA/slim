@@ -10,7 +10,8 @@ setup(
         'pandas',
         'torch',
         'scipy',
-        'scikit-learn'
+        'scikit-learn',
+        'joblib'
     ],
     entry_points={
         'console_scripts': [

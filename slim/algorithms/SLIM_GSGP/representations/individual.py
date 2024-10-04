@@ -135,7 +135,7 @@ class Individual:
             )
 
 
-    def predict(self, data, slim_version):
+    def predict(self, data, slim_version=None):
         """
             Predict the output for the given input data using the model's collection of trees and specified slim version.
 
@@ -146,10 +146,9 @@ class Individual:
                 (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
                 different observation and each column represents a feature.
 
-            slim_version : bool
-                A flag to indicate whether to use a slim version of the model for prediction.
-                The exact meaning of slim version is determined by the `check_slim_version` function.
-
+            slim_version : str or None
+                A string to verify which version of slim to use for predictions. If None is passed, the
+                function will try to retrieve it from the object's parameters
             Returns
             -------
             Tensor
@@ -178,6 +177,8 @@ class Individual:
             This function relies on PyTorch for tensor operations, including `torch.sigmoid`,
             `torch.sum`, `torch.prod`, `torch.stack`, and `torch.clamp`.
             """
+        if slim_version is None:
+            slim_version = self.version
         operator, sig, trees = check_slim_version(slim_version=slim_version)
 
         semantics = []
@@ -216,25 +217,13 @@ class Individual:
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-    def print_tree_representation(self, indent=""):
-        """
-        Prints the tree representation with indentation.
+    def get_tree_representation(self, operator=None):
+        if operator is None:
+            operator = self.version
 
-        Parameters
-        ----------
-        indent : str, optional
-            Indentation for tree structure representation. Default is an empty string.
-        """
-        if isinstance(self.structure, tuple):  # If it's a function node
-            function_name = self.structure[0]
-            print(indent + f"{function_name}(")
-            if Tree.FUNCTIONS[function_name]["arity"] == 2:
-                left_subtree, right_subtree = self.structure[1], self.structure[2]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
-                Tree(right_subtree).print_tree_representation(indent + "  ")
-            else:
-                left_subtree = self.structure[1]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
-            print(indent + ")")
-        else:  # If it's a terminal node
-            print(indent + f"{self.structure}")
+        op = "+" if operator == "sum" else "*"
+
+        return f" {op} ".join([str(t.structure) if isinstance(t.structure,
+                                                              tuple) else f'f({t.structure[1].structure})' if len(
+            t.structure) == 3
+        else f'f({t.structure[1].structure} - {t.structure[2].structure})' for t in self.collection])

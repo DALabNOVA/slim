@@ -36,7 +36,8 @@ gsgp_solve_parameters = {
     "test_elite": True,
     "run_info": None,
     "ffunction": rmse,
-    "reconstruct": False
+    "reconstruct": False,
+    "n_jobs": 1
 }
 
 # GSGP parameters
@@ -52,7 +53,7 @@ gsgp_parameters = {
 gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0
+    "p_c": 0.2
 }
 
 fitness_function_options = {

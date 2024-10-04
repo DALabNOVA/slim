@@ -30,7 +30,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          tree_functions: dict = FUNCTIONS,
          tree_constants: dict = CONSTANTS,
          copy_parent: bool = False,
-         max_depth: int = None):
+         max_depth: int = None,
+         n_jobs: int = 1):
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets.
 
@@ -65,7 +66,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path)
+                    log_path=log_path, prob_const=prob_const)
 
     # verifying that the given tree functions and tree constants dictionaries are valid
     if tree_functions != FUNCTIONS:
@@ -78,9 +79,6 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         "Both ms_lower and ms_upper must be either int or float"
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
-
-    # assuring the prob_const is valid
-    assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
@@ -138,6 +136,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
     slim_gsgp_solve_parameters["reconstruct"] = reconstruct
     slim_gsgp_solve_parameters["max_depth"] = max_depth
+    slim_gsgp_solve_parameters["n_jobs"] = n_jobs
 
     if X_test is not None and y_test is not None:
         slim_gsgp_solve_parameters["test_elite"] = True
@@ -176,6 +175,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         unique_run_id=UNIQUE_RUN_ID
     )
 
+    optimizer.elite.version = slim_version
     return optimizer.elite
 
 
@@ -200,7 +200,8 @@ if __name__ == "__main__":
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
                                   dataset_name=ds, slim_version=algorithm, max_depth=5, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
-                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"))
+                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"),
+                                  max_depth=20, reconstruct=True, n_jobs=2)
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)

@@ -40,7 +40,7 @@ slim_gsgp_solve_parameters = {
 
 # SLIM GSGP parameters
 slim_gsgp_parameters = {
-    "initializer": rhh,
+    "initializer": full,
     "selector": tournament_selection_min_slim(2),
     "crossover": geometric_crossover,
     "ms": None,
@@ -58,7 +58,7 @@ slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
 slim_gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0
+    "p_c": 1
 }
 
 

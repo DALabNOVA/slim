@@ -5,6 +5,8 @@ Tree class implementation for representing tree structures in genetic programmin
 from slim.algorithms.GP.representations.tree_utils import (bound_value, flatten,
                                                            tree_depth, _execute_tree)
 
+import torch
+
 class Tree:
     """
     Represents a tree structure for genetic programming.

@@ -42,8 +42,8 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
                 *individual.structure[1:], testing=False
             )
 
-
 def apply_tree(tree, inputs):
+
     """
     Evaluates the tree on input vectors.
 
@@ -54,6 +54,7 @@ def apply_tree(tree, inputs):
     Returns:
         float: Output of the evaluated tree.
     """
+
     if isinstance(tree.structure, tuple):  # If it's a function node
         function_name = tree.structure[0]
         if tree.FUNCTIONS[function_name]["arity"] == 2:

@@ -38,7 +38,7 @@ final_tree = gp(X_train=X_train, y_train=y_train,
                 dataset_name='ppb', pop_size=100, n_iter=100)
 
 # Show the best individual structure at the last generation
-final_tree.print_tree_representation()
+final_tree.get_tree_representation()
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test)
@@ -105,7 +105,7 @@ final_tree = slim(X_train=X_train, y_train=y_train,
                   ms_lower=0, ms_upper=1, p_inflate=0.5)
 
 # Show the best individual structure at the last generation
-final_tree.print_tree_representation()
+final_tree.get_tree_representation()
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test, slim_version='SLIM+SIG2')
