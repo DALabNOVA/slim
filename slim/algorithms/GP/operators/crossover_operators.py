@@ -17,7 +17,7 @@ def crossover_trees(FUNCTIONS):
 
     Returns
     -------
-    function
+    Callable
         Function to perform crossover between two trees.
     """
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)

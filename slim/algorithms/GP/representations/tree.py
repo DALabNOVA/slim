@@ -2,9 +2,7 @@
 Tree class implementation for representing tree structures in genetic programming.
 """
 
-from slim.algorithms.GP.representations.tree_utils import (bound_value, flatten,
-                                                           tree_depth, _execute_tree)
-
+from slim.algorithms.GP.representations.tree_utils import bound_value, flatten, tree_depth, _execute_tree
 import torch
 
 class Tree:
@@ -62,7 +60,7 @@ class Tree:
 
         Parameters
         ----------
-        repr_ : object
+        repr_ : tuple
             Representation of the tree structure.
         """
         self.FUNCTIONS = Tree.FUNCTIONS
@@ -98,26 +96,26 @@ class Tree:
             CONSTANTS=self.CONSTANTS
         )
 
-        """ if isinstance(self.repr_, tuple):  # If it's a function node
-            function_name = self.repr_[0]
-            if Tree.FUNCTIONS[function_name]["arity"] == 2:
-                left_subtree, right_subtree = self.repr_[1], self.repr_[2]
-                left_result = Tree(left_subtree).apply_tree(inputs)
-                right_result = Tree(right_subtree).apply_tree(inputs)
-                output = Tree.FUNCTIONS[function_name]["function"](
-                    left_result, right_result
-                )
-            else:
-                left_subtree = self.repr_[1]
-                left_result = Tree(left_subtree).apply_tree(inputs)
-                output = Tree.FUNCTIONS[function_name]["function"](left_result)
-
-            return bound_value(output, -1e12, 1e12)
-        else:  # If it's a terminal node
-            if self.repr_ in self.TERMINALS:
-                return inputs[:, self.TERMINALS[self.repr_]]
-            elif self.repr_ in self.CONSTANTS:
-                return self.CONSTANTS """
+        # if isinstance(self.repr_, tuple):  # If it's a function node
+        #     function_name = self.repr_[0]
+        #     if Tree.FUNCTIONS[function_name]["arity"] == 2:
+        #         left_subtree, right_subtree = self.repr_[1], self.repr_[2]
+        #         left_result = Tree(left_subtree).apply_tree(inputs)
+        #         right_result = Tree(right_subtree).apply_tree(inputs)
+        #         output = Tree.FUNCTIONS[function_name]["function"](
+        #             left_result, right_result
+        #         )
+        #     else:
+        #         left_subtree = self.repr_[1]
+        #         left_result = Tree(left_subtree).apply_tree(inputs)
+        #         output = Tree.FUNCTIONS[function_name]["function"](left_result)
+        #
+        #     return bound_value(output, -1e12, 1e12)
+        # else:  # If it's a terminal node
+        #     if self.repr_ in self.TERMINALS:
+        #         return inputs[:, self.TERMINALS[self.repr_]]
+        #     elif self.repr_ in self.CONSTANTS:
+        #         return self.CONSTANTS
 
     def evaluate(self, ffunction, X, y, testing=False, new_data = False):
         """
@@ -133,6 +131,8 @@ class Tree:
             The expected output (target) values.
         testing : bool, optional
             Flag indicating if the data is testing data. Default is False.
+        new_data : bool, optional
+            Flag indicating that the input data is new and the model is being used outside the training process.
 
         Returns
         -------

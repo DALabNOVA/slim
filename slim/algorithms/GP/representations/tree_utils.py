@@ -24,7 +24,7 @@ def bound_value(vector, min_val, max_val):
     Returns
     -------
     torch.Tensor
-        Tensor with values bounded between min_val and max_val.
+        A Tensor with values bounded between min_val and max_val.
     """
     return torch.clamp(vector, min_val, max_val)
 
@@ -50,9 +50,7 @@ def flatten(data):
         yield data
 
 
-def create_grow_random_tree(
-    depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, first_call=True
-):
+def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, first_call=True):
     """
     Generates a random tree using the Grow method with a specified depth.
 
@@ -69,7 +67,7 @@ def create_grow_random_tree(
     p_c : float, optional
         Probability of choosing a constant node. Default is 0.3.
     first_call : bool, optional
-        Variable that controls whether or not the function is being called for the first time. Default is True.
+        Variable that controls whether the function is being called for the first time. Default is True.
 
     Returns
     -------
@@ -77,9 +75,7 @@ def create_grow_random_tree(
         The generated tree according to the specified parameters.
     """
     if p_c > 0:
-        p_terminal = (len(TERMINALS) + len(CONSTANTS)) / (
-            len(TERMINALS) + len(CONSTANTS) + len(FUNCTIONS)
-        )
+        p_terminal = (len(TERMINALS) + len(CONSTANTS)) / (len(TERMINALS) + len(CONSTANTS) + len(FUNCTIONS))
     else:
         p_terminal = len(TERMINALS) / (len(TERMINALS) + len(FUNCTIONS))
 
@@ -91,17 +87,11 @@ def create_grow_random_tree(
     else:
         node = np.random.choice(list(FUNCTIONS.keys()))
         if FUNCTIONS[node]["arity"] == 2:
-            left_subtree = create_grow_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False
-            )
-            right_subtree = create_grow_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False
-            )
+            left_subtree = create_grow_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False)
+            right_subtree = create_grow_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False)
             node = (node, left_subtree, right_subtree)
         else:
-            left_subtree = create_grow_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False
-            )
+            left_subtree = create_grow_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False)
             node = (node, left_subtree)
     return node
 
@@ -136,24 +126,18 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     else:
         node = np.random.choice(list(FUNCTIONS.keys()))
         if FUNCTIONS[node]["arity"] == 2:
-            left_subtree = create_full_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c
-            )
-            right_subtree = create_full_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c
-            )
+            left_subtree = create_full_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
+            right_subtree = create_full_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
             node = (node, left_subtree, right_subtree)
         else:
-            left_subtree = create_full_random_tree(
-                depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c
-            )
+            left_subtree = create_full_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
             node = (node, left_subtree)
     return node
 
 
 def random_subtree(FUNCTIONS):
     """
-    Selects a random subtree from a given tree.
+    Creates a function that selects a random subtree from a given tree.
 
     Parameters
     ----------
@@ -162,7 +146,7 @@ def random_subtree(FUNCTIONS):
 
     Returns
     -------
-    function
+    Callable
         A function that selects a random subtree from the input tree.
     """
 
@@ -219,7 +203,7 @@ def random_subtree(FUNCTIONS):
 
 def substitute_subtree(FUNCTIONS):
     """
-    Substitutes a specific subtree in a tree with a new subtree.
+    Generates a function that substitutes a specific subtree in a tree with a new subtree.
 
     Parameters
     ----------
@@ -252,7 +236,7 @@ def substitute_subtree(FUNCTIONS):
 
 def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
     """
-    Reduces both sides of a tree to a specific depth.
+    Generates a function that reduces both sides of a tree to a specific depth.
 
     Parameters
     ----------
@@ -267,7 +251,7 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
 
     Returns
     -------
-    function
+    Callable
         A function that prunes the tree to the specified depth.
     """
 
@@ -293,7 +277,7 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
 
 def tree_depth(FUNCTIONS):
     """
-    Calculates the depth of a given tree.
+    Generates a function that calculates the depth of a given tree.
 
     Parameters
     ----------
@@ -302,7 +286,7 @@ def tree_depth(FUNCTIONS):
 
     Returns
     -------
-    function
+    Callable
         A function that calculates the depth of the input tree.
     """
 

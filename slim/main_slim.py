@@ -204,7 +204,7 @@ if __name__ == "__main__":
                                   dataset_name=ds, slim_version=algorithm, max_depth=5, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
                                                                 "log", f"TEST_slim_postgrid_{ds}-size.csv"),
-                                  max_depth=20, reconstruct=True, n_jobs=2)
+                                   reconstruct=True, n_jobs=2)
 
                 print(show_individual(final_tree, operator='sum'))
                 predictions = final_tree.predict(data=X_test, slim_version=algorithm)

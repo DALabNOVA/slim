@@ -29,7 +29,7 @@ def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
         Probability of choosing a constant node for mutation.
     Returns
     -------
-    function
+    Callable
         A function for mutating a node within a tree according to the specified parameters.
     """
 
@@ -64,18 +64,18 @@ def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
             left_subtree = inside_m(tree[1])
             if FUNCTIONS[tree[0]]["arity"] == 2:
                 right_subtree = inside_m(tree[2])
-                return (new_function, left_subtree, right_subtree)
+                return new_function, left_subtree, right_subtree
             elif FUNCTIONS[tree[0]]["arity"] == 1:
-                return (new_function, left_subtree)
+                return new_function, left_subtree
         elif node_to_mutate == 1:
             left_subtree = inside_m(tree[1])
             if FUNCTIONS[tree[0]]["arity"] == 2:
-                return (tree[0], left_subtree, tree[2])
+                return tree[0], left_subtree, tree[2]
             elif FUNCTIONS[tree[0]]["arity"] == 1:
-                return (tree[0], left_subtree)
+                return tree[0], left_subtree
         else:
             right_subtree = inside_m(tree[2])
-            return (tree[0], tree[1], right_subtree)
+            return tree[0], tree[1], right_subtree
 
     return m_tn
 
@@ -86,13 +86,21 @@ def mutate_tree_subtree(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
 
     Parameters
     ----------
+    max_depth : int
+        Maximum depth of the tree to consider during mutation.
+    TERMINALS : dict
+        Dictionary of terminal symbols allowed in the tree.
+    CONSTANTS : dict
+        Dictionary of constant values allowed in the tree.
     FUNCTIONS : dict
         Dictionary of functions allowed in the tree.
+    p_c : float
+        Probability of choosing a constant node for mutation.
 
     Returns
     -------
-    function
-        A function for mutating subtrees between two trees based on the specified functions.
+    Callable
+        Function for mutating subtrees between two trees based on the specified functions.
     """
 
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)

@@ -12,8 +12,8 @@ class Population:
 
         Parameters
         ----------
-        pop : list
-            List of individual objects that make up the population.
+        pop : List
+            The list of individual objects that make up the population.
         """
         self.population = pop
         self.size = len(pop)
