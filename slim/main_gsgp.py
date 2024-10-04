@@ -24,8 +24,8 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          initializer: str = "rhh",
          minimization: bool = True,
          prob_const: float = 0.2,
-         tree_functions: dict = FUNCTIONS,
-         tree_constants: dict = CONSTANTS,
+         tree_functions: list = list(FUNCTIONS.keys()),
+         tree_constants: list = list(CONSTANTS.keys()),
          n_jobs: int = 1):
     """
     Main function to execute the Standard GSGP algorithm on specified datasets
@@ -68,16 +68,10 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         Returns the best individual at the last generation.
     """
 
-    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                    pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path, prob_const=prob_const)
+    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
+                    elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
+                    tree_functions=tree_functions, tree_constants=tree_constants)
 
-    # TODO: verify this
-    # verifying that the given tree functions and tree constants dictionaries are valid
-    if tree_functions != FUNCTIONS:
-        validate_functions_dictionary(tree_functions)
-    if tree_constants != CONSTANTS:
-        validate_constants_dictionary(tree_constants)
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
@@ -120,8 +114,24 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # getting the terminals based on the training data
     TERMINALS = get_terminals(X_train)
     gsgp_pi_init["TERMINALS"] = TERMINALS
-    gsgp_pi_init["FUNCTIONS"] = tree_functions
-    gsgp_pi_init["CONSTANTS"] = tree_constants
+    try:
+        gsgp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
+    except KeyError as e:
+        valid_functions = list(FUNCTIONS)
+        raise KeyError(
+            "The available tree functions are: " + f"{', '.join(valid_functions[:-1])} or "f"{valid_functions[-1]}"
+            if len(valid_functions) > 1 else valid_functions[0])
+
+
+    try:
+        gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+    except KeyError as e:
+        valid_constants = list(CONSTANTS)
+        raise KeyError(
+            "The available tree constants are: " + f"{', '.join(valid_constants[:-1])} or "f"{valid_constants[-1]}"
+            if len(valid_constants) > 1 else valid_constants[0])
+
+
 
     # setting up the information of the run, for logging purposes
     gsgp_solve_parameters["run_info"] = [algo_name, unique_run_id, dataset_name]

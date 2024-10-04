@@ -30,8 +30,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          initializer: str = "rhh",
          minimization: bool = True,
          prob_const: float = 0.2,
-         tree_functions: dict = FUNCTIONS.keys(),
-         tree_constants: dict = CONSTANTS,
+         tree_functions: dict = list(FUNCTIONS.keys()),
+         tree_constants: dict = list(CONSTANTS.keys()),
          copy_parent: bool = False,
          max_depth: int = None,
          n_jobs: int = 1):
@@ -65,7 +65,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
                     pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path, prob_const=prob_const)
+                    log_path=log_path, prob_const=prob_const, tree_functions=tree_functions,
+                    tree_constants=tree_constants)
 
     # verifying that the given tree functions and tree constants dictionaries are valid
     # if tree_functions != FUNCTIONS:
@@ -107,8 +108,24 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters["copy_parent"] = copy_parent
 
     slim_gsgp_pi_init["TERMINALS"] = TERMINALS
-    slim_gsgp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
-    slim_gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+    try:
+        slim_gsgp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
+    except KeyError as e:
+        valid_functions = list(FUNCTIONS)
+        raise KeyError(
+            "The available tree functions are: " + f"{', '.join(valid_functions[:-1])} or "f"{valid_functions[-1]}"
+            if len(valid_functions) > 1 else valid_functions[0])
+
+
+    try:
+        slim_gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+    except KeyError as e:
+        valid_constants = list(CONSTANTS)
+        raise KeyError(
+            "The available tree constants are: " + f"{', '.join(valid_constants[:-1])} or "f"{valid_constants[-1]}"
+            if len(valid_constants) > 1 else valid_constants[0])
+
+
 
     slim_gsgp_pi_init["init_pop_size"] = pop_size
     slim_gsgp_pi_init["init_depth"] = init_depth

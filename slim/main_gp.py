@@ -25,8 +25,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        initializer: str = "rhh",
        n_jobs: int = 1,
        prob_const: float = 0.2,
-       tree_functions: dict = FUNCTIONS,
-       tree_constants: dict = CONSTANTS):
+       tree_functions: list = list(FUNCTIONS.keys()),
+       tree_constants: list = list(CONSTANTS.keys())):
     """
     Main function to execute the StandardGP algorithm on specified datasets
 
@@ -67,9 +67,9 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         Returns the best individual at the last generation.
     """
 
-    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                    pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path, prob_const=prob_const)
+    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
+                    elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
+                    tree_functions=tree_functions, tree_constants=tree_constants)
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
@@ -91,10 +91,6 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
             if len(valid_initializers) > 1 else valid_initializers[0]
 
-    if tree_functions != FUNCTIONS:
-        validate_functions_dictionary(tree_functions)
-    if tree_constants != CONSTANTS:
-        validate_constants_dictionary(tree_constants)
 
 
     if not elitism:
@@ -108,8 +104,24 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     # GP PI INIT
     TERMINALS = get_terminals(X_train)
     gp_pi_init["TERMINALS"] = TERMINALS
-    gp_pi_init["FUNCTIONS"] = tree_functions
-    gp_pi_init["CONSTANTS"] = tree_constants
+    try:
+        gp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
+    except KeyError as e:
+        valid_functions = list(FUNCTIONS)
+        raise KeyError(
+            "The available tree functions are: " + f"{', '.join(valid_functions[:-1])} or "f"{valid_functions[-1]}"
+            if len(valid_functions) > 1 else valid_functions[0])
+
+
+    try:
+        gp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+    except KeyError as e:
+        valid_constants = list(CONSTANTS)
+        raise KeyError(
+            "The available tree constants are: " + f"{', '.join(valid_constants[:-1])} or "f"{valid_constants[-1]}"
+            if len(valid_constants) > 1 else valid_constants[0])
+
+
     gp_pi_init["p_c"] = prob_const
 
     gp_pi_init["init_pop_size"] = pop_size # TODO: why init pop_size != than rest?
@@ -120,7 +132,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_parameters["p_m"] = 1 - gp_parameters["p_xo"]
     gp_parameters["pop_size"] = pop_size
     gp_parameters["mutator"] = mutate_tree_subtree(
-        gp_pi_init['init_depth'], TERMINALS, CONSTANTS, FUNCTIONS, p_c=gp_pi_init['p_c']
+        gp_pi_init['init_depth'],  gp_pi_init["TERMINALS"], gp_pi_init['CONSTANTS'], gp_pi_init['FUNCTIONS'],
+        p_c=gp_pi_init['p_c']
     )
     gp_parameters["initializer"] = initializer_options[initializer]
 
@@ -133,9 +146,10 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_solve_parameters["max_depth"] = max_depth
     gp_solve_parameters["n_iter"] = n_iter
     gp_solve_parameters["tree_pruner"] = tree_pruning(
-        TERMINALS=TERMINALS, CONSTANTS=CONSTANTS, FUNCTIONS=FUNCTIONS, p_c=gp_pi_init["p_c"]
+        TERMINALS=gp_pi_init['TERMINALS'], CONSTANTS=gp_pi_init['CONSTANTS'], FUNCTIONS=gp_pi_init['FUNCTIONS'],
+        p_c=gp_pi_init["p_c"]
     )
-    gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=FUNCTIONS)
+    gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=gp_pi_init['FUNCTIONS'])
     gp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
     gp_solve_parameters["n_jobs"] = n_jobs
 

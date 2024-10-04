@@ -461,7 +461,7 @@ def gs_size(y_true, y_pred):
 
 
 def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path,
-                    prob_const):
+                    prob_const, tree_functions, tree_constants):
     """
     Validates the inputs based on the specified conditions.
 
@@ -480,24 +480,44 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
 
     Raises:
     AssertionError: If any of the conditions are not met.
+
+    Parameters
+    ----------
+    tree_functions
+    tree_constants
     """
-    assert isinstance(X_train, torch.Tensor), "X_train must be a torch.Tensor"
-    assert isinstance(y_train, torch.Tensor), "y_train must be a torch.Tensor"
-    if X_test is not None:
-        assert isinstance(X_test, torch.Tensor), "X_test must be a torch.Tensor"
-    if y_test is not None:
-        assert isinstance(y_test, torch.Tensor), "y_test must be a torch.Tensor"
-    assert isinstance(pop_size, int), "Input must be a int"
-    assert isinstance(n_iter, int), "Input must be a int"
-    assert isinstance(elitism, bool), "Input must be a bool"
-    assert isinstance(n_elites, int), "Input must be a int"
-    assert isinstance(init_depth, int), "Input must be a int"
-    assert isinstance(log_path, str), "Input must be a str"
+    if not isinstance(X_train, torch.Tensor):
+        raise TypeError("X_train must be a torch.Tensor")
+    if not isinstance(y_train, torch.Tensor):
+        raise TypeError("y_train must be a torch.Tensor")
+    if X_test is not None and not isinstance(X_test, torch.Tensor):
+        raise TypeError("X_test must be a torch.Tensor")
+    if y_test is not None and not isinstance(y_test, torch.Tensor):
+        raise TypeError("y_test must be a torch.Tensor")
+    if not isinstance(pop_size, int):
+        raise TypeError("pop_size must be an int")
+    if not isinstance(n_iter, int):
+        raise TypeError("n_iter must be an int")
+    if not isinstance(elitism, bool):
+        raise TypeError("elitism must be a bool")
+    if not isinstance(n_elites, int):
+        raise TypeError("n_elites must be an int")
+    if not isinstance(init_depth, int):
+        raise TypeError("init_depth must be an int")
+    if not isinstance(log_path, str):
+        raise TypeError("log_path must be a str")
 
     # assuring the prob_const is valid
-    assert isinstance(prob_const, float) or isinstance(prob_const, int), "Input must be a float (or int in probability = 1 or 0)"
+    if not (isinstance(prob_const, float) or isinstance(prob_const, int)):
+        raise TypeError("prob_const must be a float (or an int when probability is 1 or 0)")
 
     assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
+
+    # Ensuring the functions and constants passed are valid
+    if not isinstance(tree_functions, list) or len(tree_functions) == 0:
+        raise TypeError("tree_functions must be a non-empty list")
+    if not isinstance(tree_constants, list) or len(tree_constants) == 0:
+        raise TypeError("tree_constants must be a non-empty list")
 
 def check_slim_version(slim_version):
     """
