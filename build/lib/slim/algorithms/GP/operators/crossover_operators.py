@@ -6,9 +6,9 @@ from slim.algorithms.GP.representations.tree_utils import (random_subtree,
                                                            substitute_subtree)
 
 
-def crossover_trees(FUNCTIONS):
+def standard_crossover(FUNCTIONS):
     """
-    Performs crossover between two trees.
+    Generates a function to perform crossover between two trees.
 
     Parameters
     ----------
@@ -17,8 +17,24 @@ def crossover_trees(FUNCTIONS):
 
     Returns
     -------
-    function
+    Callable
         Function to perform crossover between two trees.
+
+        Parameters
+        ----------
+        tree1 : tuple
+            The first tree.
+        tree2 : tuple
+            The second tree.
+        tree1_n_nodes : int
+            Number of nodes in the first tree.
+        tree2_n_nodes : int
+            Number of nodes in the second tree.
+
+        Returns
+        -------
+        tuple
+            Two new trees after performing crossover.
     """
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)
     random_subtree_picker = random_subtree(FUNCTIONS=FUNCTIONS)
