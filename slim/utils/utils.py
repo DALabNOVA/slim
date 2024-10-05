@@ -517,8 +517,12 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     # Ensuring the functions and constants passed are valid
     if not isinstance(tree_functions, list) or len(tree_functions) == 0:
         raise TypeError("tree_functions must be a non-empty list")
+
     if not isinstance(tree_constants, list) or len(tree_constants) == 0:
         raise TypeError("tree_constants must be a non-empty list")
+
+    all(isinstance(elem, (int, float)) and not isinstance(elem, bool) for elem in tree_constants),
+    "tree_constants must be a list containing only integers and floats"
 
     if not isinstance(log, int):
         raise TypeError("log_level must be an int")
