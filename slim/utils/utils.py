@@ -461,7 +461,8 @@ def gs_size(y_true, y_pred):
 
 
 def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path,
-                    prob_const, tree_functions, tree_constants, log, verbose, minimization, n_jobs):
+                    prob_const, tree_functions, tree_constants, log, verbose, minimization, n_jobs, test_elite,
+                    fitness_function, initializer):
     """
     Validates the inputs based on the specified conditions.
 
@@ -536,6 +537,19 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
         raise TypeError("n_jobs must be an int")
 
     assert n_jobs >= 1, "n_jobs must be at least 1"
+
+    if not isinstance(test_elite, bool):
+        raise TypeError("test_elite must be a bool")
+
+    if test_elite and (X_test is None or y_test is None):
+        raise Exception("If test_elite is True, a test dataset must be provided")
+
+    if not isinstance(fitness_function, str):
+        raise TypeError("fitness_function must be a str")
+
+    if not isinstance(initializer, str):
+        raise TypeError("initializer must be a str")
+
 
 def check_slim_version(slim_version):
     """

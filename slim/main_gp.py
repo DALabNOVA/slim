@@ -27,7 +27,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        n_jobs: int = 1,
        prob_const: float = 0.2,
        tree_functions: list = list(FUNCTIONS.keys()),
-       tree_constants: list = list(CONSTANTS.keys())):
+       tree_constants: list = list(CONSTANTS.keys()),
+       test_elite: bool = True):
 
     """
     Main function to execute the StandardGP algorithm on specified datasets
@@ -76,16 +77,13 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
-                    minimization=minimization, n_jobs=n_jobs)
+                    minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
+                    initializer=initializer)
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
     if not isinstance(max_depth, int):
         raise TypeError("max_depth value must be a int")
-
-    # validating the input training fitness
-    if not isinstance(fitness_function, str):
-        raise TypeError("fitness_function must be a str")
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
@@ -95,9 +93,6 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         "fitness function must be: " + f"{', '.join(valid_fitnesses[:-1])} or {valid_fitnesses[-1]}" \
             if len(valid_fitnesses) > 1 else valid_fitnesses[0]
 
-    # validating the input initializer
-    if not isinstance(initializer, str):
-        raise TypeError("initializer must be a str")
 
     # creating a list with the valid available initializers
     valid_initializers = list(initializer_options)
@@ -117,9 +112,9 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     unique_run_id = uuid.uuid1()
 
     algo = "StandardGP"
-    gp_solve_parameters['run_info'] = [algo, unique_run_id, dataset_name]
 
-    # GP PI INIT
+#   *************** GP_PI_INIT ***************
+
     TERMINALS = get_terminals(X_train)
     gp_pi_init["TERMINALS"] = TERMINALS
     try:
@@ -130,7 +125,6 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
             "The available tree functions are: " + f"{', '.join(valid_functions[:-1])} or "f"{valid_functions[-1]}"
             if len(valid_functions) > 1 else valid_functions[0])
 
-
     try:
         gp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
     except KeyError as e:
@@ -139,13 +133,12 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
             "The available tree constants are: " + f"{', '.join(valid_constants[:-1])} or "f"{valid_constants[-1]}"
             if len(valid_constants) > 1 else valid_constants[0])
 
-
     gp_pi_init["p_c"] = prob_const
-
     gp_pi_init["init_pop_size"] = pop_size # TODO: why init pop_size != than rest?
     gp_pi_init["init_depth"] = init_depth
 
-    # GP PARAMETERS
+#   *************** GP_PARAMETERS ***************
+
     gp_parameters["p_xo"] = p_xo
     gp_parameters["p_m"] = 1 - gp_parameters["p_xo"]
     gp_parameters["pop_size"] = pop_size
@@ -155,7 +148,16 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     )
     gp_parameters["initializer"] = initializer_options[initializer]
 
-    # GP SOLVE PARAMETERS
+    if minimization:
+        gp_parameters["selector"] = tournament_selection_min(2)
+        gp_parameters["find_elit_func"] = get_best_min
+    else:
+        gp_parameters["selector"] = tournament_selection_max(2)
+        gp_parameters["find_elit_func"] = get_best_max
+
+#   *************** GP_SOLVE_PARAMETERS ***************
+
+    gp_solve_parameters['run_info'] = [algo, unique_run_id, dataset_name]
     gp_solve_parameters["log"] = log_level
     gp_solve_parameters["verbose"] = verbose
     gp_solve_parameters["log_path"] = log_path
@@ -170,19 +172,11 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=gp_pi_init['FUNCTIONS'])
     gp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
     gp_solve_parameters["n_jobs"] = n_jobs
+    gp_solve_parameters["test_elite"] = test_elite
 
-    if X_test is not None and y_test is not None:
-        gp_solve_parameters["test_elite"] = True
-    else:
-        gp_solve_parameters["test_elite"] = False
-
-    if minimization:
-        gp_parameters["selector"] = tournament_selection_min(2)
-        gp_parameters["find_elit_func"] = get_best_min
-    else:
-        gp_parameters["selector"] = tournament_selection_max(2)
-        gp_parameters["find_elit_func"] = get_best_max
-
+    # ================================
+    #       Running the Algorithm
+    # ================================
 
     optimizer = GP(pi_init=gp_pi_init, **gp_parameters, seed=seed)
     optimizer.solve(
