@@ -18,7 +18,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        dataset_name: str = None, pop_size: int = 100, n_iter: int = 1000, p_xo: float = 0.8,
        elitism: bool = True, n_elites: int = 1, max_depth: int = 17, init_depth: int = 6,
        log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42,
-       log: int = 1,
+       log_level: int = 1,
        verbose: int = 1,
        minimization: bool = True,
        fitness_function: str = "rmse",
@@ -27,6 +27,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        prob_const: float = 0.2,
        tree_functions: list = list(FUNCTIONS.keys()),
        tree_constants: list = list(CONSTANTS.keys())):
+
     """
     Main function to execute the StandardGP algorithm on specified datasets
 
@@ -69,29 +70,13 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
-                    tree_functions=tree_functions, tree_constants=tree_constants)
+                    tree_functions=tree_functions, tree_constants=tree_constants, fitness_function=fitness_function,
+                    initializer=initializer, log=log_level, verbose=verbose)
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
-    assert isinstance(max_depth, int), "Input must be a int"
-
-    # creating a list with the valid available fitness functions
-    valid_fitnesses = list(fitness_function_options)
-
-    # assuring the chosen fitness_function is valid
-    assert fitness_function.lower() in fitness_function_options.keys(), \
-        "fitness function must be: " + f"{', '.join(valid_fitnesses[:-1])} or {valid_fitnesses[-1]}" \
-            if len(valid_fitnesses) > 1 else valid_fitnesses[0]
-
-    # creating a list with the valid available initializers
-    valid_initializers = list(initializer_options)
-
-    # assuring the chosen initializer is valid
-    assert initializer.lower() in initializer_options.keys(), \
-        "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
-            if len(valid_initializers) > 1 else valid_initializers[0]
-
-
+    if not isinstance(max_depth, int):
+        raise TypeError("max_depth value must be a int")
 
     if not elitism:
         n_elites = 0
@@ -138,7 +123,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_parameters["initializer"] = initializer_options[initializer]
 
     # GP SOLVE PARAMETERS
-    gp_solve_parameters["log"] = log
+    gp_solve_parameters["log"] = log_level
     gp_solve_parameters["verbose"] = verbose
     gp_solve_parameters["log_path"] = log_path
     gp_solve_parameters["elitism"] = elitism

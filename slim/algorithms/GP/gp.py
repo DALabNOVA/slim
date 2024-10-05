@@ -106,7 +106,7 @@ class GP:
             n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
         """
         if test_elite and (X_test is None or y_test is None):
-            raise Exception('If test_elite is True you need to provide a test dataset')
+            raise Exception('If test_elite is True, a test dataset must be provided')
 
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
