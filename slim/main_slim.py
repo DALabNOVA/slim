@@ -37,8 +37,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          initializer: str = slim_gsgp_parameters["initializer"],
          minimization: bool = True,
          prob_const: float = slim_gsgp_pi_init["p_c"],
-         tree_functions: dict = list(FUNCTIONS.keys()),
-         tree_constants: dict = list(CONSTANTS.keys()),
+         tree_functions: list = list(FUNCTIONS.keys()),
+         tree_constants: list = [2,3,4,5,-1],
          copy_parent: bool =slim_gsgp_parameters["copy_parent"],
          max_depth: int = slim_gsgp_solve_parameters["max_depth"],
          n_jobs: int = slim_gsgp_solve_parameters["n_jobs"],
@@ -133,7 +133,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
             if len(valid_functions) > 1 else valid_functions[0])
 
     try:
-        slim_gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+        slim_gsgp_pi_init['CONSTANTS'] = {f"constant_{str(n).replace('-', '_')}": lambda _: torch.tensor(n) for n in
+                                          tree_constants}
     except KeyError as e:
         valid_constants = list(CONSTANTS)
         raise KeyError(

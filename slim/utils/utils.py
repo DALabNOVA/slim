@@ -521,7 +521,7 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     if not isinstance(tree_constants, list) or len(tree_constants) == 0:
         raise TypeError("tree_constants must be a non-empty list")
 
-    all(isinstance(elem, (int, float)) and not isinstance(elem, bool) for elem in tree_constants),
+    assert all(isinstance(elem, (int, float)) and not isinstance(elem, bool) for elem in tree_constants), \
     "tree_constants must be a list containing only integers and floats"
 
     if not isinstance(log, int):
