@@ -132,6 +132,9 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     #   *************** SLIM_GSGP_PARAMETERS ***************
 
+    slim_gsgp_parameters["two_trees"] = trees
+    slim_gsgp_parameters["operator"] = op
+
     slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
     slim_gsgp_parameters["pop_size"] = pop_size
     slim_gsgp_parameters["inflate_mutator"] = inflate_mutation(
@@ -147,8 +150,6 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters['p_inflate'] = p_inflate
     slim_gsgp_parameters['p_deflate'] = 1 - slim_gsgp_parameters['p_inflate']
     slim_gsgp_parameters["copy_parent"] = copy_parent
-    slim_gsgp_parameters["two_trees"] = trees
-    slim_gsgp_parameters["operator"] = op
 
     if minimization:
         slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)
@@ -225,7 +226,7 @@ if __name__ == "__main__":
             for algorithm in ["SLIM*SIG1"]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                                  dataset_name=ds, slim_version=algorithm, max_depth=5, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
+                                  dataset_name=ds, slim_version=algorithm, max_depth=15, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
                                                                 "log", f"TEST_slim_postgrid_{ds}-size.csv"),
                                    reconstruct=True, n_jobs=2)
