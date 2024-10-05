@@ -31,7 +31,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        n_jobs: int = gp_solve_parameters["n_jobs"],
        prob_const: float = gp_pi_init["p_c"],
        tree_functions: list = list(FUNCTIONS.keys()),
-       tree_constants: list = list(CONSTANTS.keys()),
+       tree_constants: list = [float(key.replace("constant_", "").replace("_", "-")) for key in CONSTANTS],
        test_elite: bool = gp_solve_parameters["test_elite"]):
 
     """
@@ -132,7 +132,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
             if len(valid_functions) > 1 else valid_functions[0])
 
     try:
-        gp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+        gp_pi_init['CONSTANTS'] = {f"constant_{str(n).replace('-', '_')}": lambda _, num=n: torch.tensor(num)
+                                   for n in tree_constants}
     except KeyError as e:
         valid_constants = list(CONSTANTS)
         raise KeyError(

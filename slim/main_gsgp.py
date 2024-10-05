@@ -32,7 +32,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          minimization: bool = True,
          prob_const: float = gsgp_pi_init["p_c"],
          tree_functions: list = list(FUNCTIONS.keys()),
-         tree_constants: list = list(CONSTANTS.keys()),
+         tree_constants: list = [float(key.replace("constant_", "").replace("_", "-")) for key in CONSTANTS],
          n_jobs: int = gsgp_solve_parameters["n_jobs"],
          test_elite: bool = gsgp_solve_parameters["test_elite"]):
     """
@@ -144,7 +144,8 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
     try:
-        gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
+        gsgp_pi_init['CONSTANTS'] = {f"constant_{str(n).replace('-', '_')}": lambda _, num=n: torch.tensor(num)
+                                     for n in tree_constants}
     except KeyError as e:
         valid_constants = list(CONSTANTS)
         raise KeyError(
