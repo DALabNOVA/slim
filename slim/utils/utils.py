@@ -461,7 +461,7 @@ def gs_size(y_true, y_pred):
 
 
 def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path,
-                    prob_const, tree_functions, tree_constants, fitness_function, initializer, log, verbose):
+                    prob_const, tree_functions, tree_constants, log, verbose, minimization, n_jobs):
     """
     Validates the inputs based on the specified conditions.
 
@@ -519,33 +519,23 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     if not isinstance(tree_constants, list) or len(tree_constants) == 0:
         raise TypeError("tree_constants must be a non-empty list")
 
-    # validating the input training fitness
-    if not isinstance(fitness_function, str):
-        raise TypeError("fitness_function must be a str")
-
-    # creating a list with the valid available fitness functions
-    valid_fitnesses = list(fitness_function_options)
-
-    # assuring the chosen fitness_function is valid
-    assert fitness_function.lower() in fitness_function_options.keys(), \
-        "fitness function must be: " + f"{', '.join(valid_fitnesses[:-1])} or {valid_fitnesses[-1]}" \
-            if len(valid_fitnesses) > 1 else valid_fitnesses[0]
-
-    # validating the input initializer
-    if not isinstance(initializer, str):
-        raise TypeError("initializer must be a str")
-
-    # creating a list with the valid available initializers
-    valid_initializers = list(initializer_options)
-
-    # assuring the chosen initializer is valid
-    assert initializer.lower() in initializer_options.keys(), \
-        "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
-            if len(valid_initializers) > 1 else valid_initializers[0]
-
     if not isinstance(log, int):
         raise TypeError("log_level must be an int")
 
+    assert 0 <= log <= 4, "log_level must be between 0 and 4"
+
+    if not isinstance(verbose, int):
+        raise TypeError("verbose level must be an int")
+
+    assert 0 <= verbose <= 1, "verbose level must be either 0 or 1"
+
+    if not isinstance(minimization, bool):
+        raise TypeError("minimization must be a bool")
+
+    if not isinstance(n_jobs, int):
+        raise TypeError("n_jobs must be an int")
+
+    assert n_jobs >= 1, "n_jobs must be at least 1"
 
 def check_slim_version(slim_version):
     """
