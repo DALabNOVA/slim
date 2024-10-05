@@ -133,8 +133,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
             if len(valid_functions) > 1 else valid_functions[0])
 
     try:
-        slim_gsgp_pi_init['CONSTANTS'] = {f"constant_{str(n).replace('-', '_')}": lambda _: torch.tensor(n) for n in
-                                          tree_constants}
+        slim_gsgp_pi_init['CONSTANTS'] = {f"constant_{str(n).replace('-', '_')}": lambda _, num=n: torch.tensor(num)
+                                          for n in tree_constants}
     except KeyError as e:
         valid_constants = list(CONSTANTS)
         raise KeyError(
