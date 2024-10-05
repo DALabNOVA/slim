@@ -36,25 +36,30 @@ gp_solve_parameters = {
     "verbose": 1,
     "test_elite": True,
     "run_info": None,
-    # "minimization": True,
-    "ffunction": rmse,
+    "ffunction": "rmse",
     "tree_pruner": None,
-    "n_jobs": 1
+    "n_jobs": 1,
+    "max_depth": 17,
+    "n_elites":1,
+    "elitism": True,
+    "n_iter":1000
 }
 
 # GP parameters
 gp_parameters = {
-    "initializer": full,
+    "initializer": "rhh",
     "selector": tournament_selection_min(2),
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
-    "find_elit_func": get_best_min # if gp_solve_parameters["minimization"] else get_best_max
+    "p_xo":0.8,
+    "pop_size":100
 }
 
 gp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0
+    "p_c": 0,
+    "init_depth": 6
 }
 
 fitness_function_options = {

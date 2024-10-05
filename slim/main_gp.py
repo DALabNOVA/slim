@@ -10,25 +10,29 @@ from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruni
 from slim.config.gp_config import *
 from slim.selection.selection_algorithms import tournament_selection_max, tournament_selection_min
 from slim.utils.logger import log_settings
-from slim.utils.utils import (get_terminals, validate_inputs, validate_constants_dictionary,
-                              validate_functions_dictionary, get_best_max, get_best_min)
+from slim.utils.utils import (get_terminals, validate_inputs, get_best_max, get_best_min)
 
 # todo: would not be better to first log the settings and then perform the algorithm?
 
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
-       dataset_name: str = None, pop_size: int = 100, n_iter: int = 1000, p_xo: float = 0.8,
-       elitism: bool = True, n_elites: int = 1, max_depth: int = 17, init_depth: int = 6,
-       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 42,
-       log_level: int = 1,
-       verbose: int = 1,
+       dataset_name: str = None,
+       pop_size: int = gp_parameters["pop_size"],
+       n_iter: int = gp_solve_parameters["n_iter"],
+       p_xo: float = gp_parameters['p_xo'],
+       elitism: bool = gp_solve_parameters["elitism"], n_elites: int = gp_solve_parameters["n_elites"],
+       max_depth: int = gp_solve_parameters["max_depth"],
+       init_depth: int = gp_pi_init["init_depth"],
+       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 74,
+       log_level: int = gp_solve_parameters["log"],
+       verbose: int = gp_solve_parameters["verbose"],
        minimization: bool = True,
-       fitness_function: str = "rmse",
-       initializer: str = "rhh",
-       n_jobs: int = 1,
-       prob_const: float = 0.2,
+       fitness_function: str = gp_solve_parameters["ffunction"],
+       initializer: str = gp_parameters["initializer"],
+       n_jobs: int = gp_solve_parameters["n_jobs"],
+       prob_const: float = gp_pi_init["p_c"],
        tree_functions: list = list(FUNCTIONS.keys()),
        tree_constants: list = list(CONSTANTS.keys()),
-       test_elite: bool = True):
+       test_elite: bool = gp_solve_parameters["test_elite"]):
 
     """
     Main function to execute the StandardGP algorithm on specified datasets
