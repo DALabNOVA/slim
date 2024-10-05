@@ -22,7 +22,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        elitism: bool = gp_solve_parameters["elitism"], n_elites: int = gp_solve_parameters["n_elites"],
        max_depth: int = gp_solve_parameters["max_depth"],
        init_depth: int = gp_pi_init["init_depth"],
-       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = 74,
+       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = gp_parameters["seed"],
        log_level: int = gp_solve_parameters["log"],
        verbose: int = gp_solve_parameters["verbose"],
        minimization: bool = True,
@@ -158,7 +158,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     else:
         gp_parameters["selector"] = tournament_selection_max(2)
         gp_parameters["find_elit_func"] = get_best_max
-
+    gp_parameters["seed"] = seed
     #   *************** GP_SOLVE_PARAMETERS ***************
 
     gp_solve_parameters['run_info'] = [algo, unique_run_id, dataset_name]
@@ -182,7 +182,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     #       Running the Algorithm
     # ================================
 
-    optimizer = GP(pi_init=gp_pi_init, **gp_parameters, seed=seed)
+    optimizer = GP(pi_init=gp_pi_init, **gp_parameters)
     optimizer.solve(
         X_train=X_train,
         X_test=X_test,

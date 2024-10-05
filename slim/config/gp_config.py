@@ -52,14 +52,15 @@ gp_parameters = {
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
     "p_xo":0.8,
-    "pop_size":100
+    "pop_size":100,
+    "seed": 74
 }
 
 gp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
     "p_c": 0,
-    "init_depth": 6
+    "init_depth": 8
 }
 
 fitness_function_options = {

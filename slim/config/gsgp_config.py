@@ -37,7 +37,14 @@ gsgp_solve_parameters = {
     "run_info": None,
     "ffunction": rmse,
     "reconstruct": False,
-    "n_jobs": 1
+    "n_jobs": 1,
+    "n_iter": 1000,
+    "elitism": True,
+    "n_elites": 1,
+    "log": 1,
+    "verbose": 1,
+    "ffunction": "rmse",
+    "test_elite": True
 }
 
 # GSGP parameters
@@ -47,13 +54,18 @@ gsgp_parameters = {
     "crossover": geometric_crossover,
     "mutator": standard_geometric_mutation,
     "settings_dict": settings_dict,
-    "find_elit_func": get_best_min
+    "find_elit_func": get_best_min,
+    "pop_size": 100,
+    "p_xo": 0.0,
+    "seed": 74,
+    "initializer": "rhh"
 }
 
 gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 0.2
+    "p_c": 0.2,
+    "init_depth": 8
 }
 
 fitness_function_options = {

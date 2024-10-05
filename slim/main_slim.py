@@ -8,7 +8,7 @@ from slim.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
 from slim.config.slim_config import *
 from slim.utils.logger import log_settings
 from slim.utils.utils import (get_terminals, check_slim_version, validate_inputs, generate_random_uniform,
-                              validate_constants_dictionary, validate_functions_dictionary, get_best_min, get_best_max)
+                              get_best_min, get_best_max)
 from slim.algorithms.SLIM_GSGP.operators.mutators import inflate_mutation
 from slim.algorithms.SLIM_GSGP.operators.selection_algorithms import (tournament_selection_max_slim,
                                                                       tournament_selection_min_slim)
@@ -19,23 +19,31 @@ UNIQUE_RUN_ID = uuid.uuid1()
 
 
 def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
-         dataset_name: str = None, slim_version: str = "SLIM+SIG2", pop_size: int = 100,
-         n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
-         ms_lower: float = 0, ms_upper: float = 1, p_inflate: float = 0.5,
-         log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"), seed: int = 1,
-         log_level: int = 1,
-         verbose: int = 1,
-         reconstruct: bool = False,
-         fitness_function: str = "rmse",
-         initializer: str = "rhh",
+         dataset_name: str = None,
+
+         slim_version: str = "SLIM+SIG2",
+         pop_size: int = slim_gsgp_parameters["pop_size"],
+         n_iter: int = slim_gsgp_solve_parameters["n_iter"],
+         elitism: bool = slim_gsgp_solve_parameters["elitism"], n_elites: int = slim_gsgp_solve_parameters["n_elites"],
+         init_depth: int = slim_gsgp_pi_init["init_depth"],
+         ms_lower: float = 0, ms_upper: float = 1,
+         p_inflate: float = slim_gsgp_parameters["p_inflate"],
+         log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"),
+         seed: int = slim_gsgp_parameters["seed"],
+         log_level: int = slim_gsgp_solve_parameters["log"],
+         verbose: int = slim_gsgp_solve_parameters["verbose"],
+         reconstruct: bool = slim_gsgp_solve_parameters["reconstruct"],
+         fitness_function: str = slim_gsgp_solve_parameters["ffunction"],
+         initializer: str = slim_gsgp_parameters["initializer"],
          minimization: bool = True,
-         prob_const: float = 0.2,
+         prob_const: float = slim_gsgp_pi_init["p_c"],
          tree_functions: dict = list(FUNCTIONS.keys()),
          tree_constants: dict = list(CONSTANTS.keys()),
-         copy_parent: bool = False,
-         max_depth: int = None,
-         n_jobs: int = 1,
-         test_elite: bool = True):
+         copy_parent: bool =slim_gsgp_parameters["copy_parent"],
+         max_depth: int = slim_gsgp_solve_parameters["max_depth"],
+         n_jobs: int = slim_gsgp_solve_parameters["n_jobs"],
+         test_elite: bool = slim_gsgp_solve_parameters["test_elite"]):
+
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets.
 
@@ -180,8 +188,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     optimizer = SLIM_GSGP(
         pi_init=slim_gsgp_pi_init,
-        **slim_gsgp_parameters,
-        seed=seed
+        **slim_gsgp_parameters
     )
 
     optimizer.solve(

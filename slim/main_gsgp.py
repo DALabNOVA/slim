@@ -13,21 +13,28 @@ from typing import Callable
 
 # todo: would not be better to first log the settings and then perform the algorithm?
 def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
-         dataset_name: str = None, pop_size: int = 100, n_iter: int = 100, p_xo: float = 0.0, elitism: bool = True,
-         n_elites: int = 1, init_depth: int = 8, ms_lower: float = 0, ms_upper: float = 1,
+         dataset_name: str = None,
+         pop_size: int = gsgp_parameters["pop_size"],
+         n_iter: int = gsgp_solve_parameters["n_iter"],
+         p_xo: float =gsgp_parameters["p_xo"],
+         elitism: bool = gsgp_solve_parameters["elitism"],
+         n_elites: int = gsgp_solve_parameters["n_elites"],
+         init_depth: int = gsgp_pi_init["init_depth"],
+         ms_lower: float = 0,
+         ms_upper: float = 1,
          log_path: str = os.path.join(os.getcwd(), "log", "gsgp.csv"),
-         seed: int = 1,
-         log_level: int = 1,
-         verbose: int = 1,
-         reconstruct: bool = False,
-         fitness_function: str = "rmse",
-         initializer: str = "rhh",
+         seed: int = gsgp_parameters["seed"],
+         log_level: int = gsgp_solve_parameters["log"],
+         verbose: int = gsgp_solve_parameters["verbose"],
+         reconstruct: bool = gsgp_solve_parameters["reconstruct"],
+         fitness_function: str = gsgp_solve_parameters["ffunction"],
+         initializer: str =  gsgp_parameters["initializer"],
          minimization: bool = True,
-         prob_const: float = 0.2,
+         prob_const: float = gsgp_pi_init["p_c"],
          tree_functions: list = list(FUNCTIONS.keys()),
          tree_constants: list = list(CONSTANTS.keys()),
-         n_jobs: int = 1,
-         test_elite: bool = True):
+         n_jobs: int = gsgp_solve_parameters["n_jobs"],
+         test_elite: bool = gsgp_solve_parameters["test_elite"]):
     """
     Main function to execute the Standard GSGP algorithm on specified datasets
 
@@ -158,6 +165,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     gsgp_parameters["p_m"] = 1 - gsgp_parameters["p_xo"]
     gsgp_parameters["pop_size"] = pop_size
     gsgp_parameters["ms"] = ms
+    gsgp_parameters["seed"] = seed
 
     gsgp_parameters["initializer"] = initializer_options[initializer]
 
@@ -188,7 +196,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     #       Running the Algorithm
     # ================================
 
-    optimizer = GSGP(pi_init=gsgp_pi_init, **gsgp_parameters, seed=seed)
+    optimizer = GSGP(pi_init=gsgp_pi_init, **gsgp_parameters)
 
     optimizer.solve(
         X_train=X_train,

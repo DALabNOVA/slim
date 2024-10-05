@@ -33,14 +33,21 @@ slim_gsgp_solve_parameters = {
     "log": 1,
     "verbose": 1,
     "run_info": None,
-    "ffunction": rmse,
-    "max_depth": 5,
-    "reconstruct": True
+    "ffunction": "rmse",
+    "max_depth": 15,
+    "reconstruct": True,
+    "n_iter": 1000,
+    "elitism": True,
+    "n_elites": 1,
+    "log": 1,
+    "verbose": 1,
+    "n_jobs":1,
+    "test_elite": True
 }
 
 # SLIM GSGP parameters
 slim_gsgp_parameters = {
-    "initializer": full,
+    "initializer": "rhh",
     "selector": tournament_selection_min_slim(2),
     "crossover": geometric_crossover,
     "ms": None,
@@ -51,14 +58,18 @@ slim_gsgp_parameters = {
     "find_elit_func": get_best_min,
     "p_inflate": None,
     "copy_parent": None,
-    "operator": None
+    "operator": None,
+    "pop_size": 100,
+    "seed": 74
 }
 slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
 
 slim_gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
-    "p_c": 1
+    "p_c": 0.2,
+    "init_depth": 8
+
 }
 
 
