@@ -89,6 +89,12 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
 
+    if not isinstance(max_depth, int):
+        raise TypeError("max_depth value must be a int")
+
+    assert init_depth + 6 <= max_depth, f"max_depth must be at least {init_depth + 6}"
+
+
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
 
@@ -158,6 +164,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters['p_inflate'] = p_inflate
     slim_gsgp_parameters['p_deflate'] = 1 - slim_gsgp_parameters['p_inflate']
     slim_gsgp_parameters["copy_parent"] = copy_parent
+    slim_gsgp_parameters["seed"] = seed
 
     if minimization:
         slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)

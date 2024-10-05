@@ -89,6 +89,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     if not isinstance(max_depth, int):
         raise TypeError("max_depth value must be a int")
 
+    assert init_depth <= max_depth, f"max_depth must be at least {init_depth}"
+
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
 
