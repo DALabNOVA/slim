@@ -17,7 +17,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          n_elites: int = 1, init_depth: int = 8, ms_lower: float = 0, ms_upper: float = 1,
          log_path: str = os.path.join(os.getcwd(), "log", "gsgp.csv"),
          seed: int = 1,
-         log: int = 1,
+         log_level: int = 1,
          verbose: int = 1,
          reconstruct: bool = False,
          fitness_function: str = "rmse",
@@ -26,7 +26,8 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          prob_const: float = 0.2,
          tree_functions: list = list(FUNCTIONS.keys()),
          tree_constants: list = list(CONSTANTS.keys()),
-         n_jobs: int = 1):
+         n_jobs: int = 1,
+         test_elite: bool = True):
     """
     Main function to execute the Standard GSGP algorithm on specified datasets
 
@@ -68,22 +69,26 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         Returns the best individual at the last generation.
     """
 
+    # ================================
+    #         Input Validation
+    # ================================
+
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
-                    tree_functions=tree_functions, tree_constants=tree_constants)
+                    tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
+                    minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
+                    initializer=initializer)
 
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
         "Both ms_lower and ms_upper must be either int or float"
+
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
 
     # assuring the p_xo is valid
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
-
-    # assuring the prob_const is valid
-    assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
@@ -101,6 +106,11 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
                                                             if len(valid_initializers) > 1 else valid_initializers[0]
 
+
+    # ================================
+    #       Parameter Definition
+    # ================================
+
     # setting the number of elites to 0 if no elitism is used
     if not elitism:
         n_elites = 0
@@ -111,8 +121,11 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # setting the algorithm name to standard gsgp for logging TODO: do I add this as a changeable thing?
     algo_name = "StandardGSGP"
 
+    #   *************** GSGP_PI_INIT ***************
+
     # getting the terminals based on the training data
     TERMINALS = get_terminals(X_train)
+
     gsgp_pi_init["TERMINALS"] = TERMINALS
     try:
         gsgp_pi_init["FUNCTIONS"] = {key: FUNCTIONS[key] for key in tree_functions}
@@ -132,25 +145,22 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
             if len(valid_constants) > 1 else valid_constants[0])
 
 
-
-    # setting up the information of the run, for logging purposes
-    gsgp_solve_parameters["run_info"] = [algo_name, unique_run_id, dataset_name]
-
     # setting up the configuration dictionaries based on the user given input
 
-    # GSGP PI_INIT DICTIONARY #
+
     gsgp_pi_init["init_pop_size"] = pop_size
     gsgp_pi_init["init_depth"] = init_depth
     gsgp_pi_init["p_c"] = prob_const
 
-    # GSGP PARAMETERS DICTIONARY #
+    #   *************** GSGP_PARAMETERS ***************
+
     gsgp_parameters["p_xo"] = p_xo
     gsgp_parameters["p_m"] = 1 - gsgp_parameters["p_xo"]
     gsgp_parameters["pop_size"] = pop_size
     gsgp_parameters["ms"] = ms
 
     gsgp_parameters["initializer"] = initializer_options[initializer]
-    # TODO: probably remove this option since maximization doesnt make sense here... but it will in classification...
+
     if minimization:
         gsgp_parameters["selector"] = tournament_selection_min(2)
         gsgp_parameters["find_elit_func"] = get_best_min
@@ -158,24 +168,25 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         gsgp_parameters["selector"] = tournament_selection_max(2)
         gsgp_parameters["find_elit_func"] = get_best_max
 
-    # GSGP SOLVE PARAMETERS DICTIONARY #
+    #   *************** GSGP_SOLVE_PARAMETERS ***************
+
+    # setting up the information of the run, for logging purposes
+    gsgp_solve_parameters["run_info"] = [algo_name, unique_run_id, dataset_name]
 
     gsgp_solve_parameters["n_iter"] = n_iter
     gsgp_solve_parameters["log_path"] = log_path
     gsgp_solve_parameters["elitism"] = elitism
     gsgp_solve_parameters["n_elites"] = n_elites
     gsgp_solve_parameters["n_jobs"] = n_jobs
-
-    if X_test is not None and y_test is not None:
-        gsgp_solve_parameters["test_elite"] = True
-    else:
-        gsgp_solve_parameters["test_elite"] = False
-
-    gsgp_solve_parameters["log"] = log
+    gsgp_solve_parameters["test_elite"] = test_elite
+    gsgp_solve_parameters["log"] = log_level
     gsgp_solve_parameters["verbose"] = verbose
     gsgp_solve_parameters["reconstruct"] = reconstruct
-
     gsgp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
+
+    # ================================
+    #       Running the Algorithm
+    # ================================
 
     optimizer = GSGP(pi_init=gsgp_pi_init, **gsgp_parameters, seed=seed)
 

@@ -23,7 +23,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          n_iter: int = 100, elitism: bool = True, n_elites: int = 1, init_depth: int = 6,
          ms_lower: float = 0, ms_upper: float = 1, p_inflate: float = 0.5,
          log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"), seed: int = 1,
-         log: int = 1,
+         log_level: int = 1,
          verbose: int = 1,
          reconstruct: bool = False,
          fitness_function: str = "rmse",
@@ -34,7 +34,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          tree_constants: dict = list(CONSTANTS.keys()),
          copy_parent: bool = False,
          max_depth: int = None,
-         n_jobs: int = 1):
+         n_jobs: int = 1,
+         test_elite: bool = True):
     """
     Main function to execute the SLIM GSGP algorithm on specified datasets.
 
@@ -61,22 +62,22 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         Tree: The best individual at the last generation.
     """
 
+    # ================================
+    #         Input Validation
+    # ================================
+
     op, sig, trees = check_slim_version(slim_version=slim_version)
 
-    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                    pop_size=pop_size, n_iter=n_iter, elitism=elitism, n_elites=n_elites, init_depth=init_depth,
-                    log_path=log_path, prob_const=prob_const, tree_functions=tree_functions,
-                    tree_constants=tree_constants)
-
-    # verifying that the given tree functions and tree constants dictionaries are valid
-    # if tree_functions != FUNCTIONS:
-    #     validate_functions_dictionary(tree_functions)
-    # if tree_constants != CONSTANTS:
-    #     validate_constants_dictionary(tree_constants)
+    validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
+                    elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
+                    tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
+                    minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
+                    initializer=initializer)
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
         "Both ms_lower and ms_upper must be either int or float"
+
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
 
@@ -96,16 +97,17 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
             if len(valid_initializers) > 1 else valid_initializers[0]
 
+    # ================================
+    #       Parameter Definition
+    # ================================
 
-    slim_gsgp_parameters["two_trees"] = trees
-    slim_gsgp_parameters["operator"] = op
+    # setting the number of elites to 0 if no elitism is used
+    if not elitism:
+        n_elites = 0
 
+
+    #   *************** SLIM_GSGP_PI_INIT ***************
     TERMINALS = get_terminals(X_train)
-
-    slim_gsgp_parameters["ms"] = ms
-    slim_gsgp_parameters['p_inflate'] = p_inflate
-    slim_gsgp_parameters['p_deflate'] = 1 - slim_gsgp_parameters['p_inflate']
-    slim_gsgp_parameters["copy_parent"] = copy_parent
 
     slim_gsgp_pi_init["TERMINALS"] = TERMINALS
     try:
@@ -116,7 +118,6 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
             "The available tree functions are: " + f"{', '.join(valid_functions[:-1])} or "f"{valid_functions[-1]}"
             if len(valid_functions) > 1 else valid_functions[0])
 
-
     try:
         slim_gsgp_pi_init["CONSTANTS"] = {key: CONSTANTS[key] for key in tree_constants}
     except KeyError as e:
@@ -125,11 +126,11 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
             "The available tree constants are: " + f"{', '.join(valid_constants[:-1])} or "f"{valid_constants[-1]}"
             if len(valid_constants) > 1 else valid_constants[0])
 
-
-
     slim_gsgp_pi_init["init_pop_size"] = pop_size
     slim_gsgp_pi_init["init_depth"] = init_depth
     slim_gsgp_pi_init["p_c"] = prob_const
+
+    #   *************** SLIM_GSGP_PARAMETERS ***************
 
     slim_gsgp_parameters["p_m"] = 1 - slim_gsgp_parameters["p_xo"]
     slim_gsgp_parameters["pop_size"] = pop_size
@@ -142,7 +143,24 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         sig=sig
     )
     slim_gsgp_parameters["initializer"] = initializer_options[initializer]
-    slim_gsgp_solve_parameters["log"] = log
+    slim_gsgp_parameters["ms"] = ms
+    slim_gsgp_parameters['p_inflate'] = p_inflate
+    slim_gsgp_parameters['p_deflate'] = 1 - slim_gsgp_parameters['p_inflate']
+    slim_gsgp_parameters["copy_parent"] = copy_parent
+    slim_gsgp_parameters["two_trees"] = trees
+    slim_gsgp_parameters["operator"] = op
+
+    if minimization:
+        slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)
+        slim_gsgp_parameters["find_elit_func"] = get_best_min
+    else:
+        slim_gsgp_parameters["selector"] = tournament_selection_max_slim(2)
+        slim_gsgp_parameters["find_elit_func"] = get_best_max
+
+
+    #   *************** SLIM_GSGP_SOLVE_PARAMETERS ***************
+
+    slim_gsgp_solve_parameters["log"] = log_level
     slim_gsgp_solve_parameters["verbose"] = verbose
     slim_gsgp_solve_parameters["log_path"] = log_path
     slim_gsgp_solve_parameters["elitism"] = elitism
@@ -153,19 +171,11 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_solve_parameters["reconstruct"] = reconstruct
     slim_gsgp_solve_parameters["max_depth"] = max_depth
     slim_gsgp_solve_parameters["n_jobs"] = n_jobs
+    slim_gsgp_solve_parameters["test_elite"] = test_elite
 
-    if X_test is not None and y_test is not None:
-        slim_gsgp_solve_parameters["test_elite"] = True
-    else:
-        slim_gsgp_solve_parameters["test_elite"] = False
-
-        # TODO: probably remove this option since maximization doesnt make sense here... but it will in classification...
-    if minimization:
-        slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)
-        slim_gsgp_parameters["find_elit_func"] = get_best_min
-    else:
-        slim_gsgp_parameters["selector"] = tournament_selection_max_slim(2)
-        slim_gsgp_parameters["find_elit_func"] = get_best_max
+    # ================================
+    #       Running the Algorithm
+    # ================================
 
     optimizer = SLIM_GSGP(
         pi_init=slim_gsgp_pi_init,
@@ -192,6 +202,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     )
 
     optimizer.elite.version = slim_version
+
     return optimizer.elite
 
 

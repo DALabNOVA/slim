@@ -113,7 +113,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
     algo = "StandardGP"
 
-#   *************** GP_PI_INIT ***************
+    #   *************** GP_PI_INIT ***************
 
     TERMINALS = get_terminals(X_train)
     gp_pi_init["TERMINALS"] = TERMINALS
@@ -137,7 +137,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_pi_init["init_pop_size"] = pop_size # TODO: why init pop_size != than rest?
     gp_pi_init["init_depth"] = init_depth
 
-#   *************** GP_PARAMETERS ***************
+    #  *************** GP_PARAMETERS ***************
 
     gp_parameters["p_xo"] = p_xo
     gp_parameters["p_m"] = 1 - gp_parameters["p_xo"]
@@ -155,7 +155,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         gp_parameters["selector"] = tournament_selection_max(2)
         gp_parameters["find_elit_func"] = get_best_max
 
-#   *************** GP_SOLVE_PARAMETERS ***************
+    #   *************** GP_SOLVE_PARAMETERS ***************
 
     gp_solve_parameters['run_info'] = [algo, unique_run_id, dataset_name]
     gp_solve_parameters["log"] = log_level
