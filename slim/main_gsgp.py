@@ -10,7 +10,7 @@ import warnings
 from slim.algorithms.GSGP.gsgp import GSGP
 from slim.config.gsgp_config import *
 from slim.utils.logger import log_settings
-from slim.utils.utils import get_terminals, validate_inputs, generate_random_uniform, validate_functions_dictionary, validate_constants_dictionary
+from slim.utils.utils import get_terminals, validate_inputs, generate_random_uniform
 from typing import Callable
 
 # todo: would not be better to first log the settings and then perform the algorithm?

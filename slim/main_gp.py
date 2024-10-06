@@ -13,6 +13,7 @@ from slim.selection.selection_algorithms import tournament_selection_max, tourna
 from slim.utils.logger import log_settings
 from slim.utils.utils import (get_terminals, validate_inputs, get_best_max, get_best_min)
 
+
 # todo: would not be better to first log the settings and then perform the algorithm?
 
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,

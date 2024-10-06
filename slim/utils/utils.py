@@ -467,7 +467,7 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     Validates the inputs based on the specified conditions.
 
     Parameters:
-    datasets (list): List of datasets.
+    X_train (torch.Tensor): Data to be trained on
     n_runs (int): Number of runs.
     pop_size (int): Population size.
     n_iter (int): Number of iterations.

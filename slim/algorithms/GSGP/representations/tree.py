@@ -5,7 +5,6 @@ Tree Class for Genetic Programming using PyTorch.
 import torch
 from slim.algorithms.GP.representations.tree_utils import flatten, tree_depth
 from slim.algorithms.GSGP.representations.tree_utils import apply_tree, nested_depth_calculator, nested_nodes_calculator
-from slim.algorithms.GP.representations.tree import Tree as GP_Tree
 from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 
 

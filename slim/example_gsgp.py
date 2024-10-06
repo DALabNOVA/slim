@@ -2,7 +2,6 @@ from slim.main_gsgp import gsgp  # import the slim library
 from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -20,7 +19,7 @@ final_tree = gsgp(X_train=X_train, y_train=y_train,
                   reconstruct=True, ms_lower=0, ms_upper=1)
 
 # Get the prediction of the best individual on the test set
-predictions = final_tree.predict(X_train)
+predictions = final_tree.predict(X_test)
 
 # Compute and print the RMSE on the test set
-print(float(rmse(y_true=y_train, y_pred=predictions)))
+print(float(rmse(y_true=y_test, y_pred=predictions)))
