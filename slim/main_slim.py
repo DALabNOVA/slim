@@ -4,6 +4,8 @@ logging the results for further analysis.
 """
 import uuid
 import os
+import warnings
+
 from slim.algorithms.SLIM_GSGP.slim_gsgp import SLIM_GSGP
 from slim.config.slim_config import *
 from slim.utils.logger import log_settings
@@ -85,6 +87,14 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
         "Both ms_lower and ms_upper must be either int or float"
+
+    if test_elite and (X_test is None or y_test is None):
+        warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
+        test_elite = False
+
+    if dataset_name is None:
+        warnings.warn("No dataset name set. Using default value of dataset_1.")
+        dataset_name = "dataset_1"
 
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)

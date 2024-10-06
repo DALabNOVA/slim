@@ -4,6 +4,7 @@ logging the results for further analysis.
 """
 import uuid
 import os
+import warnings
 from slim.algorithms.GP.gp import GP
 from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
 from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
@@ -86,8 +87,16 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
+    if test_elite and (X_test is None or y_test is None):
+        warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
+        test_elite = False
+
     if not isinstance(max_depth, int):
         raise TypeError("max_depth value must be a int")
+
+    if dataset_name is None:
+        warnings.warn("No dataset name set. Using default value of dataset_1.")
+        dataset_name = "dataset_1"
 
     assert init_depth <= max_depth, f"max_depth must be at least {init_depth}"
 

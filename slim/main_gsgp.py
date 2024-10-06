@@ -5,6 +5,8 @@ logging the results for further analysis.
 
 import uuid
 import os
+import warnings
+
 from slim.algorithms.GSGP.gsgp import GSGP
 from slim.config.gsgp_config import *
 from slim.utils.logger import log_settings
@@ -86,6 +88,15 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
                     minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
                     initializer=initializer)
 
+
+
+    if test_elite and (X_test is None or y_test is None):
+        warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
+        test_elite = False
+
+    if dataset_name is None:
+        warnings.warn("No dataset name set. Using default value of dataset_1.")
+        dataset_name = "dataset_1"
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \

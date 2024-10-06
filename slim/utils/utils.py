@@ -512,7 +512,11 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     if not (isinstance(prob_const, float) or isinstance(prob_const, int)):
         raise TypeError("prob_const must be a float (or an int when probability is 1 or 0)")
 
-    assert 0 <= prob_const <= 1, "prob_const must be a number between 0 and 1"
+    if not 0 <= prob_const <= 1:
+        raise ValueError("prob_const must be a number between 0 and 1")
+
+    if n_iter < 1:
+        raise ValueError("n_iter must be greater than 0")
 
     # Ensuring the functions and constants passed are valid
     if not isinstance(tree_functions, list) or len(tree_functions) == 0:
@@ -544,9 +548,6 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
 
     if not isinstance(test_elite, bool):
         raise TypeError("test_elite must be a bool")
-
-    if test_elite and (X_test is None or y_test is None):
-        raise Exception("If test_elite is True, a test dataset must be provided")
 
     if not isinstance(fitness_function, str):
         raise TypeError("fitness_function must be a str")
@@ -583,67 +584,6 @@ def check_slim_version(slim_version):
     else:
         raise Exception('Invalid SLIM configuration')
 
-
-def validate_functions_dictionary(func_dict):
-
-    # checking that the func_dict input is a dictionary
-    if not isinstance(func_dict, dict):
-        raise Exception("tree_functions must be a dictionary.")
-
-    for operation, details in func_dict.items():
-
-        # making sure the keys of the dictionary are strings
-        if not isinstance(operation, str):
-            raise Exception(f"Key '{operation}' should be a string corresponding to the mathematical operation of the function (e.g., add, subtract, etc.)")
-
-        # making sure the value for each key in function_dict is a dictionary
-        if not isinstance(details, dict):
-            raise Exception(f"Value for key '{operation}' should be a dictionary containing a callable under key 'function' and an integer value under key 'arity'")
-
-        # making sure that each dictionary provided as value for the func_dict dictionary contains the keys function and arity
-        if 'function' not in details or 'arity' not in details:
-            raise Exception(
-                f"Error in '{details}'. This dictionary should be a dictionary containing a callable under key 'function' and an integer value under key 'arity'")
-
-        # making sure that the value under 'function' is a callable
-        # TODO: do I force callable to be of torch? or recommend it at least
-        if not callable(details['function']):
-            raise Exception(f"The 'function' in '{operation}' must be callable (a function).")
-
-        # making sure that the value under 'arity' is an int
-        if not isinstance(details['arity'], int):
-            raise Exception(f"The 'arity' in '{operation}' must be an integer.")
-
-    return True
-
-def validate_constants_dictionary(const_dict):
-
-    # checking that the func_dict input is a dictionary
-    if not isinstance(const_dict, dict):
-        raise Exception("tree_constants must be a dictionary.")
-
-    for constant_name, constant_func in const_dict.items():
-
-        # making sure the keys of the dictionary are strings
-        if not isinstance(constant_name, str):
-            raise Exception(f"Key '{constant_name}' should be a string.")
-
-        # making sure the value for each key in function_dict is a dictionary
-        if not isinstance(details, dict):
-            raise Exception(f"Value for key '{operation}' should be a dictionary containing a callable under key 'function' and an integer value under key 'arity'")
-
-        # making sure that the value is a callable
-        if not callable(constant_func):
-            raise ValueError(
-                f"The value for key '{constant_name}' must be a callable (e.g., a function or lambda).")
-
-        # making sure that the callable returns a torch.Tensor
-        test_value = constant_func(None)  # Passing None since the lambda function accepts an unused argument
-        if not isinstance(test_value, torch.Tensor):
-            raise ValueError(f"The callable for key '{constant_name}' must return a torch.Tensor.")
-
-
-    return True
 
 def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator="sum"):
     """
