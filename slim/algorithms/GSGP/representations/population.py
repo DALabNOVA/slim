@@ -11,8 +11,19 @@ class Population:
         """
         Initialize the population with individuals.
 
-        Args:
-            pop: List of individuals in the population.
+        Parameters
+        ----------
+        pop : list
+            The list of individuals in the population.
+
+        Attributes
+        ----------
+        population : list
+            The initialized population.
+        size : int
+            The number of individuals in the population.
+        nodes_count : int
+            The total number of nodes across all individuals in the population.
         """
         self.population = pop
         self.size = len(pop)
@@ -22,13 +33,18 @@ class Population:
         """
         Calculate the semantics for each individual in the population.
 
-        Args:
-            inputs: Input data for calculating semantics.
-            testing: Boolean indicating if the calculation is for testing semantics.
-            logistic: Boolean indicating whether to apply a logistic function to the semantics.
+        Parameters
+        ----------
+        inputs : array-like
+            Input data for calculating semantics.
+        testing : bool, optional
+            Indicates if the calculation is for testing semantics. Defaults to `False`.
+        logistic : bool, optional
+            Indicates whether to apply a logistic function to the semantics. Defaults to `False`.
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
         # Calculate semantics for each individual in the population in a sequential fashion
         [_execute_tree(individual, inputs=inputs, testing=testing, logistic=logistic) for individual in self.population]
@@ -47,8 +63,10 @@ class Population:
         """
         Return the size of the population.
 
-        Returns:
-            int: Size of the population.
+        Returns
+        -------
+        int
+            Size of the population.
         """
         return self.size
 
@@ -56,11 +74,15 @@ class Population:
         """
         Get an individual from the population by index.
 
-        Args:
-            item: Index of the individual to retrieve.
+        Parameters
+        ----------
+        item : int
+            Index of the individual to retrieve.
 
-        Returns:
-            Individual: The individual at the specified index.
+        Returns
+        -------
+        Individual
+            The individual at the specified index.
         """
         return self.population[item]
 
@@ -68,12 +90,20 @@ class Population:
         """
         Evaluate the population using a fitness function.
 
-        Args:
-            ffunction: Fitness function to evaluate the individuals.
-            y: Expected output (target) values as a torch tensor.
-            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
-        Returns:
-            None
+        The fitnesses of each individual are stored as attributes in their respective objects.
+
+        Parameters
+        ----------
+        ffunction : callable
+            Fitness function to evaluate the individuals.
+        y : torch.Tensor
+            Expected output (target) values as a torch tensor.
+        n_jobs : int, optional
+            The maximum number of concurrently running jobs for joblib parallelization. Defaults to 1.
+
+        Returns
+        -------
+        None
         """
         # Evaluate all individuals in the population in a parallel fashion
         self.fit = Parallel(n_jobs=n_jobs)(

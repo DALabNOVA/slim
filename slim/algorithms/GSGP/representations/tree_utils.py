@@ -7,17 +7,27 @@ from slim.algorithms.GP.representations.tree_utils import bound_value
 import torch
 
 def _execute_tree(individual, inputs, testing=False, logistic=False):
-
     """
-    Calculate the semantics for the tree.
+    Calculate the semantics for the tree, storing it as an attribute.
 
-    Args:
-        inputs: Input data for calculating semantics.
-        testing: Boolean indicating if the calculation is for testing semantics.
-        logistic: Boolean indicating if a logistic function should be applied.
+    Parameters
+    ----------
+    individual : Tree
+        The tree individual whose semantics are being calculated.
+    inputs : array-like
+        Input data for calculating semantics.
+    testing : bool, optional
+        Indicates if the calculation is for testing semantics. Defaults to `False`.
+    logistic : bool, optional
+        Indicates if a logistic function should be applied. Defaults to `False`.
 
-    Returns:
-        None
+    Returns
+    -------
+    None
+
+    Notes
+    -----
+    Requires the reconstruct parameter of the individual to be set to True, otherwise the structure will not be saved.
     """
     if testing and individual.test_semantics is None:
         if isinstance(individual.structure, tuple):
@@ -43,18 +53,21 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
             )
 
 def apply_tree(tree, inputs):
-
     """
     Evaluates the tree on input vectors.
 
-    Args:
-        tree: The tree structure to be evaluated.
-        inputs: Input vectors x and y.
+    Parameters
+    ----------
+    tree : Tree
+        The tree structure to be evaluated.
+    inputs : torch.Tensor
+        Input vectors x and y.
 
-    Returns:
-        torch.Tensor: Output of the evaluated tree.
+    Returns
+    -------
+    torch.Tensor
+        Output of the evaluated tree.
     """
-
     if isinstance(tree.structure, tuple):  # If it's a function node
         function_name = tree.structure[0]
         if tree.FUNCTIONS[function_name]["arity"] == 2:
@@ -85,12 +98,19 @@ def nested_depth_calculator(operator, depths):
     """
     Calculate the depth of nested structures.
 
-    Args:
-        operator: The operator applied to the tree.
-        depths: List of depths of subtrees.
+    To save computational effort, the new depth is calculated based on the operator used to generate the new tree.
 
-    Returns:
-        int: Maximum depth after applying the operator.
+    Parameters
+    ----------
+    operator : callable
+        The operator applied to the tree.
+    depths : list of int
+        List of depths of subtrees.
+
+    Returns
+    -------
+    int
+        Maximum depth after applying the operator.
     """
     if operator.__name__ == "tt_delta_sum":
         depths[0] += 2
@@ -114,12 +134,17 @@ def nested_nodes_calculator(operator, nodes):
     """
     Calculate the number of nodes in nested structures.
 
-    Args:
-        operator: The operator applied to the tree.
-        nodes: List of node counts of subtrees.
+    Parameters
+    ----------
+    operator : callable
+        The operator applied to the tree.
+    nodes : list of int
+        List of node counts of subtrees.
 
-    Returns:
-        int: Total number of nodes after applying the operator.
+    Returns
+    -------
+    int
+        Total number of nodes after applying the operator.
     """
     extra_operators_nodes = (
         [5, nodes[-1]]

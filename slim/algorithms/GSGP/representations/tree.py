@@ -17,11 +17,27 @@ class Tree:
         """
         Initialize the Tree with its structure and semantics.
 
-        Args:
-            structure: The tree structure, either as a tuple or a list of pointers.
-            train_semantics: The training semantics associated with the tree.
-            test_semantics: The testing semantics associated with the tree.
-            reconstruct: Boolean indicating if the tree should be reconstructed.
+        Parameters
+        ----------
+        structure : tuple or list
+            The tree structure, either as a tuple or a list of pointers.
+        train_semantics : torch.Tensor
+            The training semantics associated with the tree.
+        test_semantics : torch.Tensor
+            The testing semantics associated with the tree.
+        reconstruct : bool
+            Indicates if the tree's structure should be stored for later reconstruction.
+
+        Attributes
+        ----------
+        depth : int
+            The maximum depth of the tree structure.
+        nodes : int
+            The total number of nodes in the tree.
+        fitness : float or None
+            The fitness value of the tree. Defaults to None.
+        test_fitness : float or None
+            The fitness value of the tree during testing. Defaults to None.
         """
         self.FUNCTIONS = Tree.FUNCTIONS
         self.TERMINALS = Tree.TERMINALS
@@ -55,13 +71,20 @@ class Tree:
         """
         Calculate the semantics for the tree.
 
-        Args:
-            inputs: Input data for calculating semantics.
-            testing: Boolean indicating if the calculation is for testing semantics.
-            logistic: Boolean indicating if a logistic function should be applied.
+        Semantics are stored as an attribute in their respective objects.
 
-        Returns:
-            None
+        Parameters
+        ----------
+        inputs : torch.Tensor
+            Input data for calculating semantics.
+        testing : bool, optional
+            Indicates if the calculation is for testing semantics. Defaults to `False`.
+        logistic : bool, optional
+            Indicates if a logistic function should be applied. Defaults to `False`.
+
+        Returns
+        -------
+        None
         """
         if testing and self.test_semantics is None:
             if isinstance(self.structure, tuple):
@@ -86,19 +109,29 @@ class Tree:
                     *self.structure[1:], testing=False
                 )
 
-    def evaluate(self, ffunction, y, testing=False, X = None):
+    def evaluate(self, ffunction, y, testing=False, X=None):
         """
         Evaluate the tree using a fitness function.
 
-        Args:
-            ffunction: Fitness function to evaluate the individual.
-            y: Expected output (target) values as a torch tensor.
-            testing: Boolean indicating if the evaluation is for testing semantics.
-            X: input data used for calculation. Optional inside the evolution process as only the semantics are needed,
-                but necessary outside of it.
+        During the evolution process, stores the fitness as an attribute. If evaluating with new data, fitness is
+        returned as a float.
 
-        Returns:
-            None
+        Parameters
+        ----------
+        ffunction : callable
+            Fitness function to evaluate the individual.
+        y : torch.Tensor
+            Expected output (target) values as a torch tensor.
+        testing : bool, optional
+            Indicates if the evaluation is for testing semantics. Defaults to `False`.
+        X : array-like, optional
+            Input data used for calculation. Optional inside the evolution process as only the semantics are needed,
+            but necessary outside of it.
+
+        Returns
+        -------
+        None or float
+            Returns nothing or the fitness result.
         """
         if X is not None:
             semantics = apply_tree(self, X) if isinstance(self.structure, tuple) \
@@ -113,37 +146,35 @@ class Tree:
 
     def predict(self, data):
         """
-            Predict the output for the given input data using the model's structure.
+        Predict the output for the given input data using the model's structure.
 
-            Parameters
-            ----------
-            data : array-like or DataFrame
-                The input data to predict. It should be in the form of an array-like structure
-                (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
-                different observation and each column represents a feature.
+        Uses recursive logic to call itself on the structure of the tree until arriving at a basic tuple structure, and
+        then applies the necessary operations to arrive at the final result for the whole tree.
 
-            Returns
-            -------
-            array-like
-                The predicted output for the input data. The exact form and type of the output
-                depend on whether the model's structure is a tuple or a list, as well as the
-                specific implementation details of the `apply_tree` function and the prediction
-                methods of the tree objects within the structure.
+        Parameters
+        ----------
+        data : torch.Tensor
+            The input data to predict.
 
-            Notes
-            -----
-            The prediction process depends on the structure of the model:
+        Returns
+        -------
+        torch.Tensor
+            The predicted output for the input data.
 
-            - If `self.structure` is a tuple, the `apply_tree` function is used for prediction.
-            - If `self.structure` is a list, the first element is assumed to be a function that
-              combines the predictions of multiple base trees (contained in the list) along with
-              additional parameters (floats) extracted from the list. The base trees are instances
-              of the `Tree` class, and their individual predictions are passed to the combining
-              function along with any extracted parameters.
+        Notes
+        -----
+        The prediction process depends on the structure of the model:
 
-            The combining function is called with the predictions of the base trees and the
-            extracted parameters, along with `testing` set to False and `new_data` set to True.
-            """
+        - If `self.structure` is a tuple, the `apply_tree` function is used for prediction.
+        - If `self.structure` is a list, the first element is assumed to be a function that
+          combines the predictions of multiple base trees (contained in the list) along with
+          additional parameters (floats) extracted from the list. The base trees are instances
+          of the `Tree` class, and their individual predictions are passed to the combining
+          function along with any extracted parameters.
+
+        The combining function is called with the predictions of the base trees and the
+        extracted parameters, along with `testing` set to False and `new_data` set to True.
+        """
 
         # seeing if the tree has the structure attribute
         if not hasattr(self, "structure"):

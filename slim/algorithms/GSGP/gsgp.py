@@ -40,19 +40,32 @@ class GSGP:
         """
         Initialize the GSGP algorithm.
 
-        Args:
-            pi_init (dict): Dictionary with all the parameters needed for evaluation.
-            initializer (function): Function to initialize the population.
-            selector (function): Function to select individuals for crossover/mutation.
-            mutator (function): Function to mutate individuals.
-            ms (function): Function to determine mutation step.
-            crossover (function): Function to perform crossover between individuals.
-            find_elit_func (function): Function to find elite individuals.
-            p_m (float): Probability of mutation.
-            p_xo (float): Probability of crossover.
-            pop_size (int): Size of the population.
-            seed (int): Seed for random number generation.
-            settings_dict (dict): Additional settings dictionary.
+        Parameters
+        ----------
+        pi_init : dict
+            Dictionary with all the parameters needed for evaluation.
+        initializer : callable
+            Function to initialize the population.
+        selector : callable
+            Function to select individuals for crossover/mutation.
+        mutator : callable
+            Function to mutate individuals.
+        ms : callable
+            Function to determine mutation step.
+        crossover : callable
+            Function to perform crossover between individuals.
+        find_elit_func : callable
+            Function to find elite individuals.
+        p_m : float, optional
+            Probability of mutation. Defaults to 0.8.
+        p_xo : float, optional
+            Probability of crossover. Defaults to 0.2.
+        pop_size : int, optional
+            Size of the population. Defaults to 100.
+        seed : int, optional
+            Seed for random number generation. Defaults to 0.
+        settings_dict : dict, optional
+            Additional settings dictionary. Defaults to None.
         """
 
         self.pi_init = pi_init
@@ -97,23 +110,40 @@ class GSGP:
         """
         Execute the GSGP algorithm.
 
-        Args:
-            x_train (torch.Tensor): Training data features.
-            x_test (torch.Tensor): Test data features.
-            y_train (torch.Tensor): Training data labels.
-            y_test (torch.Tensor): Test data labels.
-            curr_dataset (str): Current dataset name.
-            n_iter (int): Number of iterations.
-            elitism (bool): Whether to use elitism.
-            log (int): Logging level.
-            verbose (int): Verbosity level.
-            test_elite (bool): Whether to test elite individuals.
-            log_path (str): Path to save logs.
-            run_info (list): Information about the current run.
-            ffunction (function): Fitness function.
-            reconstruct (bool): Whether to reconstruct trees.
-            n_elites (int): Number of elites.
-            n_jobs (int): The maximum number of concurrently running jobs for joblib parallelization.
+        Parameters
+        ----------
+        X_train : torch.Tensor
+            Training data features.
+        X_test : torch.Tensor
+            Test data features.
+        y_train : torch.Tensor
+            Training data labels.
+        y_test : torch.Tensor
+            Test data labels.
+        curr_dataset : str
+            Current dataset name.
+        n_iter : int
+            Number of iterations.
+        elitism : bool
+            Whether to use elitism.
+        log : int
+            Logging level.
+        verbose : int
+            Verbosity level.
+        test_elite : bool
+            Whether to test elite individuals.
+        log_path : str
+            Path to save logs.
+        run_info : list
+            Information about the current run.
+        ffunction : callable
+            Fitness function.
+        reconstruct : bool
+            Whether to reconstruct trees.
+        n_elites : int
+            Number of elites.
+        n_jobs : int
+            The maximum number of concurrently running jobs for joblib parallelization.
         """
         if test_elite and (X_test is None or y_test is None):
             raise Exception('If test_elite is True you need to provide a test dataset')
