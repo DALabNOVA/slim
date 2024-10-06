@@ -20,7 +20,9 @@ def crossover_trees(FUNCTIONS):
     Callable
         Function to perform crossover between two trees.
     """
+    # getting the function to substitute a subtree in a tree
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)
+    # getting the random subtree selection function
     random_subtree_picker = random_subtree(FUNCTIONS=FUNCTIONS)
 
     def inner_xo(tree1, tree2, tree1_n_nodes, tree2_n_nodes):

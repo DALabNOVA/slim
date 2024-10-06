@@ -74,18 +74,25 @@ def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, fir
     tuple
         The generated tree according to the specified parameters.
     """
+    # defining the probability for a terminal node to be selected, if the probability of constants is not 0
     if p_c > 0:
         p_terminal = (len(TERMINALS) + len(CONSTANTS)) / (len(TERMINALS) + len(CONSTANTS) + len(FUNCTIONS))
     else:
         p_terminal = len(TERMINALS) / (len(TERMINALS) + len(FUNCTIONS))
 
+    # if a terminal is selected (or depth is 1) and its not the first call of the create_grow_random_tree function
     if (depth <= 1 or random.random() < p_terminal) and not first_call:
+        # choosing between a constant or a terminal
         if random.random() > p_c:
             node = np.random.choice(list(TERMINALS.keys()))
         else:
             node = np.random.choice(list(CONSTANTS.keys()))
+
+    # if a function is selected
     else:
+        # selecting a random function
         node = np.random.choice(list(FUNCTIONS.keys()))
+        # creating the tree based on the selected function's arity
         if FUNCTIONS[node]["arity"] == 2:
             left_subtree = create_grow_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False)
             right_subtree = create_grow_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c, False)
@@ -118,13 +125,17 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     tuple
         The generated full tree based on the specified parameters.
     """
+    # if the maximum depth is 1, choose a terminal node
     if depth <= 1:
+        # choosing between a terminal or a constant to be the terminal node
         if random.random() > p_c:
             node = np.random.choice(list(TERMINALS.keys()))
         else:
             node = np.random.choice(list(CONSTANTS.keys()))
+    # if the depth isn't one, choose a random function
     else:
         node = np.random.choice(list(FUNCTIONS.keys()))
+        # building the tree based on the arity of the chosen function
         if FUNCTIONS[node]["arity"] == 2:
             left_subtree = create_full_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
             right_subtree = create_full_random_tree(depth - 1, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
@@ -217,6 +228,7 @@ def substitute_subtree(FUNCTIONS):
     """
 
     def substitute(tree, target_subtree, new_subtree):
+
         if tree == target_subtree:
             return new_subtree
         elif isinstance(tree, tuple):
@@ -338,16 +350,16 @@ def _execute_tree(repr_, X, FUNCTIONS, TERMINALS, CONSTANTS):
         if FUNCTIONS[function_name]["arity"] == 2:
             left_subtree, right_subtree = repr_[1], repr_[2]
             left_result = _execute_tree(left_subtree, X, FUNCTIONS, TERMINALS,
-                                        CONSTANTS)  # Tree(left_subtree).apply_tree(inputs)
+                                        CONSTANTS)  # equivalent to Tree(left_subtree).apply_tree(inputs) if no parallelization were used
             right_result = _execute_tree(right_subtree, X, FUNCTIONS, TERMINALS,
-                                         CONSTANTS)  # Tree(right_subtree).apply_tree(inputs)
+                                         CONSTANTS)  # equivalent to Tree(right_subtree).apply_tree(inputs) if no parallelization were used
             output = FUNCTIONS[function_name]["function"](
                 left_result, right_result
             )
         else:
             left_subtree = repr_[1]
             left_result = _execute_tree(left_subtree, X, FUNCTIONS, TERMINALS,
-                                        CONSTANTS)  # Tree(left_subtree).apply_tree(inputs)
+                                        CONSTANTS)  # equivalent to Tree(left_subtree).apply_tree(inputs) if no parallelization were used
             output = FUNCTIONS[function_name]["function"](left_result)
 
         return bound_value(output, -1e12, 1e12)
