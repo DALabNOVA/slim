@@ -84,7 +84,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     prob_const : float, optional
         The probability of introducing constants into the trees during evolution.
     tree_functions : list, optional
-        List of allowed functions that can appear in the trees Check documentation for the available functions.
+        List of allowed functions that can appear in the trees. Check documentation for the available functions.
     tree_constants : list, optional
         List of constants allowed to appear in the trees.
     test_elite : bool, optional
