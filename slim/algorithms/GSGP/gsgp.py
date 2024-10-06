@@ -136,10 +136,10 @@ class GSGP:
             ]
         )
 
-        population.calculate_semantics(X_train, n_jobs=n_jobs)
+        population.calculate_semantics(X_train)
         if test_elite:
-            population.calculate_semantics(X_test, testing=True, n_jobs=n_jobs)
-        population.evaluate(ffunction, y=y_train)
+            population.calculate_semantics(X_test, testing=True)
+        population.evaluate(ffunction, y=y_train, n_jobs=n_jobs)
 
         end = time.time()
         self.elites, self.elite = self.find_elit_func(population, n_elites)
@@ -360,7 +360,7 @@ class GSGP:
                 offs_pop = offs_pop[: population.size]
 
             offs_pop = Population(offs_pop)
-            offs_pop.evaluate(ffunction, y=y_train)
+            offs_pop.evaluate(ffunction, y=y_train, n_jobs=n_jobs)
             population = offs_pop
 
             end = time.time()

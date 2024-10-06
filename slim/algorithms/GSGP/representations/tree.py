@@ -104,12 +104,13 @@ class Tree:
         if X is not None:
             semantics = apply_tree(self, X) if isinstance(self.structure, tuple) \
                 else self.structure[0](*self.structure[1:], testing=False)
-            ffunction(y, semantics)
+            return ffunction(y, semantics)
         else:
             if testing:
                 self.test_fitness = ffunction(y, self.test_semantics)
             else:
                 self.fitness = ffunction(y, self.train_semantics)
+
 
     def predict(self, data):
         """
