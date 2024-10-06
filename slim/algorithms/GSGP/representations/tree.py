@@ -87,20 +87,6 @@ class Tree:
                     *self.structure[1:], testing=False
                 )
 
-    def _evaluate_parallel(self, ffunction, y):
-        """
-        Return the tree calculated fitness.
-
-        Args:
-            ffunction: Fitness function to evaluate the individual.
-            y: Expected output (target) values as a torch tensor.
-
-        Returns:
-            None
-        """
-        return ffunction(y, self.train_semantics)
-
-
     def evaluate(self, ffunction, y, testing=False, X = None):
         """
         Evaluate the tree using a fitness function.

@@ -77,8 +77,8 @@ class Population:
         """
         # Evaluate all individuals in the population in a parallel fashion
         self.fit = Parallel(n_jobs=n_jobs)(
-            delayed(individual._evaluate_parallel)(
-                ffunction, y
+            delayed(ffunction)(
+                y, individual.train_semantics
             ) for individual in self.population
         )
 
