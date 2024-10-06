@@ -15,7 +15,8 @@ def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing,
         random_tree_2: The second random tree for mutation.
         ms: Mutation strength.
         testing: Boolean indicating if the operation is on test semantics.
-        new_data: Boolean indicating if new data is being used.
+        new_data: Flag indicating whether the trees are exposed to new data. In this case, operations are performed on the inputs
+        rather than semantics
 
     Returns:
         Mutated semantics as a torch tensor.

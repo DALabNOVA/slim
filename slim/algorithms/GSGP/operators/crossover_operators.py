@@ -19,7 +19,9 @@ def geometric_crossover(tree1, tree2, random_tree, testing, new_data=False):
         The random tree used for crossover.
     testing : bool
         Flag indicating whether to use test semantics or train semantics.
-
+    new_data : bool
+        Flag indicating whether the trees are exposed to new data. In this case, operations are performed on the inputs
+        rather than semantics
     Returns
     -------
     torch.Tensor
