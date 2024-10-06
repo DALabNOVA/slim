@@ -176,6 +176,11 @@ class Individual:
             This function relies on PyTorch for tensor operations, including `torch.sigmoid`,
             `torch.sum`, `torch.prod`, `torch.stack`, and `torch.clamp`.
             """
+
+        # seeing if the tree has the structure attribute
+        if not hasattr(self, "collection"):
+            raise Exception("If reconstruct was set to False, .predict() is not available")
+
         if slim_version is None:
             slim_version = self.version
         operator, sig, trees = check_slim_version(slim_version=slim_version)
@@ -217,6 +222,11 @@ class Individual:
         )
 
     def get_tree_representation(self, operator=None):
+
+        # seeing if the tree has the structure attribute
+        if not hasattr(self, "collection"):
+            raise Exception("If reconstruct was set to False, .predict() is not available")
+
         if operator is None:
             operator = self.version
 

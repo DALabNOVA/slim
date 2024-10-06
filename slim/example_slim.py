@@ -17,7 +17,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 # Apply the SLIM GSGP algorithm
 final_tree = slim(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
-                  dataset_name='ppb', slim_version='SLIM+SIG2', pop_size=100, n_iter=100,
+                  dataset_name='ppb', slim_version='SLIM+SIG2', pop_size=100, n_iter=10,
                   ms_lower=0, ms_upper=1, p_inflate=0.5, reconstruct=True)
 
 # Show the best individual structure at the last generation
