@@ -27,6 +27,7 @@ def geometric_crossover(tree1, tree2, random_tree, testing, new_data=False):
     torch.Tensor
         The result of the geometric crossover.
     """
+
     if new_data:
         return torch.add(
             torch.mul(tree1, random_tree),

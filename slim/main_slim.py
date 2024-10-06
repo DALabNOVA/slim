@@ -142,10 +142,11 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # If so, create the ms callable
     ms = generate_random_uniform(ms_lower, ms_upper)
 
-    if not isinstance(max_depth, int):
-        raise TypeError("max_depth value must be a int")
+    if not isinstance(max_depth, int) and max_depth is not None:
+        raise TypeError("max_depth value must be a int or None")
 
-    assert init_depth + 6 <= max_depth, f"max_depth must be at least {init_depth + 6}"
+    if max_depth is not None:
+        assert init_depth + 6 <= max_depth, f"max_depth must be at least {init_depth + 6}"
 
 
     # creating a list with the valid available fitness functions

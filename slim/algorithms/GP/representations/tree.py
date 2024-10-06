@@ -136,12 +136,18 @@ class Tree:
 
         Returns
         -------
-        None
-            Attributes a fitness value to the tree.
+        None or float
+            Attributes a fitness value to the tree or The fitness value of the individual based on its predictions on new data
         """
+        # getting the predictions (i.e., semantics) of the individual
         preds = self.apply_tree(X)
+
+        # if new (testing data) is being used, return the fitness of the individual given its predictions on the data
+
         if new_data:
             return float(ffunction(y, preds))
+
+        # if not, attribute the fitness value to the individual
         else:
             if testing:
                 self.test_fitness = ffunction(y, preds)
@@ -187,10 +193,12 @@ class Tree:
         if isinstance(self.repr_, tuple):  # If it's a function node
             function_name = self.repr_[0]
             print(indent + f"{function_name}(")
+            # if the function has an arity of 2, print both left and right subtrees
             if Tree.FUNCTIONS[function_name]["arity"] == 2:
                 left_subtree, right_subtree = self.repr_[1], self.repr_[2]
                 Tree(left_subtree).print_tree_representation(indent + "  ")
                 Tree(right_subtree).print_tree_representation(indent + "  ")
+            # if the function has an arity of 1, print the left subtree
             else:
                 left_subtree = self.repr_[1]
                 Tree(left_subtree).print_tree_representation(indent + "  ")

@@ -113,13 +113,14 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         test_elite = False
 
     if not isinstance(max_depth, int):
-        raise TypeError("max_depth value must be a int")
+        raise TypeError("max_depth value must be a int or None")
+
+    assert init_depth <= max_depth, f"max_depth must be at least {init_depth}"
 
     if dataset_name is None:
         warnings.warn("No dataset name set. Using default value of dataset_1.")
         dataset_name = "dataset_1"
 
-    assert init_depth <= max_depth, f"max_depth must be at least {init_depth}"
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)
