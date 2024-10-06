@@ -4,9 +4,9 @@ Tree Class for Genetic Programming using PyTorch.
 
 import torch
 from slim.algorithms.GP.representations.tree_utils import flatten, tree_depth
-from slim.algorithms.GSGP.representations.tree_utils import (
-    apply_tree, nested_depth_calculator, nested_nodes_calculator)
+from slim.algorithms.GSGP.representations.tree_utils import apply_tree, nested_depth_calculator, nested_nodes_calculator
 from slim.algorithms.GP.representations.tree import Tree as GP_Tree
+from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossover
 
 
 class Tree:
@@ -149,6 +149,9 @@ class Tree:
         else:
             ms = [ms for ms in self.structure[1:] if isinstance(ms, float)]
             base_trees = list(filter(lambda x: isinstance(x, Tree), self.structure))
-            return self.structure[0](*[tree.predict(data) for tree in base_trees], *ms, testing = False, new_data = True)
+            if self.structure[0] == geometric_crossover:
+                return self.structure[0](*[tree.predict(data) for tree in base_trees], testing=False, new_data=True)
+            else:
+                return self.structure[0](*[tree.predict(data) for tree in base_trees], *ms, testing = False, new_data = True)
 
 

@@ -5,7 +5,7 @@ Geometric crossover implementation for genetic programming trees.
 import torch
 
 
-def geometric_crossover(tree1, tree2, random_tree, testing):
+def geometric_crossover(tree1, tree2, random_tree, testing, new_data=False):
     """
     Performs geometric crossover between two trees using a random tree.
 
@@ -25,13 +25,19 @@ def geometric_crossover(tree1, tree2, random_tree, testing):
     torch.Tensor
         The result of the geometric crossover.
     """
-    if testing:
+    if new_data:
         return torch.add(
-            torch.mul(tree1.test_semantics, random_tree.test_semantics),
-            torch.mul(torch.sub(1, random_tree.test_semantics), tree2.test_semantics),
+            torch.mul(tree1, random_tree),
+            torch.mul(torch.sub(1, random_tree), tree2),
         )
     else:
-        return torch.add(
-            torch.mul(tree1.train_semantics, random_tree.train_semantics),
-            torch.mul(torch.sub(1, random_tree.train_semantics), tree2.train_semantics),
-        )
+        if testing:
+            return torch.add(
+                torch.mul(tree1.test_semantics, random_tree.test_semantics),
+                torch.mul(torch.sub(1, random_tree.test_semantics), tree2.test_semantics),
+            )
+        else:
+            return torch.add(
+                torch.mul(tree1.train_semantics, random_tree.train_semantics),
+                torch.mul(torch.sub(1, random_tree.train_semantics), tree2.train_semantics),
+            )
