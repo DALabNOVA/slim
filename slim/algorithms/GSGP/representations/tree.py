@@ -150,8 +150,8 @@ class Tree:
             ms = [ms for ms in self.structure[1:] if isinstance(ms, float)]
             base_trees = list(filter(lambda x: isinstance(x, Tree), self.structure))
             if self.structure[0] == geometric_crossover:
-                return self.structure[0](*[tree.predict(data) for tree in base_trees], testing=False, new_data=True)
+                return self.structure[0](*[tree.predict(data) for tree in base_trees[:-1]], torch.sigmoid(base_trees[-1].predict(data)), testing=False, new_data=True)
             else:
-                return self.structure[0](*[tree.predict(data) for tree in base_trees], *ms, testing = False, new_data = True)
+                return self.structure[0](*[tree.predict(data) for tree in base_trees[:-1]], torch.sigmoid(base_trees[-1].predict(data)), *ms, testing = False, new_data = True)
 
 
