@@ -64,18 +64,42 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         The number of elites.
     init_depth : int, optional
         The depth value for the initial GP trees population.
-    ms : Callable, optional
-        A function that will generate the mutation step
+    ms_lower : float, optional
+        Lower bound for mutation rates (default is 0).
+    ms_upper : float, optional
+        Upper bound for mutation rates (default is 1).
     log_path : str, optional
         The path where is created the log directory where results are saved.
     seed : int, optional
         Seed for the randomness
+    log_level : int, optional
+        Level of detail to utilize in logging.
+    verbose : int, optional
+       Level of detail to include in console output.
+    reconstruct: bool, optional
+        Whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm.
+    minimization : bool, optional
+        If True, the objective is to minimize the fitness function. If False, maximize it (default is True).
+    fitness_function : str, optional
+        The fitness function used for evaluating individuals (default is from gp_solve_parameters).
+    initializer : str, optional
+        The strategy for initializing the population (e.g., "grow", "full", "rhh").
+    n_jobs : int, optional
+        Number of parallel jobs to run (default is 1).
+    prob_const : float, optional
+        The probability of introducing constants into the trees during evolution.
+    tree_functions : list, optional
+        List of allowed functions that can appear in the trees Check documentation for the available functions.
+    tree_constants : list, optional
+        List of constants allowed to appear in the trees.
+    test_elite : bool, optional
+        Whether to test the elite individual on the test set after each generation.
 
 
     Returns
     -------
-       Tree
-        Returns the best individual at the last generation.
+        Tree
+            Returns the best individual at the last generation.
     """
 
     # ================================

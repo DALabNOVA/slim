@@ -466,26 +466,47 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     """
     Validates the inputs based on the specified conditions.
 
-    Parameters:
-    X_train (torch.Tensor): Data to be trained on
-    n_runs (int): Number of runs.
-    pop_size (int): Population size.
-    n_iter (int): Number of iterations.
-    p_xo (float): Crossover probability, must be between 0 and 1.
-    elitism (bool): Whether to use elitism.
-    n_elites (int): Number of elites.
-    max_depth (int): Maximum depth.
-    init_depth (int): Initial depth.
-    log_path (str): Path for logging.
-    prob_const (float): probability for constant
-
-    Raises:
-    AssertionError: If any of the conditions are not met.
-
     Parameters
     ----------
-    tree_functions
-    tree_constants
+    X_train: (torch.Tensor)
+        Training input data.
+    y_train: (torch.Tensor)
+        Training output data.
+    X_test: (torch.Tensor), optional
+        Testing input data.
+    y_test: (torch.Tensor), optional
+        Testing output data.
+    pop_size : int, optional
+        The population size for the genetic programming algorithm (default is 100).
+    n_iter : int, optional
+        The number of iterations for the genetic programming algorithm (default is 100).
+    elitism : bool, optional
+        Indicate the presence or absence of elitism.
+    n_elites : int, optional
+        The number of elites.
+    init_depth : int, optional
+        The depth value for the initial GP trees population.
+    log_path : str, optional
+        The path where is created the log directory where results are saved.
+    verbose : int, optional
+       Level of detail to include in console output.
+    minimization : bool, optional
+        If True, the objective is to minimize the fitness function. If False, maximize it (default is True).
+    fitness_function : str, optional
+        The fitness function used for evaluating individuals (default is from gp_solve_parameters).
+    initializer : str, optional
+        The strategy for initializing the population (e.g., "grow", "full", "rhh").
+    n_jobs : int, optional
+        Number of parallel jobs to run (default is 1).
+    prob_const : float, optional
+        The probability of introducing constants into the trees during evolution.
+    tree_functions : list, optional
+        List of allowed functions that can appear in the trees Check documentation for the available functions.
+    tree_constants : list, optional
+        List of constants allowed to appear in the trees.
+    test_elite : bool, optional
+        Whether to test the elite individual on the test set after each generation.
+
     """
     if not isinstance(X_train, torch.Tensor):
         raise TypeError("X_train must be a torch.Tensor")

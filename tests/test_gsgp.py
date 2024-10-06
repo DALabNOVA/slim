@@ -76,10 +76,13 @@ def test_gsgp_seed_reproducibility():
     assert torch.equal(result1.predict(valid_X_test), result2.predict(valid_X_test)), \
             "Results should be reproducible with the same seed"
 
-@pytest.mark.skip(reason="Will be fixed on merge")
 def test_gsgp_n_jobs_parallelism():
-    result = gsgp(valid_X_train, valid_y_train, n_jobs=4, n_iter=valid_n_iter)
-    assert result is not None, "Function should run successfully in parallel"
+    result1 = gsgp(valid_X_train, valid_y_train, n_jobs=4, n_iter=valid_n_iter, reconstruct=True)
+    assert result1 is not None, "Function should run successfully in parallel"
+    result2 = gsgp(valid_X_train, valid_y_train, n_jobs=1, n_iter=valid_n_iter, reconstruct=True)
+    assert torch.equal(result1.predict(valid_X_test), result2.predict(valid_X_test)), \
+        "Results should be the same with the same seed and different n_jobs"
+
 
 def test_gsgp_immutability():
     X, y = load_ppb(X_y=True)
