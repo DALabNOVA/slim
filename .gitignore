@@ -7,4 +7,4 @@ slim/log/slim_postgrid_resid_build_sale_price-size.csv_test_ignore
 .DS_Store
 .idea/.name
 *.pyc
-./log/
+/log
