@@ -87,6 +87,20 @@ class Tree:
                     *self.structure[1:], testing=False
                 )
 
+    def _evaluate_parallel(self, ffunction, y):
+        """
+        Return the tree calculated fitness.
+
+        Args:
+            ffunction: Fitness function to evaluate the individual.
+            y: Expected output (target) values as a torch tensor.
+
+        Returns:
+            None
+        """
+        return ffunction(y, self.train_semantics)
+
+
     def evaluate(self, ffunction, y, testing=False, X = None):
         """
         Evaluate the tree using a fitness function.
@@ -104,12 +118,13 @@ class Tree:
         if X is not None:
             semantics = apply_tree(self, X) if isinstance(self.structure, tuple) \
                 else self.structure[0](*self.structure[1:], testing=False)
-            ffunction(y, semantics)
+            return ffunction(y, semantics)
         else:
             if testing:
                 self.test_fitness = ffunction(y, self.test_semantics)
             else:
                 self.fitness = ffunction(y, self.train_semantics)
+
 
     def predict(self, data):
         """

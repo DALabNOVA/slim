@@ -18,7 +18,7 @@ class Population:
         self.size = len(pop)
         self.nodes_count = sum([ind.nodes for ind in pop])
 
-    def calculate_semantics(self, inputs, testing=False, logistic=False, n_jobs=1):
+    def calculate_semantics(self, inputs, testing=False, logistic=False):
         """
         Calculate the semantics for each individual in the population.
 
@@ -26,17 +26,12 @@ class Population:
             inputs: Input data for calculating semantics.
             testing: Boolean indicating if the calculation is for testing semantics.
             logistic: Boolean indicating whether to apply a logistic function to the semantics.
-            n_jobs: the maximum number of concurrently running jobs for joblib parallelization.
 
         Returns:
             None
         """
-
-        # Calculate semantics for each individual in the population in a parallelized fashion
-        Parallel(n_jobs=n_jobs)(
-            delayed(_execute_tree)(individual, inputs=inputs, testing=testing, logistic=logistic
-            ) for individual in self.population
-        )
+        # Calculate semantics for each individual in the population in a sequential fashion
+        [_execute_tree(individual, inputs=inputs, testing=testing, logistic=logistic) for individual in self.population]
 
         # Store the semantics based on whether it's for testing or training
         if testing:
@@ -69,19 +64,23 @@ class Population:
         """
         return self.population[item]
 
-    def evaluate(self, ffunction, y):
+    def evaluate(self, ffunction, y, n_jobs=1):
         """
         Evaluate the population using a fitness function.
 
         Args:
             ffunction: Fitness function to evaluate the individuals.
             y: Expected output (target) values as a torch tensor.
-
+            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
         Returns:
             None
         """
-        # Evaluate all individuals in the population
-        [individual.evaluate(ffunction, y) for individual in self.population]
+        # Evaluate all individuals in the population in a parallel fashion
+        self.fit = Parallel(n_jobs=n_jobs)(
+            delayed(individual._evaluate_parallel)(
+                ffunction, y
+            ) for individual in self.population
+        )
 
-        # Store the fitness values of each individual
-        self.fit = [individual.fitness for individual in self.population]
+        # Assign individuals' fitness
+        [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
