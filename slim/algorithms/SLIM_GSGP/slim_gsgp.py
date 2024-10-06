@@ -298,7 +298,7 @@ class SLIM_GSGP:
                         p1, p2 = self.selector(population), self.selector(population)
                     pass  # future work on slim implementations should invent crossover
                 else:
-                    # so, mutation was selected. Now delation or inflation is selected.
+                    # so, mutation was selected. Now deflation or inflation is selected.
                     if random.random() < self.p_deflate:
 
                         # selecting the parent to deflate

@@ -144,6 +144,11 @@ class Tree:
             The combining function is called with the predictions of the base trees and the
             extracted parameters, along with `testing` set to False and `new_data` set to True.
             """
+
+        # seeing if the tree has the structure attribute
+        if not hasattr(self, "structure"):
+            raise Exception("If reconstruct was set to False, .predict() is not available.")
+
         if isinstance(self.structure, tuple):
             return apply_tree(self, data)
         else:
