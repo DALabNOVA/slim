@@ -462,12 +462,13 @@ def gs_size(y_true, y_pred):
 
 def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism, n_elites, init_depth, log_path,
                     prob_const, tree_functions, tree_constants, log, verbose, minimization, n_jobs, test_elite,
-                    fitness_function, initializer):
+                    fitness_function, initializer, tournament_size):
     """
     Validates the inputs based on the specified conditions.
 
     Parameters
     ----------
+    tournament_size
     X_train: (torch.Tensor)
         Training input data.
     y_train: (torch.Tensor)
@@ -488,6 +489,8 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
         The depth value for the initial GP trees population.
     log_path : str, optional
         The path where is created the log directory where results are saved.
+    log : int, optional
+        Level of detail to utilize in logging.
     verbose : int, optional
        Level of detail to include in console output.
     minimization : bool, optional
@@ -528,6 +531,8 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
         raise TypeError("init_depth must be an int")
     if not isinstance(log_path, str):
         raise TypeError("log_path must be a str")
+    if not isinstance(tournament_size, int):
+        raise TypeError("tournament_size must be an int")
 
     # assuring the prob_const is valid
     if not (isinstance(prob_const, float) or isinstance(prob_const, int)):
@@ -575,6 +580,9 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
 
     if not isinstance(initializer, str):
         raise TypeError("initializer must be a str")
+
+    if tournament_size < 2:
+        raise ValueError("tournament_size must be at least 2")
 
 
 def check_slim_version(slim_version):

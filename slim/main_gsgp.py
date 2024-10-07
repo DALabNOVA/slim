@@ -36,6 +36,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          tree_functions: list = list(FUNCTIONS.keys()),
          tree_constants: list = [float(key.replace("constant_", "").replace("_", "-")) for key in CONSTANTS],
          n_jobs: int = gsgp_solve_parameters["n_jobs"],
+         tournament_size: int = 2,
          test_elite: bool = gsgp_solve_parameters["test_elite"]):
     """
     Main function to execute the Standard GSGP algorithm on specified datasets
@@ -92,6 +93,8 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         List of allowed functions that can appear in the trees. Check documentation for the available functions.
     tree_constants : list, optional
         List of constants allowed to appear in the trees.
+    tournament_size : int, optional
+        Tournament size to utilize during selection. Only applicable if using tournament selection. (Default is 2)
     test_elite : bool, optional
         Whether to test the elite individual on the test set after each generation.
 
@@ -110,7 +113,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
                     minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
-                    initializer=initializer)
+                    initializer=initializer, tournament_size=tournament_size)
 
 
 
@@ -206,10 +209,10 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     gsgp_parameters["initializer"] = initializer_options[initializer]
 
     if minimization:
-        gsgp_parameters["selector"] = tournament_selection_min(2)
+        gsgp_parameters["selector"] = tournament_selection_min(tournament_size)
         gsgp_parameters["find_elit_func"] = get_best_min
     else:
-        gsgp_parameters["selector"] = tournament_selection_max(2)
+        gsgp_parameters["selector"] = tournament_selection_max(tournament_size)
         gsgp_parameters["find_elit_func"] = get_best_max
 
     #   *************** GSGP_SOLVE_PARAMETERS ***************

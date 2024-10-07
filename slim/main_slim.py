@@ -44,6 +44,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          copy_parent: bool =slim_gsgp_parameters["copy_parent"],
          max_depth: int = slim_gsgp_solve_parameters["max_depth"],
          n_jobs: int = slim_gsgp_solve_parameters["n_jobs"],
+         tournament_size: int = 2,
          test_elite: bool = slim_gsgp_solve_parameters["test_elite"]):
 
     """
@@ -105,6 +106,8 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
         Whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints).
     n_jobs : int, optional
         Number of parallel jobs to run (default is 1).
+    tournament_size : int, optional
+        Tournament size to utilize during selection. Only applicable if using tournament selection. (Default is 2)
     test_elite : bool, optional
         Whether to test the elite individual on the test set after each generation.
 
@@ -125,7 +128,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
                     minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
-                    initializer=initializer)
+                    initializer=initializer, tournament_size=tournament_size)
 
     # Checking that both ms bounds are numerical
     assert isinstance(ms_lower, (int, float)) and isinstance(ms_upper, (int, float)), \
@@ -222,10 +225,10 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     slim_gsgp_parameters["seed"] = seed
 
     if minimization:
-        slim_gsgp_parameters["selector"] = tournament_selection_min_slim(2)
+        slim_gsgp_parameters["selector"] = tournament_selection_min_slim(tournament_size)
         slim_gsgp_parameters["find_elit_func"] = get_best_min
     else:
-        slim_gsgp_parameters["selector"] = tournament_selection_max_slim(2)
+        slim_gsgp_parameters["selector"] = tournament_selection_max_slim(tournament_size)
         slim_gsgp_parameters["find_elit_func"] = get_best_max
 
 
