@@ -16,7 +16,7 @@ class Population:
         Parameters
         ----------
         pop : List
-            The list of individual objects that make up the population.
+            The list of individual Tree objects that make up the population.
 
         Returns
         -------
@@ -35,7 +35,7 @@ class Population:
         Parameters
         ----------
         ffunction : function
-            Fitness function to evaluate the individual.
+            Fitness function to evaluate the individuals.
         X : torch.Tensor
             The input data (which can be training or testing).
         y : torch.Tensor
