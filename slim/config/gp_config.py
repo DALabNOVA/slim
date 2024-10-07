@@ -6,7 +6,7 @@ from slim.initializers.initializers import rhh, grow, full
 from slim.selection.selection_algorithms import tournament_selection_min
 
 from slim.evaluators.fitness_functions import *
-from slim.utils.utils import get_best_min, protected_div
+from slim.utils.utils import protected_div
 import torch
 
 # Define functions and constants

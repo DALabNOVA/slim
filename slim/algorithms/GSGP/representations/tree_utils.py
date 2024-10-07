@@ -29,25 +29,33 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
     -----
     Requires the reconstruct parameter of the individual to be set to True, otherwise the structure will not be saved.
     """
+    # if the calculation is for testing semantics
     if testing and individual.test_semantics is None:
+
+        # if the individual is a base (gp) tree, use apply_tree to compute its semantics
         if isinstance(individual.structure, tuple):
             individual.test_semantics = (
                 torch.sigmoid(apply_tree(individual, inputs))
                 if logistic
                 else apply_tree(individual, inputs)
             )
+        # if not, use the operator (mutation or crossover) with the base trees to compute the semantics
         else:
             individual.test_semantics = individual.structure[0](
                 *individual.structure[1:], testing=True
             )
+    # if the calculation is for training semantics
     elif individual.train_semantics is None:
+        # if the individual is a base (gp) tree, use apply_tree to compute its semantics
         if isinstance(individual.structure, tuple):
             individual.train_semantics = (
                 torch.sigmoid(apply_tree(individual, inputs))
                 if logistic
                 else apply_tree(individual, inputs)
             )
+        # if not, use the operator (mutation or crossover) with the base trees to compute the semantics
         else:
+
             individual.train_semantics = individual.structure[0](
                 *individual.structure[1:], testing=False
             )

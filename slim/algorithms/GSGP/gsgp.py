@@ -145,15 +145,16 @@ class GSGP:
         n_jobs : int
             The maximum number of concurrently running jobs for joblib parallelization.
         """
-        if test_elite and (X_test is None or y_test is None):
-            raise Exception('If test_elite is True you need to provide a test dataset')
 
+        # setting the seeds
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
         random.seed(self.seed)
 
+        # starting the time computation
         start = time.time()
 
+        # creating the initial population
         population = Population(
             [
                 Tree(
@@ -166,16 +167,27 @@ class GSGP:
             ]
         )
 
+        # calculating the semantics for the initial population
         population.calculate_semantics(X_train)
+
+        # calculating the testing semantics, if applicable
         if test_elite:
             population.calculate_semantics(X_test, testing=True)
+
+        # evaluating the initial population
         population.evaluate(ffunction, y=y_train, n_jobs=n_jobs)
 
         end = time.time()
+
+        # obtaining the elite(s)
+
         self.elites, self.elite = self.find_elit_func(population, n_elites)
+
+        # testing the elite, if applicable
         if test_elite:
             self.elite.evaluate(ffunction, y=y_test, testing=True)
 
+        # logging the intial results, if the result level is != 0
         if log != 0:
             if log == 2:
                 add_info = [
@@ -234,6 +246,7 @@ class GSGP:
 
                 add_info = [self.elite.test_fitness, self.elite.nodes, log]
 
+            # logging the results
             logger(
                 log_path,
                 0,
@@ -244,7 +257,7 @@ class GSGP:
                 run_info=run_info,
                 seed=self.seed,
             )
-
+        # displaying the results on console, if applicable
         if verbose != 0:
             verbose_reporter(
                 curr_dataset,
@@ -254,20 +267,25 @@ class GSGP:
                 end - start,
                 self.elite.nodes,
             )
-
+        # EVOLUTIONARY PROCESS
         for it in range(1, n_iter + 1, 1):
+            # creating the empty offpsring population
             offs_pop, start = [], time.time()
+            # adding the elite(s) to the offspring population
             if elitism:
-                offs_pop.append(self.elite)
+                offs_pop.extend(self.elites)
 
+            # filling the offspring population
             while len(offs_pop) < self.pop_size:
 
+                # if choosing xover
                 if random.random() < self.p_xo:
                     p1, p2 = self.selector(population), self.selector(population)
 
+                    # assuring the parents are different
                     while p1 == p2:
                         p1, p2 = self.selector(population), self.selector(population)
-
+                    # getting the random tree
                     r_tree = get_random_tree(
                         max_depth=self.pi_init["init_depth"],
                         FUNCTIONS=self.pi_init["FUNCTIONS"],
@@ -277,10 +295,11 @@ class GSGP:
                         logistic=True,
                         p_c=self.pi_init["p_c"],
                     )
-
+                    # getting the testing semantics of the random trees, if applicable
                     if test_elite:
                         r_tree.calculate_semantics(X_test, testing=True, logistic=True)
 
+                    # getting the offspring
                     offs1 = Tree(
                         structure=(
                             [self.crossover, p1, p2, r_tree] if reconstruct else None
@@ -293,6 +312,8 @@ class GSGP:
                         ),
                         reconstruct=reconstruct,
                     )
+
+                    # if reconstruct = False, calculate the nodes and the depth of the offspring
                     if not reconstruct:
                         offs1.nodes = nested_nodes_calculator(
                             self.crossover, [p1.nodes, p2.nodes, r_tree.nodes]
@@ -301,12 +322,18 @@ class GSGP:
                             self.crossover, [p1.depth, p2.depth, r_tree.depth]
                         )
 
+                    # adding the offspring to the offspring population
                     offs_pop.append(offs1)
 
+                # if mutation
                 else:
+                    # selecting the parent
                     p1 = self.selector(population)
+
+                    # determining the mutation step
                     ms_ = self.ms()
 
+                    # seeing if two random trees are needed or only one
                     if self.mutator.__name__ in [
                         "standard_geometric_mutation",
                         "product_two_trees_geometric_mutation",
@@ -330,8 +357,10 @@ class GSGP:
                             p_c=self.pi_init["p_c"],
                         )
 
+                        # storing the mutation trees
                         mutation_trees = [r_tree1, r_tree2]
 
+                        # calculating the testing semantics of the random tree(s), if applicable
                         if test_elite:
                             [
                                 rt.calculate_semantics(
@@ -340,6 +369,7 @@ class GSGP:
                                 for rt in mutation_trees
                             ]
 
+                    # getting only one random tree
                     else:
                         r_tree1 = get_random_tree(
                             max_depth=self.pi_init["init_depth"],
@@ -351,8 +381,10 @@ class GSGP:
                             p_c=self.pi_init["p_c"],
                         )
 
+                        # storing the mutation tree
                         mutation_trees = [r_tree1]
 
+                        # calculating the testing semantics of the random tree, if applicable
                         if test_elite:
                             r_tree1.calculate_semantics(
                                 X_test, testing=True, logistic=False
@@ -375,7 +407,11 @@ class GSGP:
                         reconstruct=reconstruct,
                     )
 
+                    # adding the offspring to the population
                     offs_pop.append(offs1)
+
+                    # if reconstruct = False, calculate the nodes and the depth of the offspring
+
                     if not reconstruct:
                         offs1.nodes = nested_nodes_calculator(
                             self.mutator,
@@ -386,20 +422,29 @@ class GSGP:
                             [p1.depth, *[rt.depth for rt in mutation_trees]],
                         )
 
+            # making sure the offspring population contains population.size amount of individuals
             if len(offs_pop) > population.size:
                 offs_pop = offs_pop[: population.size]
 
+            # turning the offspring population into a Population
             offs_pop = Population(offs_pop)
+
+            # evaluating the offspring population
             offs_pop.evaluate(ffunction, y=y_train, n_jobs=n_jobs)
+
+            # replacing the population with the offspring population (P = P')
             population = offs_pop
 
             end = time.time()
 
+            # replacing the elites
             self.elites, self.elite = self.find_elit_func(population, n_elites)
 
+            # testing elite, if applicable
             if test_elite:
                 self.elite.evaluate(ffunction, y=y_test, testing=True)
 
+            # logging the results if log !=0
             if log != 0:
 
                 if log == 2:
@@ -461,6 +506,7 @@ class GSGP:
 
                     add_info = [self.elite.test_fitness, self.elite.nodes, log]
 
+                # logging the results
                 logger(
                     log_path,
                     it,
@@ -471,7 +517,7 @@ class GSGP:
                     run_info=run_info,
                     seed=self.seed,
                 )
-
+            # displaying the results on console, if applicable
             if verbose != 0:
                 verbose_reporter(
                     run_info[-1],
