@@ -7,20 +7,20 @@ import torch
 
 class Tree:
     """
-    Represents a tree structure for genetic programming.
+    The Tree class representing the candidate solutions in genetic programming.
 
     Attributes
     ----------
     repr_ : tuple or str
         Representation of the tree structure.
     FUNCTIONS : dict
-        Dictionary of allowed functions in the tree.
+        Dictionary of allowed functions in the tree representation.
     TERMINALS : dict
-        Dictionary of terminal symbols allowed in the tree.
+        Dictionary of terminal symbols allowed in the tree representation.
     CONSTANTS : dict
-        Dictionary of constant values allowed in the tree.
+        Dictionary of constant values allowed in the tree representation.
     depth : int
-        Depth of the tree structure.
+        Depth of the tree.
     fitness : float
         Fitness value of the tree.
     test_fitness : float
@@ -108,13 +108,13 @@ class Tree:
         Returns
         -------
         None or float
-            Attributes a fitness value to the tree or The fitness value of the individual based on its predictions on new data
+            Attributes the fitness value to the tree or, if new is being used, return the fitness value
+            for this new data.
         """
         # getting the predictions (i.e., semantics) of the individual
         preds = self.apply_tree(X)
 
-        # if new (testing data) is being used, return the fitness of the individual given its predictions on the data
-
+        # if new (testing data) is being used, return the fitness value for this new data
         if new_data:
             return float(ffunction(y, preds))
 
@@ -127,7 +127,7 @@ class Tree:
 
     def predict(self, X):
         """
-        Predict the output for the given input data.
+        Predict the tree semantics (output) for the given input data.
 
         Parameters
         ----------
