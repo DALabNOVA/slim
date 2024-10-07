@@ -52,7 +52,7 @@ def flatten(data):
 
 def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, first_call=True):
     """
-    Generates a random tree using the Grow method with a specified depth.
+    Generates a random tree representation using the Grow method with a maximum specified depth.
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, fir
     Returns
     -------
     tuple
-        The generated tree according to the specified parameters.
+        The generated tree representation according to the specified parameters.
     """
     # defining the probability for a terminal node to be selected, if the probability of constants is not 0
     if p_c > 0:
@@ -105,7 +105,7 @@ def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, fir
 
 def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     """
-    Generates a full random tree with a specified depth.
+    Generates a full random tree representation with a specified depth.
 
     Parameters
     ----------
@@ -118,12 +118,12 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     CONSTANTS : dict
         Dictionary of constant values allowed in the tree.
     p_c : float, optional
-        Probability of choosing a function node. Default is 0.3.
+        Probability of choosing a constant node. Default is 0.3.
 
     Returns
     -------
     tuple
-        The generated full tree based on the specified parameters.
+        The generated full tree representaiton based on the specified parameters.
     """
     # if the maximum depth is 1, choose a terminal node
     if depth <= 1:
@@ -148,9 +148,9 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
 
 def random_subtree(FUNCTIONS):
     """
-    Creates a function that selects a random subtree from a given tree.
+    Creates a function that selects a random subtree from a given tree representation.
 
-    This function generates another function that traverses a tree structure to randomly
+    This function generates another function that traverses a tree representation to randomly
     select a subtree based on the arity of the functions within the tree.
 
     Parameters
@@ -161,24 +161,12 @@ def random_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function that selects a random subtree from the input tree.
-
-    Notes
-    -----
-    The returned function traverses the tree recursively, selecting subtrees based on random
-    probabilities influenced by the structure of the tree.
-    """
-    def random_subtree_picker(tree, first_call=True, num_of_nodes=None):
-        """
-        Selects a random subtree from the given tree.
-
-        This function navigates the tree structure recursively, choosing a subtree based on
-        probabilities determined by the overall structure of the tree.
+        A function (`random_subtree_picker`) that selects a random subtree from the input tree representation.
 
         Parameters
         ----------
         tree : tuple
-            The tree structure from which to select a subtree.
+            The tree representation from which to select a subtree.
         first_call : bool, optional
             Indicates whether this is the initial call to the function. Defaults to True.
         num_of_nodes : int, optional
@@ -187,7 +175,33 @@ def random_subtree(FUNCTIONS):
         Returns
         -------
         tuple
-            The randomly selected subtree or the original node if not applicable.
+            The randomly selected subtree (or the original node if not applicable).
+
+    Notes
+    -----
+    The returned function traverses the tree representation recursively, selecting subtrees based on random
+    probabilities influenced by the representation of the tree.
+    """
+    def random_subtree_picker(tree, first_call=True, num_of_nodes=None):
+        """
+        Selects a random subtree from the given tree representation.
+
+        This function navigates the tree representation recursively, choosing a subtree based on
+        probabilities determined by the overall representation of the tree.
+
+        Parameters
+        ----------
+        tree : tuple
+            The tree representation from which to select a subtree.
+        first_call : bool, optional
+            Indicates whether this is the initial call to the function. Defaults to True.
+        num_of_nodes : int, optional
+            The total number of nodes in the tree. Used to calculate probabilities.
+
+        Returns
+        -------
+        tuple
+            The randomly selected subtree (or the original node if not applicable).
         """
         if isinstance(tree, tuple):
             current_number_of_nodes = (
@@ -241,10 +255,10 @@ def random_subtree(FUNCTIONS):
 
 def substitute_subtree(FUNCTIONS):
     """
-    Generates a function that substitutes a specific subtree in a tree with a new subtree.
+    Generates a function that substitutes a specific subtree in a tree representation with a new subtree.
 
-    This function returns another function that can recursively traverse a tree to replace
-    occurrences of a specified subtree with a new one, maintaining the structure and
+    This function returns another function that can recursively traverse a tree representation to replace
+    occurrences of a specified subtree with a new one, maintaining the representation and
     validity of the original tree.
 
     Parameters
@@ -255,25 +269,12 @@ def substitute_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function that substitutes a subtree in the input tree.
-
-    Notes
-    -----
-    The returned function performs replacements while preserving the tree structure based on the arity of the function nodes.
-    """
-
-    def substitute(tree, target_subtree, new_subtree):
-        """
-        Substitutes a specified subtree within the given tree with a new subtree.
-
-        This function recursively searches for occurrences of the target subtree within the tree
-        and replaces it with the new subtree when found. If the original tree is a terminal or equal to the new one,
-        return it.
+        A function (`substitute`) that substitutes a subtree in the input tree representation.
 
         Parameters
         ----------
         tree : tuple or str
-            The tree structure in which to perform the substitution. Can be a terminal.
+            The tree representation in which to perform the substitution. Can be a terminal.
         target_subtree : tuple
             The subtree to be replaced.
         new_subtree : tuple
@@ -282,7 +283,35 @@ def substitute_subtree(FUNCTIONS):
         Returns
         -------
         tuple or str
-            The modified tree with the target subtree replaced by the new subtree.
+            The modified tree representation with the target subtree replaced by the new subtree.
+
+    Notes
+    -----
+    The returned function performs replacements while preserving the tree structure based on
+    the arity of the function nodes.
+    """
+
+    def substitute(tree, target_subtree, new_subtree):
+        """
+        Substitutes a specified subtree within the given tree representation with a new subtree.
+
+        This function recursively searches for occurrences of the target subtree within the tree
+        representation and replaces it with the new subtree when found. If the original tree
+        representation is a terminal or equal to the new one, return it.
+
+        Parameters
+        ----------
+        tree : tuple or str
+            The tree representation in which to perform the substitution. Can be a terminal.
+        target_subtree : tuple
+            The subtree to be replaced.
+        new_subtree : tuple
+            The subtree to insert in place of the target subtree.
+
+        Returns
+        -------
+        tuple or str
+            The modified tree representation with the target subtree replaced by the new subtree.
         """
         if tree == target_subtree:
             return new_subtree
@@ -303,11 +332,10 @@ def substitute_subtree(FUNCTIONS):
 
 def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
     """
-    Generates a function that reduces both sides of a tree to a specific depth.
+    Generates a function that reduces both sides of a tree representation to a specific depth.
 
-    This function returns another function that can prune a given tree to a
-    specified depth by replacing nodes with terminals or constants based on
-    a defined probability.
+    This function returns another function that can prune a given tree representation to a
+    specified depth by replacing nodes with terminals or constants based on a defined probability.
 
     Parameters
     ----------
@@ -323,27 +351,40 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
     Returns
     -------
     Callable
-        A function that prunes the tree to the specified depth.
+        A function (`pruning`) that prunes the tree representation to the specified depth.
+
+        Parameters
+        ----------
+        tree : tuple or str
+            The tree representation to be pruned.
+        target_depth : int
+            The depth to which the tree representation should be pruned.
+
+        Returns
+        -------
+        tuple or str
+            The pruned tree representation, which may consist of terminals, constants, or
+            a modified subtree.
     """
     def pruning(tree, target_depth):
         """
-        Prunes the given tree to the specified depth.
+        Prunes the given tree representation to the specified depth.
 
-        This function replaces nodes in the tree with terminals or constants
-        if the target depth is reached, ensuring the tree does not exceed the
+        This function replaces nodes in the tree representation with terminals or constants
+        if the target depth is reached, ensuring the tree representation does not exceed the
         specified depth.
 
         Parameters
         ----------
         tree : tuple or str
-            The tree structure to be pruned.
+            The tree representation to be pruned.
         target_depth : int
-            The depth to which the tree should be pruned.
+            The depth to which the tree representation should be pruned.
 
         Returns
         -------
         tuple or str
-            The pruned tree, which may consist of terminals, constants, or
+            The pruned tree representation, which may consist of terminals, constants, or
             a modified subtree.
         """
         if target_depth <= 1 and tree not in TERMINALS:
@@ -367,26 +408,37 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
 
 def tree_depth(FUNCTIONS):
     """
-    Generates a function that calculates the depth of a given tree.
+    Generates a function that calculates the depth of a given tree representation.
 
     This function returns another function that can be used to compute the depth
-    of a tree, which is defined as the length of the longest path from the root
-    node to a leaf node.
+    of a tree representation, which is defined as the length of the longest path
+    from the root node to a leaf node.
 
     Parameters
     ----------
     FUNCTIONS : dict
-        Dictionary of functions allowed in the tree.
+        Dictionary of functions allowed in the tree representation.
 
     Returns
     -------
     Callable
-        A function that calculates the depth of the input tree.
+        A function (`depth`) that calculates the depth of the input tree representation.
+
+        Parameters
+        ----------
+        tree : tuple or str
+            The tree representation for which to calculate the depth. It can also be
+            a terminal node represented as a string.
+
+        Returns
+        -------
+        int
+            The depth of the tree.
 
     Notes
     -----
-    The returned function traverses the tree recursively, determining the depth
-    based on the max of the subtree depths.
+    The returned function traverses the tree representation recursively, determining
+    the depth based on the max of the subtree depths.
     """
     def depth(tree):
         """
@@ -398,7 +450,7 @@ def tree_depth(FUNCTIONS):
         Parameters
         ----------
         tree : tuple or str
-            The tree structure for which to calculate the depth. It can also be
+            The tree representation for which to calculate the depth. It can also be
             a terminal node represented as a string.
 
         Returns
@@ -421,31 +473,27 @@ def tree_depth(FUNCTIONS):
 
 
 def _execute_tree(repr_, X, FUNCTIONS, TERMINALS, CONSTANTS):
-
     """
     Evaluates a tree genotype on input vectors.
 
-    Check how to have FUNCTIONS, TERMINALS, CONSTANTS imported here instead of
-    being passed as argument at each _execute_tree(...) call.
-
     Parameters
     ----------
-    repr_ : object
-        Representation of the tree structure.
+    repr_ : tuple
+        Tree representation.
 
     FUNCTIONS : dict
-        Dictionary of allowed functions in the tree.
+        Dictionary of allowed functions in the tree representation.
 
     TERMINALS : dict
-        Dictionary of terminal symbols allowed in the tree.
+        Dictionary of terminal symbols allowed in the tree representation.
 
     CONSTANTS : dict
-        Dictionary of constant values allowed in the tree.
+        Dictionary of constant values allowed in the tree representation.
 
     Returns
     -------
     float
-        Output of the evaluated tree.
+        Output of the evaluated tree representation.
     """
     if isinstance(repr_, tuple):  # If it's a function node
         function_name = repr_[0]
