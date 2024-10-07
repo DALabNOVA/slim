@@ -6,15 +6,22 @@ def niche_entropy(repr_, n_niches=10):
     """
     Calculate the niche entropy of a population.
 
-    Args:
-        repr_ (list): List of individuals in the population.
-        n_niches (int): Number of niches to divide the population into.
+    Parameters
+    ----------
+    repr_ : list
+        The list of individuals in the population.
+    n_niches : int
+        Number of niches to divide the population into.
 
-    Returns:
-        float: The entropy of the distribution of individuals across niches.
+    Returns
+    -------
+    float
+        The entropy of the distribution of individuals across niches.
+    Notes
+    -----
+    https://www.semanticscholar.org/paper/Entropy-Driven-Adaptive-RoscaComputer/ab5c8a8f415f79c5ec6ff6281ed7113736615682
+    https://strathprints.strath.ac.uk/76488/1/Marchetti_etal_Springer_2021_Inclusive_genetic_programming.pdf
     """
-    # https://www.semanticscholar.org/paper/Entropy-Driven-Adaptive-RoscaComputer/ab5c8a8f415f79c5ec6ff6281ed7113736615682
-    # https://strathprints.strath.ac.uk/76488/1/Marchetti_etal_Springer_2021_Inclusive_genetic_programming.pdf
 
     num_nodes = [len(ind) - 1 for ind in repr_]
     min_ = min(num_nodes)
@@ -38,13 +45,19 @@ def gsgp_pop_div_from_vectors(sem_vectors):
     """
     Calculate the diversity of a population from semantic vectors.
 
-    Args:
-        sem_vectors (torch.Tensor): Tensor of semantic vectors.
+    Parameters
+    ----------
+    sem_vectors : torch.Tensor
+        The tensor of semantic vectors.
 
-    Returns:
-        float: The average pairwise distance between semantic vectors.
+    Returns
+    -------
+    float
+        The average pairwise distance between semantic vectors.
+    Notes
+    -----
+    https://ieeexplore.ieee.org/document/9283096
     """
-    # https://ieeexplore.ieee.org/document/9283096
     return torch.sum(torch.cdist(sem_vectors, sem_vectors)) / (
         sem_vectors.shape[0] ** 2
     )

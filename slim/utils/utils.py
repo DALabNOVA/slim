@@ -239,7 +239,7 @@ def get_terminals(X):
 
     Parameters
     ----------
-    data_loader : (torch.Tensor)
+    X : (torch.Tensor)
         An array to get the set of TERMINALS from, it will correspond to the columns.
 
     Returns
@@ -265,7 +265,7 @@ def get_best_min(population, n_elites):
     Returns
     -------
     list
-        List of elite individuals.
+        The list of elite individuals.
     Individual
         Best individual from the elites.
     """
@@ -293,7 +293,7 @@ def get_best_max(population, n_elites):
     Returns
     -------
     list
-        List of elite individuals.
+        The list of elite individuals.
     Individual
         Best individual from the elites.
     """
@@ -376,11 +376,22 @@ def generate_random_uniform(lower, upper):
 
     Returns
     -------
-    function
+    Callable
         A function that when called, generates a random number within the specified range.
+    Notes
+    -----
+    The returned function takes no input and returns a random float between lower and upper whenever called.
     """
 
     def generate_num():
+        """
+        Generate a random number within a specified range.
+
+        Returns
+        -------
+        float
+            A random number between the defined lower and upper bounds.
+        """
         return random.uniform(lower, upper)
 
     generate_num.lower = lower
