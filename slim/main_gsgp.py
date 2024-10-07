@@ -258,10 +258,10 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
 if __name__ == "__main__":
-    from slim.datasets.data_loader import load_merged_data
+    from slim.datasets.data_loader import load_resid_build_sale_price
     from slim.utils.utils import train_test_split
 
-    X, y = load_merged_data("resid_build_sale_price", X_y=True)
+    X, y = load_resid_build_sale_price(X_y=True)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
     X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)

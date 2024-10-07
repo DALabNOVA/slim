@@ -1,21 +1,30 @@
 import os
 
+import pandas
 import pandas as pd
 import torch
 
+def load_pandas_df(df : pandas.DataFrame, X_y: bool = True):
+    """
+
+    Parameters
+    ----------
+    df : Pandas Dataframe
+        The Pandas Dataframe that is to be used and turned into a torch.Tensor. Must contain the target variable
+        in the last column if X_y is set to True.
+
+    X_y : bool, optional
+        Indicates if the data is to be returned as two objects of type torch.Tensor, otherwise as single Tensor.
 
 
-def load_merged_data(dataset, X_y=False):
+    Returns
+    -------
 
-    df = pd.read_csv(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "merged_data",
-            f"{dataset}_merged.txt",
-        ),
-        sep=" ",
-        header=None,
-    )
+    tuple or torch.Tensor
+        A tuple containing two torch.Tensors (X and the target variable, Y), if X_y is True or a single
+        torch.Tensor if X_y is set to False
+
+    """
 
     if X_y:
         return (
@@ -23,8 +32,7 @@ def load_merged_data(dataset, X_y=False):
             torch.from_numpy(df.values[:, -1]).float(),
         )
     else:
-        return df
-
+        return torch.from_numpy(df.values).float()
 
 def load_dummy_test(boo=True):
     df = pd.read_csv(
@@ -60,7 +68,7 @@ def load_dummy_train(boo=True):
     )
 
 
-def load_preloaded(dataset_name, seed = 1, training=True, X_y=False):
+def load_preloaded(dataset_name, seed = 1, training=True, X_y=False): # TODO: remove?
 
     filename = (
         f"TRAINING_{seed}_{dataset_name.upper()}.txt"
@@ -86,15 +94,75 @@ def load_preloaded(dataset_name, seed = 1, training=True, X_y=False):
     else:
         return df
 
+def load_resid_build_sale_price(X_y=True):
+    """
+    Loads and returns the RESIDNAME data set (regression).
 
-"""
+    Parameters
+    ----------
+    X_y : bool, optional
+        Indicates if the data is to be returned as two objects of type torch.Tensor, otherwise as single Tensor.
 
-Adapted from GPOL.
+    Returns
+    -------
 
-TODO: add citation
+    tuple or torch.Tensor
+        A tuple containing two torch.Tensors (X and the target variable, Y), if X_y is True or a single
+        torch.Tensor if X_y is set to False
 
-"""
-def load_airfoil(X_y=False):
+    """
+
+    df = pd.read_csv(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "resid_build_sale_price.txt"), sep=" ",
+        header=None
+    )
+    if X_y:
+        return (
+            torch.from_numpy(df.values[:, :-1]).float(),
+            torch.from_numpy(df.values[:, -1]).float(),
+        )
+    else:
+        return df
+
+def load_istanbul(X_y=True):
+    """
+    Loads and returns the Istanbul data set (regression). Taken from https://docs.1010data.com/MachineLearningExamples/IstanbulDataSet.html.
+
+    Parameters
+    ----------
+    X_y : bool, optional
+        Indicates if the data is to be returned as two objects of type torch.Tensor, otherwise as single Tensor.
+
+    Returns
+    -------
+
+    tuple or torch.Tensor
+        A tuple containing two torch.Tensors (X and the target variable, Y), if X_y is True or a single
+        torch.Tensor if X_y is set to False
+
+    """
+
+    df = pd.read_csv(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "istanbul.txt"), sep=" ",
+        header=None
+    )
+    if X_y:
+        return (
+            torch.from_numpy(df.values[:, :-1]).float(),
+            torch.from_numpy(df.values[:, -1]).float(),
+        )
+    else:
+        return df
+
+    """
+
+    Adapted from GPOL.
+
+    TODO: add citation
+
+    """
+
+def load_airfoil(X_y=True):
     """Loads and returns the Airfoil Self-Noise data set (regression)
 
     NASA data set, obtained from a series of aerodynamic and acoustic
@@ -110,7 +178,7 @@ def load_airfoil(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -133,7 +201,7 @@ def load_airfoil(X_y=False):
         return df
 
 
-def load_boston(X_y=False):
+def load_boston(X_y=True):
     """Loads and returns the Boston Housing data set (regression)
 
     This dataset contains information collected by the U.S. Census
@@ -148,7 +216,7 @@ def load_boston(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -173,7 +241,7 @@ def load_boston(X_y=False):
         return df
 
 
-def load_breast_cancer(X_y=False):
+def load_breast_cancer(X_y=True):
     """Loads and returns the breast cancer data set (classification)
 
     Breast Cancer Wisconsin (Diagnostic) dataset.
@@ -187,7 +255,7 @@ def load_breast_cancer(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -214,7 +282,7 @@ def load_breast_cancer(X_y=False):
         return df
 
 
-def load_concrete_slump(X_y=False):
+def load_concrete_slump(X_y=True):
     """Loads and returns the Concrete Slump data set (regression)
 
     Concrete is a highly complex material. The slump flow of concrete
@@ -230,7 +298,7 @@ def load_concrete_slump(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -254,7 +322,7 @@ def load_concrete_slump(X_y=False):
         return df
 
 
-def load_concrete_strength(X_y=False):
+def load_concrete_strength(X_y=True):
     """Loads and returns the Concrete Strength data set (regression)
 
     Concrete is the most important material in civil engineering. The
@@ -270,7 +338,7 @@ def load_concrete_strength(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -294,7 +362,7 @@ def load_concrete_strength(X_y=False):
         return df
 
 
-def load_diabetes(X_y=False):
+def load_diabetes(X_y=True):
     """Loads and returns the Diabetes data set(regression)
 
     The file is located in /gpol/utils/data/diabetes.txt
@@ -306,7 +374,7 @@ def load_diabetes(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -333,7 +401,7 @@ def load_diabetes(X_y=False):
         return df
 
 
-def load_efficiency_heating(X_y=False):
+def load_efficiency_heating(X_y=True):
     """Loads and returns the Heating Efficiency data set(regression)
 
     The data set regards heating load assessment of buildings (that is,
@@ -348,7 +416,7 @@ def load_efficiency_heating(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -374,7 +442,7 @@ def load_efficiency_heating(X_y=False):
         return df
 
 
-def load_efficiency_cooling(X_y=False):
+def load_efficiency_cooling(X_y=True):
     """Loads and returns the Cooling Efficiency data set(regression)
 
     The data set regards cooling load assessment of buildings (that is,
@@ -389,7 +457,7 @@ def load_efficiency_cooling(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -415,7 +483,7 @@ def load_efficiency_cooling(X_y=False):
         return df
 
 
-def load_forest_fires(X_y=False):
+def load_forest_fires(X_y=True):
     """Loads and returns the Forest Fires data set (regression)
 
     The data set regards the prediction of the burned area of forest
@@ -431,7 +499,7 @@ def load_forest_fires(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -455,7 +523,7 @@ def load_forest_fires(X_y=False):
         return df
 
 
-def load_parkinson_updrs(X_y=False):
+def load_parkinson_updrs(X_y=True):
     """Loads and returns the Parkinsons Telemonitoring data set (regression)
 
     The data set was created by A. Tsanas and M. Little of the Oxford's
@@ -474,7 +542,7 @@ def load_parkinson_updrs(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -500,7 +568,7 @@ def load_parkinson_updrs(X_y=False):
         return df
 
 
-def load_ld50(X_y=False):
+def load_ld50(X_y=True):
     """Loads and returns the LD50 data set(regression)
 
     The data set consists in predicting the median amount of compound
@@ -517,7 +585,7 @@ def load_ld50(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -539,7 +607,7 @@ def load_ld50(X_y=False):
         return df
 
 
-def load_ppb(X_y=False):
+def load_ppb(X_y=True):
     """Loads and returns the PPB data set(regression)
 
     The data set consists in predicting the percentage of the initial
@@ -556,7 +624,7 @@ def load_ppb(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -578,7 +646,7 @@ def load_ppb(X_y=False):
         return df
 
 
-def load_bioav(X_y=False):
+def load_bioav(X_y=True):
     """Loads and returns the Oral Bioavailability data set (regression)
 
     The data set consists in predicting the value of the percentage of
@@ -597,7 +665,7 @@ def load_bioav(X_y=False):
 
     Parameters
     ----------
-    X_y : bool (default=False)
+    X_y : bool (default=True)
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 

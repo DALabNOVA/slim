@@ -1,12 +1,12 @@
 
 from slim.main_slim import slim  # import the slim library
-from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+from slim.datasets.data_loader import load_resid_build_sale_price  # import the loader for the dataset PPB
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
+
 
 # Load the PPB dataset
-X, y = load_ppb(X_y=True)
+X, y = load_resid_build_sale_price(X_y=True)
 
 # Split into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
