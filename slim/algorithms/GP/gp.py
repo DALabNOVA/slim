@@ -32,18 +32,30 @@ class GP:
         """
         Initialize the Genetic Programming algorithm.
 
-        Args:
-            pi_init (dict): Dictionary with all the parameters needed for evaluation.
-            initializer (function): Function to initialize the population.
-            selector (function): Function to select individuals for crossover/mutation.
-            mutator (function): Function to mutate individuals.
-            crossover (function): Function to perform crossover between individuals.
-            find_elit_func (function): Function to find elite individuals.
-            p_m (float): Probability of mutation.
-            p_xo (float): Probability of crossover.
-            pop_size (int): Size of the population.
-            seed (int): Seed for random number generation.
-            settings_dict (dict): Additional settings dictionary.
+        Parameters
+        ----------
+        pi_init : dict
+            Dictionary with all the parameters needed for evaluation.
+        initializer : Callable
+            Function to initialize the population.
+        selector : Callable
+            Function to select individuals for crossover/mutation.
+        mutator : Callable
+            Function to mutate individuals.
+        crossover : Callable
+            Function to perform crossover between individuals.
+        find_elit_func : Callable
+            Function to find elite individuals.
+        p_m : float, optional
+            Probability of mutation. Default is 0.2.
+        p_xo : float, optional
+            Probability of crossover. Default is 0.8.
+        pop_size : int, optional
+            Size of the population. Default is 100.
+        seed : int, optional
+            Seed for random number generation. Default is 0.
+        settings_dict : dict, optional
+            Additional settings dictionary.
         """
         self.pi_init = pi_init
         self.selector = selector
@@ -85,25 +97,45 @@ class GP:
         """
         Execute the Genetic Programming algorithm.
 
-        Args:
-            X_train (torch.Tensor): Training data features.
-            X_test (torch.Tensor): Test data features.
-            y_train (torch.Tensor): Training data labels.
-            y_test (torch.Tensor): Test data labels.
-            curr_dataset (str): Current dataset name.
-            n_iter (int): Number of iterations.
-            elitism (bool): Whether to use elitism.
-            log (int): Logging level.
-            verbose (int): Verbosity level.
-            test_elite (bool): Whether to test elite individuals.
-            log_path (str): Path to save logs.
-            run_info (list): Information about the current run.
-            max_depth (int): Maximum depth of the tree.
-            ffunction (function): Fitness function.
-            n_elites (int): Number of elites.
-            tree_pruner (function): Function to prune trees.
-            depth_calculator (function): Function to calculate tree depth.
-            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
+
+        Parameters
+        ----------
+        X_train : torch.Tensor
+            Training data features.
+        X_test : torch.Tensor
+            Test data features.
+        y_train : torch.Tensor
+            Training data labels.
+        y_test : torch.Tensor
+            Test data labels.
+        curr_dataset : str
+            Current dataset name.
+        n_iter : int, optional
+            Number of iterations. Default is 20.
+        elitism : bool, optional
+            Whether to use elitism. Default is True.
+        log : int, optional
+            Logging level. Default is 0.
+        verbose : int, optional
+            Verbosity level. Default is 0.
+        test_elite : bool, optional
+            Whether to test elite individuals. Default is False.
+        log_path : str, optional
+            Path to save logs. Default is None.
+        run_info : list, optional
+            Information about the current run. Default is None.
+        max_depth : int, optional
+            Maximum depth of the tree. Default is None.
+        ffunction : function, optional
+            Fitness function. Default is None.
+        n_elites : int, optional
+            Number of elites. Default is 1.
+        tree_pruner : function, optional
+            Function to prune trees. Default is None.
+        depth_calculator : function, optional
+            Function to calculate tree depth. Default is None.
+        n_jobs : int, optional
+            The number of jobs for parallel processing. Default is 1.
         """
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
