@@ -8,12 +8,19 @@ from slim.algorithms.GP.representations.tree_utils import _execute_tree
 class Population:
     def __init__(self, pop):
         """
-        Initializes the Population object.
+        Initializes a population of Trees.
+
+        This constructor sets up the population with a list of Tree objects,
+        calculating the size of the population and the total node count.
 
         Parameters
         ----------
         pop : List
             The list of individual objects that make up the population.
+
+        Returns
+        -------
+        None
         """
         self.population = pop
         self.size = len(pop)
@@ -23,24 +30,22 @@ class Population:
         """
         Evaluates the population given a certain fitness function, input data (X), and target data (y).
 
+        Attributes a fitness tensor to the population.
+
         Parameters
         ----------
         ffunction : function
             Fitness function to evaluate the individual.
-
         X : torch.Tensor
             The input data (which can be training or testing).
-
         y : torch.Tensor
             The expected output (target) values.
-
         n_jobs : int
             The maximum number of concurrently running jobs for joblib parallelization.
 
         Returns
         -------
         None
-            Attributes a fitness tensor to the population.
         """
         # Evaluates individuals' semantics
         y_pred = Parallel(n_jobs=n_jobs)(
