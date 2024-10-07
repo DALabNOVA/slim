@@ -10,13 +10,18 @@ def log_settings(path: str, settings_dict: list, unique_run_id: UUID) -> None:
     """
     Log the settings to a CSV file.
 
-    Args:
-        path (str): Path to the CSV file.
-        settings_dict (dict): Dictionary of settings.
-        unique_run_id (str): Unique identifier for the run.
+    Parameters
+    ----------
+    path : str
+        Path to the CSV file.
+    settings_dict : list
+        Dictionary of settings.
+    unique_run_id : UUID
+        Unique identifier for the run.
 
-    Returns:
-        None
+    Returns
+    -------
+    None
     """
     settings_dict = merge_settings(*settings_dict)
     del settings_dict["TERMINALS"]
@@ -32,14 +37,21 @@ def merge_settings(sd1: dict, sd2: dict, sd3: dict, sd4: dict) -> dict:
     """
     Merge multiple settings dictionaries into one.
 
-    Args:
-        sd1 (dict): First settings dictionary.
-        sd2 (dict): Second settings dictionary.
-        sd3 (dict): Third settings dictionary.
-        sd4 (dict): Fourth settings dictionary.
+    Parameters
+    ----------
+    sd1 : dict
+        First settings dictionary.
+    sd2 : dict
+        Second settings dictionary.
+    sd3 : dict
+        Third settings dictionary.
+    sd4 : dict
+        Fourth settings dictionary.
 
-    Returns:
-        dict: Merged settings dictionary.
+    Returns
+    -------
+    dict
+        Merged settings dictionary.
     """
     return {**sd1, **sd2, **sd3, **sd4}
 
@@ -57,18 +69,28 @@ def logger(
     """
     Logs information into a CSV file.
 
-    Args:
-        path (str): Path to the CSV file.
-        generation (int): Current generation number.
-        elite_fit (float): Elite's validation fitness value.
-        timing (float): Time taken for the process.
-        nodes (int): Count of nodes in the population.
-        additional_infos (list, optional): Population's test fitness value(s) and diversity measurements. Defaults to None.
-        run_info (list, optional): Information about the run. Defaults to None.
-        seed (int, optional): The seed used in random, numpy, and torch libraries. Defaults to 0.
+    Parameters
+    ----------
+    path : str
+        Path to the CSV file.
+    generation : int
+        Current generation number.
+    elite_fit : float
+        Elite's validation fitness value.
+    timing : float
+        Time taken for the process.
+    nodes : int
+        Count of nodes in the population.
+    additional_infos : list, optional
+        Population's test fitness value(s) and diversity measurements. Defaults to None.
+    run_info : list, optional
+        Information about the run. Defaults to None.
+    seed : int, optional
+        The seed used in random, numpy, and torch libraries. Defaults to 0.
 
-    Returns:
-        None
+    Returns
+    -------
+    None
     """
     if not os.path.isdir(os.path.dirname(path)):
         os.mkdir(os.path.dirname(path))
@@ -91,12 +113,16 @@ def drop_experiment_from_logger(experiment_id: str or int, log_path: str) -> Non
     """
     Remove an experiment from the logger CSV file. If the given experiment_id is -1, the last saved experiment is removed.
 
-    Args:
-        experiment_id (str or int): The experiment id to be removed. If -1, the most recent experiment is removed.
-        log_path (str): Path to the file containing the logging information.
+    Parameters
+    ----------
+    experiment_id : str or int
+        The experiment ID to be removed. If -1, the most recent experiment is removed.
+    log_path : str
+        Path to the file containing the logging information.
 
-    Returns:
-        None
+    Returns
+    -------
+    None
     """
     logger_data = pd.read_csv(log_path)
 
