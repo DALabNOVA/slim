@@ -34,65 +34,6 @@ def load_pandas_df(df : pandas.DataFrame, X_y: bool = True):
     else:
         return torch.from_numpy(df.values).float()
 
-def load_dummy_test(boo=True):
-    df = pd.read_csv(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "data",
-            "TEST_1_myToySumDataset.txt",
-        ),
-        sep=" ",
-        header=None,
-    )
-
-    return (
-        torch.from_numpy(df.values[:, :-2]).float(),
-        torch.from_numpy(df.values[:, -2]).float(),
-    )
-
-
-def load_dummy_train(boo=True):
-    df = pd.read_csv(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "data",
-            "TRAINING_1_myToySumDataset.txt",
-        ),
-        sep=" ",
-        header=None,
-    )
-
-    return (
-        torch.from_numpy(df.values[:, :-2]).float(),
-        torch.from_numpy(df.values[:, -2]).float(),
-    )
-
-
-def load_preloaded(dataset_name, seed = 1, training=True, X_y=False): # TODO: remove?
-
-    filename = (
-        f"TRAINING_{seed}_{dataset_name.upper()}.txt"
-        if training
-        else f"TEST_{seed}_{dataset_name.upper()}.txt"
-    )
-
-    # dropping the last column as it only contains NaNs due to spacing as
-    # separator
-    df = pd.read_csv(
-        os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), "pre_loaded_data", filename
-        ),
-        sep=" ",
-        header=None,
-    ).iloc[:, :-1]
-
-    if X_y:
-        return (
-            torch.from_numpy(df.values[:, :-1]).float(),
-            torch.from_numpy(df.values[:, -1]).float(),
-        )
-    else:
-        return df
 
 def load_resid_build_sale_price(X_y=True):
     """
@@ -105,13 +46,13 @@ def load_resid_build_sale_price(X_y=True):
 
     Returns
     -------
-
-    tuple or torch.Tensor
-        A tuple containing two torch.Tensors (X and the target variable, Y), if X_y is True or a single
-        torch.Tensor if X_y is set to False
-
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
+        An object of type pandas.DataFrame which holds the data. The
+        target is the last column.
     """
-
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "resid_build_sale_price.txt"), sep=" ",
         header=None
@@ -135,11 +76,12 @@ def load_istanbul(X_y=True):
 
     Returns
     -------
-
-    tuple or torch.Tensor
-        A tuple containing two torch.Tensors (X and the target variable, Y), if X_y is True or a single
-        torch.Tensor if X_y is set to False
-
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
+        An object of type pandas.DataFrame which holds the data. The
+        target is the last column.
     """
 
     df = pd.read_csv(
@@ -154,13 +96,9 @@ def load_istanbul(X_y=True):
     else:
         return df
 
-    """
 
-    Adapted from GPOL.
 
-    TODO: add citation
-
-    """
+#   The following functions were Adapted from the GPOL library.
 
 def load_airfoil(X_y=True):
     """Loads and returns the Airfoil Self-Noise data set (regression)
@@ -169,7 +107,7 @@ def load_airfoil(X_y=True):
     tests of two and three-dimensional airfoil blade sections conducted
     in an anechoic wind tunnel.
     Downloaded from the UCI ML Repository.
-    The file is located in gpol/utils/data/airfoil.txt
+    The file is located in slim/datasets/data/airfoil.txt
 
     Basic information:
     - Number of data instances: 1503;
@@ -178,17 +116,25 @@ def load_airfoil(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
-    """
 
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
+    """
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "airfoil.txt")
     )
@@ -207,7 +153,7 @@ def load_boston(X_y=True):
     This dataset contains information collected by the U.S. Census
     Service concerning housing in the area of Boston Massachusetts.
     Downloaded from the StatLib archive.
-    The file is located in /gpol/utils/data/boston.txt
+    The file is located in /slim/datasets/data/boston.txt
 
     Basic information:
     - Number of data instances: 506;
@@ -216,7 +162,7 @@ def load_boston(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -228,6 +174,12 @@ def load_boston(X_y=True):
     df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "boston.txt")
@@ -246,7 +198,7 @@ def load_breast_cancer(X_y=True):
 
     Breast Cancer Wisconsin (Diagnostic) dataset.
     Downloaded from the StatLib archive.
-    The file is located in /gpol/utils/data/boston.txt
+    The file is located in /slim/datasets/data/boston.txt
 
     Basic information:
     - Number of data instances: 569;
@@ -255,7 +207,7 @@ def load_breast_cancer(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -267,6 +219,12 @@ def load_breast_cancer(X_y=True):
     df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -289,7 +247,7 @@ def load_concrete_slump(X_y=True):
     is not only determined by the water content, but that is also
     influenced by other concrete ingredients.
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/concrete_slump.txt
+    The file is located in /slim/datasets/data/concrete_slump.txt
 
     Basic information:
     - Number of data instances: 103;
@@ -298,15 +256,24 @@ def load_concrete_slump(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -329,7 +296,7 @@ def load_concrete_strength(X_y=True):
     concrete compressive strength is a highly nonlinear function of
     age and ingredients.
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/concrete_strength.txt
+    The file is located in /slim/datasets/data/concrete_strength.txt
 
     Basic information:
     - Number of data instances: 1005;
@@ -338,15 +305,24 @@ def load_concrete_strength(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -365,7 +341,7 @@ def load_concrete_strength(X_y=True):
 def load_diabetes(X_y=True):
     """Loads and returns the Diabetes data set(regression)
 
-    The file is located in /gpol/utils/data/diabetes.txt
+    The file is located in /slim/datasets/data/diabetes.txt
 
     Basic information:
     - Number of data instances: 442;
@@ -374,7 +350,7 @@ def load_diabetes(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
@@ -386,6 +362,12 @@ def load_diabetes(X_y=True):
     df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -407,7 +389,7 @@ def load_efficiency_heating(X_y=True):
     The data set regards heating load assessment of buildings (that is,
     energy efficiency) as a function of building parameters.
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/efficiency_heating.txt
+    The file is located in /slim/datasets/data/efficiency_heating.txt
 
     Basic information:
     - Number of data instances: 768;
@@ -416,15 +398,24 @@ def load_efficiency_heating(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -448,7 +439,7 @@ def load_efficiency_cooling(X_y=True):
     The data set regards cooling load assessment of buildings (that is,
     energy efficiency) as a function of building parameters.
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/efficiency_cooling.txt
+    The file is located in /slim/datasets/data/efficiency_cooling.txt
 
     Basic information:
     - Number of data instances: 768;
@@ -457,15 +448,24 @@ def load_efficiency_cooling(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X_y : bool, optional
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -490,7 +490,7 @@ def load_forest_fires(X_y=True):
     fires, in the northeast region of Portugal, by using meteorological
     and other data.
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/forest_fires.txt
+    The file is located in /slim/datasets/data/forest_fires.txt
 
     Basic information:
     - Number of data instances: 513;
@@ -499,15 +499,24 @@ def load_forest_fires(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -533,7 +542,7 @@ def load_parkinson_updrs(X_y=True):
     nonlinear regression methods to predict the clinician's Parkinson's
     disease symptom score on the UPDRS scale (total UPDRS used here).
     Downloaded from the UCI ML Repository.
-    The file is located in /gpol/utils/data/parkinson_total_UPDRS.txt
+    The file is located in /slim/datasets/data/parkinson_total_UPDRS.txt
 
     Basic information:
     - Number of data instances: 5875;
@@ -542,15 +551,24 @@ def load_parkinson_updrs(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(
@@ -576,7 +594,7 @@ def load_ld50(X_y=True):
     the lethal dose or LD50. For more details, consult the publication
     entitled as "Genetic programming for computational pharmacokinetics
     in drug discovery and development" by F. Archetti et al. (2007).
-    The file is located in /gpol/utils/data/ld50.txt
+    The file is located in /slim/datasets/data/ld50.txt
 
     Basic information:
     - Number of data instances: 234;
@@ -585,15 +603,24 @@ def load_ld50(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "ld50.txt")
@@ -615,7 +642,7 @@ def load_ppb(X_y=True):
     protein binding level). For more details, consult the publication
     entitled as "Genetic programming for computational pharmacokinetics
     in drug discovery and development" by F. Archetti et al. (2007).
-    The file is located in /gpol/utils/data/ppb.txt
+    The file is located in /slim/datasets/data/ppb.txt
 
     Basic information:
     - Number of data instances: 131;
@@ -624,15 +651,24 @@ def load_ppb(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "ppb.txt")
@@ -656,7 +692,7 @@ def load_bioav(X_y=True):
     the publication entitled as "Genetic programming for computational
     pharmacokinetics in drug discovery and development" by F. Archetti
     et al. (2007).
-    The file is located in gpol/utils/data/bioavailability.txt
+    The file is located in slim/datasets/data/bioavailability.txt
 
     Basic information:
     - Number of data instances: 358;
@@ -665,15 +701,24 @@ def load_bioav(X_y=True):
 
     Parameters
     ----------
-    X_y : bool (default=True)
+    X_y : bool, optional
         Return data as two objects of type torch.Tensor, otherwise as a
         pandas.DataFrame.
 
     Returns
     -------
-    pandas.DataFrame
+    X, y : torch.Tensor, torch.Tensor
+        The input data (X) and the target of the prediction (y). The
+        latter is extracted from the data set as the last column.
+    df : pandas.DataFrame
         An object of type pandas.DataFrame which holds the data. The
         target is the last column.
+
+    References
+    ----------
+    Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., & Schettini, R. (2021). General purpose optimization
+    library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
+    4774.
     """
     df = pd.read_csv(
         os.path.join(

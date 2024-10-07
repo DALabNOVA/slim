@@ -297,7 +297,7 @@ if __name__ == "__main__":
             for algorithm in ["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1", "SLIM*SIG1"]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                                  dataset_name=ds, slim_version=algorithm, max_depth=None, pop_size=100, n_iter=1000, seed=s, p_inflate=0.2,
+                                  dataset_name=ds, slim_version=algorithm, max_depth=None, pop_size=100, n_iter=10, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
                                                                 "log", f"test_{ds}-size.csv"),
                                    reconstruct=True, n_jobs=1)

@@ -3,6 +3,9 @@ from slim.datasets.data_loader import load_ppb  # import the loader for the data
 from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim.utils.utils import train_test_split  # import the train-test split function
 
+import pandas as pd
+
+
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
