@@ -35,11 +35,11 @@ class GP:
         Parameters
         ----------
         pi_init : dict
-            Dictionary with all the parameters needed for evaluation.
+            Dictionary with all the parameters needed for candidate solutions initialization.
         initializer : Callable
             Function to initialize the population.
         selector : Callable
-            Function to select individuals for crossover/mutation.
+            Function to select individuals.
         mutator : Callable
             Function to mutate individuals.
         crossover : Callable
@@ -90,13 +90,11 @@ class GP:
         max_depth=None,
         ffunction=None,
         n_elites=1,
-        tree_pruner=None,
         depth_calculator=None,
         n_jobs = 1
     ):
         """
         Execute the Genetic Programming algorithm.
-
 
         Parameters
         ----------
@@ -119,7 +117,7 @@ class GP:
         verbose : int, optional
             Verbosity level. Default is 0.
         test_elite : bool, optional
-            Whether to test elite individuals. Default is False.
+            Whether to evaluate elite individuals on test data. Default is False.
         log_path : str, optional
             Path to save logs. Default is None.
         run_info : list, optional
@@ -130,8 +128,6 @@ class GP:
             Fitness function. Default is None.
         n_elites : int, optional
             Number of elites. Default is 1.
-        tree_pruner : function, optional
-            Function to prune trees. Default is None.
         depth_calculator : function, optional
             Function to calculate tree depth. Default is None.
         n_jobs : int, optional
@@ -216,7 +212,7 @@ class GP:
         n_jobs=1
     ):
         """
-        Evolve the population for one generation.
+        Evolve the population for one iteration (generation).
 
         Args:
             population (Population): Current population.
@@ -225,7 +221,7 @@ class GP:
             depth_calculator (function): Function to calculate tree depth.
             elitism (bool): Whether to use elitism.
             X_train (torch.Tensor): Training data features.
-            y_train (torch.Tensor): Training data labels.
+            y_train (torch.Tensor): Training data targets.
             n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
 
         Returns:
@@ -353,7 +349,7 @@ class GP:
         Log the results for the current generation.
 
         Args:
-            generation (int): Current generation number.
+            generation (int): Current generation (iteration) number.
             population (Population): Current population.
             elapsed_time (float): Time taken for the process.
             log (int): Logging level.

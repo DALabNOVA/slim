@@ -7,7 +7,7 @@ import os
 import warnings
 from slim.algorithms.GP.gp import GP
 from slim.algorithms.GP.operators.mutators import mutate_tree_subtree
-from slim.algorithms.GP.representations.tree_utils import tree_depth, tree_pruning
+from slim.algorithms.GP.representations.tree_utils import tree_depth
 from slim.config.gp_config import *
 from slim.selection.selection_algorithms import tournament_selection_max, tournament_selection_min
 from slim.utils.logger import log_settings
@@ -206,10 +206,6 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     gp_solve_parameters["n_elites"] = n_elites
     gp_solve_parameters["max_depth"] = max_depth
     gp_solve_parameters["n_iter"] = n_iter
-    gp_solve_parameters["tree_pruner"] = tree_pruning(
-        TERMINALS=gp_pi_init['TERMINALS'], CONSTANTS=gp_pi_init['CONSTANTS'], FUNCTIONS=gp_pi_init['FUNCTIONS'],
-        p_c=gp_pi_init["p_c"]
-    )
     gp_solve_parameters['depth_calculator'] = tree_depth(FUNCTIONS=gp_pi_init['FUNCTIONS'])
     gp_solve_parameters["ffunction"] = fitness_function_options[fitness_function]
     gp_solve_parameters["n_jobs"] = n_jobs

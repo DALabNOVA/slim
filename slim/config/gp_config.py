@@ -37,7 +37,6 @@ gp_solve_parameters = {
     "test_elite": True,
     "run_info": None,
     "ffunction": "rmse",
-    "tree_pruner": None,
     "n_jobs": 1,
     "max_depth": 17,
     "n_elites":1,
