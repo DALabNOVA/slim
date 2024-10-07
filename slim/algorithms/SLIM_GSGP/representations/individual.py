@@ -8,16 +8,49 @@ from slim.utils.utils import  check_slim_version
 
 class Individual:
     """
-    Initialize an Individual with a collection of trees and semantics.
+    Individual of the SLIM_GSGP algorithm. Composed of 'blocks' of trees.
 
-    Args:
-        collection: List of trees representing the individual.
-        train_semantics: Training semantics associated with the individual.
-        test_semantics: Testing semantics associated with the individual.
-        reconstruct: Boolean indicating if the individual should be reconstructed.
+    Parameters
+    ----------
+    collection : list
+        The list of trees representing the individual.
+    structure : list
+        The structure of each tree in the collection.
+    size : int
+        The amount of trees in the collection
+    train_semantics : torch.Tensor
+        Training semantics associated with the individual.
+    test_semantics : torch.Tensor or None
+        Testing semantics associated with the individual. Can be None if not applicable.
+    fitness : float or None
+        The fitness value of the tree. Defaults to None.
+    test_fitness : float or None
+        The fitness value of the tree during testing. Defaults to None.
+    nodes_collection : int
+        The number of nodes in each tree of the collection.
+    nodes_count : int
+        The total amount of nodes in the tree.
+    depth_collection : int
+        The maximum depth of each tree in the collection.
+    depth : int
+        The maximum depth of the tree.
     """
 
     def __init__(self, collection, train_semantics, test_semantics, reconstruct):
+        """
+        Initialize an Individual with a collection of trees and their associated semantics.
+
+        Parameters
+        ----------
+        collection : list
+            The list of trees representing the individual.
+        train_semantics : torch.Tensor
+            Training semantics associated with the individual.
+        test_semantics : torch.Tensor or None
+            Testing semantics associated with the individual. Can be None if not applicable.
+        reconstruct : bool
+            Boolean indicating if the structure of the individual should be stored.
+        """
         if collection is not None and reconstruct:
             self.collection = collection
             self.structure = [tree.structure for tree in collection]
@@ -40,14 +73,18 @@ class Individual:
 
     def calculate_semantics(self, inputs, testing=False):
         """
-        Calculate the semantics for the individual.
+        Calculate the semantics for the individual. Result is stored as an attribute associated with the object.
 
-        Args:
-            inputs: Input data for calculating semantics.
-            testing: Boolean indicating if the calculation is for testing semantics.
+        Parameters
+        ----------
+        inputs : torch.Tensor
+            Input data for calculating semantics.
+        testing : bool, optional
+            Boolean indicating if the calculation is for testing semantics. Default is False.
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
 
         if testing and self.test_semantics is None:
@@ -80,19 +117,26 @@ class Individual:
         """
         Return the size of the individual.
 
-        Returns:
-            int: Size of the individual.
+        Returns
+        -------
+        int
+            Size of the individual.
         """
         return self.size
 
     def __getitem__(self, item):
-        """Get a tree from the individual by index.
+        """
+        Get a tree from the individual by index.
 
-        Args:
-            item: Index of the tree to retrieve.
+        Parameters
+        ----------
+        item : int
+            Index of the tree to retrieve.
 
-        Returns:
-            Tree: The tree at the specified index.
+        Returns
+        -------
+        Tree
+            The tree at the specified index.
         """
         return self.collection[item]
 
@@ -100,14 +144,20 @@ class Individual:
         """
         Evaluate the individual using a fitness function.
 
-        Args:
-            ffunction: Fitness function to evaluate the individual.
-            y: Expected output (target) values as a torch tensor.
-            testing: Boolean indicating if the evaluation is for testing semantics.
-            operator: Operator to apply to the semantics ("sum" or "prod").
+        Parameters
+        ----------
+        ffunction : Callable
+            Fitness function to evaluate the individual.
+        y : torch.Tensor
+            Expected output (target) values.
+        testing : bool, optional
+            Boolean indicating if the evaluation is for testing semantics (default is False).
+        operator : str, optional
+            Operator to apply to the semantics (default is "sum").
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
         if operator == "sum":
             operator = torch.sum
@@ -222,10 +272,27 @@ class Individual:
         )
 
     def get_tree_representation(self, operator=None):
+        """
+        Get a string representation of the trees in the individual.
 
+        Parameters
+        ----------
+        operator : str, optional
+            The operator to use in the representation ("sum" or "mul"). If None, it will be determined based on the version.
+
+        Returns
+        -------
+        str
+            A string representing the structure of the trees in the individual.
+
+        Raises
+        ------
+        Exception
+            If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.
+        """
         # seeing if the tree has the structure attribute
         if not hasattr(self, "collection"):
-            raise Exception("If reconstruct was set to False, .predict() is not available")
+            raise Exception("If reconstruct was set to False, .get_tree_representation() is not available")
 
         # finding out the used operator based on the slim version
         if operator is None:
