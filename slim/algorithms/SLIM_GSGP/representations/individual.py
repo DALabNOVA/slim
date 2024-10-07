@@ -51,6 +51,9 @@ class Individual:
         reconstruct : bool
             Boolean indicating if the structure of the individual should be stored.
         """
+        # setting the Individual attributes based on the collection, if existent. Otherwise, those are added to the individual
+        # after its created (during mutation).
+
         if collection is not None and reconstruct:
             self.collection = collection
             self.structure = [tree.structure for tree in collection]
@@ -66,6 +69,7 @@ class Individual:
                 ]
             ) + (self.size - 1)
 
+        # setting the semantics and fitness related attributes
         self.train_semantics = train_semantics
         self.test_semantics = test_semantics
         self.fitness = None
@@ -87,7 +91,9 @@ class Individual:
         None
         """
 
+        # computing the testing semantics, if not existent
         if testing and self.test_semantics is None:
+            # getting the semantics for every tree in the collection
             [tree.calculate_semantics(inputs, testing) for tree in self.collection]
             self.test_semantics = torch.stack(
                 [
@@ -100,7 +106,9 @@ class Individual:
                 ]
             )
 
+        # computing the training semantics
         elif self.train_semantics is None:
+            # getting the semantics for every tree in the collection
             [tree.calculate_semantics(inputs, testing) for tree in self.collection]
             self.train_semantics = torch.stack(
                 [
@@ -159,11 +167,14 @@ class Individual:
         -------
         None
         """
+
+        # getting the correct torch operator based on the slim version
         if operator == "sum":
             operator = torch.sum
         else:
             operator = torch.prod
 
+        # computing the testing fitness, if applicable
         if testing:
             self.test_fitness = ffunction(
                 y,
@@ -173,7 +184,7 @@ class Individual:
                     1000000000000.0,
                 ),
             )
-
+        # computing the training fitness
         else:
             self.fitness = ffunction(
                 y,
@@ -184,7 +195,7 @@ class Individual:
                 ),
             )
 
-    def predict(self, data, slim_version=None):
+    def predict(self, data):
         """
             Predict the output for the given input data using the model's collection of trees and specified slim version.
 
@@ -195,9 +206,6 @@ class Individual:
                 (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
                 different observation and each column represents a feature.
 
-            slim_version : str or None
-                A string to verify which version of slim to use for predictions. If None is passed, the
-                function will try to retrieve it from the object's parameters
             Returns
             -------
             Tensor
@@ -231,42 +239,51 @@ class Individual:
         if not hasattr(self, "collection"):
             raise Exception("If reconstruct was set to False, .predict() is not available")
 
-        if slim_version is None:
-            slim_version = self.version
-        operator, sig, trees = check_slim_version(slim_version=slim_version)
+        # getting the relevant variables based on the used slim version
+        operator, sig, trees = check_slim_version(slim_version=self.version)
 
+        # getting an empty semantics list
         semantics = []
 
+        # getting the semantics for each tree in the collection
         for t in self.collection:
-            if isinstance(t.structure, tuple):
+            if isinstance(t.structure, tuple): # if it's a base (gp) tree
                 semantics.append(apply_tree(t, data))
             else:
-
-                if len(t.structure) == 3:  # one tree
+                if len(t.structure) == 3:  # one tree mutation
+                    # seeing if a logistic function is to be used
                     if sig:
+                        # saving the previous semantics, for safekeeping
                         t.structure[1].previous_training = t.train_semantics
+                        # getting the new training semantics based on the provided data
                         t.structure[1].train_semantics = torch.sigmoid(
                             apply_tree(t.structure[1], data)
                         )
                     else:
+                        # saving the previous semantics, for safekeeping
                         t.structure[1].previous_training = t.train_semantics
+                        # getting the new training semantics based on the provided data
                         t.structure[1].train_semantics = apply_tree(t.structure[1], data)
 
-                elif len(t.structure) == 4:  # two tree
+                elif len(t.structure) == 4:  # two tree mutation
                     t.structure[1].previous_training = t.train_semantics
                     t.structure[1].train_semantics = torch.sigmoid(
                         apply_tree(t.structure[1], data)
                     )
-
+                    # saving the previous semantics, for safekeeping
                     t.structure[2].previous_training = t.train_semantics
+                    # getting the new training semantics based on the provided data
                     t.structure[2].train_semantics = torch.sigmoid(
                         apply_tree(t.structure[2], data)
                     )
 
+                # getting the semantics by calling the corresponding operator on the structure
                 semantics.append(t.structure[0](*t.structure[1:], testing=False))
 
+        # getting the correct torch function based on the used operator (mul or sum)
         operator = torch.sum if operator == "sum" else torch.prod
 
+        # clamping the semantics
         return torch.clamp(
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )

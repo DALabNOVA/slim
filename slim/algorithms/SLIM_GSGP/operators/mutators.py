@@ -270,9 +270,10 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
                 grow_probability=grow_probability,
                 logistic=True,
             )
+            # adding the random trees to a list, to be used in the creation of a new block
             random_trees = [random_tree1, random_tree2]
 
-            # getting the testing semantics of the random trees
+            # calculating the semantics of the random trees on testing, if applicable
             if X_test is not None:
                 [
                     rt.calculate_semantics(X_test, testing=True, logistic=True)
@@ -280,6 +281,7 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
                 ]
 
         else:
+            # getting one random tree
             random_tree1 = get_random_tree(
                 max_depth,
                 FUNCTIONS,
@@ -290,9 +292,10 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
                 grow_probability=grow_probability,
                 logistic=single_tree_sigmoid or sig,
             )
-
+            # adding the random tree to a list, to be used in the creation of a new block
             random_trees = [random_tree1]
 
+            # calculating the semantics of the random trees on testing, if applicable
             if X_test is not None:
                 [
                     rt.calculate_semantics(
@@ -301,11 +304,13 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
                     for rt in random_trees
                 ]
 
+        # getting the correct mutation operator, based on the number of random trees used
         variator = (
             two_trees_delta(operator=operator)
             if two_trees
             else one_tree_delta(operator=operator, sig=sig)
         )
+        # creating the new block for the individual, based on the random trees and operators
         new_block = Tree(
             structure=[variator, *random_trees, ms],
             train_semantics=variator(*random_trees, ms, testing=False),
@@ -316,7 +321,7 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
             ),
             reconstruct=True,
         )
-
+        # creating the offspring individual, by adding the new block to it
         offs = Individual(
             collection=[*individual.collection, new_block] if reconstruct else None,
             train_semantics=torch.stack(
@@ -347,7 +352,7 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
             ),
             reconstruct=reconstruct,
         )
-
+        # computing offspring attributes
         offs.size = individual.size + 1
         offs.nodes_collection = [*individual.nodes_collection, new_block.nodes]
         offs.nodes_count = sum(offs.nodes_collection) + (offs.size - 1)
@@ -381,8 +386,10 @@ def deflate_mutation(individual, reconstruct):
     Individual
         The mutated individual
     """
+    # choosing the block that will be removed
     mut_point = random.randint(1, individual.size - 1)
 
+    # removing the block from the individual and creating a new Individual
     offs = Individual(
         collection=(
             [
@@ -411,6 +418,7 @@ def deflate_mutation(individual, reconstruct):
         reconstruct=reconstruct,
     )
 
+    # computing offspring attributes
     offs.size = individual.size - 1
     offs.nodes_collection = [
         *individual.nodes_collection[:mut_point],

@@ -133,6 +133,7 @@ class GP:
         n_jobs : int, optional
             The number of jobs for parallel processing. Default is 1.
         """
+        # setting the seeds
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)
         random.seed(self.seed)
@@ -143,19 +144,27 @@ class GP:
         population = Population(
             [Tree(tree) for tree in self.initializer(**self.pi_init)]
         )
+
+        # evaluating the intial population
         population.evaluate(ffunction, X=X_train, y=y_train, n_jobs=n_jobs)
 
         end = time.time()
+
+        # getting the elite(s) from the initial population
         self.elites, self.elite = self.find_elit_func(population, n_elites)
 
+        # testing the elite on testing data, if applicable
         if test_elite:
             self.elite.evaluate(ffunction, X=X_test, y=y_test, testing=True)
+
+        # logging the results if the log level is not 0
 
         if log != 0:
             self.log_initial_population(
                 population, end - start, log, log_path, run_info
             )
 
+        # displaying the results on console if verbose level is not 0
         if verbose != 0:
             verbose_reporter(
                 curr_dataset.split("load_")[-1],
@@ -166,7 +175,9 @@ class GP:
                 self.elite.node_count,
             )
 
+        # EVOLUTIONARY PROCESS
         for it in range(1, n_iter + 1):
+            # getting the offspring population
             offs_pop, start = self.evolve_population(
                 population,
                 ffunction,
@@ -177,19 +188,25 @@ class GP:
                 y_train,
                 n_jobs=n_jobs
             )
+            # replacing the population with the offspring population (P = P')
             population = offs_pop
+
             end = time.time()
 
+            # getting the new elite(s)
             self.elites, self.elite = self.find_elit_func(population, n_elites)
 
+            # testing the elite on testing data, if applicable
             if test_elite:
                 self.elite.evaluate(ffunction, X=X_test, y=y_test, testing=True)
 
+            # logging the results if log != 0
             if log != 0:
                 self.log_generation(
                     it, population, end - start, log, log_path, run_info
                 )
 
+            # displaying the results on console if verbose != 0
             if verbose != 0:
                 verbose_reporter(
                     run_info[-1],
@@ -228,18 +245,26 @@ class GP:
             Population: Evolved population.
             float: Start time of evolution.
         """
+        # creating an empty offspring population list
         offs_pop = []
+
         start = time.time()
 
+        # adding the elite(s) to the offspring population
         if elitism:
             offs_pop.extend(self.elites)
 
+        # filling the offspring population
         while len(offs_pop) < self.pop_size:
-            if random.random() < self.p_xo:
+            # choosing between crossover and mutation
+            if random.random() < self.p_xo: # if crossover is selected
+                # choose two parents
                 p1, p2 = self.selector(population), self.selector(population)
+                # make sure that the parents are different
                 while p1 == p2:
                     p1, p2 = self.selector(population), self.selector(population)
 
+                # generate offspring from the chosen parents
                 offs1, offs2 = self.crossover(
                     p1.repr_,
                     p2.repr_,
@@ -247,6 +272,7 @@ class GP:
                     tree2_n_nodes=p2.node_count,
                 )
 
+                # assuring the offspring do not exceed max_depth
                 if max_depth is not None:
                     while (
                         depth_calculator(offs1) > max_depth
@@ -258,34 +284,37 @@ class GP:
                             tree1_n_nodes=p1.node_count,
                             tree2_n_nodes=p2.node_count,
                         )
-                else:
-                    offs1, offs2 = self.crossover(
-                        p1.repr_,
-                        p2.repr_,
-                        tree1_n_nodes=p1.node_count,
-                        tree2_n_nodes=p2.node_count,
-                    )
 
+                # grouping the offspring in a list to be added to the offspring population
                 offspring = [offs1, offs2]
-            else:
+
+            else: # if mutation was chosen
+                # choosing a parent
                 p1 = self.selector(population)
+                # generating a mutated offspring from the parent
                 offs1 = self.mutator(p1.repr_, num_of_nodes=p1.node_count)
 
+                # making sure the offspring does not exceed max_depth
                 if max_depth is not None:
                     while depth_calculator(offs1) > max_depth:
                         offs1 = self.mutator(p1.repr_, num_of_nodes=p1.node_count)
-                else:
-                    offs1 = self.mutator(p1.repr_, num_of_nodes=p1.node_count)
 
+                # adding the offspring to a list, to be added to the offspring population
                 offspring = [offs1]
 
+            # adding the offspring as instances of Tree to the offspring population
             offs_pop.extend([Tree(child) for child in offspring])
 
+        # making sure the offspring population is of the same size as the population
         if len(offs_pop) > population.size:
             offs_pop = offs_pop[: population.size]
 
+        # turning the offspring population into an instance of Population
         offs_pop = Population(offs_pop)
+        # evaluating the offspring population
         offs_pop.evaluate(ffunction, X=X_train, y=y_train, n_jobs=n_jobs)
+
+        # retuning the offspring population and the time control variable
         return offs_pop, start
 
     def log_initial_population(self, population, elapsed_time, log, log_path, run_info):
@@ -302,6 +331,7 @@ class GP:
         Returns:
             None
         """
+        # logging the initial population result depending on the log level
         if log == 2:
             add_info = [
                 self.elite.test_fitness,
