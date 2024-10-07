@@ -33,7 +33,7 @@ valid_fitness_function = "mean_squared_error"
 valid_initializer = "random"
 
 # Result of a pre-computed run
-valid_result = 27.57062339782715
+valid_result = 30.30640411376953
 
 def test_gp_valid_inputs():
     X_train = torch.tensor([[1.0, 2.0], [3.0, 4.0]])

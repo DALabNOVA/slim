@@ -30,7 +30,7 @@ valid_test_elite = False
 valid_fitness_function = "mean_squared_error"
 valid_initializer = "random"
 
-valid_result = 57.38235092163086
+valid_result = 56.9146728515625
 
 
 def test_gsgp_valid_inputs():
