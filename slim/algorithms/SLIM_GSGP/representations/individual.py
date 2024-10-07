@@ -227,8 +227,9 @@ class Individual:
         if not hasattr(self, "collection"):
             raise Exception("If reconstruct was set to False, .predict() is not available")
 
+        # finding out the used operator based on the slim version
         if operator is None:
-            operator = self.version
+            operator = "sum" if "+" in self.version else "mul"
 
         op = "+" if operator == "sum" else "*"
 

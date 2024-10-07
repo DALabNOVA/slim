@@ -295,14 +295,14 @@ if __name__ == "__main__":
 
             #X_train, X_val, y_train, y_val = train_test_split(X, y, p_test=0.3, seed=s)
 
-            for algorithm in ["SLIM*SIG1"]:
+            for algorithm in [["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1", "SLIM*SIG1"]]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
-                                  dataset_name=ds, slim_version=algorithm, max_depth=15, pop_size=100, n_iter=100, seed=s, p_inflate=0.2,
+                                  dataset_name=ds, slim_version=algorithm, max_depth=None, pop_size=100, n_iter=1000, seed=s, p_inflate=0.2,
                                 log_path=os.path.join(os.getcwd(),
-                                                                "log", f"TEST_slim_postgrid_{ds}-size.csv"),
-                                   reconstruct=True, n_jobs=2)
+                                                                "log", f"test_{ds}-size.csv"),
+                                   reconstruct=True, n_jobs=1)
 
-                print(show_individual(final_tree, operator='sum'))
-                predictions = final_tree.predict(data=X_test, slim_version=algorithm)
-                print(float(rmse(y_true=y_test, y_pred=predictions)))
+                #print(show_individual(final_tree, operator='sum'))
+                #predictions = final_tree.predict(data=X_test, slim_version=algorithm)
+                #print(float(rmse(y_true=y_test, y_pred=predictions)))

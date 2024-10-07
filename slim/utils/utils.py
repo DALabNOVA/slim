@@ -613,7 +613,6 @@ def check_slim_version(slim_version):
     else:
         raise Exception('Invalid SLIM configuration')
 
-
 def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator="sum"):
     """
     Evaluate the individual using a fitness function.

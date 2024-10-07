@@ -8,7 +8,7 @@ from slim.algorithms.GP.representations.tree_utils import (random_subtree,
 
 def crossover_trees(FUNCTIONS):
     """
-    Returns a function that performs crossover between two trees.
+    Returns a function that performs crossover between two tree representations.
 
     To avoid passing the FUNCTIONS parameter unnecessarily, a new function is created utilizing it. This function is
     returned and passed as a parameter to the GP algorithm, where it is then called when crossover is performed.
@@ -21,33 +21,34 @@ def crossover_trees(FUNCTIONS):
     Returns
     -------
     Callable
-        A function (`inner_xo`) that performs crossover between two trees.
+        A function (`inner_xo`) that performs crossover between two tree representations.
         Inner function to perform crossover between two trees.
 
         Parameters
         ----------
         tree1 : tuple
-            The first tree.
+            The first tree representation.
         tree2 : tuple
-            The second tree.
+            The second tree representation.
         tree1_n_nodes : int
-            Number of nodes in the first tree.
+            Number of nodes in the first tree representation.
         tree2_n_nodes : int
-            Number of nodes in the second tree.
+            Number of nodes in the second tree representation.
 
         Returns
         -------
         tuple
-            Two new trees after performing crossover.
+            Two new tree representations after performing crossover.
         Notes
         -----
         This function selects random crossover points from both `tree1` and `tree2` and swaps
-        their subtrees at those points. If either tree is a terminal node, it returns the trees unchanged.
+        their subtrees at those points. If either tree is a terminal node, it returns the tree
+        representations unchanged.
 
     Notes
     -----
-    The returned function (`inner_xo`) takes two trees and their node counts, selects random
-    subtrees, and swaps them to create new offspring trees.
+    The returned function (`inner_xo`) takes two tree representations and their node counts,
+    selects random subtrees, and swaps them to create the representations of the new offspring trees.
     """
     # getting the function to substitute a subtree in a tree
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)
@@ -61,13 +62,13 @@ def crossover_trees(FUNCTIONS):
         Parameters
         ----------
         tree1 : tuple
-            The first tree.
+            The first tree representation.
         tree2 : tuple
-            The second tree.
+            The second tree representation.
         tree1_n_nodes : int
-            Number of nodes in the first tree.
+            Number of nodes in the first tree representation.
         tree2_n_nodes : int
-            Number of nodes in the second tree.
+            Number of nodes in the second tree representation.
 
         Returns
         -------
@@ -76,7 +77,8 @@ def crossover_trees(FUNCTIONS):
         Notes
         -----
         This function selects random crossover points from both `tree1` and `tree2` and swaps
-        their subtrees at those points. If either tree is a terminal node, it returns the trees unchanged.
+        their subtrees at those points. If either tree is a terminal node, it returns the trees
+        representations unchanged.
         """
         if isinstance(tree1, tuple) and isinstance(tree2, tuple):
             # Randomly select crossover points in both trees
@@ -97,7 +99,7 @@ def crossover_trees(FUNCTIONS):
 
             return new_tree1, new_tree2
         else:
-            # If either tree is a terminal node, return them as they are (no crossover)
+            # If either tree1 or tree2 is a terminal node, return them as they are (no crossover)
             return tree1, tree2
 
     return inner_xo
