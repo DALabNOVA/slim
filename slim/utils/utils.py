@@ -299,7 +299,7 @@ def get_best_max(population, n_elites):
     """
     if n_elites > 1:
         idx = np.argpartition(population.fit, -n_elites)
-        elites = [population.population[i] for i in idx[:-n_elites]]
+        elites = [population.population[i] for i in idx[-n_elites:]]
         return elites, elites[np.argmax([elite.fitness for elite in elites])]
 
     else:
