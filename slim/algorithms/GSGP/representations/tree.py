@@ -9,6 +9,33 @@ from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossov
 
 
 class Tree:
+    """
+    Represents a tree structure for genetic programming in a GSGP approach.
+
+    Attributes
+    ----------
+    structure : tuple or str
+        The tree structure, either as a tuple or a list of pointers.
+    FUNCTIONS : dict
+        Dictionary of allowed functions in the tree.
+    TERMINALS : dict
+        Dictionary of terminal symbols allowed in the tree.
+    CONSTANTS : dict
+        Dictionary of constant values allowed in the tree.
+    depth : int
+        The maximum depth of the tree structure.
+    nodes : int
+        The total number of nodes in the tree.
+    train_semantics : torch.Tensor
+        The training semantics associated with the tree.
+    test_semantics : torch.Tensor
+        The testing semantics associated with the tree.
+    fitness : float or None
+        The fitness value of the tree. Defaults to None.
+    test_fitness : float or None
+        The fitness value of the tree during testing. Defaults to None.
+
+    """
     FUNCTIONS = None
     TERMINALS = None
     CONSTANTS = None
@@ -19,7 +46,7 @@ class Tree:
 
         Parameters
         ----------
-        structure : tuple or list
+        structure : tuple or str
             The tree structure, either as a tuple or a list of pointers.
         train_semantics : torch.Tensor
             The training semantics associated with the tree.
@@ -28,16 +55,7 @@ class Tree:
         reconstruct : bool
             Indicates if the tree's structure should be stored for later reconstruction.
 
-        Attributes
-        ----------
-        depth : int
-            The maximum depth of the tree structure.
-        nodes : int
-            The total number of nodes in the tree.
-        fitness : float or None
-            The fitness value of the tree. Defaults to None.
-        test_fitness : float or None
-            The fitness value of the tree during testing. Defaults to None.
+
         """
         self.FUNCTIONS = Tree.FUNCTIONS
         self.TERMINALS = Tree.TERMINALS

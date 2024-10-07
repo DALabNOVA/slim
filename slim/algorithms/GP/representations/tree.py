@@ -11,7 +11,7 @@ class Tree:
 
     Attributes
     ----------
-    repr_ : object
+    repr_ : tuple or str
         Representation of the tree structure.
     FUNCTIONS : dict
         Dictionary of allowed functions in the tree.
