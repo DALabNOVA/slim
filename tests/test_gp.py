@@ -96,3 +96,8 @@ def test_gp_immutability():
     # Compute and print the RMSE on the test set
     assert float(rmse(y_true=y_test, y_pred=predictions)) == valid_result, "Final result should not change with updates"
 
+def test_gp_no_max_depth():
+    result = gp(valid_X_train, valid_y_train, max_depth=None, n_iter=3, pop_size=5)
+    assert result is not None  # Check if function returns valid output
+
+

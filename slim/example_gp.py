@@ -14,7 +14,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 
 # Apply the GP algorithm
 final_tree = gp(X_train=X_train, y_train=y_train,
-                X_test=X_val, y_test=y_val,
+                X_test=X_val, y_test=y_val, max_depth=None,
                 dataset_name='ppb', pop_size=100, n_iter=100, )
 
 # Show the best individual structure at the last generation

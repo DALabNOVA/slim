@@ -21,7 +21,7 @@ def two_trees_delta(operator="sum"):
 
     Returns
     -------
-    function
+    Callable
         A mutation function for two trees.
     """
 
@@ -63,7 +63,7 @@ def one_tree_delta(operator="sum", sig=False):
 
     Returns
     -------
-    function
+    Callable
         A mutation function for one tree.
     """
 
@@ -161,7 +161,7 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
 
     Returns
     -------
-    function
+    Callable
         An inflate mutation function.
     """
 

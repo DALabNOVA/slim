@@ -115,10 +115,10 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
         test_elite = False
 
-    if not isinstance(max_depth, int):
+    if not isinstance(max_depth, int) and max_depth is not None:
         raise TypeError("max_depth value must be a int or None")
 
-    assert init_depth <= max_depth, f"max_depth must be at least {init_depth}"
+    assert max_depth is None or init_depth <= max_depth, f"max_depth must be at least {init_depth}"
 
     if dataset_name is None:
         warnings.warn("No dataset name set. Using default value of dataset_1.")

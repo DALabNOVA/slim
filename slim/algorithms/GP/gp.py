@@ -262,6 +262,13 @@ class GP:
                             tree1_n_nodes=p1.node_count,
                             tree2_n_nodes=p2.node_count,
                         )
+                else:
+                    offs1, offs2 = self.crossover(
+                        p1.repr_,
+                        p2.repr_,
+                        tree1_n_nodes=p1.node_count,
+                        tree2_n_nodes=p2.node_count,
+                    )
 
                 offspring = [offs1, offs2]
             else:
@@ -271,6 +278,8 @@ class GP:
                 if max_depth is not None:
                     while depth_calculator(offs1) > max_depth:
                         offs1 = self.mutator(p1.repr_, num_of_nodes=p1.node_count)
+                else:
+                    offs1 = self.mutator(p1.repr_, num_of_nodes=p1.node_count)
 
                 offspring = [offs1]
 
