@@ -13,11 +13,13 @@ from slim.algorithms.GP.representations.tree_utils import (create_grow_random_tr
 # Function to perform mutation on a tree.
 def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
     """
-    Generates a function for mutating a node within a tree based on a set of terminals, constants, and functions.
+    Generates a function for mutating a node within a tree representation based on a set of
+    terminals, constants, and functions.
 
-    This function returns another function that can mutate a specific node in the tree. The mutation
-    process involves randomly choosing between modifying a terminal, constant, or function node, while ensuring
-    the resulting tree maintains valid arity (i.e., the number of child nodes expected by the function node).
+    This function returns another function that can mutate a specific node in the tree representation.
+    The mutation process involves randomly choosing between modifying a terminal, constant, or function node,
+    while ensuring the resulting tree representation maintains valid arity (i.e., the number of child nodes
+    expected by the function node).
 
     Parameters
     ----------
@@ -35,41 +37,39 @@ def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
     Returns
     -------
     Callable
-        A function for mutating a node within a tree according to the specified parameters.
-
-    Notes
-    -----
-    The returned function (`m_tn`) operates recursively to traverse the tree and randomly select a node
-    for mutation.
-    """
-    def m_tn(tree):
-        """
-        Generates a function for performing subtree mutation within a tree.
-
-        This function returns another function that can perform subtree mutation by selecting a random subtree
-        in the tree and replacing it with a newly generated random subtree.
+        A function (`m_tn`) for mutating a node within a tree representation according to the
+        specified parameters.
 
         Parameters
         ----------
-        max_depth : int
-            Maximum depth of the tree to consider during mutation.
-        TERMINALS : dict
-            Dictionary of terminal symbols allowed in the tree.
-        CONSTANTS : dict
-            Dictionary of constant values allowed in the tree.
-        FUNCTIONS : dict
-            Dictionary of functions allowed in the tree.
-        p_c : float
-            Probability of choosing a constant node for mutation.
+        tree : tuple
+            The tree representation to mutate.
+
+    Notes
+    -----
+    The returned function (`m_tn`) operates recursively to traverse the tree representation and
+    randomly select a node for mutation.
+    """
+    def m_tn(tree):
+        """
+        Generates a function for performing subtree mutation within a tree representation.
+
+        This function returns another function that can perform subtree mutation by selecting a random subtree
+        in the tree representation and replacing it with a newly generated random subtree.
+
+        Parameters
+        ----------
+        tree : tuple
+            The tree representation to mutate.
 
         Returns
         -------
         Callable
-            A function for mutating subtrees within a tree based on the specified parameters.
+            A function for mutating subtrees within a tree representation based on the specified parameters.
 
         Notes
         -----
-        The returned function (`inner_mut`) operates by selecting a random subtree from the input tree
+        The returned function (`m_tn`) operates by selecting a random subtree from the input tree
         and replacing it with a randomly generated tree of the same maximum depth.
         """
         # if the maximum depth is one or the tree is just a terminal, choose a random node
@@ -86,7 +86,7 @@ def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
         elif FUNCTIONS[tree[0]]["arity"] == 1:
             node_to_mutate = np.random.randint(0, 2)  #
 
-        # obtaning the mutating function
+        # obtaining the mutating function
         inside_m = mutate_tree_node(max_depth - 1, TERMINALS, CONSTANTS, FUNCTIONS, p_c)
 
         # if the first node is to be mutated
@@ -137,10 +137,10 @@ def mutate_tree_node(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
 
 def mutate_tree_subtree(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
     """
-    Generates a function for performing subtree mutation within a tree.
+    Generates a function for performing subtree mutation within a tree representation.
 
     This function returns another function that can perform subtree mutation by selecting a random subtree
-    in the tree and replacing it with a newly generated random subtree.
+    in the tree representation and replacing it with a newly generated random subtree.
 
     Parameters
     ----------
@@ -158,12 +158,12 @@ def mutate_tree_subtree(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
     Returns
     -------
     Callable
-        A function for mutating subtrees within a tree based on the specified parameters.
+        A function for mutating subtrees within a tree representation based on the specified parameters.
 
     Notes
     -----
     The returned function (`inner_mut`) operates by selecting a random subtree from the input tree
-    and replacing it with a randomly generated tree of the same maximum depth.
+    representation and replacing it with a randomly generated tree representation of the same maximum depth.
     """
     # getting the subtree substitution function and the random subtree selection function
     subtree_substitution = substitute_subtree(FUNCTIONS=FUNCTIONS)
@@ -171,34 +171,35 @@ def mutate_tree_subtree(max_depth, TERMINALS, CONSTANTS, FUNCTIONS, p_c):
 
     def inner_mut(tree1, num_of_nodes=None):
         """
-        Mutates a subtree in the given tree by replacing a randomly selected subtree.
+        Mutates a subtree in the given tree representation by replacing a randomly selected subtree.
 
-        This function selects a random subtree in the input tree and substitutes it with a newly
-        generated random subtree of the same maximum depth. If a terminal is passed, returns the original.
+        This function selects a random subtree in the input tree representation and substitutes it
+        with a newly generated random subtree of the same maximum depth. If a terminal is passed,
+        returns the original.
 
         Parameters
         ----------
         tree1 : tuple or str
-            The tree to mutate.
+            The tree representation to mutate.
         num_of_nodes : int, optional
             The number of nodes in the tree, used for selecting a random subtree.
 
         Returns
         -------
         tuple or str
-            The mutated tree with a new subtree or the original tree if no mutation is performed.
+            The mutated tree representation with a new subtree or the original tree representation
+            if no mutation is performed.
         """
         if isinstance(tree1, tuple):
-            crossover_point_tree1 = random_subtree_picker(
+            mutation_point = random_subtree_picker(
                 tree1, num_of_nodes=num_of_nodes
             )
-            crossover_point_tree2 = create_grow_random_tree(
+            new_subtree = create_grow_random_tree(
                 max_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=p_c
             )
             new_tree1 = subtree_substitution(
-                tree1, crossover_point_tree1, crossover_point_tree2
+                tree1, mutation_point, new_subtree
             )
-
             return new_tree1
         else:
             return tree1
