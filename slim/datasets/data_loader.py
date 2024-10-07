@@ -96,7 +96,7 @@ def load_preloaded(dataset_name, seed = 1, training=True, X_y=False): # TODO: re
 
 def load_resid_build_sale_price(X_y=True):
     """
-    Loads and returns the RESIDNAME data set (regression).
+    Loads and returns the RESIDNAME data set (regression). Taken from https://archive.ics.uci.edu/dataset/437/residential+building+data+set
 
     Parameters
     ----------
