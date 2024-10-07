@@ -22,10 +22,33 @@ def two_trees_delta(operator="sum"):
     Returns
     -------
     Callable
-        A mutation function for two trees.
+        A mutation function for two trees (Individuals) that returns the mutated semantics.
+    Notes
+    -----
+    The returned function ('tt_delta_{operator}') takes as input two individuals, the mutation step, a boolean
+    representing whether to use the train or test semantics, and returns the calculated semantics of the new individual.
     """
 
     def tt_delta(tr1, tr2, ms, testing):
+        """
+        Performs delta mutation between two trees based on their semantics.
+
+        Parameters
+        ----------
+        tr1 : Individual
+            The first tree with attributes for train and test semantics.
+        tr2 : Individual
+            The second tree with attributes for train and test semantics.
+        ms : float
+            Mutation step.
+        testing : bool
+            Flag to indicate whether to use test or train semantics.
+
+        Returns
+        -------
+        torch.Tensor
+            The mutated semantics.
+        """
         if testing:
             return (
                 torch.mul(ms, torch.sub(tr1.test_semantics, tr2.test_semantics))
@@ -65,9 +88,29 @@ def one_tree_delta(operator="sum", sig=False):
     -------
     Callable
         A mutation function for one tree.
+    Notes
+    -----
+    The returned function ('ot_delta_{operator}_{sig}') takes as input one individual, the mutation step,
+    a boolean representing whether to use the train or test semantics, and returns the mutated semantics.
     """
-
     def ot_delta(tr1, ms, testing):
+        """
+        Performs delta mutation on one tree based on its semantics.
+
+        Parameters
+        ----------
+        tr1 : Individual
+            The tree with attributes for train and test semantics.
+        ms : float
+            Mutation step.
+        testing : bool
+            Flag to indicate whether to use test or train semantics.
+
+        Returns
+        -------
+        torch.Tensor
+            The mutated semantics.
+        """
         if sig:
             if testing:
                 return (
@@ -138,7 +181,6 @@ def one_tree_delta(operator="sum", sig=False):
 
 
 def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum",single_tree_sigmoid=False,sig=False):
-
     """
     Generate an inflate mutation function.
 
@@ -163,8 +205,11 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
     -------
     Callable
         An inflate mutation function.
+    Notes
+    -----
+    The returned function performs inflate mutation on individuals, using either one or two randomly generated trees
+    and applying either delta mutation or sigmoid mutation based on the parameters.
     """
-
     def inflate(
         individual,
         ms,
@@ -175,7 +220,33 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
         grow_probability=1,
         reconstruct=True,
     ):
+        """
+        Perform inflate mutation on the given individual.
 
+        Parameters
+        ----------
+        individual : Individual
+            The individual to mutate.
+        ms : float
+            Mutation step.
+        X : torch.Tensor
+            Input data for calculating semantics.
+        max_depth : int, optional
+            Maximum depth for generated trees (default: 8).
+        p_c : float, optional
+            Probability of choosing constants (default: 0.1).
+        X_test : torch.Tensor, optional
+            Test data for calculating test semantics (default: None).
+        grow_probability : float, optional
+            Probability of growing trees during mutation (default: 1).
+        reconstruct : bool, optional
+            Whether to reconstruct the individual's collection after mutation (default: True).
+
+        Returns
+        -------
+        Individual
+            The mutated individual.
+        """
         if two_trees:
             # getting two random trees
             random_tree1 = get_random_tree(
@@ -296,16 +367,20 @@ def inflate_mutation(FUNCTIONS, TERMINALS,CONSTANTS,two_trees=True,operator="sum
 
 def deflate_mutation(individual, reconstruct):
     """
-    Perform deflate mutation on an individual.
+    Perform deflate mutation on an individual by removing a random 'block'.
 
-    Args:
-        individual: The individual to be mutated.
-        reconstruct: Boolean indicating if the individual should be reconstructed.
+    Parameters
+    ----------
+    individual : Individual
+        The individual to be mutated.
+    reconstruct : bool
+        Whether to store the individual's structure after mutation.
 
-    Returns:
-        Individual: The mutated individual.
+    Returns
+    -------
+    Individual
+        The mutated individual
     """
-
     mut_point = random.randint(1, individual.size - 1)
 
     offs = Individual(

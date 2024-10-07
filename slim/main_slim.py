@@ -295,7 +295,7 @@ if __name__ == "__main__":
 
             #X_train, X_val, y_train, y_val = train_test_split(X, y, p_test=0.3, seed=s)
 
-            for algorithm in [["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1", "SLIM*SIG1"]]:
+            for algorithm in ["SLIM+SIG2", "SLIM*SIG2", "SLIM+ABS", "SLIM*ABS", "SLIM+SIG1", "SLIM*SIG1"]:
 
                 final_tree = slim(X_train=X_train, y_train=y_train, X_test=X_val, y_test=y_val,
                                   dataset_name=ds, slim_version=algorithm, max_depth=None, pop_size=100, n_iter=1000, seed=s, p_inflate=0.2,

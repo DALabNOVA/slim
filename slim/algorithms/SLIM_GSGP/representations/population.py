@@ -9,10 +9,15 @@ class Population:
         """
         Initialize the Population with a list of individuals.
 
-        Args:
-            population: List of individuals in the population.
-        """
+        Parameters
+        ----------
+        population : list
+            The list of individuals in the population.
 
+        Returns
+        -------
+        None
+        """
         self.population = population
         self.size = len(population)
         self.nodes_count = sum([ind.nodes_count for ind in population])
@@ -21,14 +26,17 @@ class Population:
         """
         Calculate the semantics for each individual in the population.
 
-        Args:
-            inputs: Input data for calculating semantics.
-            testing: Boolean indicating if the calculation is for testing semantics.
+        Parameters
+        ----------
+        inputs : torch.Tensor
+            Input data for calculating semantics.
+        testing : bool, optional
+            Boolean indicating if the calculation is for testing semantics.
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
-
         [
             individual.calculate_semantics(inputs, testing)
             for individual in self.population
@@ -48,8 +56,10 @@ class Population:
         """
         Return the size of the population.
 
-        Returns:
-            int: Size of the population.
+        Returns
+        -------
+        int
+            Size of the population.
         """
         return self.size
 
@@ -57,25 +67,34 @@ class Population:
         """
         Get an individual from the population by index.
 
-        Args:
-            item: Index of the individual to retrieve.
+        Parameters
+        ----------
+        item : int
+            Index of the individual to retrieve.
 
-        Returns:
-            Individual: The individual at the specified index.
+        Returns
+        -------
+        Individual
+            The individual at the specified index.
         """
         return self.population[item]
 
     def evaluate_no_parall(self, ffunction, y, operator="sum"):
         """
-         Evaluate the population using a fitness function.
+        Evaluate the population using a fitness function.
 
-        Args:
-            ffunction: Fitness function to evaluate the individuals.
-            y: Expected output (target) values as a torch tensor.
-            operator: Operator to apply to the semantics ("sum" or "prod").
+        Parameters
+        ----------
+        ffunction : Callable
+            Fitness function to evaluate the individuals.
+        y : torch.Tensor
+            Expected output (target) values.
+        operator : str, optional
+            Operator to apply to the semantics. Default is "sum".
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
         [
             individual.evaluate(ffunction, y, operator=operator)
@@ -86,16 +105,22 @@ class Population:
 
     def evaluate(self, ffunction, y, operator="sum", n_jobs=1):
         """
-         Evaluate the population using a fitness function.
+        Evaluate the population using a fitness function.
 
-        Args:
-            ffunction: Fitness function to evaluate the individuals.
-            y: Expected output (target) values as a torch tensor.
-            operator: Operator to apply to the semantics ("sum" or "prod").
-            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
+        Parameters
+        ----------
+        ffunction : Callable
+            Fitness function to evaluate the individuals.
+        y : torch.Tensor
+            Expected output (target) values.
+        operator : str, optional
+            Operator to apply to the semantics ("sum" or "prod"). Default is "sum".
+        n_jobs : int, optional
+            The maximum number of concurrently running jobs for joblib parallelization. Default is 1.
 
-        Returns:
-            None
+        Returns
+        -------
+        None
         """
         fits = Parallel(n_jobs=n_jobs)(
             delayed(_evaluate_slim_individual)(individual, ffunction=ffunction, y=y, operator=operator
