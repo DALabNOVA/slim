@@ -30,7 +30,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          verbose: int = gsgp_solve_parameters["verbose"],
          reconstruct: bool = gsgp_solve_parameters["reconstruct"],
          fitness_function: str = gsgp_solve_parameters["ffunction"],
-         initializer: str =  gsgp_parameters["initializer"],
+         initializer: str = gsgp_parameters["initializer"],
          minimization: bool = True,
          prob_const: float = gsgp_pi_init["p_c"],
          tree_functions: list = list(FUNCTIONS.keys()),
@@ -98,24 +98,19 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     test_elite : bool, optional
         Whether to test the elite individual on the test set after each generation.
 
-
     Returns
     -------
         Tree
             Returns the best individual at the last generation.
     """
-
     # ================================
     #         Input Validation
     # ================================
-
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
                     minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
                     initializer=initializer, tournament_size=tournament_size)
-
-
 
     if test_elite and (X_test is None or y_test is None):
         warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
@@ -150,7 +145,6 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     assert initializer.lower() in initializer_options.keys(), \
         "initializer must be " + f"{', '.join(valid_initializers[:-1])} or {valid_initializers[-1]}" \
                                                             if len(valid_initializers) > 1 else valid_initializers[0]
-
 
     # ================================
     #       Parameter Definition
@@ -192,8 +186,6 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
 
     # setting up the configuration dictionaries based on the user given input
-
-
     gsgp_pi_init["init_pop_size"] = pop_size
     gsgp_pi_init["init_depth"] = init_depth
     gsgp_pi_init["p_c"] = prob_const
@@ -219,7 +211,6 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     # setting up the information of the run, for logging purposes
     gsgp_solve_parameters["run_info"] = [algo_name, unique_run_id, dataset_name]
-
     gsgp_solve_parameters["n_iter"] = n_iter
     gsgp_solve_parameters["log_path"] = log_path
     gsgp_solve_parameters["elitism"] = elitism

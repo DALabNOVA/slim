@@ -1,10 +1,10 @@
 """
-Individual Class and Utility Functions for Genetic Programming using PyTorch.
+Individual Class and Utility Functions for SLIM GSGP.
 """
 
 import torch
 from slim.algorithms.GSGP.representations.tree_utils import apply_tree
-from slim.utils.utils import  check_slim_version
+from slim.utils.utils import check_slim_version
 
 class Individual:
     """
@@ -19,13 +19,13 @@ class Individual:
     size : int
         The amount of trees in the collection
     train_semantics : torch.Tensor
-        Training semantics associated with the individual.
+        Training semantics associated with the Individual.
     test_semantics : torch.Tensor or None
-        Testing semantics associated with the individual. Can be None if not applicable.
+        Testing semantics associated with the Individual. Can be None if not applicable.
     fitness : float or None
-        The fitness value of the tree. Defaults to None.
+        The fitness value of the Individual. Defaults to None.
     test_fitness : float or None
-        The fitness value of the tree during testing. Defaults to None.
+        The fitness value of the Individual during testing. Defaults to None.
     nodes_collection : int
         The number of nodes in each tree of the collection.
     nodes_count : int
@@ -70,8 +70,8 @@ class Individual:
         reconstruct : bool
             Boolean indicating if the structure of the individual should be stored.
         """
-        # setting the Individual attributes based on the collection, if existent. Otherwise, those are added to the individual
-        # after its created (during mutation).
+        # setting the Individual attributes based on the collection, if existent.
+        # Otherwise, those are added to the individual after its created (during mutation).
 
         if collection is not None and reconstruct:
             self.collection = collection
@@ -96,7 +96,7 @@ class Individual:
 
     def calculate_semantics(self, inputs, testing=False):
         """
-        Calculate the semantics for the individual. Result is stored as an attribute associated with the object.
+        Calculate the semantics for the Individual. Result is stored as an attribute associated with the object.
 
         Parameters
         ----------
@@ -169,12 +169,12 @@ class Individual:
 
     def evaluate(self, ffunction, y, testing=False, operator="sum"):
         """
-        Evaluate the individual using a fitness function.
+        Evaluate the Individual using a fitness function.
 
         Parameters
         ----------
         ffunction : Callable
-            Fitness function to evaluate the individual.
+            Fitness function to evaluate the Individual.
         y : torch.Tensor
             Expected output (target) values.
         testing : bool, optional
@@ -186,7 +186,6 @@ class Individual:
         -------
         None
         """
-
         # getting the correct torch operator based on the slim version
         if operator == "sum":
             operator = torch.sum
@@ -216,24 +215,25 @@ class Individual:
 
     def predict(self, data):
         """
-            Predict the output for the given input data using the model's collection of trees and specified slim version.
+            Predict the output for the given input data using the model's collection of trees
+            and the specified slim version.
 
             Parameters
             ----------
             data : array-like or DataFrame
-                The input data to predict. It should be in the form of an array-like structure
+                The input data to predict. It should be an array-like structure
                 (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
                 different observation and each column represents a feature.
 
             Returns
             -------
             Tensor
-                The predicted output for the input data. The output is a tensor whose values
+                The predicted output for the input data. The output is a PyTorch Tensor whose values
                 are clamped between -1e12 and 1e12.
 
             Notes
             -----
-            The prediction process involves several steps:
+            The prediction involves several steps:
 
             1. The `check_slim_version` function is called with the `slim_version` flag to determine
                the appropriate operator (`sum` or `prod`), whether to apply a sigmoid function (`sig`),
@@ -311,12 +311,13 @@ class Individual:
 
     def get_tree_representation(self):
         """
-        Get a string representation of the trees in the individual.
+        Get a string representation of the trees in the Individual.
 
         Parameters
         ----------
         operator : str, optional
-            The operator to use in the representation ("sum" or "mul"). If None, it will be determined based on the version.
+            The operator to use in the representation ("sum" or "mul").
+            If None, it will be determined based on the version.
 
         Returns
         -------
@@ -337,7 +338,11 @@ class Individual:
 
         op = "+" if operator == "sum" else "*"
 
-        return f" {op} ".join([str(t.structure) if isinstance(t.structure,
-                                                              tuple) else f'f({t.structure[1].structure})' if len(
-            t.structure) == 3
-        else f'f({t.structure[1].structure} - {t.structure[2].structure})' for t in self.collection])
+        return f" {op} ".join(
+            [
+                str(t.structure) if isinstance(t.structure, tuple)
+                else f'f({t.structure[1].structure})' if len(t.structure) == 3
+                else f'f({t.structure[1].structure} - {t.structure[2].structure})'
+                for t in self.collection
+            ]
+        )

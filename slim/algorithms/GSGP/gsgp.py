@@ -180,7 +180,6 @@ class GSGP:
         end = time.time()
 
         # obtaining the elite(s)
-
         self.elites, self.elite = self.find_elit_func(population, n_elites)
 
         # testing the elite, if applicable
