@@ -5,21 +5,24 @@ Geometric Mutation Functions for Tree Structures using PyTorch.
 import torch
 
 
-def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing, new_data = False):
+def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing, new_data=False):
     """
     Apply standard geometric mutation on tree semantics using two random trees.
 
     Parameters
     ----------
     tree : Tree or torch.Tensor
-        The target tree whose semantics are to be mutated.  If standard_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
+        The target tree whose semantics are to be mutated. If standard_geometric_mutation is called with new_data=True,
+        it means the final tree is being evaluated on testing data and tree is a torch.Tensor. Otherwise,
+        during training, the individuals are Tree instances.
     random_tree_1 : Tree or torch.Tensor
-        The first random tree for mutation. If standard_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_1 is a torch.Tensor. Otherwise, during training, random_tree_1 is a Tree instance.
+        The first random tree for mutation. If standard_geometric_mutation is called with new_data=True, it means the
+        final tree is being evaluated on testing data and random_tree_1 is a torch.Tensor. Otherwise, during training,
+        random_tree_1 is a Tree instance.
     random_tree_2 : Tree or torch.Tensor
-        The second random tree for mutation. If standard_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_2 is a torch.Tensor. Otherwise, during training, random_tree_2 is a Tree instance.
+        The second random tree for mutation. If standard_geometric_mutation is called with new_data=True, it means the
+        final tree is being evaluated on testing data and random_tree_2 is a torch.Tensor. Otherwise, during training,
+        random_tree_2 is a Tree instance.
     ms : float
         Mutation step.
     testing : bool
@@ -42,8 +45,8 @@ def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing,
                     torch.sub(random_tree_1, random_tree_2),
                 ),
             )
-    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase, tree.test_semantics or tree.train_semantics
-    # attribute is used
+    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase,
+    # tree.test_semantics or tree.train_semantics attribute is used
     else:
         if testing:
             return torch.add(
@@ -63,18 +66,20 @@ def standard_geometric_mutation(tree, random_tree_1, random_tree_2, ms, testing,
             )
 
 
-def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_data = False):
+def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_data=False):
     """
     Apply standard geometric mutation on tree semantics using one random tree.
 
     Parameters
     ----------
     tree : Tree or torch.Tensor
-        The target tree whose semantics are to be mutated. If standard_one_tree_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
+        The target tree whose semantics are to be mutated. If standard_one_tree_geometric_mutation is called with
+        new_data=True, it means the final tree is being evaluated on testing data and tree is a torch.Tensor.
+        Otherwise, during training, the individuals are Tree instances.
     random_tree_1 : Tree or torch.Tensor
-        The random tree for mutation. If standard_one_tree_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_1 is a torch.Tensor. Otherwise, during training, random_tree_1 is a Tree instance.
+        The random tree for mutation. If standard_one_tree_geometric_mutation is called with new_data=True,
+        it means the final tree is being evaluated on testing data and random_tree_1 is a torch.Tensor.
+        Otherwise, during training, random_tree_1 is a Tree instance.
     ms : float
         Mutation step.
     testing : bool
@@ -90,7 +95,7 @@ def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_d
     """
     # if new (testing) data is used (for the testing of the final tree), return the semantics resulting from mutation
     if new_data:
-        return  torch.add(
+        return torch.add(
                 tree,
                 torch.mul(
                     ms,
@@ -100,8 +105,8 @@ def standard_one_tree_geometric_mutation(tree, random_tree_1, ms, testing, new_d
                     ),
                 ),
             )
-    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase, tree.test_semantics or tree.train_semantics
-    # attribute is used
+    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase,
+    # tree.test_semantics or tree.train_semantics attribute is used
     else:
         if testing:
             return torch.add(
@@ -136,14 +141,17 @@ def product_two_trees_geometric_mutation(tree, random_tree_1, random_tree_2, ms,
     Parameters
     ----------
     tree : Tree or torch.Tensor
-        The target tree whose semantics are to be mutated.  If product_two_trees_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
+        The target tree whose semantics are to be mutated. If product_two_trees_geometric_mutation is called with
+        new_data=True, it means the final tree is being evaluated on testing data and tree is a torch.Tensor.
+        Otherwise, during training, the individuals are Tree instances.
     random_tree_1 : Tree or torch.Tensor
-        The first random tree for mutation.  If product_two_trees_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_1 is a torch.Tensor. Otherwise, during training, random_tree_1 is a Tree instance.
+        The first random tree for mutation.  If product_two_trees_geometric_mutation is called with new_data=True,
+        it means the final tree is being evaluated on testing data and random_tree_1 is a torch.Tensor.
+        Otherwise, during training, random_tree_1 is a Tree instance.
     random_tree_2 : Tree or torch.Tensor
-        The second random tree for mutation. If product_two_trees_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_2 is a torch.Tensor. Otherwise, during training, random_tree_2 is a Tree instance.
+        The second random tree for mutation. If product_two_trees_geometric_mutation is called with new_data=True,
+        it means the final tree is being evaluated on testing data and random_tree_2 is a torch.Tensor.
+        Otherwise, during training, random_tree_2 is a Tree instance.
     ms : float
         Mutation step.
     testing : bool
@@ -171,8 +179,8 @@ def product_two_trees_geometric_mutation(tree, random_tree_1, random_tree_2, ms,
                     ),
                 ),
             )
-    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase, tree.test_semantics or tree.train_semantics
-    # attribute is used
+    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase,
+    # tree.test_semantics or tree.train_semantics attribute is used
     else:
         if testing:
             return torch.mul(
@@ -209,11 +217,13 @@ def product_one_trees_geometric_mutation(tree, random_tree_1, ms, testing, new_d
         Parameters
         ----------
         tree : Tree or torch.Tensor
-            The target tree whose semantics are to be mutated. If product_one_trees_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
+            The target tree whose semantics are to be mutated. If product_one_trees_geometric_mutation is called with
+            new_data=True, it means the final tree is being evaluated on testing data and tree is a torch.Tensor.
+            Otherwise, during training, the individuals are Tree instances.
         random_tree_1 : Tree or torch.Tensor
-            The random tree for mutation. If product_one_trees_geometric_mutation is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree_1 is a torch.Tensor. Otherwise, during training, random_tree_1 is a Tree instance.
+            The random tree for mutation. If product_one_trees_geometric_mutation is called with new_data=True,
+            it means the final tree is being evaluated on testing data and random_tree_1 is a torch.Tensor.
+            Otherwise, during training, random_tree_1 is a Tree instance.
         ms : float
             Mutation step.
         testing : bool
@@ -244,8 +254,8 @@ def product_one_trees_geometric_mutation(tree, random_tree_1, ms, testing, new_d
                 ),
             ),
         )
-    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase, tree.test_semantics or tree.train_semantics
-    # attribute is used
+    # if new_data is false, standard_geometric_mutation is being called during GSGP's training phase,
+    # tree.test_semantics or tree.train_semantics attribute is used
     else:
         if testing:
             return torch.mul(

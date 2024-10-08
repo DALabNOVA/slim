@@ -13,15 +13,16 @@ def geometric_crossover(tree1, tree2, random_tree, testing, new_data=False):
     ----------
     tree1 : Tree or torch.Tensor
         The first parent tree. If geometric_crossover is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree1 is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
-
+        evaluated on testing data and tree1 is a torch.Tensor. Otherwise, during training, the individuals
+        are Tree instances.
     tree2 : Tree or torch.Tensor
         The second parent tree. If geometric_crossover is called with new_data=True, it means the final tree is being
-        evaluated on testing data and tree2 is a torch.Tensor. Otherwise, during training, the individuals are Tree instances.
-
+        evaluated on testing data and tree2 is a torch.Tensor. Otherwise, during training, the individuals
+        are Tree instances.
     random_tree : Tree or torch.Tensor
-        The random tree used for crossover. If geometric_crossover is called with new_data=True, it means the final tree is being
-        evaluated on testing data and random_tree is a torch.Tensor. Otherwise, during training, random_tree is a Tree instance.
+        The random tree used for crossover. If geometric_crossover is called with new_data=True, it means the
+        final tree is being evaluated on testing data and random_tree is a torch.Tensor. Otherwise, during training,
+        random_tree is a Tree instance.
     testing : bool
         Flag indicating whether to use test semantics or train semantics.
     new_data : bool
@@ -38,8 +39,8 @@ def geometric_crossover(tree1, tree2, random_tree, testing, new_data=False):
             torch.mul(tree1, random_tree),
             torch.mul(torch.sub(1, random_tree), tree2),
         )
-    # if new_data is false, geomettric_crossover is being called during GSGP's training phase, tree.test_semantics or tree.train_semantics
-    # attribute is used
+    # if new_data is false, geomettric_crossover is being called during GSGP's training phase, tree.test_semantics or
+    # tree.train_semantics attribute is used
     else:
         if testing:
             return torch.add(
