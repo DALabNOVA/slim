@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documentation &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/index.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slim.algorithms" href="slim.algorithms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selection.html">slim.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-semantic-learning-algorithm-based-on-inflate-and-deflate-mutation-documentation">
+<h1>SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documentation<a class="headerlink" href="#slim-semantic-learning-algorithm-based-on-inflate-and-deflate-mutation-documentation" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.evaluators.html#module-slim.evaluators.fitness_functions">slim.evaluators.fitness_functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.grow"><code class="docutils literal notranslate"><span class="pre">grow()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.initializers.html#slim.initializers.initializers.rhh"><code class="docutils literal notranslate"><span class="pre">rhh()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selection.html">slim.selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.selection.html#slim.selection.selection_algorithms.tournament_selection_max"><code class="docutils literal notranslate"><span class="pre">tournament_selection_max()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.selection.html#slim.selection.selection_algorithms.tournament_selection_min"><code class="docutils literal notranslate"><span class="pre">tournament_selection_min()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.diversity">slim.utils.diversity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.logger">slim.utils.logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.utils.html#module-slim.utils.utils">slim.utils.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_gp">slim.main_gp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_gsgp">slim.main_gsgp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim_main_files.html#module-slim.main_slim">slim.main_slim</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
+<p><em>gsgp_slim</em> is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>To install the library, use the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>gsgp_slim
+</pre></div>
+</div>
+<p>Additionally, make sure to install all required dependencies:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="running-gp">
+<h3>Running GP<a class="headerlink" href="#running-gp" title="Link to this heading"></a></h3>
+<p>To use the GP algorithm, you can use the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim.main_gp</span> <span class="kn">import</span> <span class="n">gp</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim.evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+
+<span class="c1"># Load the PPB dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Split into train and test sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># Split the test set into validation and test sets</span>
+<span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Apply the GP algorithm</span>
+<span class="n">final_tree</span> <span class="o">=</span> <span class="n">gp</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                <span class="n">X_test</span><span class="o">=</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;ppb&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Show the best individual structure at the last generation</span>
+<span class="n">final_tree</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">()</span>
+
+<span class="c1"># Get the prediction of the best individual on the test set</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">final_tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Compute and print the RMSE on the test set</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+<section id="running-standard-gsgp">
+<h3>Running standard GSGP<a class="headerlink" href="#running-standard-gsgp" title="Link to this heading"></a></h3>
+<p>To use the GSGP algorithm, you can use the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim.main_gsgp</span> <span class="kn">import</span> <span class="n">gsgp</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim.evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
+
+<span class="c1"># Load the PPB dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Split into train and test sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># Split the test set into validation and test sets</span>
+<span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Apply the Standard GSGP algorithm</span>
+<span class="n">final_tree</span> <span class="o">=</span> <span class="n">gsgp</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                  <span class="n">X_test</span><span class="o">=</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+                  <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;ppb&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                  <span class="n">ms</span><span class="o">=</span><span class="n">generate_random_uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Get the prediction of the best individual on the test set</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">final_tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Compute and print the RMSE on the test set</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+<section id="running-slim">
+<h3>Running SLIM<a class="headerlink" href="#running-slim" title="Link to this heading"></a></h3>
+<p>To use the SLIM GSGP algorithm, you can use the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim.main_slim</span> <span class="kn">import</span> <span class="n">slim</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim.evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
+
+<span class="c1"># Load the PPB dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Split into train and test sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># Split the test set into validation and test sets</span>
+<span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Apply the SLIM GSGP algorithm</span>
+<span class="n">final_tree</span> <span class="o">=</span> <span class="n">slim</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                  <span class="n">X_test</span><span class="o">=</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+                  <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;ppb&#39;</span><span class="p">,</span> <span class="n">slim_version</span><span class="o">=</span><span class="s1">&#39;SLIM+SIG2&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                  <span class="n">ms</span><span class="o">=</span><span class="n">generate_random_uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">p_inflate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Show the best individual structure at the last generation</span>
+<span class="n">final_tree</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">()</span>
+
+<span class="c1"># Get the prediction of the best individual on the test set</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">final_tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Compute and print the RMSE on the test set</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">)))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="arguments-for-the-gp-gsgp-and-slim-function">
+<h2>Arguments for the <em>gp</em>, <em>gsgp</em> and <em>slim</em> function<a class="headerlink" href="#arguments-for-the-gp-gsgp-and-slim-function" title="Link to this heading"></a></h2>
+<section id="common-arguments">
+<h3>Common arguments<a class="headerlink" href="#common-arguments" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>X_train</strong>: A torch tensor with the training input data <em>(default: None)</em>.</p></li>
+<li><p><strong>y_train</strong>: A torch tensor with the training output data <em>(default: None)</em>.</p></li>
+<li><p><strong>X_test</strong>: A torch tensor with the testing input data <em>(default: None)</em>.</p></li>
+<li><p><strong>y_test</strong>: A torch tensor with the testing output data <em>(default: None)</em>.</p></li>
+<li><p><strong>dataset_name</strong>: A string specifying how the results will be logged <em>(default: None)</em>.</p></li>
+<li><p><strong>pop_size</strong>: An integer specifying the population size <em>(default: 100)</em>.</p></li>
+<li><p><strong>n_iter</strong>: An integer specifying the number of iterations <em>(default: 1000)</em>.</p></li>
+<li><p><strong>elitism</strong>: A boolean specifying the presence of elitism <em>(default: True)</em>.</p></li>
+<li><p><strong>n_elites</strong>: An integer specifying the number of elites <em>(default: 1)</em>.</p></li>
+<li><p><strong>init_depth</strong>: An integer specifying the initial depth of the GP tree
+* <em>default: 6</em> for gp and slim
+* <em>default: 8</em> for gsgp</p></li>
+<li><p><strong>log_path</strong>: A string specifying where the results are going to be saved
+* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gp.csv&quot;)</span></code> for gp
+* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gsgp.csv&quot;)</span></code> for gsgp
+* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;slim.csv&quot;)</span></code> for slim</p></li>
+<li><p><strong>seed</strong>: An integer specifying the seed for randomness <em>(default: 1)</em>.</p></li>
+<li><p><strong>n_jobs</strong>: Number of parallel jobs to run <em>(default: 1)</em>.</p></li>
+</ul>
+</section>
+<section id="specific-for-gp">
+<h3>Specific for <em>gp</em><a class="headerlink" href="#specific-for-gp" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>p_xo</strong>: A float specifying the crossover probability <em>(default: 0.8)</em>.</p></li>
+<li><p><strong>max_depth</strong>: An integer specifying the maximum depth of the GP tree <em>(default: 17)</em>.</p></li>
+</ul>
+</section>
+<section id="specific-for-gsgp">
+<h3>Specific for <em>gsgp</em><a class="headerlink" href="#specific-for-gsgp" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>p_xo</strong>: A float specifying the crossover probability <em>(default: 0.0)</em>.</p></li>
+<li><p><strong>ms_lower</strong>: An integer number representing the lower bound for the function to generate the random mutation step <em>(default: 0)</em>.</p></li>
+<li><p><strong>ms_upper</strong>: An integer number representing the upper bound for the function to generate the random mutation step <em>(default: 1)</em>.</p></li>
+</ul>
+</section>
+<section id="specific-for-slim">
+<h3>Specific for <em>slim</em><a class="headerlink" href="#specific-for-slim" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>slim_version</strong>: A string specifying the version of SLIM-GSGP to run <em>(default: “SLIM+SIG2”)</em>.</p></li>
+<li><p><strong>ms_lower</strong>: An integer number representing the lower bound for the function to generate the random mutation step <em>(default: 0)</em>.</p></li>
+<li><p><strong>ms_upper</strong>: An integer number representing the upper bound for the function to generate the random mutation step <em>(default: 1)</em>.</p></li>
+<li><p><strong>p_inflate</strong>: A float specifying the probability to apply the inflate mutation <em>(default: 0.5)</em>.</p></li>
+</ul>
+</section>
+</section>
+<section id="additional-notes">
+<h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Link to this heading"></a></h2>
+<p>If a user wishes to use their own dataset rather than one of the sixteen benchmarking datasets included with the <code class="docutils literal notranslate"><span class="pre">slim</span></code> library, they can load their data into a Pandas DataFrame,
+ensuring that the target variable is the last column. They can then call the <code class="docutils literal notranslate"><span class="pre">load_pandas_df</span></code> function from <code class="docutils literal notranslate"><span class="pre">datasets.data_loader</span></code> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_pandas_df</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Reading the desired dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;path/your_data.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Turning df into X and y torch.Tensors</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_pandas_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Split into train and test sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># Split the test set into validation and test sets</span>
+<span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="slim.algorithms.html" class="btn btn-neutral float-right" title="slim.algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

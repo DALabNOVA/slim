@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.GSGP.representations &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/slim.algorithms.GSGP.representations.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slim.algorithms.SLIM_GSGP" href="slim.algorithms.SLIM_GSGP.html" />
+    <link rel="prev" title="slim.algorithms.GSGP.operators" href="slim.algorithms.GSGP.operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.operators.html">slim.algorithms.GSGP.operators</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">slim.algorithms.GSGP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.GSGP.representations.population">slim.algorithms.GSGP.representations.population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.GSGP.representations.tree">slim.algorithms.GSGP.representations.tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.GSGP.representations.tree_utils">slim.algorithms.GSGP.representations.tree_utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.GSGP.html#module-slim.algorithms.GSGP.gsgp">slim.algorithms.GSGP.gsgp module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selection.html">slim.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.GSGP.representations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/slim.algorithms.GSGP.representations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-algorithms-gsgp-representations">
+<h1>slim.algorithms.GSGP.representations<a class="headerlink" href="#slim-algorithms-gsgp-representations" title="Link to this heading"></a></h1>
+<section id="module-slim.algorithms.GSGP.representations.population">
+<span id="slim-algorithms-gsgp-representations-population"></span><h2>slim.algorithms.GSGP.representations.population<a class="headerlink" href="#module-slim.algorithms.GSGP.representations.population" title="Link to this heading"></a></h2>
+<p>Population Class for Evolutionary Computation with Tree Structures using PyTorch.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.population.Population">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.GSGP.representations.population.</span></span><span class="sig-name descname"><span class="pre">Population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/population.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.population.Population" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.population.Population.calculate_semantics">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/population.html#Population.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.population.Population.calculate_semantics" title="Link to this definition"></a></dt>
+<dd><p>Calculate the semantics for each individual in the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array-like</em>) – Input data for calculating semantics.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if the calculation is for testing semantics. Defaults to <cite>False</cite>.</p></li>
+<li><p><strong>logistic</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to apply a logistic function to the semantics. Defaults to <cite>False</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.population.Population.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/population.html#Population.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.population.Population.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the population using a fitness function.</p>
+<p>The fitnesses of each individual are stored as attributes in their respective objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>callable</em>) – Fitness function to evaluate the individuals.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – Expected output (target) values as a torch tensor.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of concurrently running jobs for joblib parallelization. Defaults to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GSGP.representations.tree">
+<span id="slim-algorithms-gsgp-representations-tree"></span><h2>slim.algorithms.GSGP.representations.tree<a class="headerlink" href="#module-slim.algorithms.GSGP.representations.tree" title="Link to this heading"></a></h2>
+<p>Tree Class for Genetic Programming using PyTorch.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.GSGP.representations.tree.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Tree class implementation for representing tree structures in GSGP.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.structure">
+<span class="sig-name descname"><span class="pre">structure</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.structure" title="Link to this definition"></a></dt>
+<dd><p>The tree structure, either as a tuple or a list of pointers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.FUNCTIONS">
+<span class="sig-name descname"><span class="pre">FUNCTIONS</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.FUNCTIONS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of allowed functions in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.TERMINALS">
+<span class="sig-name descname"><span class="pre">TERMINALS</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.TERMINALS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of terminal symbols allowed in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.CONSTANTS">
+<span class="sig-name descname"><span class="pre">CONSTANTS</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.CONSTANTS" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of constant values allowed in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.depth" title="Link to this definition"></a></dt>
+<dd><p>The maximum depth of the tree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.nodes">
+<span class="sig-name descname"><span class="pre">nodes</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.nodes" title="Link to this definition"></a></dt>
+<dd><p>The total number of nodes in the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.train_semantics">
+<span class="sig-name descname"><span class="pre">train_semantics</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.train_semantics" title="Link to this definition"></a></dt>
+<dd><p>The training semantics associated with the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.test_semantics">
+<span class="sig-name descname"><span class="pre">test_semantics</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.test_semantics" title="Link to this definition"></a></dt>
+<dd><p>The testing semantics associated with the tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.fitness">
+<span class="sig-name descname"><span class="pre">fitness</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.fitness" title="Link to this definition"></a></dt>
+<dd><p>The fitness value of the tree. Defaults to None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.test_fitness">
+<span class="sig-name descname"><span class="pre">test_fitness</span></span><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.test_fitness" title="Link to this definition"></a></dt>
+<dd><p>The fitness value of the tree during testing. Defaults to None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes a Tree object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.calculate_semantics">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.calculate_semantics" title="Link to this definition"></a></dt>
+<dd><p>Calculates the semantics for the tree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree using a fitness function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree.Tree.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree.Tree.predict" title="Link to this definition"></a></dt>
+<dd><p>Predicts the output for the given input data using the model’s structure.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">CONSTANTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">FUNCTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">TERMINALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Calculate the semantics for the tree.</p>
+<p>Semantics are stored as an attribute in their respective objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em>) – Input data for calculating semantics.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if the calculation is for testing semantics. Defaults to <cite>False</cite>.</p></li>
+<li><p><strong>logistic</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if a logistic (Sigmoid) function should be applied. Defaults to <cite>False</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the tree using a fitness function.</p>
+<p>During the evolution process, stores the fitness as an attribute. If evaluating with new data, fitness is
+returned as a float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>callable</em>) – Fitness function to evaluate the individual.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – Expected output (target) values as a torch tensor.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if the evaluation is for testing semantics. Defaults to <cite>False</cite>.</p></li>
+<li><p><strong>X</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Input data used for calculation. Optional inside the evolution process as only the semantics are needed,
+but necessary outside of it.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>None or float</em> – Returns nothing if no new data is provided, as the training and testing fitness is stored as an attribute.</p></li>
+<li><p><em>float</em> – The fitness value of the tree when evaluated with new data.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree.html#Tree.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Predict the output for the given input data using the model’s structure.</p>
+<p>Uses recursive logic to call itself on the structure of the tree until arriving at a basic tuple structure, and
+then applies the necessary operations to arrive at the final result for the whole tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>torch.Tensor</em>) – The input data to predict.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output for the input data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The prediction process depends on the structure of the model:</p>
+<ul class="simple">
+<li><p>If <cite>self.structure</cite> is a tuple, the <cite>apply_tree</cite> function is used for prediction.</p></li>
+<li><p>If <cite>self.structure</cite> is a list, the first element is assumed to be a function that
+combines the predictions of multiple base trees (contained in the list) along with
+additional parameters (floats) extracted from the list. The base trees are instances
+of the <cite>Tree</cite> class, and their individual predictions are passed to the combining
+function along with any extracted parameters.</p></li>
+</ul>
+<p>The combining function is called with the predictions of the base trees and the
+extracted parameters, along with <cite>testing</cite> set to False and <cite>new_data</cite> set to True.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.GSGP.representations.tree_utils">
+<span id="slim-algorithms-gsgp-representations-tree-utils"></span><h2>slim.algorithms.GSGP.representations.tree_utils<a class="headerlink" href="#module-slim.algorithms.GSGP.representations.tree_utils" title="Link to this heading"></a></h2>
+<p>Utility functions for Tree Evaluation and Mutation in GSGP.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree_utils.apply_tree">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GSGP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">apply_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree_utils.html#apply_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree_utils.apply_tree" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the tree on input vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tree</strong> (<a class="reference internal" href="slim.algorithms.GP.representations.html#slim.algorithms.GP.representations.tree.Tree" title="slim.algorithms.GP.representations.tree.Tree"><em>Tree</em></a>) – The tree structure to be evaluated.</p></li>
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em>) – Input vectors x and y.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output of the evaluated tree.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree_utils.nested_depth_calculator">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GSGP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">nested_depth_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree_utils.html#nested_depth_calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree_utils.nested_depth_calculator" title="Link to this definition"></a></dt>
+<dd><p>Calculate the depth of nested structures.</p>
+<p>To save computational effort, the new depth is calculated based on the operator used to generate the new tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> (<em>callable</em>) – The operator applied to the tree.</p></li>
+<li><p><strong>depths</strong> (<em>list</em><em> of </em><em>int</em>) – List of depths of subtrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum depth after applying the operator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim.algorithms.GSGP.representations.tree_utils.nested_nodes_calculator">
+<span class="sig-prename descclassname"><span class="pre">slim.algorithms.GSGP.representations.tree_utils.</span></span><span class="sig-name descname"><span class="pre">nested_nodes_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/GSGP/representations/tree_utils.html#nested_nodes_calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.GSGP.representations.tree_utils.nested_nodes_calculator" title="Link to this definition"></a></dt>
+<dd><p>Calculate the number of nodes in nested structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> (<em>callable</em>) – The operator applied to the tree.</p></li>
+<li><p><strong>nodes</strong> (<em>list</em><em> of </em><em>int</em>) – List of node counts of subtrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total number of nodes after applying the operator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="slim.algorithms.GSGP.operators.html" class="btn btn-neutral float-left" title="slim.algorithms.GSGP.operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.algorithms.SLIM_GSGP.html" class="btn btn-neutral float-right" title="slim.algorithms.SLIM_GSGP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

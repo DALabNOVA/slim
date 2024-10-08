@@ -24,7 +24,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          init_depth: int = gsgp_pi_init["init_depth"],
          ms_lower: float = 0,
          ms_upper: float = 1,
-         log_path: str = os.path.join(os.getcwd(), "log", "gsgp.csv"),
+         log_path: str = None,
          seed: int = gsgp_parameters["seed"],
          log_level: int = gsgp_solve_parameters["log"],
          verbose: int = gsgp_solve_parameters["verbose"],
@@ -106,6 +106,11 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # ================================
     #         Input Validation
     # ================================
+
+    # Setting the log_path
+    if log_path is None:
+        os.path.join(os.getcwd(), "log", "gsgp.csv")
+
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,

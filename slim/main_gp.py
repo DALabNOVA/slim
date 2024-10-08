@@ -24,7 +24,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        elitism: bool = gp_solve_parameters["elitism"], n_elites: int = gp_solve_parameters["n_elites"],
        max_depth: int = gp_solve_parameters["max_depth"],
        init_depth: int = gp_pi_init["init_depth"],
-       log_path: str = os.path.join(os.getcwd(), "log", "gp.csv"), seed: int = gp_parameters["seed"],
+       log_path: str = None, seed: int = gp_parameters["seed"],
        log_level: int = gp_solve_parameters["log"],
        verbose: int = gp_solve_parameters["verbose"],
        minimization: bool = True,
@@ -67,7 +67,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     init_depth : int, optional
         The depth value for the initial GP trees population.
     log_path : str, optional
-        The path where is created the log directory where results are saved.
+        The path where is created the log directory where results are saved. Defaults to `os.path.join(os.getcwd(), "log", "gp.csv")`
     seed : int, optional
         Seed for the randomness
     log_level : int, optional
@@ -103,11 +103,16 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     #         Input Validation
     # ================================
 
+    # Setting the log_path
+    if log_path is None:
+        os.path.join(os.getcwd(), "log", "gp.csv")
+
     validate_inputs(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, pop_size=pop_size, n_iter=n_iter,
                     elitism=elitism, n_elites=n_elites, init_depth=init_depth, log_path=log_path, prob_const=prob_const,
                     tree_functions=tree_functions, tree_constants=tree_constants, log=log_level, verbose=verbose,
                     minimization=minimization, n_jobs=n_jobs, test_elite=test_elite, fitness_function=fitness_function,
                     initializer=initializer, tournament_size=tournament_size)
+
 
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
