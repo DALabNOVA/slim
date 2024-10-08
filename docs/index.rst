@@ -7,7 +7,7 @@ SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documen
 ==================
 
 .. image:: _static/images/overview.jpg
-   :width: 400px
+   :width: 650px
    :align: center
    :alt: SLIM algorithm
 
