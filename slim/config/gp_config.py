@@ -39,9 +39,9 @@ gp_solve_parameters = {
     "ffunction": "rmse",
     "n_jobs": 1,
     "max_depth": 17,
-    "n_elites":1,
+    "n_elites": 1,
     "elitism": True,
-    "n_iter":1000
+    "n_iter": 1000
 }
 
 # GP parameters
@@ -51,7 +51,7 @@ gp_parameters = {
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
     "p_xo":0.8,
-    "pop_size":100,
+    "pop_size": 100,
     "seed": 74
 }
 

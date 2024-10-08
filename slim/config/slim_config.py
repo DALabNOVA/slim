@@ -38,7 +38,7 @@ slim_gsgp_solve_parameters = {
     "n_elites": 1,
     "log": 1,
     "verbose": 1,
-    "n_jobs":1,
+    "n_jobs": 1,
     "test_elite": True
 }
 
