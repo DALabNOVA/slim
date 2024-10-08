@@ -10,7 +10,7 @@ from slim.algorithms.GSGP.operators.crossover_operators import geometric_crossov
 
 class Tree:
     """
-    Represents a tree structure for genetic programming in a GSGP approach.
+    Tree class implementation for representing tree structures in GSGP.
 
     Attributes
     ----------
@@ -42,7 +42,7 @@ class Tree:
 
     def __init__(self, structure, train_semantics, test_semantics, reconstruct):
         """
-        Initialize the Tree with its structure and semantics.
+        Initialize the Tree object with its structure and semantics.
 
         Parameters
         ----------
@@ -55,7 +55,6 @@ class Tree:
         reconstruct : bool
             Indicates if the tree's structure should be stored for later reconstruction.
 
-
         """
         self.FUNCTIONS = Tree.FUNCTIONS
         self.TERMINALS = Tree.TERMINALS
@@ -65,7 +64,6 @@ class Tree:
             self.structure = (
                 structure  # either repr_ from gp(tuple) or list of pointers
             )
-
         self.train_semantics = train_semantics
         self.test_semantics = test_semantics
 
@@ -117,8 +115,8 @@ class Tree:
                     else apply_tree(self, inputs)
                 )
             else:
-                # otherwise, the semantics are computed by calling the operator (crossover or mutation) with the remaindin
-                # structure of the individual
+                # otherwise, the semantics are computed by calling the operator (crossover or mutation)
+                # with the remaindin structure of the individual
                 self.test_semantics = self.structure[0](
                     *self.structure[1:], testing=True
                 )
@@ -132,8 +130,8 @@ class Tree:
                     else apply_tree(self, inputs)
                 )
             else:
-                # otherwise, the semantics are computed by calling the operator (crossover or mutation) with the remaining
-                # structure of the individual
+                # otherwise, the semantics are computed by calling the operator (crossover or mutation)
+                # with the remaining structure of the individual
                 self.train_semantics = self.structure[0](
                     *self.structure[1:], testing=False
                 )
@@ -175,7 +173,6 @@ class Tree:
                 self.test_fitness = ffunction(y, self.test_semantics)
             else:
                 self.fitness = ffunction(y, self.train_semantics)
-
 
     def predict(self, data):
         """
@@ -226,11 +223,17 @@ class Tree:
 
             # if crossover
             if self.structure[0] == geometric_crossover:
-                return self.structure[0](*[tree.predict(data) for tree in base_trees[:-1]], torch.sigmoid(base_trees[-1].predict(data)), testing=False, new_data=True)
+                return self.structure[0](
+                    *[tree.predict(data) for tree in base_trees[:-1]], torch.sigmoid(base_trees[-1].predict(data)),
+                    testing=False, new_data=True
+                )
             # if mutation
             else:
                 # only apply the sigmoid to the random trees (in indexes 1 and 2)
-                return self.structure[0](*[torch.sigmoid(tree.predict(data))  if i != 0 else tree.predict(data) for i, tree in enumerate(base_trees) ], *ms, testing = False, new_data = True)
+                return self.structure[0](
+                    *[torch.sigmoid(tree.predict(data)) if i != 0 else tree.predict(data) for i, tree in
+                      enumerate(base_trees)], *ms, testing=False, new_data=True
+                )
 
 
 
