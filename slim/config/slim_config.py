@@ -29,8 +29,6 @@ settings_dict = {"p_test": 0.2}
 
 # SLIM GSGP solve parameters
 slim_gsgp_solve_parameters = {
-    "log": 1,
-    "verbose": 1,
     "run_info": None,
     "ffunction": "rmse",
     "max_depth": 15,
@@ -70,7 +68,6 @@ slim_gsgp_pi_init = {
     "init_depth": 8
 
 }
-
 
 fitness_function_options = {
     "rmse": rmse,
