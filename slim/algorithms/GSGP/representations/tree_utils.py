@@ -1,5 +1,5 @@
 """
-Utility functions for Tree Evaluation and Mutation in Genetic Programming.
+Utility functions for Tree Evaluation and Mutation in GSGP.
 """
 
 from slim.algorithms.GP.representations.tree import Tree
@@ -19,7 +19,7 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
     testing : bool, optional
         Indicates if the calculation is for testing semantics. Defaults to `False`.
     logistic : bool, optional
-        Indicates if a logistic function should be applied. Defaults to `False`.
+        Indicates if a logistic function should be applied to tree outputs. Defaults to `False`.
 
     Returns
     -------
@@ -27,11 +27,11 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
 
     Notes
     -----
-    Requires the reconstruct parameter of the individual to be set to True, otherwise the structure will not be saved.
+    The individual to be execute must be have the `reconstruct` attribute set to True; otherwise,
+    its structure will not be available for evaluation.
     """
     # if the calculation is for testing semantics
     if testing and individual.test_semantics is None:
-
         # if the individual is a base (gp) tree, use apply_tree to compute its semantics
         if isinstance(individual.structure, tuple):
             individual.test_semantics = (
@@ -44,6 +44,7 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
             individual.test_semantics = individual.structure[0](
                 *individual.structure[1:], testing=True
             )
+
     # if the calculation is for training semantics
     elif individual.train_semantics is None:
         # if the individual is a base (gp) tree, use apply_tree to compute its semantics
@@ -53,9 +54,9 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
                 if logistic
                 else apply_tree(individual, inputs)
             )
+
         # if not, use the operator (mutation or crossover) with the base trees to compute the semantics
         else:
-
             individual.train_semantics = individual.structure[0](
                 *individual.structure[1:], testing=False
             )

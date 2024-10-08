@@ -162,6 +162,7 @@ Common arguments
   * *default*: ``os.path.join(os.getcwd(), "log", "gsgp.csv")`` for gsgp
   * *default*: ``os.path.join(os.getcwd(), "log", "slim.csv")`` for slim
 * **seed**: An integer specifying the seed for randomness *(default: 1)*.
+* **n_jobs**: Number of parallel jobs to run *(default: 1)*.
 
 Specific for *gp*
 ~~~~~~~~~~~~~~~~~
@@ -173,15 +174,36 @@ Specific for *gsgp*
 ~~~~~~~~~~~~~~~~~~~
 
 * **p_xo**: A float specifying the crossover probability *(default: 0.0)*.
-* **ms**: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
+* **ms_lower**: An integer number representing the lower bound for the function to generate the random mutation step *(default: 0)*.
+* **ms_upper**: An integer number representing the upper bound for the function to generate the random mutation step *(default: 1)*.
 
 Specific for *slim*
 ~~~~~~~~~~~~~~~~~~~
 
 * **slim_version**: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
-* **ms**: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
+* **ms_lower**: An integer number representing the lower bound for the function to generate the random mutation step *(default: 0)*.
+* **ms_upper**: An integer number representing the upper bound for the function to generate the random mutation step *(default: 1)*.
+
 * **p_inflate**: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
 
+Additional Notes
+--------------------------------------------------
+
+If a user wishes to use their own dataset rather than one of the sixteen benchmarking datasets included with the `slim` library, they can load their data into a Pandas DataFrame,
+ensuring that the target variable is the last column. They can then call the `load_pandas_df` function from `datasets.data_loader` as follows:
+
+.. code-block:: python
+
+   from datasets.data_loader import load_pandas_df  # import the loader for the dataset PPB
+
+   # Load the PPB dataset
+   X, y = load_pandas_df(X_y=True)
+
+   # Split into train and test sets
+   X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
+
+   # Split the test set into validation and test sets
+   X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 
 .. toctree::
    :maxdepth: 2
