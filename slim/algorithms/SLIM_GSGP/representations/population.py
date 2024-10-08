@@ -21,6 +21,7 @@ class Population:
         self.population = population
         self.size = len(population)
         self.nodes_count = sum([ind.nodes_count for ind in population])
+        self.fit = None
 
     def calculate_semantics(self, inputs, testing=False):
         """

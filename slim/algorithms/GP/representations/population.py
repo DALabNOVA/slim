@@ -25,6 +25,7 @@ class Population:
         self.population = pop
         self.size = len(pop)
         self.nodes_count = sum(ind.node_count for ind in pop)
+        self.fit = None
 
     def evaluate(self, ffunction, X, y, n_jobs=1):
         """
