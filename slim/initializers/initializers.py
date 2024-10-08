@@ -92,6 +92,7 @@ def rhh(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     population = []
 
     inds_per_bin = init_pop_size / (init_depth - 1)
+
     for curr_depth in range(2, init_depth + 1):
 
         population.extend(
