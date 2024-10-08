@@ -43,11 +43,11 @@ class GSGP:
         Parameters
         ----------
         pi_init : dict
-            Dictionary with all the parameters needed for evaluation.
+            Dictionary with all the parameters needed for candidate solutions initialization.
         initializer : callable
             Function to initialize the population.
         selector : callable
-            Function to select individuals for crossover/mutation.
+            Function to select individuals.
         mutator : callable
             Function to mutate individuals.
         ms : callable
@@ -127,23 +127,23 @@ class GSGP:
         elitism : bool
             Whether to use elitism.
         log : int
-            Logging level.
+            Logging level. Default is 0.
         verbose : int
-            Verbosity level.
+            Verbosity level. Default is 0.
         test_elite : bool
-            Whether to test elite individuals.
+            Whether to evaluate elite individuals on test data. Default is False.
         log_path : str
-            Path to save logs.
+            Path to save logs. Default is None.
         run_info : list
-            Information about the current run.
+            Information about the current run. Default is None.
         ffunction : callable
-            Fitness function.
+            Fitness function. Default is None.
         reconstruct : bool
-            Whether to reconstruct trees.
+            Whether to reconstruct trees. Default is False.
         n_elites : int
-            Number of elites.
+            Number of elites. Default is 1.
         n_jobs : int
-            The maximum number of concurrently running jobs for joblib parallelization.
+            The maximum number of jobs for parallel processing. Default is 1.
         """
 
         # setting the seeds
