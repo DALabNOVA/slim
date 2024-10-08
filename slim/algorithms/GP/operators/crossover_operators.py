@@ -2,8 +2,7 @@
 Crossover operator implementation.
 """
 
-from slim.algorithms.GP.representations.tree_utils import (random_subtree,
-                                                           substitute_subtree)
+from slim.algorithms.GP.representations.tree_utils import random_subtree, substitute_subtree
 
 
 def crossover_trees(FUNCTIONS):

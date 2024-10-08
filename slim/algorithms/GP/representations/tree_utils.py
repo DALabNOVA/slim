@@ -41,7 +41,7 @@ def flatten(data):
     Yields
     ------
     object
-        Flattened data element by element.
+        Flattened data element by element. If data is not a tuple, returns the original data itself.
     """
     if isinstance(data, tuple):
         for x in data:
@@ -53,6 +53,8 @@ def flatten(data):
 def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, first_call=True):
     """
     Generates a random tree representation using the Grow method with a maximum specified depth.
+
+    Utilizes recursion to call itself on progressively smaller depths to form the whole tree, until the leaf nodes.
 
     Parameters
     ----------
@@ -73,6 +75,8 @@ def create_grow_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3, fir
     -------
     tuple
         The generated tree representation according to the specified parameters.
+    str
+        The terminal or constant node selected, depending on depth and random probabilities.
     """
     # defining the probability for a terminal node to be selected, if the probability of constants is not 0
     if p_c > 0:
@@ -107,6 +111,8 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     """
     Generates a full random tree representation with a specified depth.
 
+    Utilizes recursion to call itself on progressively smaller depths to form the whole tree, until the leaf nodes.
+
     Parameters
     ----------
     depth : int
@@ -123,7 +129,9 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     Returns
     -------
     tuple
-        The generated full tree representaiton based on the specified parameters.
+        The generated tree representation according to the specified parameters.
+    str
+        The terminal or constant node selected, depending on depth and random probabilities.
     """
     # if the maximum depth is 1, choose a terminal node
     if depth <= 1:
@@ -275,15 +283,17 @@ def substitute_subtree(FUNCTIONS):
         ----------
         tree : tuple or str
             The tree representation in which to perform the substitution. Can be a terminal.
-        target_subtree : tuple
+        target_subtree : tuple or str
             The subtree to be replaced.
-        new_subtree : tuple
+        new_subtree : tuple or str
             The subtree to insert in place of the target subtree.
 
         Returns
         -------
-        tuple or str
+        tuple
             The modified tree representation with the target subtree replaced by the new subtree.
+        str
+            The new tree leaf node if the original is a leaf.
 
     Notes
     -----
@@ -303,15 +313,17 @@ def substitute_subtree(FUNCTIONS):
         ----------
         tree : tuple or str
             The tree representation in which to perform the substitution. Can be a terminal.
-        target_subtree : tuple
+        target_subtree : tuple or str
             The subtree to be replaced.
-        new_subtree : tuple
+        new_subtree : tuple or str
             The subtree to insert in place of the target subtree.
 
         Returns
         -------
-        tuple or str
+        tuple
             The modified tree representation with the target subtree replaced by the new subtree.
+        str
+            The new tree leaf node if the original is a leaf.
         """
         if tree == target_subtree:
             return new_subtree
@@ -362,9 +374,11 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
 
         Returns
         -------
-        tuple or str
+        tuple
             The pruned tree representation, which may consist of terminals, constants, or
             a modified subtree.
+        str
+            The pruned tree if it is a leaf.
     """
     def pruning(tree, target_depth):
         """
@@ -383,9 +397,11 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
 
         Returns
         -------
-        tuple or str
+        tuple
             The pruned tree representation, which may consist of terminals, constants, or
             a modified subtree.
+        str
+            The pruned tree if it is a leaf.
         """
         if target_depth <= 1 and tree not in TERMINALS:
             return (
