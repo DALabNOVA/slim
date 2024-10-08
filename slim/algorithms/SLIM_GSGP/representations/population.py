@@ -1,5 +1,5 @@
 """
-Population Class for Evolutionary Computation using PyTorch.
+Population Class for SLIM GSGP using PyTorch.
 """
 from slim.utils.utils import _evaluate_slim_individual
 from joblib import Parallel, delayed
@@ -22,6 +22,8 @@ class Population:
         self.size = len(population)
         self.nodes_count = sum([ind.nodes_count for ind in population])
         self.fit = None
+        self.train_semantics = None
+        self.test_semantics = None
 
     def calculate_semantics(self, inputs, testing=False):
         """
@@ -43,7 +45,6 @@ class Population:
             individual.calculate_semantics(inputs, testing)
             for individual in self.population
         ]
-
 
         # computing testing semantics, if applicable
         if testing:
@@ -88,7 +89,8 @@ class Population:
     def evaluate_no_parall(self, ffunction, y, operator="sum"):
         """
         Evaluate the population using a fitness function (without parallelization).
-        This function is not currently in use, but has been retained for potential future use at the developer's discretion.
+        This function is not currently in use, but has been retained for potential future use
+        at the developer's discretion.
 
         Parameters
         ----------
@@ -130,13 +132,10 @@ class Population:
         -------
         None
         """
-        # parallelizing the evaluation of the slim individual
-        fits = Parallel(n_jobs=n_jobs)(
+        # Evaluates individuals' fitnesses
+        self.fit = Parallel(n_jobs=n_jobs)(
             delayed(_evaluate_slim_individual)(individual, ffunction=ffunction, y=y, operator=operator
             ) for individual in self.population)
-
-        # setting the fit attribute for the population
-        self.fit = fits
 
         # Assigning individuals' fitness as an attribute
         [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
