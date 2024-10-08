@@ -160,9 +160,9 @@ class GP:
         # logging the results if the log level is not 0
 
         if log != 0:
-            self.log_initial_population(
-                population, end - start, log, log_path, run_info
-            )
+            self.log_generation(
+                    0, population, end - start, log, log_path, run_info
+                )
 
         # displaying the results on console if verbose level is not 0
         if verbose != 0:
@@ -316,61 +316,6 @@ class GP:
 
         # retuning the offspring population and the time control variable
         return offs_pop, start
-
-    def log_initial_population(self, population, elapsed_time, log, log_path, run_info):
-        """
-        Log the initial population.
-
-        Args:
-            population (Population): The population to log.
-            elapsed_time (float): Time taken for the process.
-            log (int): Logging level.
-            log_path (str): Path to save logs.
-            run_info (list): Information about the current run.
-
-        Returns:
-            None
-        """
-        # logging the initial population result depending on the log level
-        if log == 2:
-            add_info = [
-                self.elite.test_fitness,
-                self.elite.node_count,
-                float(niche_entropy([ind.repr_ for ind in population.population])),
-                np.std(population.fit),
-                log,
-            ]
-        elif log == 3:
-            add_info = [
-                self.elite.test_fitness,
-                self.elite.node_count,
-                " ".join([str(ind.node_count) for ind in population.population]),
-                " ".join([str(f) for f in population.fit]),
-                log,
-            ]
-        elif log == 4:
-            add_info = [
-                self.elite.test_fitness,
-                self.elite.node_count,
-                float(niche_entropy([ind.repr_ for ind in population.population])),
-                np.std(population.fit),
-                " ".join([str(ind.node_count) for ind in population.population]),
-                " ".join([str(f) for f in population.fit]),
-                log,
-            ]
-        else:
-            add_info = [self.elite.test_fitness, self.elite.node_count, log]
-
-        logger(
-            log_path,
-            0,
-            self.elite.fitness,
-            elapsed_time,
-            float(population.nodes_count),
-            additional_infos=add_info,
-            run_info=run_info,
-            seed=self.seed,
-        )
 
     def log_generation(
         self, generation, population, elapsed_time, log, log_path, run_info
