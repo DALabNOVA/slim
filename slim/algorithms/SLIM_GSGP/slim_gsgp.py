@@ -42,27 +42,46 @@ class SLIM_GSGP:
         """
         Initialize the SLIM_GSGP algorithm with given parameters.
 
-        Args:
-            pi_init: Dictionary with all the parameters needed for evaluation.
-            initializer: Function to initialize the population.
-            selector: Function to select individuals from the population.
-            inflate_mutator: Function for inflate mutation.
-            deflate_mutator: Function for deflate mutation.
-            ms: Mutation step function.
-            crossover: Crossover function.
-            find_elit_func: Function to find elite individuals.
-            p_m: Probability of mutation.
-            p_xo: Probability of crossover.
-            p_inflate: Probability of inflate mutation.
-            p_deflate: Probability of deflate mutation.
-            pop_size: Population size.
-            seed: Random seed.
-            operator: Operator to apply to the semantics ("sum" or "prod").
-            copy_parent: Boolean indicating if parent should be copied when mutation is not possible.
-            two_trees: Boolean indicating if two trees are used.
-            settings_dict: Additional settings dictionary.
-        """
+        Parameters
+        ----------
+        pi_init : dict
+            Dictionary with all the parameters needed for candidate solutions initialization.
+        initializer : Callable
+            Function to initialize the population.
+        selector : Callable
+            Function to select individuals.
+        inflate_mutator : Callable
+            Function for inflate mutation.
+        deflate_mutator : Callable
+            Function for deflate mutation.
+        ms : Callable
+            Mutation step function.
+        crossover : Callable
+            Crossover function.
+        find_elit_func : Callable
+            Function to find elite individuals.
+        p_m : float
+            Probability of mutation. Default is 1.
+        p_xo : float
+            Probability of crossover. Default is 0.
+        p_inflate : float
+            Probability of inflate mutation. Default is 0.3.
+        p_deflate : float
+            Probability of deflate mutation. Default is 0.7.
+        pop_size : int
+            Size of the population. Default is 100.
+        seed : int
+            Random seed for reproducibility. Default is 0.
+        operator : {'sum', 'prod'}
+            Operator to apply to the semantics, either "sum" or "prod". Default is "sum".
+        copy_parent : bool
+            Whether to copy the parent when mutation is not possible. Default is True.
+        two_trees : bool
+            Indicates if two trees are used. Default is True.
+        settings_dict : dict
+            Additional settings passed as a dictionary.
 
+        """
         self.pi_init = pi_init
         self.selector = selector
         self.p_m = p_m
@@ -108,28 +127,47 @@ class SLIM_GSGP:
         max_depth=17,
         n_elites=1,
         reconstruct=True,
-        n_jobs = 1):
+        n_jobs=1):
         """
         Solve the optimization problem using SLIM_GSGP.
 
-        Args:
-            X_train: Training input data.
-            X_test: Testing input data.
-            y_train: Training output data.
-            y_test: Testing output data.
-            curr_dataset: Current dataset identifier.
-            run_info: Information about the current run.
-            n_iter: Number of iterations.
-            elitism: Boolean indicating if elitism is used.
-            log: Logging level.
-            verbose: Verbosity level.
-            test_elite: Boolean indicating if elite should be tested.
-            log_path: Path for logging.
-            ffunction: Fitness function.
-            max_depth: Maximum depth for trees.
-            n_elites: Number of elite individuals.
-            reconstruct: Boolean indicating if reconstruction is needed.
-            n_jobs: The maximum number of concurrently running jobs for joblib parallelization.
+        Parameters
+        ----------
+        X_train : array-like
+            Training input data.
+        X_test : array-like
+            Testing input data.
+        y_train : array-like
+            Training output data.
+        y_test : array-like
+            Testing output data.
+        curr_dataset : str or int
+            Identifier for the current dataset.
+        run_info : dict
+            Information about the current run.
+        n_iter : int
+            Number of iterations. Default is 20.
+        elitism : bool
+            Whether elitism is used during evolution. Default is True.
+        log : int or str
+            Logging level (e.g., 0 for no logging, 1 for basic, etc.). Default is 0.
+        verbose : int
+            Verbosity level for logging outputs. Default is 0.
+        test_elite : bool
+            Whether elite individuals should be tested. Default is False.
+        log_path : str
+            File path for saving log outputs. Default is None.
+        ffunction : function
+            Fitness function used to evaluate individuals. Default is None.
+        max_depth : int
+            Maximum depth for the trees. Default is 17.
+        n_elites : int
+            Number of elite individuals to retain during selection. Default is True.
+        reconstruct : bool
+            Indicates if reconstruction of the solution is needed. Default is True.
+        n_jobs : int
+            Maximum number of concurrently running jobs for joblib parallelization. Default is 1.
+
         """
 
         if test_elite and (X_test is None or y_test is None):
@@ -446,7 +484,6 @@ class SLIM_GSGP:
             self.elites, self.elite = self.find_elit_func(population, n_elites)
 
             # calculating the testing semantics and the elite's testing fitness if test_elite is true
-
             if test_elite:
                 self.elite.calculate_semantics(X_test, testing=True)
                 self.elite.evaluate(
@@ -541,7 +578,7 @@ class SLIM_GSGP:
                     seed=self.seed,
                 )
 
-            # displaying the results on consule if verbose level is more than 0
+            # displaying the results on console if verbose level is more than 0
             if verbose != 0:
                 verbose_reporter(
                     run_info[-1],
