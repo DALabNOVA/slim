@@ -31,11 +31,7 @@ settings_dict = {"p_test": 0.2}
 
 # GSGP solve parameters
 gsgp_solve_parameters = {
-    "log": 1,
-    "verbose": 1,
-    "test_elite": True,
     "run_info": None,
-    "ffunction": rmse,
     "reconstruct": False,
     "n_jobs": 1,
     "n_iter": 1000,
@@ -49,7 +45,6 @@ gsgp_solve_parameters = {
 
 # GSGP parameters
 gsgp_parameters = {
-    "initializer": rhh,
     "selector": tournament_selection_min(2),
     "crossover": geometric_crossover,
     "mutator": standard_geometric_mutation,
