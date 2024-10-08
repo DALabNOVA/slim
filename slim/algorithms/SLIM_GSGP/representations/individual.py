@@ -34,6 +34,25 @@ class Individual:
         The maximum depth of each tree in the collection.
     depth : int
         The maximum depth of the tree.
+
+    Methods
+    -------
+    __init__(collection, train_semantics, test_semantics, reconstruct)
+        Initializes an Individual object.
+    calculate_semantics(inputs, testing=False)
+        Calculate the semantics for the individual.
+    __len__()
+        Return the size of the individual.
+    __getitem__(item)
+        Get a tree ('block') from the individual by index.
+    evaluate(ffunction, y, testing=False, operator="sum")
+        Evaluate the individual using a fitness function.
+    predict(data)
+        Predict the output for the given input data using the model's collection of trees and specified slim version.
+    get_tree_representation()
+        Get a string representation of the trees in the individual.
+
+
     """
 
     def __init__(self, collection, train_semantics, test_semantics, reconstruct):
@@ -283,12 +302,14 @@ class Individual:
         # getting the correct torch function based on the used operator (mul or sum)
         operator = torch.sum if operator == "sum" else torch.prod
 
+
+
         # clamping the semantics
         return torch.clamp(
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-    def get_tree_representation(self, operator=None):
+    def get_tree_representation(self):
         """
         Get a string representation of the trees in the individual.
 
@@ -312,8 +333,7 @@ class Individual:
             raise Exception("If reconstruct was set to False, .get_tree_representation() is not available")
 
         # finding out the used operator based on the slim version
-        if operator is None:
-            operator = "sum" if "+" in self.version else "mul"
+        operator = "sum" if "+" in self.version else "mul"
 
         op = "+" if operator == "sum" else "*"
 

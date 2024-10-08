@@ -27,7 +27,7 @@ def _execute_tree(individual, inputs, testing=False, logistic=False):
 
     Notes
     -----
-    The individual to be execute must be have the `reconstruct` attribute set to True; otherwise,
+    The individual to be executed must have the `reconstruct` attribute set to True; otherwise,
     its structure will not be available for evaluation.
     """
     # if the calculation is for testing semantics

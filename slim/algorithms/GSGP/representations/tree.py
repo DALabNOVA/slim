@@ -35,6 +35,16 @@ class Tree:
     test_fitness : float or None
         The fitness value of the tree during testing. Defaults to None.
 
+    Methods
+    -------
+    __init__(structure, train_semantics, test_semantics, reconstruct)
+        Initializes a Tree object.
+    calculate_semantics(inputs, testing=False, logistic=False)
+        Calculates the semantics for the tree.
+    evaluate(ffunction, y, testing=False, X=None)
+        Evaluates the tree using a fitness function.
+    predict(data)
+        Predicts the output for the given input data using the model's structure.
     """
     FUNCTIONS = None
     TERMINALS = None
@@ -158,7 +168,9 @@ class Tree:
         Returns
         -------
         None or float
-            Returns nothing (if X is not provided) or the fitness result (if X is provided).
+            Returns nothing if no new data is provided, as the training and testing fitness is stored as an attribute.
+        float
+            The fitness value of the tree when evaluated with new data.
         """
         # if data is provided
         if X is not None:
