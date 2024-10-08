@@ -51,8 +51,6 @@ class Individual:
         Predict the output for the given input data using the model's collection of trees and specified slim version.
     get_tree_representation()
         Get a string representation of the trees in the individual.
-
-
     """
 
     def __init__(self, collection, train_semantics, test_semantics, reconstruct):
@@ -302,7 +300,10 @@ class Individual:
         # getting the correct torch function based on the used operator (mul or sum)
         operator = torch.sum if operator == "sum" else torch.prod
 
+        # making sure that if the semantics of the collection is solely a constant,
+        # the constant value is repeated len(data) number of times to match the remaining semantics' shapes.
 
+        semantics = [ten if ten.numel() == len(data) else ten.repeat(len(data)) for ten in semantics]
 
         # clamping the semantics
         return torch.clamp(
