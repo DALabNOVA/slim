@@ -25,7 +25,7 @@ SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documen
 User Guide
 ========================================================================
 
-*gsgp_slim* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
+``slim_gsgp`` is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.
 
 Installation
 ------------
@@ -34,7 +34,7 @@ To install the library, use the following command:
 
 .. code-block:: sh
 
-   pip install gsgp_slim
+   pip install slim_gsgp
 
 Additionally, make sure to install all required dependencies:
 
@@ -53,10 +53,10 @@ To use the GP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim_gsgpmain_gp import gp  # import the slim library
-   from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim_gsgputils.utils import train_test_split  # import the train-test split function
+   from slim_gsgp.main_gp import gp  # import the slim library
+   from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+   from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -89,11 +89,11 @@ To use the GSGP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim_gsgpmain_gsgp import gsgp  # import the slim library
-   from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim_gsgputils.utils import train_test_split  # import the train-test split function
-   from slim_gsgputils.utils import generate_random_uniform  # import the mutation step function
+   from slim_gsgp.main_gsgp import gsgp  # import the slim library
+   from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+   from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+   from slim_gsgp.utils.utils import generate_random_uniform  # import the mutation step function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -124,11 +124,11 @@ To use the SLIM GSGP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim_gsgpmain_slim import slim  # import the slim library
-   from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim_gsgputils.utils import train_test_split  # import the train-test split function
-   from slim_gsgputils.utils import generate_random_uniform  # import the mutation step function
+   from slim_gsgp..main_slim import slim  # import the slim library
+   from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+   from slim_gsgp..evaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+   from slim_gsgp.utils.utils import generate_random_uniform  # import the mutation step function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -210,7 +210,7 @@ ensuring that the target variable is the last column. They can then call the ``l
 
 .. code-block:: python
 
-   from datasets.data_loader import load_pandas_df  # import the loader for pandas DataFrames
+   from slim_gsgp.datasets.data_loader import load_pandas_df  # import the loader for pandas DataFrames
    import pandas as pd
 
    # Reading the desired dataset
@@ -225,6 +225,67 @@ ensuring that the target variable is the last column. They can then call the ``l
    # Split the test set into validation and test sets
    X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 
+License
+=======
+
+This library is `MIT licensed <https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file>`_.
+
+The datasets provided are public. The table below specifies the source and license of each dataset.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 40 30
+
+   * - Dataset
+     - Source
+     - License
+   * - airfoil
+     - `airfoil self noise <https://archive.ics.uci.edu/dataset/291/airfoil+self+noise>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - bike sharing
+     - `bike sharing dataset <https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - bioavailability
+     - F. Archetti et al. (2007)*
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - breast cancer
+     - `breast cancer <https://archive.ics.uci.edu/dataset/14/breast+cancer>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - concrete slump
+     - `concrete slump test <http://archive.ics.uci.edu/dataset/182/concrete+slump+test>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - concrete strength (different number of instances)
+     - `concrete compressive strength <https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - diabetes
+     - `diabetes dataset <https://www4.stat.ncsu.edu/~boos/var.select/diabetes.html>`_
+     - CC0 License
+   * - efficiency_cooling
+     - `energy efficiency <https://archive.ics.uci.edu/dataset/242/energy+efficiency>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - efficiency_heating
+     - `energy efficiency <https://archive.ics.uci.edu/dataset/242/energy+efficiency>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - forest fires
+     - `forest fires <https://archive.ics.uci.edu/dataset/162/forest+fires>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - istanbul
+     - `istanbul stock exchange <https://archive.ics.uci.edu/dataset/247/istanbul+stock+exchange>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - ld50
+     - F. Archetti et al. (2007)*
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - parkinsons_total_UPDRS
+     - `parkinsons telemonitoring <https://archive.ics.uci.edu/dataset/189/parkinsons+telemonitoring>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - ppb
+     - F. Archetti et al. (2007)*
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+   * - resid_build_sale_price
+     - `residential building data set <https://archive.ics.uci.edu/dataset/437/residential+building+data+set>`_
+     - Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+*Archetti, F., Lanzeni, S., Messina, E., Vanneschi, L. (2007). Genetic Programming and Other Machine Learning Approaches to Predict Median Oral Lethal Dose (LD50) and Plasma Protein Binding Levels (%PPB) of Drugs. In: Marchiori, E., Moore, J.H., Rajapakse, J.C. (eds) Evolutionary Computation, Machine Learning and Data Mining in Bioinformatics. EvoBIO 2007. Lecture Notes in Computer Science, vol 4447. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-71783-6_2
 
 
 

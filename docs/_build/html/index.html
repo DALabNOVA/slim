@@ -121,11 +121,11 @@
 </section>
 <section id="user-guide">
 <h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
-<p><em>gsgp_slim</em> is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.</p>
+<p><code class="docutils literal notranslate"><span class="pre">slim_gsgp</span></code> is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>To install the library, use the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>gsgp_slim
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>slim_gsgp
 </pre></div>
 </div>
 <p>Additionally, make sure to install all required dependencies:</p>
@@ -138,10 +138,10 @@
 <section id="running-gp">
 <h3>Running GP<a class="headerlink" href="#running-gp" title="Link to this heading"></a></h3>
 <p>To use the GP algorithm, you can use the following example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgpmain_gp</span> <span class="kn">import</span> <span class="n">gp</span>  <span class="c1"># import the slim library</span>
-<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
-<span class="kn">from</span> <span class="nn">slim_gsgpevaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
-<span class="kn">from</span> <span class="nn">slim_gsgputils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgp.main_gp</span> <span class="kn">import</span> <span class="n">gp</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
 
 <span class="c1"># Load the PPB dataset</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -171,11 +171,11 @@
 <section id="running-standard-gsgp">
 <h3>Running standard GSGP<a class="headerlink" href="#running-standard-gsgp" title="Link to this heading"></a></h3>
 <p>To use the GSGP algorithm, you can use the following example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgpmain_gsgp</span> <span class="kn">import</span> <span class="n">gsgp</span>  <span class="c1"># import the slim library</span>
-<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
-<span class="kn">from</span> <span class="nn">slim_gsgpevaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
-<span class="kn">from</span> <span class="nn">slim_gsgputils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
-<span class="kn">from</span> <span class="nn">slim_gsgputils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgp.main_gsgp</span> <span class="kn">import</span> <span class="n">gsgp</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
 
 <span class="c1"># Load the PPB dataset</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -203,11 +203,11 @@
 <section id="running-slim">
 <h3>Running SLIM<a class="headerlink" href="#running-slim" title="Link to this heading"></a></h3>
 <p>To use the SLIM GSGP algorithm, you can use the following example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgpmain_slim</span> <span class="kn">import</span> <span class="n">slim</span>  <span class="c1"># import the slim library</span>
-<span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
-<span class="kn">from</span> <span class="nn">slim_gsgpevaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
-<span class="kn">from</span> <span class="nn">slim_gsgputils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
-<span class="kn">from</span> <span class="nn">slim_gsgputils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgp..main_slim</span> <span class="kn">import</span> <span class="n">slim</span>  <span class="c1"># import the slim library</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_ppb</span>  <span class="c1"># import the loader for the dataset PPB</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp..evaluators.fitness_functions</span> <span class="kn">import</span> <span class="n">rmse</span>  <span class="c1"># import the rmse fitness metric</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span>  <span class="c1"># import the train-test split function</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">generate_random_uniform</span>  <span class="c1"># import the mutation step function</span>
 
 <span class="c1"># Load the PPB dataset</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_ppb</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -290,7 +290,7 @@
 <h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Link to this heading"></a></h2>
 <p>If a user wishes to use their own dataset rather than one of the sixteen benchmarking datasets included with the <code class="docutils literal notranslate"><span class="pre">slim</span></code> library, they can load their data into a Pandas DataFrame,
 ensuring that the target variable is the last column. They can then call the <code class="docutils literal notranslate"><span class="pre">load_pandas_df</span></code> function from <code class="docutils literal notranslate"><span class="pre">datasets.data_loader</span></code> as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_pandas_df</span>  <span class="c1"># import the loader for pandas DataFrames</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">slim_gsgp.datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_pandas_df</span>  <span class="c1"># import the loader for pandas DataFrames</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># Reading the desired dataset</span>
@@ -307,6 +307,96 @@ ensuring that the target variable is the last column. They can then call the <co
 </pre></div>
 </div>
 </section>
+</section>
+<section id="license">
+<h1>License<a class="headerlink" href="#license" title="Link to this heading"></a></h1>
+<p>This library is <a class="reference external" href="https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file">MIT licensed</a>.</p>
+<p>The datasets provided are public. The table below specifies the source and license of each dataset.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>License</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>airfoil</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/291/airfoil+self+noise">airfoil self noise</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>bike sharing</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">bike sharing dataset</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>bioavailability</p></td>
+<td><ol class="upperalpha simple" start="6">
+<li><p>Archetti et al. (2007)*</p></li>
+</ol>
+</td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>breast cancer</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/14/breast+cancer">breast cancer</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>concrete slump</p></td>
+<td><p><a class="reference external" href="http://archive.ics.uci.edu/dataset/182/concrete+slump+test">concrete slump test</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>concrete strength (different number of instances)</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength">concrete compressive strength</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>diabetes</p></td>
+<td><p><a class="reference external" href="https://www4.stat.ncsu.edu/~boos/var.select/diabetes.html">diabetes dataset</a></p></td>
+<td><p>CC0 License</p></td>
+</tr>
+<tr class="row-odd"><td><p>efficiency_cooling</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/242/energy+efficiency">energy efficiency</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>efficiency_heating</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/242/energy+efficiency">energy efficiency</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>forest fires</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/162/forest+fires">forest fires</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>istanbul</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/247/istanbul+stock+exchange">istanbul stock exchange</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ld50</p></td>
+<td><ol class="upperalpha simple" start="6">
+<li><p>Archetti et al. (2007)*</p></li>
+</ol>
+</td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>parkinsons_total_UPDRS</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/189/parkinsons+telemonitoring">parkinsons telemonitoring</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ppb</p></td>
+<td><ol class="upperalpha simple" start="6">
+<li><p>Archetti et al. (2007)*</p></li>
+</ol>
+</td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+<tr class="row-even"><td><p>resid_build_sale_price</p></td>
+<td><p><a class="reference external" href="https://archive.ics.uci.edu/dataset/437/residential+building+data+set">residential building data set</a></p></td>
+<td><p>Creative Commons Attribution 4.0 International (CC BY 4.0)</p></td>
+</tr>
+</tbody>
+</table>
+<p><a href="#id2"><span class="problematic" id="id3">*</span></a>Archetti, F., Lanzeni, S., Messina, E., Vanneschi, L. (2007). Genetic Programming and Other Machine Learning Approaches to Predict Median Oral Lethal Dose (LD50) and Plasma Protein Binding Levels (%PPB) of Drugs. In: Marchiori, E., Moore, J.H., Rajapakse, J.C. (eds) Evolutionary Computation, Machine Learning and Data Mining in Bioinformatics. EvoBIO 2007. Lecture Notes in Computer Science, vol 4447. Springer, Berlin, Heidelberg. <a class="reference external" href="https://doi.org/10.1007/978-3-540-71783-6_2">https://doi.org/10.1007/978-3-540-71783-6_2</a></p>
 </section>
 
 
