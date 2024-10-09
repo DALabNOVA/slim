@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim_gsgp.algorithms.GP.representations.tree_utils &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/_modules/slim_gsgp/algorithms/GP/representations/tree_utils.html" />
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.algorithms.html">slim_gsgp.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.evaluators.html">slim_gsgp.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.initializers.html">slim_gsgp.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.selection.html">slim_gsgp.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.utils.html">slim_gsgp.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">slim_gsgp.algorithms.GP.representations.tree_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for slim_gsgp.algorithms.GP.representations.tree_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MIT License</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2024 DALabNOVA</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Utility functions and tree operations for genetic programming.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="bound_value">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.bound_value">[docs]</a>
+<span class="k">def</span> <span class="nf">bound_value</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constrains the values within a specific range.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vector : torch.Tensor</span>
+<span class="sd">        Input tensor to be bounded.</span>
+<span class="sd">    min_val : float</span>
+<span class="sd">        Minimum value for bounding.</span>
+<span class="sd">    max_val : float</span>
+<span class="sd">        Maximum value for bounding.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    torch.Tensor</span>
+<span class="sd">        A Tensor with values bounded between min_val and max_val.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flatten">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.flatten">[docs]</a>
+<span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flattens a nested tuple structure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : tuple</span>
+<span class="sd">        Input nested tuple data structure.</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+<span class="sd">    object</span>
+<span class="sd">        Flattened data element by element. If data is not a tuple, returns the original data itself.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">data</span></div>
+
+
+
+<div class="viewcode-block" id="create_grow_random_tree">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.create_grow_random_tree">[docs]</a>
+<span class="k">def</span> <span class="nf">create_grow_random_tree</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">first_call</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a random tree representation using the Grow method with a maximum specified depth.</span>
+
+<span class="sd">    Utilizes recursion to call itself on progressively smaller depths to form the whole tree, until the leaf nodes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    depth : int</span>
+<span class="sd">        Maximum depth of the tree to be created.</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree.</span>
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree.</span>
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree.</span>
+<span class="sd">    p_c : float, optional</span>
+<span class="sd">        Probability of choosing a constant node. Default is 0.3.</span>
+<span class="sd">    first_call : bool, optional</span>
+<span class="sd">        Variable that controls whether the function is being called for the first time. Default is True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        The generated tree representation according to the specified parameters.</span>
+<span class="sd">    str</span>
+<span class="sd">        The terminal or constant node selected, depending on depth and random probabilities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># defining the probability for a terminal node to be selected, if the probability of constants is not 0</span>
+    <span class="k">if</span> <span class="n">p_c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p_terminal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">TERMINALS</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">TERMINALS</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p_terminal</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">TERMINALS</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">TERMINALS</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">))</span>
+
+    <span class="c1"># if a terminal is selected (or depth is 1) and its not the first call of the create_grow_random_tree function</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">depth</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_terminal</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">first_call</span><span class="p">:</span>
+        <span class="c1"># choosing between a constant or a terminal</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">p_c</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TERMINALS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+    <span class="c1"># if a function is selected</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># selecting a random function</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="c1"># creating the tree based on the selected function&#39;s arity</span>
+        <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">create_grow_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">right_subtree</span> <span class="o">=</span> <span class="n">create_grow_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">create_grow_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">left_subtree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+
+<div class="viewcode-block" id="create_full_random_tree">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.create_full_random_tree">[docs]</a>
+<span class="k">def</span> <span class="nf">create_full_random_tree</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a full random tree representation with a specified depth.</span>
+
+<span class="sd">    Utilizes recursion to call itself on progressively smaller depths to form the whole tree, until the leaf nodes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    depth : int</span>
+<span class="sd">        Maximum depth of the tree to be created.</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree.</span>
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree.</span>
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree.</span>
+<span class="sd">    p_c : float, optional</span>
+<span class="sd">        Probability of choosing a constant node. Default is 0.3.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        The generated tree representation according to the specified parameters.</span>
+<span class="sd">    str</span>
+<span class="sd">        The terminal or constant node selected, depending on depth and random probabilities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if the maximum depth is 1, choose a terminal node</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># choosing between a terminal or a constant to be the terminal node</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">p_c</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TERMINALS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="c1"># if the depth isn&#39;t one, choose a random function</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="c1"># building the tree based on the arity of the chosen function</span>
+        <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">create_full_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">)</span>
+            <span class="n">right_subtree</span> <span class="o">=</span> <span class="n">create_full_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">create_full_random_tree</span><span class="p">(</span><span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">p_c</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">left_subtree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+
+<div class="viewcode-block" id="random_subtree">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.random_subtree">[docs]</a>
+<span class="k">def</span> <span class="nf">random_subtree</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a function that selects a random subtree from a given tree representation.</span>
+
+<span class="sd">    This function generates another function that traverses a tree representation to randomly</span>
+<span class="sd">    select a subtree based on the arity of the functions within the tree.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function that selects a random subtree from the given tree representation.</span>
+
+<span class="sd">        This function navigates the tree representation recursively, choosing a subtree based on</span>
+<span class="sd">        probabilities determined by the overall representation of the tree.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple</span>
+<span class="sd">            The tree representation from which to select a subtree.</span>
+<span class="sd">        first_call : bool, optional</span>
+<span class="sd">            Indicates whether this is the initial call to the function. Defaults to True.</span>
+<span class="sd">        num_of_nodes : int, optional</span>
+<span class="sd">            The total number of nodes in the tree. Used to calculate probabilities.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The randomly selected subtree (or the original node if not applicable).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function traverses the tree representation recursively, selecting subtrees based on random</span>
+<span class="sd">    probabilities influenced by the representation of the tree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">random_subtree_picker</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">first_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_of_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects a random subtree from the given tree representation.</span>
+
+<span class="sd">        This function navigates the tree representation recursively, choosing a subtree based on</span>
+<span class="sd">        probabilities determined by the overall representation of the tree.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple</span>
+<span class="sd">            The tree representation from which to select a subtree.</span>
+<span class="sd">        first_call : bool, optional</span>
+<span class="sd">            Indicates whether this is the initial call to the function. Defaults to True.</span>
+<span class="sd">        num_of_nodes : int, optional</span>
+<span class="sd">            The total number of nodes in the tree. Used to calculate probabilities.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The randomly selected subtree (or the original node if not applicable).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">current_number_of_nodes</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">num_of_nodes</span> <span class="k">if</span> <span class="n">first_call</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">tree</span><span class="p">)))</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">first_call</span><span class="p">:</span>
+                    <span class="n">subtree_exploration</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="mi">1</span>
+                        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+                        <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">/</span> <span class="p">(</span><span class="n">current_number_of_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="k">else</span> <span class="mi">2</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+                    <span class="n">subtree_exploration</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="mi">0</span>
+                        <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">current_number_of_nodes</span>
+                        <span class="k">else</span> <span class="p">(</span>
+                            <span class="mi">1</span>
+                            <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">/</span> <span class="n">current_number_of_nodes</span>
+                            <span class="k">else</span> <span class="mi">2</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">subtree_exploration</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">first_call</span>
+                    <span class="k">else</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">current_number_of_nodes</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">subtree_exploration</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">tree</span>
+            <span class="k">elif</span> <span class="n">subtree_exploration</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">random_subtree_picker</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="kc">False</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">subtree_exploration</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">random_subtree_picker</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="kc">False</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tree</span>
+
+    <span class="k">return</span> <span class="n">random_subtree_picker</span></div>
+
+
+
+<div class="viewcode-block" id="substitute_subtree">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.substitute_subtree">[docs]</a>
+<span class="k">def</span> <span class="nf">substitute_subtree</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a function that substitutes a specific subtree in a tree representation with a new subtree.</span>
+
+<span class="sd">    This function returns another function that can recursively traverse a tree representation to replace</span>
+<span class="sd">    occurrences of a specified subtree with a new one, maintaining the representation and</span>
+<span class="sd">    validity of the original tree.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function that substitutes a specified subtree within the given tree representation with a new subtree.</span>
+
+<span class="sd">        This function recursively searches for occurrences of the target subtree within the tree</span>
+<span class="sd">        representation and replaces it with the new subtree when found. If the original tree</span>
+<span class="sd">        representation is a terminal or equal to the new one, return it.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation in which to perform the substitution. Can be a terminal.</span>
+<span class="sd">        target_subtree : tuple or str</span>
+<span class="sd">            The subtree to be replaced.</span>
+<span class="sd">        new_subtree : tuple or str</span>
+<span class="sd">            The subtree to insert in place of the target subtree.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The modified tree representation with the target subtree replaced by the new subtree.</span>
+<span class="sd">        str</span>
+<span class="sd">            The new tree leaf node if the original is a leaf.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function performs replacements while preserving the tree structure based on</span>
+<span class="sd">    the arity of the function nodes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">substitute</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">target_subtree</span><span class="p">,</span> <span class="n">new_subtree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Substitutes a specified subtree within the given tree representation with a new subtree.</span>
+
+<span class="sd">        This function recursively searches for occurrences of the target subtree within the tree</span>
+<span class="sd">        representation and replaces it with the new subtree when found. If the original tree</span>
+<span class="sd">        representation is a terminal or equal to the new one, return it.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation in which to perform the substitution. Can be a terminal.</span>
+<span class="sd">        target_subtree : tuple or str</span>
+<span class="sd">            The subtree to be replaced.</span>
+<span class="sd">        new_subtree : tuple or str</span>
+<span class="sd">            The subtree to insert in place of the target subtree.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The modified tree representation with the target subtree replaced by the new subtree.</span>
+<span class="sd">        str</span>
+<span class="sd">            The new tree leaf node if the original is a leaf.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="n">target_subtree</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_subtree</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">substitute</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">target_subtree</span><span class="p">,</span> <span class="n">new_subtree</span><span class="p">),</span>
+                    <span class="n">substitute</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">target_subtree</span><span class="p">,</span> <span class="n">new_subtree</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">substitute</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">target_subtree</span><span class="p">,</span> <span class="n">new_subtree</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tree</span>
+
+    <span class="k">return</span> <span class="n">substitute</span></div>
+
+
+
+<div class="viewcode-block" id="tree_pruning">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.tree_pruning">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_pruning</span><span class="p">(</span><span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">p_c</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a function that reduces both sides of a tree representation to a specific depth.</span>
+
+<span class="sd">    This function returns another function that can prune a given tree representation to a</span>
+<span class="sd">    specified depth by replacing nodes with terminals or constants based on a defined probability.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree.</span>
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree.</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree.</span>
+<span class="sd">    p_c : float, optional</span>
+<span class="sd">        Probability of choosing a constant node. Default is 0.3.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function (&#39;pruning&#39;) that prunes the given tree representation to the specified depth.</span>
+
+<span class="sd">        This function replaces nodes in the tree representation with terminals or constants</span>
+<span class="sd">        if the target depth is reached, ensuring the tree representation does not exceed the</span>
+<span class="sd">        specified depth.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation to be pruned.</span>
+<span class="sd">        target_depth : int</span>
+<span class="sd">            The depth to which the tree representation should be pruned.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The pruned tree representation, which may consist of terminals, constants, or</span>
+<span class="sd">            a modified subtree.</span>
+<span class="sd">        str</span>
+<span class="sd">            The pruned tree if it is a leaf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">pruning</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">target_depth</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prunes the given tree representation to the specified depth.</span>
+
+<span class="sd">        This function replaces nodes in the tree representation with terminals or constants</span>
+<span class="sd">        if the target depth is reached, ensuring the tree representation does not exceed the</span>
+<span class="sd">        specified depth.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation to be pruned.</span>
+<span class="sd">        target_depth : int</span>
+<span class="sd">            The depth to which the tree representation should be pruned.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            The pruned tree representation, which may consist of terminals, constants, or</span>
+<span class="sd">            a modified subtree.</span>
+<span class="sd">        str</span>
+<span class="sd">            The pruned tree if it is a leaf.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">target_depth</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">tree</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TERMINALS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TERMINALS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">p_c</span>
+                <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">tree</span>
+        <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">new_left_subtree</span> <span class="o">=</span> <span class="n">pruning</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">target_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">new_right_subtree</span> <span class="o">=</span> <span class="n">pruning</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">target_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">new_left_subtree</span><span class="p">,</span> <span class="n">new_right_subtree</span>
+        <span class="k">elif</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">new_left_subtree</span> <span class="o">=</span> <span class="n">pruning</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">target_depth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">new_left_subtree</span>
+
+    <span class="k">return</span> <span class="n">pruning</span></div>
+
+
+
+<div class="viewcode-block" id="tree_depth">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree_utils.tree_depth">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_depth</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a function that calculates the depth of a given tree representation.</span>
+
+<span class="sd">    This function returns another function that can be used to compute the depth</span>
+<span class="sd">    of a tree representation, which is defined as the length of the longest path</span>
+<span class="sd">    from the root node to a leaf node.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of functions allowed in the tree representation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A function (&#39;depth&#39;) that calculates the depth of the given tree.</span>
+
+<span class="sd">        This function determines the depth by recursively computing the maximum</span>
+<span class="sd">        depth of the left and right subtrees and adding one for the current node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation for which to calculate the depth. It can also be</span>
+<span class="sd">            a terminal node represented as a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The depth of the tree.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function traverses the tree representation recursively, determining</span>
+<span class="sd">    the depth based on the max of the subtree depths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the depth of the given tree.</span>
+
+<span class="sd">        This function determines the depth by recursively computing the maximum</span>
+<span class="sd">        depth of the left and right subtrees and adding one for the current node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : tuple or str</span>
+<span class="sd">            The tree representation for which to calculate the depth. It can also be</span>
+<span class="sd">            a terminal node represented as a string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The depth of the tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">left_depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">right_depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">left_depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">right_depth</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">left_depth</span><span class="p">,</span> <span class="n">right_depth</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">depth</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_execute_tree</span><span class="p">(</span><span class="n">repr_</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluates a tree genotype on input vectors.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    repr_ : tuple</span>
+<span class="sd">        Tree representation.</span>
+
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        Dictionary of allowed functions in the tree representation.</span>
+
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        Dictionary of terminal symbols allowed in the tree representation.</span>
+
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        Dictionary of constant values allowed in the tree representation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Output of the evaluated tree representation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
+        <span class="n">function_name</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">left_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                        <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># equivalent to Tree(left_subtree).apply_tree(inputs) if no parallelization were used</span>
+            <span class="n">right_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                         <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># equivalent to Tree(right_subtree).apply_tree(inputs) if no parallelization were used</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span>
+                <span class="n">left_result</span><span class="p">,</span> <span class="n">right_result</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">left_subtree</span> <span class="o">=</span> <span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">left_result</span> <span class="o">=</span> <span class="n">_execute_tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span>
+                                        <span class="n">CONSTANTS</span><span class="p">)</span>  <span class="c1"># equivalent to Tree(left_subtree).apply_tree(inputs) if no parallelization were used</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;function&quot;</span><span class="p">](</span><span class="n">left_result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">bound_value</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e12</span><span class="p">,</span> <span class="mf">1e12</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
+        <span class="k">if</span> <span class="n">repr_</span> <span class="ow">in</span> <span class="n">TERMINALS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">TERMINALS</span><span class="p">[</span><span class="n">repr_</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">repr_</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="n">repr_</span><span class="p">](</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

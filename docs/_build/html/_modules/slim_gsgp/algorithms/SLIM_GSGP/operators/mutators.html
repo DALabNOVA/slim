@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim_gsgp.algorithms.SLIM_GSGP.operators.mutators &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/_modules/slim_gsgp/algorithms/SLIM_GSGP/operators/mutators.html" />
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.algorithms.html">slim_gsgp.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.evaluators.html">slim_gsgp.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.initializers.html">slim_gsgp.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.selection.html">slim_gsgp.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp.utils.html">slim_gsgp.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../slim_gsgp_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">slim_gsgp.algorithms.SLIM_GSGP.operators.mutators</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for slim_gsgp.algorithms.SLIM_GSGP.operators.mutators</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MIT License</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2024 DALabNOVA</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Mutation Functions for SLIM GSGP.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.algorithms.GSGP.representations.tree</span> <span class="kn">import</span> <span class="n">Tree</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.algorithms.SLIM_GSGP.representations.individual</span> <span class="kn">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">slim_gsgp.utils.utils</span> <span class="kn">import</span> <span class="n">get_random_tree</span>
+
+
+<span class="c1"># two tree function</span>
+<div class="viewcode-block" id="two_trees_delta">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.operators.html#slim_gsgp.algorithms.SLIM_GSGP.operators.mutators.two_trees_delta">[docs]</a>
+<span class="k">def</span> <span class="nf">two_trees_delta</span><span class="p">(</span><span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a function for the two-tree delta mutation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    operator : str</span>
+<span class="sd">        The operator to be used in the mutation (&quot;sum&quot; or other).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A mutation function (`tt_delta`) for two Individuals that returns the mutated semantics.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tr1 : Individual</span>
+<span class="sd">            The first tree individual.</span>
+<span class="sd">        tr2 : Individual</span>
+<span class="sd">            The second tree individual.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        testing : bool</span>
+<span class="sd">            Flag to indicate whether to use test or train Individual semantics.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        torch.Tensor</span>
+<span class="sd">            The mutated semantics.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function (&#39;tt_delta_{operator}&#39;) takes as input two individuals, the mutation step, a boolean</span>
+<span class="sd">    representing whether to use the train or test semantics, and returns the calculated semantics of the new individual.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">tt_delta</span><span class="p">(</span><span class="n">tr1</span><span class="p">,</span> <span class="n">tr2</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">testing</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs delta mutation between two trees based on their semantics.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tr1 : Individual</span>
+<span class="sd">            The first tree Individual.</span>
+<span class="sd">        tr2 : Individual</span>
+<span class="sd">            The second tree Individual.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        testing : bool</span>
+<span class="sd">            Flag to indicate whether to use test or train Individual semantics.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        torch.Tensor</span>
+<span class="sd">            The mutated semantics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">testing</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">,</span> <span class="n">tr2</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">,</span> <span class="n">tr2</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">,</span> <span class="n">tr2</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">,</span> <span class="n">tr2</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">)),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="n">tt_delta</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+=</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">operator</span>
+
+    <span class="k">return</span> <span class="n">tt_delta</span></div>
+
+
+
+<div class="viewcode-block" id="one_tree_delta">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.operators.html#slim_gsgp.algorithms.SLIM_GSGP.operators.mutators.one_tree_delta">[docs]</a>
+<span class="k">def</span> <span class="nf">one_tree_delta</span><span class="p">(</span><span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a function for the one-tree delta mutation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    operator : str</span>
+<span class="sd">        The operator to be used in the mutation (&quot;sum&quot; or other).</span>
+<span class="sd">    sig : bool</span>
+<span class="sd">        Boolean indicating if sigmoid should be applied.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        A mutation function (`ot_delta`) for one-tree mutation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tr1 : Individual</span>
+<span class="sd">            The tree Individual.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        testing : bool</span>
+<span class="sd">            Flag to indicate whether to use test or train semantics.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        torch.Tensor</span>
+<span class="sd">            The mutated semantics.</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function (&#39;ot_delta_{operator}_{sig}&#39;) takes as input one individual, the mutation step,</span>
+<span class="sd">    a boolean representing whether to use the train or test semantics, and returns the mutated semantics.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">ot_delta</span><span class="p">(</span><span class="n">tr1</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">testing</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs delta mutation on one tree based on its semantics.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tr1 : Individual</span>
+<span class="sd">            The tree Individual.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        testing : bool</span>
+<span class="sd">            Flag to indicate whether to use test or train semantics.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        torch.Tensor</span>
+<span class="sd">            The mutated semantics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sig</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">testing</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                    <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                    <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">),</span> <span class="mi">1</span><span class="p">)),</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">testing</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span>
+                        <span class="n">ms</span><span class="p">,</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                            <span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">)))</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                    <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span>
+                            <span class="n">ms</span><span class="p">,</span>
+                            <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                                <span class="mi">1</span><span class="p">,</span>
+                                <span class="n">torch</span><span class="o">.</span><span class="n">div</span><span class="p">(</span>
+                                    <span class="mi">2</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">))</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span>
+                        <span class="n">ms</span><span class="p">,</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                            <span class="mi">1</span><span class="p">,</span>
+                            <span class="n">torch</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">))),</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span>
+                    <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span>
+                            <span class="n">ms</span><span class="p">,</span>
+                            <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                                <span class="mi">1</span><span class="p">,</span>
+                                <span class="n">torch</span><span class="o">.</span><span class="n">div</span><span class="p">(</span>
+                                    <span class="mi">2</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tr1</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">))</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+    <span class="n">ot_delta</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+=</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">operator</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ot_delta</span></div>
+
+
+
+<div class="viewcode-block" id="inflate_mutation">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.operators.html#slim_gsgp.algorithms.SLIM_GSGP.operators.mutators.inflate_mutation">[docs]</a>
+<span class="k">def</span> <span class="nf">inflate_mutation</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">,</span> <span class="n">TERMINALS</span><span class="p">,</span><span class="n">CONSTANTS</span><span class="p">,</span><span class="n">two_trees</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">operator</span><span class="o">=</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span><span class="n">single_tree_sigmoid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">sig</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate an inflate mutation function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    FUNCTIONS : dict</span>
+<span class="sd">        The dictionary of functions used in the mutation.</span>
+<span class="sd">    TERMINALS : dict</span>
+<span class="sd">        The dictionary of terminals used in the mutation.</span>
+<span class="sd">    CONSTANTS : dict</span>
+<span class="sd">        The dictionary of constants used in the mutation.</span>
+<span class="sd">    two_trees : bool</span>
+<span class="sd">        Boolean indicating if two trees should be used.</span>
+<span class="sd">    operator : str</span>
+<span class="sd">        The operator to be used in the mutation.</span>
+<span class="sd">    single_tree_sigmoid : bool</span>
+<span class="sd">        Boolean indicating if sigmoid should be applied to a single tree.</span>
+<span class="sd">    sig : bool</span>
+<span class="sd">        Boolean indicating if sigmoid should be applied.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Callable</span>
+<span class="sd">        An inflate mutation function (`inflate`).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        individual : Individual</span>
+<span class="sd">            The tree Individual to mutate.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        X : torch.Tensor</span>
+<span class="sd">            Input data for calculating semantics.</span>
+<span class="sd">        max_depth : int, optional</span>
+<span class="sd">            Maximum depth for generated trees (default: 8).</span>
+<span class="sd">        p_c : float, optional</span>
+<span class="sd">            Probability of choosing constants (default: 0.1).</span>
+<span class="sd">        X_test : torch.Tensor, optional</span>
+<span class="sd">            Test data for calculating test semantics (default: None).</span>
+<span class="sd">        grow_probability : float, optional</span>
+<span class="sd">            Probability of growing trees during mutation (default: 1).</span>
+<span class="sd">        reconstruct : bool, optional</span>
+<span class="sd">            Whether to reconstruct the Individual&#39;s collection after mutation (default: True).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Individual</span>
+<span class="sd">            The mutated tree Individual.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The returned function performs inflate mutation on Individuals, using either one or two randomly generated trees</span>
+<span class="sd">    and applying either delta mutation or sigmoid mutation based on the parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">inflate</span><span class="p">(</span>
+        <span class="n">individual</span><span class="p">,</span>
+        <span class="n">ms</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">,</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="n">p_c</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">grow_probability</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">reconstruct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform inflate mutation on the given Individual.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        individual : Individual</span>
+<span class="sd">            The tree Individual to mutate.</span>
+<span class="sd">        ms : float</span>
+<span class="sd">            Mutation step.</span>
+<span class="sd">        X : torch.Tensor</span>
+<span class="sd">            Input data for calculating semantics.</span>
+<span class="sd">        max_depth : int, optional</span>
+<span class="sd">            Maximum depth for generated trees (default: 8).</span>
+<span class="sd">        p_c : float, optional</span>
+<span class="sd">            Probability of choosing constants (default: 0.1).</span>
+<span class="sd">        X_test : torch.Tensor, optional</span>
+<span class="sd">            Test data for calculating test semantics (default: None).</span>
+<span class="sd">        grow_probability : float, optional</span>
+<span class="sd">            Probability of growing trees during mutation (default: 1).</span>
+<span class="sd">        reconstruct : bool, optional</span>
+<span class="sd">            Whether to reconstruct the Individual&#39;s collection after mutation (default: True).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Individual</span>
+<span class="sd">            The mutated tree Individual.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">two_trees</span><span class="p">:</span>
+            <span class="c1"># getting two random trees</span>
+            <span class="n">random_tree1</span> <span class="o">=</span> <span class="n">get_random_tree</span><span class="p">(</span>
+                <span class="n">max_depth</span><span class="p">,</span>
+                <span class="n">FUNCTIONS</span><span class="p">,</span>
+                <span class="n">TERMINALS</span><span class="p">,</span>
+                <span class="n">CONSTANTS</span><span class="p">,</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+                <span class="n">p_c</span><span class="o">=</span><span class="n">p_c</span><span class="p">,</span>
+                <span class="n">grow_probability</span><span class="o">=</span><span class="n">grow_probability</span><span class="p">,</span>
+                <span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">random_tree2</span> <span class="o">=</span> <span class="n">get_random_tree</span><span class="p">(</span>
+                <span class="n">max_depth</span><span class="p">,</span>
+                <span class="n">FUNCTIONS</span><span class="p">,</span>
+                <span class="n">TERMINALS</span><span class="p">,</span>
+                <span class="n">CONSTANTS</span><span class="p">,</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+                <span class="n">p_c</span><span class="o">=</span><span class="n">p_c</span><span class="p">,</span>
+                <span class="n">grow_probability</span><span class="o">=</span><span class="n">grow_probability</span><span class="p">,</span>
+                <span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># adding the random trees to a list, to be used in the creation of a new block</span>
+            <span class="n">random_trees</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_tree1</span><span class="p">,</span> <span class="n">random_tree2</span><span class="p">]</span>
+
+            <span class="c1"># calculating the semantics of the random trees on testing, if applicable</span>
+            <span class="k">if</span> <span class="n">X_test</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="p">[</span>
+                    <span class="n">rt</span><span class="o">.</span><span class="n">calculate_semantics</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">rt</span> <span class="ow">in</span> <span class="n">random_trees</span>
+                <span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># getting one random tree</span>
+            <span class="n">random_tree1</span> <span class="o">=</span> <span class="n">get_random_tree</span><span class="p">(</span>
+                <span class="n">max_depth</span><span class="p">,</span>
+                <span class="n">FUNCTIONS</span><span class="p">,</span>
+                <span class="n">TERMINALS</span><span class="p">,</span>
+                <span class="n">CONSTANTS</span><span class="p">,</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+                <span class="n">p_c</span><span class="o">=</span><span class="n">p_c</span><span class="p">,</span>
+                <span class="n">grow_probability</span><span class="o">=</span><span class="n">grow_probability</span><span class="p">,</span>
+                <span class="n">logistic</span><span class="o">=</span><span class="n">single_tree_sigmoid</span> <span class="ow">or</span> <span class="n">sig</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># adding the random tree to a list, to be used in the creation of a new block</span>
+            <span class="n">random_trees</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_tree1</span><span class="p">]</span>
+
+            <span class="c1"># calculating the semantics of the random trees on testing, if applicable</span>
+            <span class="k">if</span> <span class="n">X_test</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="p">[</span>
+                    <span class="n">rt</span><span class="o">.</span><span class="n">calculate_semantics</span><span class="p">(</span>
+                        <span class="n">X_test</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="n">single_tree_sigmoid</span> <span class="ow">or</span> <span class="n">sig</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">rt</span> <span class="ow">in</span> <span class="n">random_trees</span>
+                <span class="p">]</span>
+
+        <span class="c1"># getting the correct mutation operator, based on the number of random trees used</span>
+        <span class="n">variator</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">two_trees_delta</span><span class="p">(</span><span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">two_trees</span>
+            <span class="k">else</span> <span class="n">one_tree_delta</span><span class="p">(</span><span class="n">operator</span><span class="o">=</span><span class="n">operator</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="n">sig</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># creating the new block for the individual, based on the random trees and operators</span>
+        <span class="n">new_block</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span>
+            <span class="n">structure</span><span class="o">=</span><span class="p">[</span><span class="n">variator</span><span class="p">,</span> <span class="o">*</span><span class="n">random_trees</span><span class="p">,</span> <span class="n">ms</span><span class="p">],</span>
+            <span class="n">train_semantics</span><span class="o">=</span><span class="n">variator</span><span class="p">(</span><span class="o">*</span><span class="n">random_trees</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">test_semantics</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">variator</span><span class="p">(</span><span class="o">*</span><span class="n">random_trees</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">testing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">X_test</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">reconstruct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># creating the offspring individual, by adding the new block to it</span>
+        <span class="n">offs</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span>
+            <span class="n">collection</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">collection</span><span class="p">,</span> <span class="n">new_block</span><span class="p">]</span> <span class="k">if</span> <span class="n">reconstruct</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">train_semantics</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">,</span>
+                    <span class="p">(</span>
+                        <span class="n">new_block</span><span class="o">.</span><span class="n">train_semantics</span>
+                        <span class="k">if</span> <span class="n">new_block</span><span class="o">.</span><span class="n">train_semantics</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([])</span>
+                        <span class="k">else</span> <span class="n">new_block</span><span class="o">.</span><span class="n">train_semantics</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+                    <span class="p">),</span>
+                <span class="p">]</span>
+            <span class="p">),</span>
+            <span class="n">test_semantics</span><span class="o">=</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">,</span>
+                            <span class="p">(</span>
+                                <span class="n">new_block</span><span class="o">.</span><span class="n">test_semantics</span>
+                                <span class="k">if</span> <span class="n">new_block</span><span class="o">.</span><span class="n">test_semantics</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([])</span>
+                                <span class="k">else</span> <span class="n">new_block</span><span class="o">.</span><span class="n">test_semantics</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+                            <span class="p">),</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+            <span class="n">reconstruct</span><span class="o">=</span><span class="n">reconstruct</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># computing offspring attributes</span>
+        <span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">offs</span><span class="o">.</span><span class="n">nodes_collection</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">nodes_collection</span><span class="p">,</span> <span class="n">new_block</span><span class="o">.</span><span class="n">nodes</span><span class="p">]</span>
+        <span class="n">offs</span><span class="o">.</span><span class="n">nodes_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">nodes_collection</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">offs</span><span class="o">.</span><span class="n">depth_collection</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">depth_collection</span><span class="p">,</span> <span class="n">new_block</span><span class="o">.</span><span class="n">depth</span><span class="p">]</span>
+        <span class="n">offs</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">depth</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">depth</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">depth</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">depth_collection</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">offs</span>
+
+    <span class="k">return</span> <span class="n">inflate</span></div>
+
+
+
+<div class="viewcode-block" id="deflate_mutation">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.operators.html#slim_gsgp.algorithms.SLIM_GSGP.operators.mutators.deflate_mutation">[docs]</a>
+<span class="k">def</span> <span class="nf">deflate_mutation</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">reconstruct</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform deflate mutation on a given Individual by removing a random &#39;block&#39;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    individual : Individual</span>
+<span class="sd">        The Individual to be mutated.</span>
+<span class="sd">    reconstruct : bool</span>
+<span class="sd">        Whether to store the Individual&#39;s structure after mutation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Individual</span>
+<span class="sd">        The mutated individual</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># choosing the block that will be removed</span>
+    <span class="n">mut_point</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">individual</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># removing the block from the individual and creating a new Individual</span>
+    <span class="n">offs</span> <span class="o">=</span> <span class="n">Individual</span><span class="p">(</span>
+        <span class="n">collection</span><span class="o">=</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">collection</span><span class="p">[:</span><span class="n">mut_point</span><span class="p">],</span>
+                <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">collection</span><span class="p">[</span><span class="n">mut_point</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">reconstruct</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">),</span>
+        <span class="n">train_semantics</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">[:</span><span class="n">mut_point</span><span class="p">],</span>
+                <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">train_semantics</span><span class="p">[</span><span class="n">mut_point</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+        <span class="n">test_semantics</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">[:</span><span class="n">mut_point</span><span class="p">],</span>
+                    <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span><span class="p">[</span><span class="n">mut_point</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">individual</span><span class="o">.</span><span class="n">test_semantics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">),</span>
+        <span class="n">reconstruct</span><span class="o">=</span><span class="n">reconstruct</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># computing offspring attributes</span>
+    <span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">individual</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">offs</span><span class="o">.</span><span class="n">nodes_collection</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">nodes_collection</span><span class="p">[:</span><span class="n">mut_point</span><span class="p">],</span>
+        <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">nodes_collection</span><span class="p">[</span><span class="n">mut_point</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+    <span class="p">]</span>
+    <span class="n">offs</span><span class="o">.</span><span class="n">nodes_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">nodes_collection</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">offs</span><span class="o">.</span><span class="n">depth_collection</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">depth_collection</span><span class="p">[:</span><span class="n">mut_point</span><span class="p">],</span>
+        <span class="o">*</span><span class="n">individual</span><span class="o">.</span><span class="n">depth_collection</span><span class="p">[</span><span class="n">mut_point</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+    <span class="p">]</span>
+    <span class="n">offs</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">depth</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">depth</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">depth</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">depth_collection</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">offs</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">offs</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

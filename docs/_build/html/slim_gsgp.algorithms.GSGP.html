@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim_gsgp.algorithms.GSGP &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/slim_gsgp.algorithms.GSGP.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slim_gsgp.algorithms.GSGP.operators" href="slim_gsgp.algorithms.GSGP.operators.html" />
+    <link rel="prev" title="slim_gsgp.algorithms.GP.representations" href="slim_gsgp.algorithms.GP.representations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="slim_gsgp.algorithms.html">slim_gsgp.algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GP.html">slim_gsgp.algorithms.GP</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">slim_gsgp.algorithms.GSGP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html">slim_gsgp.algorithms.GSGP.operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html">slim_gsgp.algorithms.GSGP.representations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slim-gsgp-algorithms-gsgp-gsgp-module">slim_gsgp.algorithms.GSGP.gsgp module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slim_gsgp.algorithms.GSGP.gsgp.GSGP"><code class="docutils literal notranslate"><span class="pre">GSGP</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.SLIM_GSGP.html">slim_gsgp.algorithms.SLIM_GSGP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.evaluators.html">slim_gsgp.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.initializers.html">slim_gsgp.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.selection.html">slim_gsgp.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.utils.html">slim_gsgp.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="slim_gsgp.algorithms.html">slim_gsgp.algorithms</a></li>
+      <li class="breadcrumb-item active">slim_gsgp.algorithms.GSGP</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/slim_gsgp.algorithms.GSGP.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-gsgp-algorithms-gsgp">
+<h1>slim_gsgp.algorithms.GSGP<a class="headerlink" href="#slim-gsgp-algorithms-gsgp" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html">slim_gsgp.algorithms.GSGP.operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim-gsgp-algorithms-gsgp-operators-crossover-operators-module">slim_gsgp.algorithms.GSGP.operators.crossover_operators module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim_gsgp.algorithms.GSGP.operators.crossover_operators.geometric_crossover"><code class="docutils literal notranslate"><span class="pre">geometric_crossover()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#module-slim_gsgp.algorithms.GSGP.operators.mutators">slim_gsgp.algorithms.GSGP.operators.mutators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim_gsgp.algorithms.GSGP.operators.mutators.product_one_trees_geometric_mutation"><code class="docutils literal notranslate"><span class="pre">product_one_trees_geometric_mutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim_gsgp.algorithms.GSGP.operators.mutators.product_two_trees_geometric_mutation"><code class="docutils literal notranslate"><span class="pre">product_two_trees_geometric_mutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim_gsgp.algorithms.GSGP.operators.mutators.standard_geometric_mutation"><code class="docutils literal notranslate"><span class="pre">standard_geometric_mutation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.operators.html#slim_gsgp.algorithms.GSGP.operators.mutators.standard_one_tree_geometric_mutation"><code class="docutils literal notranslate"><span class="pre">standard_one_tree_geometric_mutation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html">slim_gsgp.algorithms.GSGP.representations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#module-slim_gsgp.algorithms.GSGP.representations.population">slim_gsgp.algorithms.GSGP.representations.population</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.population.Population"><code class="docutils literal notranslate"><span class="pre">Population</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.population.Population.calculate_semantics"><code class="docutils literal notranslate"><span class="pre">Population.calculate_semantics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.population.Population.evaluate"><code class="docutils literal notranslate"><span class="pre">Population.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#module-slim_gsgp.algorithms.GSGP.representations.tree">slim_gsgp.algorithms.GSGP.representations.tree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.structure"><code class="docutils literal notranslate"><span class="pre">Tree.structure</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.FUNCTIONS"><code class="docutils literal notranslate"><span class="pre">Tree.FUNCTIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.TERMINALS"><code class="docutils literal notranslate"><span class="pre">Tree.TERMINALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.CONSTANTS"><code class="docutils literal notranslate"><span class="pre">Tree.CONSTANTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.depth"><code class="docutils literal notranslate"><span class="pre">Tree.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.nodes"><code class="docutils literal notranslate"><span class="pre">Tree.nodes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.train_semantics"><code class="docutils literal notranslate"><span class="pre">Tree.train_semantics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.test_semantics"><code class="docutils literal notranslate"><span class="pre">Tree.test_semantics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.fitness"><code class="docutils literal notranslate"><span class="pre">Tree.fitness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.test_fitness"><code class="docutils literal notranslate"><span class="pre">Tree.test_fitness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.__init__"><code class="docutils literal notranslate"><span class="pre">Tree.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.calculate_semantics"><code class="docutils literal notranslate"><span class="pre">Tree.calculate_semantics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.evaluate"><code class="docutils literal notranslate"><span class="pre">Tree.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.predict"><code class="docutils literal notranslate"><span class="pre">Tree.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#id0"><code class="docutils literal notranslate"><span class="pre">Tree.calculate_semantics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#id1"><code class="docutils literal notranslate"><span class="pre">Tree.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#id2"><code class="docutils literal notranslate"><span class="pre">Tree.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#module-slim_gsgp.algorithms.GSGP.representations.tree_utils">slim_gsgp.algorithms.GSGP.representations.tree_utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree_utils.apply_tree"><code class="docutils literal notranslate"><span class="pre">apply_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree_utils.nested_depth_calculator"><code class="docutils literal notranslate"><span class="pre">nested_depth_calculator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree_utils.nested_nodes_calculator"><code class="docutils literal notranslate"><span class="pre">nested_nodes_calculator()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="slim-gsgp-algorithms-gsgp-gsgp-module">
+<h2>slim_gsgp.algorithms.GSGP.gsgp module<a class="headerlink" href="#slim-gsgp-algorithms-gsgp-gsgp-module" title="Link to this heading"></a></h2>
+<p id="module-slim_gsgp.algorithms.GSGP.gsgp">Geometric Semantic Genetic Programming (GSGP) module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.GSGP.gsgp.GSGP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim_gsgp.algorithms.GSGP.gsgp.</span></span><span class="sig-name descname"><span class="pre">GSGP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pi_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">find_elit_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_xo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/GSGP/gsgp.html#GSGP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.GSGP.gsgp.GSGP" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Geometric Semantic Genetic Programming class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.GSGP.gsgp.GSGP.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curr_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elitism</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_elite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffunction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_elites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/GSGP/gsgp.html#GSGP.solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.GSGP.gsgp.GSGP.solve" title="Link to this definition"></a></dt>
+<dd><p>Execute the GSGP algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>torch.Tensor</em>) – Training data features.</p></li>
+<li><p><strong>X_test</strong> (<em>torch.Tensor</em>) – Test data features.</p></li>
+<li><p><strong>y_train</strong> (<em>torch.Tensor</em>) – Training data labels.</p></li>
+<li><p><strong>y_test</strong> (<em>torch.Tensor</em>) – Test data labels.</p></li>
+<li><p><strong>curr_dataset</strong> (<em>str</em>) – Current dataset name.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em>) – Number of iterations.</p></li>
+<li><p><strong>elitism</strong> (<em>bool</em>) – Whether to use elitism.</p></li>
+<li><p><strong>log</strong> (<em>int</em>) – Logging level. Default is 0.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – Verbosity level. Default is 0.</p></li>
+<li><p><strong>test_elite</strong> (<em>bool</em>) – Whether to evaluate elite individuals on test data. Default is False.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – Path to save logs. Default is None.</p></li>
+<li><p><strong>run_info</strong> (<em>list</em>) – Information about the current run. Default is None.</p></li>
+<li><p><strong>ffunction</strong> (<em>callable</em>) – Fitness function. Default is None.</p></li>
+<li><p><strong>reconstruct</strong> (<em>bool</em>) – Whether to reconstruct trees. Default is False.</p></li>
+<li><p><strong>n_elites</strong> (<em>int</em>) – Number of elites. Default is 1.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em>) – The maximum number of jobs for parallel processing. Default is 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="slim_gsgp.algorithms.GP.representations.html" class="btn btn-neutral float-left" title="slim_gsgp.algorithms.GP.representations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim_gsgp.algorithms.GSGP.operators.html" class="btn btn-neutral float-right" title="slim_gsgp.algorithms.GSGP.operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

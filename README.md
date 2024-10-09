@@ -1,16 +1,12 @@
 # SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation)
 
-*gsgp_slim* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly. Slim's documentation can be accessed in [Slim Documentation](https://slim-library.readthedocs.io/en/latest/).
+*slim_gsgp* is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly. Slim's documentation can be accessed in [Slim Documentation](https://slim-library.readthedocs.io/en/latest/).
 
 ## Installation
 
 To install the library, use the following command:
 ```sh
-pip install gsgp_slim
-```
-Additionally, make sure to install all required dependencies:
-```sh
-pip install -r requirements.txt
+pip install slim_gsgp
 ```
 
 ## Usage
@@ -18,10 +14,10 @@ pip install -r requirements.txt
 To use the GP algorithm, you can use the following example:
 
 ```python
-from slim.main_gp import gp  # import the slim library
-from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
+from slim_gsgp.main_gp import gp  # import the slim_gsgp library
+from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -38,7 +34,7 @@ final_tree = gp(X_train=X_train, y_train=y_train,
                 dataset_name='ppb', pop_size=100, n_iter=100)
 
 # Show the best individual structure at the last generation
-final_tree.get_tree_representation()
+final_tree.print_tree_representation()
 
 # Get the prediction of the best individual on the test set
 predictions = final_tree.predict(X_test)
@@ -51,11 +47,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the GSGP algorithm, you can use the following example:
 
 ```python
-from slim.main_gsgp import gsgp  # import the slim library
-from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
+from slim_gsgp.main_gsgp import gsgp  # import the slim_gsgp library
+from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -69,7 +65,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 # Apply the Standard GSGP algorithm
 final_tree = gsgp(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
-                  dataset_name='ppb', pop_size=100, n_iter=100, 
+                  dataset_name='ppb', pop_size=100, n_iter=100,
                   reconstruct=True, ms_lower=0, ms_upper=1)
 
 # Get the prediction of the best individual on the test set
@@ -83,11 +79,11 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the SLIM GSGP algorithm, you can use the following example:
 
 ```python
-from slim.main_slim import slim  # import the slim library
-from slim.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim.utils.utils import train_test_split  # import the train-test split function
-from slim.utils.utils import generate_random_uniform  # import the mutation step function
+from slim_gsgp.main_slim import slim  # import the slim_gsgp library
+from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
+from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+from slim_gsgp.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
@@ -135,7 +131,7 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
   * *default: 
     ``` os.path.join(os.getcwd(), "log", "gsgp.csv")```* for slim
   * *default: 
-    ``` os.path.join(os.getcwd(), "log", "slim.csv")```* for slim
+    ``` os.path.join(os.getcwd(), "log", "slim_gsgpcsv")```* for slim
 * `seed`: An integer specifying the seed for randomness *(default: 1)*.
 
 ### Specific for *gp*
@@ -151,6 +147,27 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 * `slim_version`: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
 * `ms`: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
 * `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
+
+## Additional Notes
+
+If a user wishes to use their own dataset rather than one of the sixteen benchmarking datasets included with the `slim` library, they can load their data into a Pandas DataFrame, ensuring that the target variable is the last column. They can then call the `load_pandas_df` function from `datasets.data_loader` as follows:
+
+```python
+from slim_gsgp.datasets.data_loader import load_pandas_df  # import the loader for the dataset PPB
+import pandas as pd
+
+# Reading the desired dataset
+df = pd.read_csv("path/your_data.csv")
+
+# Turning df into X and y torch.Tensors
+X, y = load_pandas_df(df, X_y=True)
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
+
+# Split the test set into validation and test sets
+X_val, X_test, y_val, y_test = t
+```
 
 ## License
 

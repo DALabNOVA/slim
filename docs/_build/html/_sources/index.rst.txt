@@ -15,12 +15,12 @@ SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documen
    :maxdepth: 2
    :caption: Contents:
 
-   slim.algorithms
-   slim.evaluators
-   slim.initializers
-   slim.selection
-   slim.utils
-   slim_main_files
+   slim_gsgp.algorithms
+   slim_gsgp.evaluators
+   slim_gsgp.initializers
+   slim_gsgp.selection
+   slim_gsgp.utils
+   slim_gsgp_main_files
 
 User Guide
 ========================================================================
@@ -53,10 +53,10 @@ To use the GP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim.main_gp import gp  # import the slim library
+   from slim_gsgpmain_gp import gp  # import the slim library
    from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim.utils.utils import train_test_split  # import the train-test split function
+   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgputils.utils import train_test_split  # import the train-test split function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -89,11 +89,11 @@ To use the GSGP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim.main_gsgp import gsgp  # import the slim library
+   from slim_gsgpmain_gsgp import gsgp  # import the slim library
    from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim.utils.utils import train_test_split  # import the train-test split function
-   from slim.utils.utils import generate_random_uniform  # import the mutation step function
+   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgputils.utils import train_test_split  # import the train-test split function
+   from slim_gsgputils.utils import generate_random_uniform  # import the mutation step function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -124,11 +124,11 @@ To use the SLIM GSGP algorithm, you can use the following example:
 
 .. code-block:: python
 
-   from slim.main_slim import slim  # import the slim library
+   from slim_gsgpmain_slim import slim  # import the slim library
    from datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-   from slim.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-   from slim.utils.utils import train_test_split  # import the train-test split function
-   from slim.utils.utils import generate_random_uniform  # import the mutation step function
+   from slim_gsgpevaluators.fitness_functions import rmse  # import the rmse fitness metric
+   from slim_gsgputils.utils import train_test_split  # import the train-test split function
+   from slim_gsgputils.utils import generate_random_uniform  # import the mutation step function
 
    # Load the PPB dataset
    X, y = load_ppb(X_y=True)
@@ -176,7 +176,7 @@ Common arguments
 * **log_path**: A string specifying where the results are going to be saved
   * *default*: ``os.path.join(os.getcwd(), "log", "gp.csv")`` for gp
   * *default*: ``os.path.join(os.getcwd(), "log", "gsgp.csv")`` for gsgp
-  * *default*: ``os.path.join(os.getcwd(), "log", "slim.csv")`` for slim
+  * *default*: ``os.path.join(os.getcwd(), "log", "slim_gsgpcsv")`` for slim
 * **seed**: An integer specifying the seed for randomness *(default: 1)*.
 * **n_jobs**: Number of parallel jobs to run *(default: 1)*.
 
@@ -210,7 +210,7 @@ ensuring that the target variable is the last column. They can then call the ``l
 
 .. code-block:: python
 
-   from datasets.data_loader import load_pandas_df  # import the loader for the dataset PPB
+   from datasets.data_loader import load_pandas_df  # import the loader for pandas DataFrames
    import pandas as pd
 
    # Reading the desired dataset
