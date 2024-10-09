@@ -56,6 +56,7 @@ def crossover_trees(FUNCTIONS):
 
     def inner_xo(tree1, tree2, tree1_n_nodes, tree2_n_nodes):
         """
+        Performs crossover between two tree representations.
         Inner function to perform crossover between two trees.
 
         Parameters
@@ -72,11 +73,11 @@ def crossover_trees(FUNCTIONS):
         Returns
         -------
         tuple
-            Two new trees after performing crossover.
+            Two new tree representations after performing crossover.
         Notes
         -----
         This function selects random crossover points from both `tree1` and `tree2` and swaps
-        their subtrees at those points. If either tree is a terminal node, it returns the trees
+        their subtrees at those points. If either tree is a terminal node, it returns the tree
         representations unchanged.
         """
         if isinstance(tree1, tuple) and isinstance(tree2, tuple):

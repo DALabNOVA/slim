@@ -169,7 +169,10 @@ def random_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function (`random_subtree_picker`) that selects a random subtree from the input tree representation.
+        A function that selects a random subtree from the given tree representation.
+
+        This function navigates the tree representation recursively, choosing a subtree based on
+        probabilities determined by the overall representation of the tree.
 
         Parameters
         ----------
@@ -277,7 +280,11 @@ def substitute_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function (`substitute`) that substitutes a subtree in the input tree representation.
+        A function that substitutes a specified subtree within the given tree representation with a new subtree.
+
+        This function recursively searches for occurrences of the target subtree within the tree
+        representation and replaces it with the new subtree when found. If the original tree
+        representation is a terminal or equal to the new one, return it.
 
         Parameters
         ----------
@@ -363,7 +370,11 @@ def tree_pruning(TERMINALS, CONSTANTS, FUNCTIONS, p_c=0.3):
     Returns
     -------
     Callable
-        A function (`pruning`) that prunes the tree representation to the specified depth.
+        A function ('pruning') that prunes the given tree representation to the specified depth.
+
+        This function replaces nodes in the tree representation with terminals or constants
+        if the target depth is reached, ensuring the tree representation does not exceed the
+        specified depth.
 
         Parameters
         ----------
@@ -438,7 +449,10 @@ def tree_depth(FUNCTIONS):
     Returns
     -------
     Callable
-        A function (`depth`) that calculates the depth of the input tree representation.
+        A function ('depth') that calculates the depth of the given tree.
+
+        This function determines the depth by recursively computing the maximum
+        depth of the left and right subtrees and adding one for the current node.
 
         Parameters
         ----------
