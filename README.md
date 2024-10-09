@@ -152,3 +152,29 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 * `ms`: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
 * `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
 
+## License
+
+This libeary is [MIT licensed](https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file).
+
+The datasets provided are public. The table below specifies the source and license of each dataset.
+
+| Datset                                            | Source                                                                | License                                                    |
+|---------------------------------------------------|-----------------------------------------------------------------------|------------------------------------------------------------|
+| airfoil                                           | https://archive.ics.uci.edu/dataset/291/airfoil+self+noise            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| bike sharing                                      | https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset          | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| bioavailability                                   | Yoshida, F. and Topliss, J.G., 2000*                                  | Unknown                                                    |
+| breast cancer                                     | https://archive.ics.uci.edu/dataset/14/breast+cancer                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| concrete slump                                    | http://archive.ics.uci.edu/dataset/182/concrete+slump+test            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| concrete strength (different number of instances) | https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| diabetes                                          | https://www4.stat.ncsu.edu/~boos/var.select/diabetes.html             | CC0 License (Almost sure)                                  |
+| efficiency_cooling                                | https://archive.ics.uci.edu/dataset/242/energy+efficiency             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| efficiency_heating                                | https://archive.ics.uci.edu/dataset/242/energy+efficiency             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| forest_fires                                      | https://archive.ics.uci.edu/dataset/162/forest+fires                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| istanbul                                          | https://archive.ics.uci.edu/dataset/247/istanbul+stock+exchange       | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| ld50                                              | Yoshida, F. and Topliss, J.G., 2000*                                  | Unknown                                                    |
+| parkinsons_total_UPDRS                            | https://archive.ics.uci.edu/dataset/189/parkinsons+telemonitoring     | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| ppb                                               | Yoshida, F. and Topliss, J.G., 2000*                                  | Unknown                                                    |
+| resid_build_sale_price                            | https://archive.ics.uci.edu/dataset/437/residential+building+data+set | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+
+*Yoshida F, and Topliss JG. (2000). QSAR model for drug human oral bioavailability. J Med Chem. 2000 Jun 29;43(13):2575-85. doi: 10.1021/jm0000564. Erratum in: J Med Chem, Nov 30;43(24):4723. PMID: 10891117.
+
