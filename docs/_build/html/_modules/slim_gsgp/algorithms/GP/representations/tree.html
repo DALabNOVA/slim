@@ -127,27 +127,12 @@
 <span class="sd">        Test fitness value of the tree.</span>
 <span class="sd">    node_count : int</span>
 <span class="sd">        Number of nodes in the tree.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    __init__(repr_)</span>
-<span class="sd">        Initializes a Tree object.</span>
-<span class="sd">    apply_tree(inputs)</span>
-<span class="sd">        Evaluates the tree on input vectors.</span>
-<span class="sd">    evaluate(ffunction, X, y, testing=False)</span>
-<span class="sd">        Evaluates the tree given a fitness function and data.</span>
-<span class="sd">    predict(X):</span>
-<span class="sd">        Outputs a prediction for a given input X.</span>
-<span class="sd">    print_tree_representation(indent=&quot;&quot;)</span>
-<span class="sd">        Prints the tree representation with indentation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">TERMINALS</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">FUNCTIONS</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">CONSTANTS</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Tree.__init__">
-<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree.Tree.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repr_</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a Tree object.</span>
@@ -165,8 +150,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">tree_depth</span><span class="p">(</span><span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">)(</span><span class="n">repr_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">node_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">)))</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">)))</span>
 
 <div class="viewcode-block" id="Tree.apply_tree">
 <a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree.Tree.apply_tree">[docs]</a>

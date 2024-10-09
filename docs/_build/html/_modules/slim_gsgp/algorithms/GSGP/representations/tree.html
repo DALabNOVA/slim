@@ -134,24 +134,11 @@
 <span class="sd">        The fitness value of the tree. Defaults to None.</span>
 <span class="sd">    test_fitness : float or None</span>
 <span class="sd">        The fitness value of the tree during testing. Defaults to None.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    __init__(structure, train_semantics, test_semantics, reconstruct)</span>
-<span class="sd">        Initializes a Tree object.</span>
-<span class="sd">    calculate_semantics(inputs, testing=False, logistic=False)</span>
-<span class="sd">        Calculates the semantics for the tree.</span>
-<span class="sd">    evaluate(ffunction, y, testing=False, X=None)</span>
-<span class="sd">        Evaluates the tree using a fitness function.</span>
-<span class="sd">    predict(data)</span>
-<span class="sd">        Predicts the output for the given input data using the model&#39;s structure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">FUNCTIONS</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">TERMINALS</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">CONSTANTS</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Tree.__init__">
-<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">train_semantics</span><span class="p">,</span> <span class="n">test_semantics</span><span class="p">,</span> <span class="n">reconstruct</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the Tree object with its structure and semantics.</span>
@@ -196,8 +183,7 @@
             <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="kc">None</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_fitness</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Tree.calculate_semantics">
 <a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GSGP.representations.html#slim_gsgp.algorithms.GSGP.representations.tree.Tree.calculate_semantics">[docs]</a>

@@ -120,7 +120,17 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Callable</span>
-<span class="sd">        Function to execute tournament selection for minimum fitness.</span>
+<span class="sd">        A function (&#39;ts&#39;) that elects the individual with the lowest fitness from a randomly chosen pool.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pop : Population</span>
+<span class="sd">            The population from which individuals are drawn.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Individual</span>
+<span class="sd">            The individual with the lowest fitness in the pool.</span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The returned function performs tournament selection by receiving a population and returning the best of {pool_size}</span>
@@ -163,7 +173,17 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Callable</span>
-<span class="sd">        Function to execute tournament selection for maximum fitness.</span>
+<span class="sd">        A function (&#39;ts&#39;) that elects the individual with the highest fitness from a randomly chosen pool.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pop : Population</span>
+<span class="sd">            The population from which individuals are drawn.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Individual</span>
+<span class="sd">            The individual with the lowest fitness in the pool.</span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    The returned function performs tournament selection by receiving a population and returning the best of {pool_size}</span>

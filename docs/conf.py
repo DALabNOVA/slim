@@ -50,3 +50,5 @@ autodoc_default_options = {
 html_baseurl = "https://dalabnova.github.io/slim/"
 
 html_static_path = ['_static']
+
+master_doc = 'index'

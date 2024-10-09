@@ -121,50 +121,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initializes an Individual object.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.calculate_semantics">
 <span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.calculate_semantics" title="Link to this definition"></a></dt>
-<dd><p>Calculate the semantics for the individual.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__len__">
-<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__len__" title="Link to this definition"></a></dt>
-<dd><p>Return the size of the individual.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__getitem__">
-<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.__getitem__" title="Link to this definition"></a></dt>
-<dd><p>Get a tree (‘block’) from the individual by index.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate" title="Link to this definition"></a></dt>
-<dd><p>Evaluate the individual using a fitness function.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict" title="Link to this definition"></a></dt>
-<dd><p>Predict the output for the given input data using the model’s collection of trees and specified slim_gsgp version.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation">
-<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation" title="Link to this definition"></a></dt>
-<dd><p>Get a string representation of the trees in the individual.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>Calculate the semantics for the Individual. Result is stored as an attribute associated with the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -180,8 +138,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate" title="Link to this definition"></a></dt>
 <dd><p>Evaluate the Individual using a fitness function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -199,8 +157,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation">
+<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation" title="Link to this definition"></a></dt>
 <dd><p>Get a string representation of the trees in the Individual.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -220,8 +178,8 @@ If None, it will be determined based on the version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict" title="Link to this definition"></a></dt>
 <dd><p>Predict the output for the given input data using the model’s collection of trees
 and the specified slim_gsgp version.</p>
 <dl class="field-list simple">
