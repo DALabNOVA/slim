@@ -15,6 +15,7 @@ slim.algorithms.GP.representations.tree
 .. automodule:: slim.algorithms.GP.representations.tree
    :members:
    :undoc-members:
+   :exclude-members: TERMINALS, FUNCTIONS, CONSTANTS
    :show-inheritance:
 
 slim.algorithms.GP.representations.tree\_utils
