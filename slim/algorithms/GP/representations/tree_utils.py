@@ -190,7 +190,7 @@ def random_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function that selects a random subtree from the given tree representation.
+        A function ('random_subtree_picker') that selects a random subtree from the given tree representation.
 
         This function navigates the tree representation recursively, choosing a subtree based on
         probabilities determined by the overall representation of the tree.
@@ -301,7 +301,7 @@ def substitute_subtree(FUNCTIONS):
     Returns
     -------
     Callable
-        A function that substitutes a specified subtree within the given tree representation with a new subtree.
+        A function ('substitute') that substitutes a specified subtree within the given tree representation with a new subtree.
 
         This function recursively searches for occurrences of the target subtree within the tree
         representation and replaces it with the new subtree when found. If the original tree
