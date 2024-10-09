@@ -24,8 +24,8 @@ Individual Class and Utility Functions for SLIM GSGP.
 """
 
 import torch
-from slim_gsgp.algorithms.GSGP.representations.tree_utils import apply_tree
-from slim_gsgp.utils.utils import check_slim_version
+from slim.algorithms.GSGP.representations.tree_utils import apply_tree
+from slim.utils.utils import check_slim_version
 
 class Individual:
     """
@@ -69,7 +69,7 @@ class Individual:
     evaluate(ffunction, y, testing=False, operator="sum")
         Evaluate the individual using a fitness function.
     predict(data)
-        Predict the output for the given input data using the model's collection of trees and specified slim_gsgp version.
+        Predict the output for the given input data using the model's collection of trees and specified slim version.
     get_tree_representation()
         Get a string representation of the trees in the individual.
     """
@@ -205,7 +205,7 @@ class Individual:
         -------
         None
         """
-        # getting the correct torch operator based on the slim_gsgp version
+        # getting the correct torch operator based on the slim version
         if operator == "sum":
             operator = torch.sum
         else:
@@ -235,7 +235,7 @@ class Individual:
     def predict(self, data):
         """
             Predict the output for the given input data using the model's collection of trees
-            and the specified slim_gsgp version.
+            and the specified slim version.
 
             Parameters
             ----------
@@ -277,7 +277,7 @@ class Individual:
         if not hasattr(self, "collection"):
             raise Exception("If reconstruct was set to False, .predict() is not available")
 
-        # getting the relevant variables based on the used slim_gsgp version
+        # getting the relevant variables based on the used slim version
         operator, sig, trees = check_slim_version(slim_version=self.version)
 
         # getting an empty semantics list
@@ -355,7 +355,7 @@ class Individual:
         if not hasattr(self, "collection"):
             raise Exception("If reconstruct was set to False, .get_tree_representation() is not available")
 
-        # finding out the used operator based on the slim_gsgp version
+        # finding out the used operator based on the slim version
         operator = "sum" if "+" in self.version else "mul"
 
         op = "+" if operator == "sum" else "*"
