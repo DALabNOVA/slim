@@ -82,7 +82,7 @@ class Population:
 
         Returns
         -------
-        Individual
+        Tree
             The individual at the specified index.
         """
         return self.population[item]

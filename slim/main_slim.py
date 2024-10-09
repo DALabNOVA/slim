@@ -29,7 +29,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
          init_depth: int = slim_gsgp_pi_init["init_depth"],
          ms_lower: float = 0, ms_upper: float = 1,
          p_inflate: float = slim_gsgp_parameters["p_inflate"],
-         log_path: str = os.path.join(os.getcwd(), "log", "slim.csv"),
+         log_path: str = None,
          seed: int = slim_gsgp_parameters["seed"],
          log_level: int = slim_gsgp_solve_parameters["log"],
          verbose: int = slim_gsgp_solve_parameters["verbose"],
@@ -120,6 +120,10 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # ================================
     #         Input Validation
     # ================================
+
+    # Setting the log_path
+    if log_path is None:
+        os.path.join(os.getcwd(), "log", "slim.csv")
 
     op, sig, trees = check_slim_version(slim_version=slim_version)
 

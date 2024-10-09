@@ -231,19 +231,31 @@ class GP:
         """
         Evolve the population for one iteration (generation).
 
-        Args:
-            population (Population): Current population.
-            ffunction (function): Fitness function.
-            max_depth (int): Maximum depth of the tree.
-            depth_calculator (function): Function to calculate tree depth.
-            elitism (bool): Whether to use elitism.
-            X_train (torch.Tensor): Training data features.
-            y_train (torch.Tensor): Training data targets.
-            n_jobs (int): The number of jobs for the joblib library Parallel parallelization.
+        Parameters
+        ----------
+        population : Population
+            The current population of individuals to evolve.
+        ffunction : function
+            Fitness function used to evaluate individuals.
+        max_depth : int
+            Maximum allowable depth for trees in the population.
+        depth_calculator : Callable
+            Function used to calculate the depth of trees.
+        elitism : bool
+            Whether to use elitism, i.e., preserving the best individuals across generations.
+        X_train : torch.Tensor
+            Input training data features.
+        y_train : torch.Tensor
+            Target values for the training data.
+        n_jobs : int, optional
+            Number of parallel jobs to use with the joblib library (default is 1).
 
-        Returns:
-            Population: Evolved population.
-            float: Start time of evolution.
+        Returns
+        -------
+        Population
+            The evolved population after one generation.
+        float
+            The start time of the evolution process.
         """
         # creating an empty offspring population list
         offs_pop = []

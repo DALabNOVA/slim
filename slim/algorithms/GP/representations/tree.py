@@ -107,9 +107,10 @@ class Tree:
 
         Returns
         -------
-        None or float
-            Attributes the fitness value to the tree or, if new is being used, return the fitness value
-            for this new data.
+        None
+            If the data is training or testing data, the fitness value is attributed to the individual.
+        float
+            If exposed to new data, the fitness value is returned.
         """
         # getting the predictions (i.e., semantics) of the individual
         preds = self.apply_tree(X)
@@ -131,17 +132,13 @@ class Tree:
 
         Parameters
         ----------
-        X : array-like or DataFrame
-            The input data to predict. It should be in the form of an array-like structure
-            (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
-            different observation and each column represents a feature.
+        X : torch.Tensor
+            The input data to predict.
 
         Returns
         -------
-        array-like
-            The predicted output for the input data. The exact form and type of the output
-            depend on the implementation of the `apply_tree` method, but typically it would
-            be an array or list of predicted values corresponding to each observation in X.
+        torch.Tensor
+            The predicted output for the input data.
 
         Notes
         -----

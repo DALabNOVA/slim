@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.main_slim &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/_modules/slim/main_slim.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.algorithms.html">slim.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.selection.html">slim.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slim_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">slim.main_slim</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for slim.main_slim</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This script runs the SLIM_GSGP algorithm on various datasets and configurations,</span>
+<span class="sd">logging the results for further analysis.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">slim.algorithms.SLIM_GSGP.slim_gsgp</span> <span class="kn">import</span> <span class="n">SLIM_GSGP</span>
+<span class="kn">from</span> <span class="nn">slim.config.slim_config</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">slim.utils.logger</span> <span class="kn">import</span> <span class="n">log_settings</span>
+<span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">get_terminals</span><span class="p">,</span> <span class="n">check_slim_version</span><span class="p">,</span> <span class="n">validate_inputs</span><span class="p">,</span> <span class="n">generate_random_uniform</span><span class="p">,</span>
+                              <span class="n">get_best_min</span><span class="p">,</span> <span class="n">get_best_max</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">slim.algorithms.SLIM_GSGP.operators.mutators</span> <span class="kn">import</span> <span class="n">inflate_mutation</span>
+<span class="kn">from</span> <span class="nn">slim.selection.selection_algorithms</span> <span class="kn">import</span> <span class="n">tournament_selection_max</span><span class="p">,</span> <span class="n">tournament_selection_min</span>
+
+
+<span class="n">ELITES</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">UNIQUE_RUN_ID</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="slim">
+<a class="viewcode-back" href="../../slim_main_files.html#slim.main_slim.slim">[docs]</a>
+<span class="k">def</span> <span class="nf">slim</span><span class="p">(</span><span class="n">X_train</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y_train</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">X_test</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+         <span class="n">slim_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SLIM+SIG2&quot;</span><span class="p">,</span>
+         <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;pop_size&quot;</span><span class="p">],</span>
+         <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_iter&quot;</span><span class="p">],</span>
+         <span class="n">elitism</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;elitism&quot;</span><span class="p">],</span> <span class="n">n_elites</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_elites&quot;</span><span class="p">],</span>
+         <span class="n">init_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;init_depth&quot;</span><span class="p">],</span>
+         <span class="n">ms_lower</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ms_upper</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+         <span class="n">p_inflate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;p_inflate&quot;</span><span class="p">],</span>
+         <span class="n">log_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+         <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">],</span>
+         <span class="n">log_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">],</span>
+         <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+         <span class="n">reconstruct</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;reconstruct&quot;</span><span class="p">],</span>
+         <span class="n">fitness_function</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;ffunction&quot;</span><span class="p">],</span>
+         <span class="n">initializer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;initializer&quot;</span><span class="p">],</span>
+         <span class="n">minimization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+         <span class="n">prob_const</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;p_c&quot;</span><span class="p">],</span>
+         <span class="n">tree_functions</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+         <span class="n">tree_constants</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;constant_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="p">],</span>
+         <span class="n">copy_parent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span><span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;copy_parent&quot;</span><span class="p">],</span>
+         <span class="n">max_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">],</span>
+         <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">],</span>
+         <span class="n">tournament_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+         <span class="n">test_elite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;test_elite&quot;</span><span class="p">]):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to execute the SLIM GSGP algorithm on specified datasets.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X_train: (torch.Tensor)</span>
+<span class="sd">        Training input data.</span>
+<span class="sd">    y_train: (torch.Tensor)</span>
+<span class="sd">        Training output data.</span>
+<span class="sd">    X_test: (torch.Tensor), optional</span>
+<span class="sd">        Testing input data.</span>
+<span class="sd">    y_test: (torch.Tensor), optional</span>
+<span class="sd">        Testing output data.</span>
+<span class="sd">    dataset_name : str, optional</span>
+<span class="sd">        Dataset name, for logging purposes</span>
+<span class="sd">    pop_size : int, optional</span>
+<span class="sd">        The population size for the genetic programming algorithm (default is 100).</span>
+<span class="sd">    n_iter : int, optional</span>
+<span class="sd">        The number of iterations for the genetic programming algorithm (default is 100).</span>
+<span class="sd">    elitism : bool, optional</span>
+<span class="sd">        Indicate the presence or absence of elitism.</span>
+<span class="sd">    n_elites : int, optional</span>
+<span class="sd">        The number of elites.</span>
+<span class="sd">    init_depth : int, optional</span>
+<span class="sd">        The depth value for the initial GP trees population.</span>
+<span class="sd">    ms_lower : float, optional</span>
+<span class="sd">        Lower bound for mutation rates (default is 0).</span>
+<span class="sd">    ms_upper : float, optional</span>
+<span class="sd">        Upper bound for mutation rates (default is 1).</span>
+<span class="sd">    p_inflate : float, optional</span>
+<span class="sd">        Probability of selecting inflate mutation when mutating an individual.</span>
+<span class="sd">    log_path : str, optional</span>
+<span class="sd">        The path where is created the log directory where results are saved.</span>
+<span class="sd">    seed : int, optional</span>
+<span class="sd">        Seed for the randomness</span>
+<span class="sd">    log_level : int, optional</span>
+<span class="sd">        Level of detail to utilize in logging.</span>
+<span class="sd">    verbose : int, optional</span>
+<span class="sd">       Level of detail to include in console output.</span>
+<span class="sd">    reconstruct: bool, optional</span>
+<span class="sd">        Whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm.</span>
+<span class="sd">    minimization : bool, optional</span>
+<span class="sd">        If True, the objective is to minimize the fitness function. If False, maximize it (default is True).</span>
+<span class="sd">    fitness_function : str, optional</span>
+<span class="sd">        The fitness function used for evaluating individuals (default is from gp_solve_parameters).</span>
+<span class="sd">    initializer : str, optional</span>
+<span class="sd">        The strategy for initializing the population (e.g., &quot;grow&quot;, &quot;full&quot;, &quot;rhh&quot;).</span>
+<span class="sd">    prob_const : float, optional</span>
+<span class="sd">        The probability of introducing constants into the trees during evolution.</span>
+<span class="sd">    tree_functions : list, optional</span>
+<span class="sd">        List of allowed functions that can appear in the trees. Check documentation for the available functions.</span>
+<span class="sd">    tree_constants : list, optional</span>
+<span class="sd">        List of constants allowed to appear in the trees.</span>
+<span class="sd">    max_depth: int, optional</span>
+<span class="sd">        Max depth for the SLIM GSGP trees.</span>
+<span class="sd">    copy_parent: bool, optional</span>
+<span class="sd">        Whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints).</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of parallel jobs to run (default is 1).</span>
+<span class="sd">    tournament_size : int, optional</span>
+<span class="sd">        Tournament size to utilize during selection. Only applicable if using tournament selection. (Default is 2)</span>
+<span class="sd">    test_elite : bool, optional</span>
+<span class="sd">        Whether to test the elite individual on the test set after each generation.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        Individual</span>
+<span class="sd">            Returns the best individual at the last generation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ================================</span>
+    <span class="c1">#         Input Validation</span>
+    <span class="c1"># ================================</span>
+
+    <span class="c1"># Setting the log_path</span>
+    <span class="k">if</span> <span class="n">log_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;slim.csv&quot;</span><span class="p">)</span>
+
+    <span class="n">op</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">trees</span> <span class="o">=</span> <span class="n">check_slim_version</span><span class="p">(</span><span class="n">slim_version</span><span class="o">=</span><span class="n">slim_version</span><span class="p">)</span>
+
+    <span class="n">validate_inputs</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="n">pop_size</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+                    <span class="n">elitism</span><span class="o">=</span><span class="n">elitism</span><span class="p">,</span> <span class="n">n_elites</span><span class="o">=</span><span class="n">n_elites</span><span class="p">,</span> <span class="n">init_depth</span><span class="o">=</span><span class="n">init_depth</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span> <span class="n">prob_const</span><span class="o">=</span><span class="n">prob_const</span><span class="p">,</span>
+                    <span class="n">tree_functions</span><span class="o">=</span><span class="n">tree_functions</span><span class="p">,</span> <span class="n">tree_constants</span><span class="o">=</span><span class="n">tree_constants</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                    <span class="n">minimization</span><span class="o">=</span><span class="n">minimization</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">test_elite</span><span class="o">=</span><span class="n">test_elite</span><span class="p">,</span> <span class="n">fitness_function</span><span class="o">=</span><span class="n">fitness_function</span><span class="p">,</span>
+                    <span class="n">initializer</span><span class="o">=</span><span class="n">initializer</span><span class="p">,</span> <span class="n">tournament_size</span><span class="o">=</span><span class="n">tournament_size</span><span class="p">)</span>
+
+    <span class="c1"># Checking that both ms bounds are numerical</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ms_lower</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ms_upper</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)),</span> \
+        <span class="s2">&quot;Both ms_lower and ms_upper must be either int or float&quot;</span>
+
+    <span class="k">if</span> <span class="n">test_elite</span> <span class="ow">and</span> <span class="p">(</span><span class="n">X_test</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y_test</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;If test_elite is True, a test dataset must be provided. test_elite has been set to False&quot;</span><span class="p">)</span>
+        <span class="n">test_elite</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">dataset_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No dataset name set. Using default value of dataset_1.&quot;</span><span class="p">)</span>
+        <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;dataset_1&quot;</span>
+
+    <span class="c1"># If so, create the ms callable</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">generate_random_uniform</span><span class="p">(</span><span class="n">ms_lower</span><span class="p">,</span> <span class="n">ms_upper</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;max_depth value must be a int or None&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">init_depth</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="n">max_depth</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;max_depth must be at least </span><span class="si">{</span><span class="n">init_depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+    <span class="c1"># creating a list with the valid available fitness functions</span>
+    <span class="n">valid_fitnesses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fitness_function_options</span><span class="p">)</span>
+
+    <span class="c1"># assuring the chosen fitness_function is valid</span>
+    <span class="k">assert</span> <span class="n">fitness_function</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">fitness_function_options</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> \
+        <span class="s2">&quot;fitness function must be: &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_fitnesses</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">valid_fitnesses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> \
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_fitnesses</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">valid_fitnesses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># creating a list with the valid available initializers</span>
+    <span class="n">valid_initializers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">initializer_options</span><span class="p">)</span>
+
+    <span class="c1"># assuring the chosen initializer is valid</span>
+    <span class="k">assert</span> <span class="n">initializer</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">initializer_options</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> \
+        <span class="s2">&quot;initializer must be &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_initializers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">valid_initializers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> \
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_initializers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">valid_initializers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># ================================</span>
+    <span class="c1">#       Parameter Definition</span>
+    <span class="c1"># ================================</span>
+
+    <span class="c1"># setting the number of elites to 0 if no elitism is used</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">elitism</span><span class="p">:</span>
+        <span class="n">n_elites</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+    <span class="c1">#   *************** SLIM_GSGP_PI_INIT ***************</span>
+    <span class="n">TERMINALS</span> <span class="o">=</span> <span class="n">get_terminals</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+    <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;TERMINALS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TERMINALS</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;FUNCTIONS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tree_functions</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">valid_functions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">FUNCTIONS</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+            <span class="s2">&quot;The available tree functions are: &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_functions</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2"> or &quot;</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid_functions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_functions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">valid_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s1">&#39;CONSTANTS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;constant_</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">n</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+                                          <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">tree_constants</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">valid_constants</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+            <span class="s2">&quot;The available tree constants are: &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_constants</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2"> or &quot;</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid_constants</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_constants</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">valid_constants</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;init_pop_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_size</span>
+    <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;init_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">init_depth</span>
+    <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;p_c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prob_const</span>
+
+    <span class="c1">#   *************** SLIM_GSGP_PARAMETERS ***************</span>
+
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;two_trees&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trees</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;operator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span>
+
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;p_m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;p_xo&quot;</span><span class="p">]</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;pop_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop_size</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;inflate_mutator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inflate_mutation</span><span class="p">(</span>
+        <span class="n">FUNCTIONS</span><span class="o">=</span> <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;FUNCTIONS&quot;</span><span class="p">],</span>
+        <span class="n">TERMINALS</span><span class="o">=</span> <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;TERMINALS&quot;</span><span class="p">],</span>
+        <span class="n">CONSTANTS</span><span class="o">=</span> <span class="n">slim_gsgp_pi_init</span><span class="p">[</span><span class="s2">&quot;CONSTANTS&quot;</span><span class="p">],</span>
+        <span class="n">two_trees</span><span class="o">=</span><span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s1">&#39;two_trees&#39;</span><span class="p">],</span>
+        <span class="n">operator</span><span class="o">=</span><span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">],</span>
+        <span class="n">sig</span><span class="o">=</span><span class="n">sig</span>
+    <span class="p">)</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;initializer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">initializer_options</span><span class="p">[</span><span class="n">initializer</span><span class="p">]</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;ms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ms</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s1">&#39;p_inflate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_inflate</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s1">&#39;p_deflate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s1">&#39;p_inflate&#39;</span><span class="p">]</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;copy_parent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy_parent</span>
+    <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+
+    <span class="k">if</span> <span class="n">minimization</span><span class="p">:</span>
+        <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;selector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tournament_selection_min</span><span class="p">(</span><span class="n">tournament_size</span><span class="p">)</span>
+        <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;find_elit_func&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_best_min</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;selector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tournament_selection_max</span><span class="p">(</span><span class="n">tournament_size</span><span class="p">)</span>
+        <span class="n">slim_gsgp_parameters</span><span class="p">[</span><span class="s2">&quot;find_elit_func&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_best_max</span>
+
+
+    <span class="c1">#   *************** SLIM_GSGP_SOLVE_PARAMETERS ***************</span>
+
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_level</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">verbose</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;log_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_path</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;elitism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">elitism</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_elites&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_elites</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_iter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_iter</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s1">&#39;run_info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">slim_version</span><span class="p">,</span> <span class="n">UNIQUE_RUN_ID</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">]</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;ffunction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness_function_options</span><span class="p">[</span><span class="n">fitness_function</span><span class="p">]</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;reconstruct&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reconstruct</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_depth</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;n_jobs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_jobs</span>
+    <span class="n">slim_gsgp_solve_parameters</span><span class="p">[</span><span class="s2">&quot;test_elite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_elite</span>
+
+    <span class="c1"># ================================</span>
+    <span class="c1">#       Running the Algorithm</span>
+    <span class="c1"># ================================</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">SLIM_GSGP</span><span class="p">(</span>
+        <span class="n">pi_init</span><span class="o">=</span><span class="n">slim_gsgp_pi_init</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">slim_gsgp_parameters</span>
+    <span class="p">)</span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+        <span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span>
+        <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+        <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+        <span class="n">curr_dataset</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">slim_gsgp_solve_parameters</span>
+    <span class="p">)</span>
+
+    <span class="n">log_settings</span><span class="p">(</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;slim_settings.csv&quot;</span><span class="p">),</span>
+        <span class="n">settings_dict</span><span class="o">=</span><span class="p">[</span><span class="n">slim_gsgp_solve_parameters</span><span class="p">,</span>
+                       <span class="n">slim_gsgp_parameters</span><span class="p">,</span>
+                       <span class="n">slim_gsgp_pi_init</span><span class="p">,</span>
+                       <span class="n">settings_dict</span><span class="p">],</span>
+        <span class="n">unique_run_id</span><span class="o">=</span><span class="n">UNIQUE_RUN_ID</span>
+    <span class="p">)</span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">elite</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">slim_version</span>
+
+    <span class="k">return</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">elite</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">slim.datasets.data_loader</span> <span class="kn">import</span> <span class="n">load_resid_build_sale_price</span>
+    <span class="kn">from</span> <span class="nn">slim.utils.utils</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">show_individual</span>
+
+
+    <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;resid_build_sale_price&quot;</span><span class="p">]:</span>
+
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_resid_build_sale_price</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">p_test</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+
+            <span class="c1">#X_train, X_val, y_train, y_val = train_test_split(X, y, p_test=0.3, seed=s)</span>
+
+            <span class="k">for</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;SLIM+SIG2&quot;</span><span class="p">,</span> <span class="s2">&quot;SLIM*SIG2&quot;</span><span class="p">,</span> <span class="s2">&quot;SLIM+ABS&quot;</span><span class="p">,</span> <span class="s2">&quot;SLIM*ABS&quot;</span><span class="p">,</span> <span class="s2">&quot;SLIM+SIG1&quot;</span><span class="p">,</span> <span class="s2">&quot;SLIM*SIG1&quot;</span><span class="p">]:</span>
+
+                <span class="n">final_tree</span> <span class="o">=</span> <span class="n">slim</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+                                  <span class="n">dataset_name</span><span class="o">=</span><span class="n">ds</span><span class="p">,</span> <span class="n">slim_version</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">p_inflate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                                <span class="n">log_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                                                                <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;test_</span><span class="si">{</span><span class="n">ds</span><span class="si">}</span><span class="s2">-size.csv&quot;</span><span class="p">),</span>
+                                   <span class="n">reconstruct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1">#print(show_individual(final_tree, operator=&#39;sum&#39;))</span>
+                <span class="c1">#predictions = final_tree.predict(data=X_test, slim_version=algorithm)</span>
+                <span class="c1">#print(float(rmse(y_true=y_test, y_pred=predictions)))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

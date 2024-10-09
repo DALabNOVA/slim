@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slim.algorithms.SLIM_GSGP.representations &mdash; Slim 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
+
+  
+    <link rel="canonical" href="https://dalabnova.github.io/slim/slim.algorithms.SLIM_GSGP.representations.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="slim.evaluators" href="slim.evaluators.html" />
+    <link rel="prev" title="slim.algorithms.SLIM_GSGP.operators" href="slim.algorithms.SLIM_GSGP.operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Slim
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="slim.algorithms.html">slim.algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GP.html">slim.algorithms.GP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slim.algorithms.GSGP.html">slim.algorithms.GSGP</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.operators.html">slim.algorithms.SLIM_GSGP.operators</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">slim.algorithms.SLIM_GSGP.representations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.SLIM_GSGP.representations.individual">slim.algorithms.SLIM_GSGP.representations.individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-slim.algorithms.SLIM_GSGP.representations.population">slim.algorithms.SLIM_GSGP.representations.population</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="slim.algorithms.SLIM_GSGP.html#module-slim.algorithms.SLIM_GSGP.slim_gsgp">slim.algorithms.SLIM_GSGP.slim_gsgp module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slim.evaluators.html">slim.evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.initializers.html">slim.initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.selection.html">slim.selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim.utils.html">slim.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slim_main_files.html">slim main files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Slim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.html">slim.algorithms</a></li>
+          <li class="breadcrumb-item"><a href="slim.algorithms.SLIM_GSGP.html">slim.algorithms.SLIM_GSGP</a></li>
+      <li class="breadcrumb-item active">slim.algorithms.SLIM_GSGP.representations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/slim.algorithms.SLIM_GSGP.representations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slim-algorithms-slim-gsgp-representations">
+<h1>slim.algorithms.SLIM_GSGP.representations<a class="headerlink" href="#slim-algorithms-slim-gsgp-representations" title="Link to this heading"></a></h1>
+<section id="module-slim.algorithms.SLIM_GSGP.representations.individual">
+<span id="slim-algorithms-slim-gsgp-representations-individual"></span><h2>slim.algorithms.SLIM_GSGP.representations.individual<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.individual" title="Link to this heading"></a></h2>
+<p>Individual Class and Utility Functions for SLIM GSGP.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.representations.individual.</span></span><span class="sig-name descname"><span class="pre">Individual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Individual of the SLIM_GSGP algorithm. Composed of ‘blocks’ of trees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> (<em>list</em>) – The list of trees representing the individual.</p></li>
+<li><p><strong>structure</strong> (<em>list</em>) – The structure of each tree in the collection.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – The amount of trees in the collection</p></li>
+<li><p><strong>train_semantics</strong> (<em>torch.Tensor</em>) – Training semantics associated with the Individual.</p></li>
+<li><p><strong>test_semantics</strong> (<em>torch.Tensor</em><em> or </em><em>None</em>) – Testing semantics associated with the Individual. Can be None if not applicable.</p></li>
+<li><p><strong>fitness</strong> (<em>float</em><em> or </em><em>None</em>) – The fitness value of the Individual. Defaults to None.</p></li>
+<li><p><strong>test_fitness</strong> (<em>float</em><em> or </em><em>None</em>) – The fitness value of the Individual during testing. Defaults to None.</p></li>
+<li><p><strong>nodes_collection</strong> (<em>int</em>) – The number of nodes in each tree of the collection.</p></li>
+<li><p><strong>nodes_count</strong> (<em>int</em>) – The total amount of nodes in the tree.</p></li>
+<li><p><strong>depth_collection</strong> (<em>int</em>) – The maximum depth of each tree in the collection.</p></li>
+<li><p><strong>depth</strong> (<em>int</em>) – The maximum depth of the tree.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_semantics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes an Individual object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.calculate_semantics">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.calculate_semantics" title="Link to this definition"></a></dt>
+<dd><p>Calculate the semantics for the individual.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.__len__" title="Link to this definition"></a></dt>
+<dd><p>Return the size of the individual.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Get a tree (‘block’) from the individual by index.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the individual using a fitness function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.predict" title="Link to this definition"></a></dt>
+<dd><p>Predict the output for the given input data using the model’s collection of trees and specified slim version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation">
+<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation" title="Link to this definition"></a></dt>
+<dd><p>Get a string representation of the trees in the individual.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Calculate the semantics for the Individual. Result is stored as an attribute associated with the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em>) – Input data for calculating semantics.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Boolean indicating if the calculation is for testing semantics. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the Individual using a fitness function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>Callable</em>) – Fitness function to evaluate the Individual.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – Expected output (target) values.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Boolean indicating if the evaluation is for testing semantics (default is False).</p></li>
+<li><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – Operator to apply to the semantics (default is “sum”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Get a string representation of the trees in the Individual.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – The operator to use in the representation (“sum” or “mul”).
+If None, it will be determined based on the version.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representing the structure of the trees in the individual.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Predict the output for the given input data using the model’s collection of trees
+and the specified slim version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>array-like</em><em> or </em><em>DataFrame</em>) – The input data to predict. It should be an array-like structure
+(e.g., list, numpy array) or a pandas DataFrame, where each row represents a
+different observation and each column represents a feature.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output for the input data. The output is a PyTorch Tensor whose values
+are clamped between -1e12 and 1e12.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The prediction involves several steps:</p>
+<ol class="arabic">
+<li><p>The <cite>check_slim_version</cite> function is called with the <cite>slim_version</cite> flag to determine
+the appropriate operator (<cite>sum</cite> or <cite>prod</cite>), whether to apply a sigmoid function (<cite>sig</cite>),
+and the specific trees to use for prediction.</p></li>
+<li><p>For each tree in the <cite>self.collection</cite>:
+- If the tree structure is a tuple, predictions are made using the <cite>apply_tree</cite> function.
+- If the tree structure is a list:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For single-tree structures (length 3), predictions are made directly or with a sigmoid
+function applied, and training semantics are updated.</p></li>
+<li><p>For two-tree structures (length 4), predictions for both trees are made with a sigmoid
+function applied, and training semantics are updated for both trees.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The semantics (predicted outputs) of all trees are combined using the specified operator
+(<cite>sum</cite> or <cite>prod</cite>), and the final output is clamped to be within the range of -1e12 to 1e12.</p></li>
+</ol>
+<p>This function relies on PyTorch for tensor operations, including <cite>torch.sigmoid</cite>,
+<cite>torch.sum</cite>, <cite>torch.prod</cite>, <cite>torch.stack</cite>, and <cite>torch.clamp</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-slim.algorithms.SLIM_GSGP.representations.population">
+<span id="slim-algorithms-slim-gsgp-representations-population"></span><h2>slim.algorithms.SLIM_GSGP.representations.population<a class="headerlink" href="#module-slim.algorithms.SLIM_GSGP.representations.population" title="Link to this heading"></a></h2>
+<p>Population Class for SLIM GSGP using PyTorch.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">slim.algorithms.SLIM_GSGP.representations.population.</span></span><span class="sig-name descname"><span class="pre">Population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population.calculate_semantics">
+<span class="sig-name descname"><span class="pre">calculate_semantics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">testing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.calculate_semantics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.calculate_semantics" title="Link to this definition"></a></dt>
+<dd><p>Calculate the semantics for each individual in the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>torch.Tensor</em>) – Input data for calculating semantics.</p></li>
+<li><p><strong>testing</strong> (<em>bool</em><em>, </em><em>optional</em>) – Boolean indicating if the calculation is for testing semantics.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the population using a fitness function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>Callable</em>) – Fitness function to evaluate the individuals.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – Expected output (target) values.</p></li>
+<li><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – Operator to apply to the semantics (“sum” or “prod”). Default is “sum”.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of concurrently running jobs for joblib parallelization. Default is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate_no_parall">
+<span class="sig-name descname"><span class="pre">evaluate_no_parall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ffunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim/algorithms/SLIM_GSGP/representations/population.html#Population.evaluate_no_parall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim.algorithms.SLIM_GSGP.representations.population.Population.evaluate_no_parall" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the population using a fitness function (without parallelization).
+This function is not currently in use, but has been retained for potential future use
+at the developer’s discretion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ffunction</strong> (<em>Callable</em>) – Fitness function to evaluate the individuals.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – Expected output (target) values.</p></li>
+<li><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – Operator to apply to the semantics. Default is “sum”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="slim.algorithms.SLIM_GSGP.operators.html" class="btn btn-neutral float-left" title="slim.algorithms.SLIM_GSGP.operators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="slim.evaluators.html" class="btn btn-neutral float-right" title="slim.evaluators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
