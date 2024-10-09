@@ -50,7 +50,7 @@ gp_parameters = {
     "selector": tournament_selection_min(2),
     "crossover": crossover_trees(FUNCTIONS),
     "settings_dict": settings_dict,
-    "p_xo":0.8,
+    "p_xo": 0.8,
     "pop_size": 100,
     "seed": 74
 }

@@ -123,7 +123,7 @@ def create_full_random_tree(depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     Returns
     -------
     tuple
-        The generated full tree representaiton based on the specified parameters.
+        The generated full tree representation based on the specified parameters.
     """
     # if the maximum depth is 1, choose a terminal node
     if depth <= 1:
