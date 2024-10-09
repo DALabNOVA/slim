@@ -9,9 +9,9 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
 
-project = 'Slim'
-copyright = '2024, Rosenfeld, et al.,'
-author = 'Rosenfeld, et al.,'
+project = 'slim_gsgp'
+copyright = '2024, L. Rosenfeld, et al.,'
+author = 'L. Rosenfeld, et al.,'
 release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
