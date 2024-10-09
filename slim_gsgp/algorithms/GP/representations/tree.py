@@ -48,19 +48,6 @@ class Tree:
         Test fitness value of the tree.
     node_count : int
         Number of nodes in the tree.
-
-    Methods
-    -------
-    __init__(repr_)
-        Initializes a Tree object.
-    apply_tree(inputs)
-        Evaluates the tree on input vectors.
-    evaluate(ffunction, X, y, testing=False)
-        Evaluates the tree given a fitness function and data.
-    predict(X):
-        Outputs a prediction for a given input X.
-    print_tree_representation(indent="")
-        Prints the tree representation with indentation.
     """
 
     TERMINALS = None
