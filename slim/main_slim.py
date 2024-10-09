@@ -123,7 +123,7 @@ def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
 
     # Setting the log_path
     if log_path is None:
-        os.path.join(os.getcwd(), "log", "slim.csv")
+        log_path = os.path.join(os.getcwd(), "log", "slim.csv")
 
     op, sig, trees = check_slim_version(slim_version=slim_version)
 
