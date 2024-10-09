@@ -41,7 +41,17 @@ def tournament_selection_min(pool_size):
     Returns
     -------
     Callable
-        Function to execute tournament selection for minimum fitness.
+        A function ('ts') that elects the individual with the lowest fitness from a randomly chosen pool.
+
+        Parameters
+        ----------
+        pop : Population
+            The population from which individuals are drawn.
+
+        Returns
+        -------
+        Individual
+            The individual with the lowest fitness in the pool.
     Notes
     -----
     The returned function performs tournament selection by receiving a population and returning the best of {pool_size}
@@ -81,7 +91,17 @@ def tournament_selection_max(pool_size):
     Returns
     -------
     Callable
-        Function to execute tournament selection for maximum fitness.
+        A function ('ts') that elects the individual with the highest fitness from a randomly chosen pool.
+
+        Parameters
+        ----------
+        pop : Population
+            The population from which individuals are drawn.
+
+        Returns
+        -------
+        Individual
+            The individual with the lowest fitness in the pool.
     Notes
     -----
     The returned function performs tournament selection by receiving a population and returning the best of {pool_size}
