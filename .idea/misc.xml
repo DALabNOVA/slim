@@ -4,5 +4,5 @@
     <option name="pathToExecutable" value="C:\Users\Utilizador\anaconda3\Scripts\black.exe" />
     <option name="sdkName" value="Python 3.9 (slim)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="slim_env" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="slim2" project-jdk-type="Python SDK" />
 </project>

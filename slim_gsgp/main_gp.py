@@ -43,7 +43,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        n_iter: int = gp_solve_parameters["n_iter"],
        p_xo: float = gp_parameters['p_xo'],
        elitism: bool = gp_solve_parameters["elitism"], n_elites: int = gp_solve_parameters["n_elites"],
-       max_depth: int = gp_solve_parameters["max_depth"],
+       max_depth: int | None = gp_solve_parameters["max_depth"],
        init_depth: int = gp_pi_init["init_depth"],
        log_path: str = None, seed: int = gp_parameters["seed"],
        log_level: int = gp_solve_parameters["log"],

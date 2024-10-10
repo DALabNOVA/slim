@@ -110,7 +110,7 @@ def test_gp_immutability():
 
     final_tree = gp(X_train=X_train, y_train=y_train,
                     X_test=X_val, y_test=y_val,
-                    dataset_name='ppb', pop_size=100, n_iter=100, )
+                    dataset_name='ppb', pop_size=100, n_iter=100, init_depth=8)
 
     predictions = final_tree.predict(X_test)
 

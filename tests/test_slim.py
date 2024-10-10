@@ -109,8 +109,9 @@ def test_slim_immutability():
     final_tree = slim(X_train=X_train, y_train=y_train,
                       X_test=X_val, y_test=y_val,
                       slim_version='SLIM+SIG2', pop_size=100, n_iter=100,
-                      ms_lower=0, ms_upper=1, p_inflate=0.5, reconstruct=True)
+                      ms_lower=0, ms_upper=1, p_inflate=0.5, reconstruct=True, init_depth=8, copy_parent=None)
 
     predictions = final_tree.predict(X_test)
+    print(float(rmse(y_true=y_test, y_pred=predictions)))
     assert float(rmse(y_true=y_test, y_pred=predictions)) == valid_result, "Final result should not change with updates"
 
