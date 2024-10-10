@@ -364,13 +364,8 @@ class Individual:
 
         Returns
         -------
-        str
-            A string representing the structure of the trees in the individual.
-
-        Raises
-        ------
-        Exception
-            If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.
+        None
+            Prints a string representing the structure of the trees in the individual.
         """
 
         print(self.get_tree_representation())
