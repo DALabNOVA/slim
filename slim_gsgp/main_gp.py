@@ -104,7 +104,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     n_jobs : int, optional
         Number of parallel jobs to run (default is 1).
     prob_const : float, optional
-        The probability of introducing constants into the trees during evolution.
+        The probability of a constant being chosen rather than a terminal in trees creation (default: 0.2).
     tree_functions : list, optional
         List of allowed functions that can appear in the trees. Check documentation for the available functions.
     tree_constants : list, optional

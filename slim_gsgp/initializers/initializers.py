@@ -43,7 +43,7 @@ def grow(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     CONSTANTS : dict
         The dictionary of constant values allowed in the trees.
     p_c : float, optional
-        The probability of choosing a constant node during tree creation. Default is 0.3.
+        The probability of a constant being chosen rather than a terminal in trees creation (default: 0.3).
     Returns
     -------
     list
@@ -73,7 +73,7 @@ def full(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     CONSTANTS : dict
         The dictionary of constant values allowed in the trees.
     p_c : float, optional
-        The probability of choosing a constant node during tree creation. Default is 0.3.
+        The probability of a constant being chosen rather than a terminal in trees creation (default: 0.3).
     Returns
     -------
     list
@@ -103,7 +103,7 @@ def rhh(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
     CONSTANTS : dict
         The dictionary of constant values allowed in the trees.
     p_c : float, optional
-        The probability of choosing a constant node during tree creation. Default is 0.3.
+        The probability of a constant being chosen rather than a terminal in trees creation (default: 0.3).
     Returns
     -------
     list
