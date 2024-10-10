@@ -80,7 +80,7 @@ gp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
     "p_c": 0,
-    "init_depth": 8
+    "init_depth": 6
 }
 
 fitness_function_options = {

@@ -42,7 +42,6 @@ UNIQUE_RUN_ID = uuid.uuid1()
 
 def slim(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None,
-
          slim_version: str = "SLIM+SIG2",
          pop_size: int = slim_gsgp_parameters["pop_size"],
          n_iter: int = slim_gsgp_solve_parameters["n_iter"],

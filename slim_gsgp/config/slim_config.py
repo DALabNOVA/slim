@@ -75,7 +75,7 @@ slim_gsgp_parameters = {
     "settings_dict": settings_dict,
     "find_elit_func": get_best_min,
     "p_inflate": 0.2,
-    "copy_parent": None,
+    "copy_parent": True,
     "operator": None,
     "pop_size": 100,
     "seed": 74,
@@ -86,7 +86,7 @@ slim_gsgp_pi_init = {
     'FUNCTIONS': FUNCTIONS,
     'CONSTANTS': CONSTANTS,
     "p_c": 0.2,
-    "init_depth": 8
+    "init_depth": 6
 
 }
 
