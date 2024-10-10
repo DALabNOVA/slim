@@ -314,7 +314,7 @@ class Individual:
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-    def get_tree_representation(self):
+    def print_tree_representation(self):
         """
         Get a string representation of the trees in the Individual.
 
