@@ -165,6 +165,11 @@ class Tree:
         ----------
         indent : str, optional
             Indentation for tree structure representation. Default is an empty string.
+
+        Returns
+        -------
+        str
+            Returns the tree representation with the chosen indentation.
         """
         representation = []
 
@@ -196,6 +201,12 @@ class Tree:
         ----------
         indent : str, optional
             Indentation for tree structure representation. Default is an empty string.
+
+        Returns
+        -------
+        None
+            Prints the tree representation as a string with indentation.
+
         """
 
         print(self.get_tree_representation(indent=indent))
