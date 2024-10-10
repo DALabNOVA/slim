@@ -83,7 +83,6 @@ from slim_gsgp.main_slim import slim  # import the slim_gsgp library
 from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
 from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
-from slim_gsgp.utils.utils import generate_random_uniform  # import the mutation step function
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
