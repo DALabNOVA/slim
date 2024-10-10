@@ -168,6 +168,49 @@ def load_airfoil(X_y=True):
         return df
 
 
+def load_bike_sharing(X_y=True):
+    """Loads and returns the Bike Sharing data set (regression)
+
+        This dataset contains the hourly and daily count of rental bikes between
+        years 2011 and 2012 in Capital bikeshare system with the corresponding
+        weather and seasonal information.
+
+        Basic information:
+        - Number of data instances: 17389;
+        - Number of input features: 13;
+        - Target's range: [22, 8714].
+
+        Parameters
+        ----------
+        X_y : bool, optional
+            Return data as two objects of type torch.Tensor, otherwise as a
+            pandas.DataFrame.
+
+        Returns
+        -------
+        X, y : torch.Tensor, torch.Tensor
+            The input data (X) and the target of the prediction (y). The
+            latter is extracted from the data set as the last column.
+        df : pandas.DataFrame
+            An object of type pandas.DataFrame which holds the data. The
+            target is the last column.
+
+        References
+        ----------
+        https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset
+        """
+    df = pd.read_csv(
+        os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", "bike_sharing_day.txt"),
+        index_col=0
+    )
+    if X_y:
+        return (
+            torch.from_numpy(df.values[:, :-1]).float(),
+            torch.from_numpy(df.values[:, -1]).float(),
+        )
+    else:
+        return df
+
 def load_boston(X_y=True):
     """Loads and returns the Boston Housing data set (regression)
 
