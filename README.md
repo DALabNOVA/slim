@@ -151,18 +151,19 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 
 ### Specific for *gsgp*
 * `p_xo` : A float specifying the crossover probability *(default: 0.0)*.
-* `ms_lower`: Lower bound for mutation step *(default: 0)*.
-* `ms_upperr`: Upper bound for mutation step *(default: 1)*.
+* `ms_lower`: A float or int representing the lower bound for mutation step *(default: 0)*.
+* `ms_upper`: A float or int representing the upper bound for mutation step *(default: 1)*.
 * `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
 
 ### Specific for *slim*
 * `slim_version`: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
-* `ms_lower`: Lower bound for mutation step *(default: 0)*.
-*  `ms_upperr`: Upper bound for mutation step *(default: 1)*.
-* `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
+* `ms_lower`: A float or int representing the lower bound for mutation step *(default: 0)*.
+*  `ms_upper`:  A float or int representing the upper bound for mutation step *(default: 1)*.
+* `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.2)*.
 * `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
 *  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
 *  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
+*  
 
 ## Additional Notes
 
