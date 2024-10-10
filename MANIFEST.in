@@ -1,4 +1,8 @@
 include README.md
 include LICENSE
-recursive-include slim/slim/datasets *
-recursive-include slim/slim/datasets/data *.txt
+recursive-include slim_library/slim_gsgp/datasets *
+recursive-include slim_library/slim_gsgp/datasets/data *.txt
+
+recursive-include slim_gsgp/datasets *
+recursive-include slim_gsgp/datasets/data *.txt
+

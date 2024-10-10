@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="slim_env" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="final_tester" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="NUMPY" />

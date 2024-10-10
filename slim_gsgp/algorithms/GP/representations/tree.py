@@ -157,6 +157,37 @@ class Tree:
         """
         return self.apply_tree(X)
 
+    def get_tree_representation(self, indent=""):
+        """
+        Returns the tree representation as a string with indentation.
+
+        Parameters
+        ----------
+        indent : str, optional
+            Indentation for tree structure representation. Default is an empty string.
+        """
+        representation = []
+
+        if isinstance(self.repr_, tuple):  # If it's a function node
+            function_name = self.repr_[0]
+            representation.append(indent + f"{function_name}(\n")
+
+            # if the function has an arity of 2, process both left and right subtrees
+            if Tree.FUNCTIONS[function_name]["arity"] == 2:
+                left_subtree, right_subtree = self.repr_[1], self.repr_[2]
+                representation.append(Tree(left_subtree).get_tree_representation(indent + "  "))
+                representation.append(Tree(right_subtree).get_tree_representation(indent + "  "))
+            # if the function has an arity of 1, process the left subtree
+            else:
+                left_subtree = self.repr_[1]
+                representation.append(Tree(left_subtree).get_tree_representation(indent + "  "))
+
+            representation.append(indent + ")\n")
+        else:  # If it's a terminal node
+            representation.append(indent + f"{self.repr_}\n")
+
+        return "".join(representation)
+
     def print_tree_representation(self, indent=""):
         """
         Prints the tree representation with indentation.
@@ -166,18 +197,5 @@ class Tree:
         indent : str, optional
             Indentation for tree structure representation. Default is an empty string.
         """
-        if isinstance(self.repr_, tuple):  # If it's a function node
-            function_name = self.repr_[0]
-            print(indent + f"{function_name}(")
-            # if the function has an arity of 2, print both left and right subtrees
-            if Tree.FUNCTIONS[function_name]["arity"] == 2:
-                left_subtree, right_subtree = self.repr_[1], self.repr_[2]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
-                Tree(right_subtree).print_tree_representation(indent + "  ")
-            # if the function has an arity of 1, print the left subtree
-            else:
-                left_subtree = self.repr_[1]
-                Tree(left_subtree).print_tree_representation(indent + "  ")
-            print(indent + ")")
-        else:  # If it's a terminal node
-            print(indent + f"{self.repr_}")
+
+        print(self.get_tree_representation(indent=indent))

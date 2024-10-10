@@ -314,9 +314,9 @@ class Individual:
             operator(torch.stack(semantics), dim=0), -1000000000000.0, 1000000000000.0
         )
 
-    def print_tree_representation(self):
+    def get_tree_representation(self):
         """
-        Get a string representation of the trees in the Individual.
+        Returns a string representation of the trees in the Individual.
 
         Parameters
         ----------
@@ -351,3 +351,26 @@ class Individual:
                 for t in self.collection
             ]
         )
+
+    def print_tree_representation(self):
+        """
+        Prints a string representation of the trees in the Individual.
+
+        Parameters
+        ----------
+        operator : str, optional
+            The operator to use in the representation ("sum" or "mul").
+            If None, it will be determined based on the version.
+
+        Returns
+        -------
+        str
+            A string representing the structure of the trees in the individual.
+
+        Raises
+        ------
+        Exception
+            If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.
+        """
+
+        print(self.get_tree_representation())
