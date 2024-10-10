@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim_gsgp.datasets &mdash; Slim 0.0.1 documentation</title>
+  <title>slim_gsgp.datasets &mdash; slim_gsgp 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
 
@@ -31,7 +31,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Slim
+            slim_gsgp
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -57,7 +57,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Slim</a>
+          <a href="index.html">slim_gsgp</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -111,6 +111,36 @@ target is the last column.</p></li>
 <p>Bakurov, I., Buzzelli, M., Castelli, M., Vanneschi, L., &amp; Schettini, R. (2021). General purpose optimization
 library (GPOL): a flexible and efficient multi-purpose optimization library in Python. Applied Sciences, 11(11),
 4774.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="slim_gsgp.datasets.data_loader.load_bike_sharing">
+<span class="sig-prename descclassname"><span class="pre">slim_gsgp.datasets.data_loader.</span></span><span class="sig-name descname"><span class="pre">load_bike_sharing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/datasets/data_loader.html#load_bike_sharing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.datasets.data_loader.load_bike_sharing" title="Link to this definition"></a></dt>
+<dd><p>Loads and returns the Bike Sharing data set (regression)</p>
+<p>This dataset contains the hourly and daily count of rental bikes between
+years 2011 and 2012 in Capital bikeshare system with the corresponding
+weather and seasonal information.</p>
+<p>Basic information:
+- Number of data instances: 17389;
+- Number of input features: 13;
+- Target’s range: [22, 8714].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_y</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return data as two objects of type torch.Tensor, otherwise as a
+pandas.DataFrame.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X, y</strong> (<em>torch.Tensor, torch.Tensor</em>) – The input data (X) and the target of the prediction (y). The
+latter is extracted from the data set as the last column.</p></li>
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – An object of type pandas.DataFrame which holds the data. The
+target is the last column.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset</a></p>
 </dd></dl>
 
 <dl class="py function">
@@ -592,7 +622,7 @@ target is the last column.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+    <p>&#169; Copyright 2024, L. Rosenfeld, et al.,.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

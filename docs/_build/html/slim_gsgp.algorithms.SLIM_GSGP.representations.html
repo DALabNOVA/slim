@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim_gsgp.algorithms.SLIM_GSGP.representations &mdash; Slim 0.0.1 documentation</title>
+  <title>slim_gsgp.algorithms.SLIM_GSGP.representations &mdash; slim_gsgp 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Slim
+            slim_gsgp
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -73,7 +73,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Slim</a>
+          <a href="index.html">slim_gsgp</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -157,27 +157,6 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation">
-<span class="sig-name descname"><span class="pre">get_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.get_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation" title="Link to this definition"></a></dt>
-<dd><p>Get a string representation of the trees in the Individual.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – The operator to use in the representation (“sum” or “mul”).
-If None, it will be determined based on the version.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A string representing the structure of the trees in the individual.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Exception</strong> – If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.predict" title="Link to this definition"></a></dt>
 <dd><p>Predict the output for the given input data using the model’s collection of trees
@@ -219,6 +198,27 @@ function applied, and training semantics are updated for both trees.</p></li>
 </ol>
 <p>This function relies on PyTorch for tensor operations, including <cite>torch.sigmoid</cite>,
 <cite>torch.sum</cite>, <cite>torch.prod</cite>, <cite>torch.stack</cite>, and <cite>torch.clamp</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.print_tree_representation">
+<span class="sig-name descname"><span class="pre">print_tree_representation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/slim_gsgp/algorithms/SLIM_GSGP/representations/individual.html#Individual.print_tree_representation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.print_tree_representation" title="Link to this definition"></a></dt>
+<dd><p>Get a string representation of the trees in the Individual.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<em>str</em><em>, </em><em>optional</em>) – The operator to use in the representation (“sum” or “mul”).
+If None, it will be determined based on the version.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representing the structure of the trees in the individual.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If reconstruct was set to False, indicating that the .get_tree_representation() method is not available.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -303,7 +303,7 @@ at the developer’s discretion.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+    <p>&#169; Copyright 2024, L. Rosenfeld, et al.,.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

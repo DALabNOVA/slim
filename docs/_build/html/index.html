@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documentation &mdash; Slim 0.0.1 documentation</title>
+  <title>SLIM (Semantic Learning algorithm based on Inflate and deflate Mutation) Documentation &mdash; slim_gsgp 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
 
@@ -32,7 +32,7 @@
           
           
           <a href="#" class="icon icon-home">
-            Slim
+            slim_gsgp
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -58,7 +58,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Slim</a>
+          <a href="#">slim_gsgp</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -241,48 +241,60 @@
 <section id="common-arguments">
 <h3>Common arguments<a class="headerlink" href="#common-arguments" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>X_train</strong>: A torch tensor with the training input data <em>(default: None)</em>.</p></li>
-<li><p><strong>y_train</strong>: A torch tensor with the training output data <em>(default: None)</em>.</p></li>
-<li><p><strong>X_test</strong>: A torch tensor with the testing input data <em>(default: None)</em>.</p></li>
-<li><p><strong>y_test</strong>: A torch tensor with the testing output data <em>(default: None)</em>.</p></li>
-<li><p><strong>dataset_name</strong>: A string specifying how the results will be logged <em>(default: None)</em>.</p></li>
-<li><p><strong>pop_size</strong>: An integer specifying the population size <em>(default: 100)</em>.</p></li>
-<li><p><strong>n_iter</strong>: An integer specifying the number of iterations <em>(default: 1000)</em>.</p></li>
-<li><p><strong>elitism</strong>: A boolean specifying the presence of elitism <em>(default: True)</em>.</p></li>
-<li><p><strong>n_elites</strong>: An integer specifying the number of elites <em>(default: 1)</em>.</p></li>
-<li><p><strong>init_depth</strong>: An integer specifying the initial depth of the GP tree
-* <em>default: 6</em> for gp and slim
-* <em>default: 8</em> for gsgp</p></li>
-<li><p><strong>log_path</strong>: A string specifying where the results are going to be saved
-* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gp.csv&quot;)</span></code> for gp
-* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gsgp.csv&quot;)</span></code> for gsgp
-* <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;slim_gsgpcsv&quot;)</span></code> for slim</p></li>
-<li><p><strong>seed</strong>: An integer specifying the seed for randomness <em>(default: 1)</em>.</p></li>
-<li><p><strong>n_jobs</strong>: Number of parallel jobs to run <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_train</span></code> : A torch tensor with the training input data <em>(default: None)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_train</span></code> : A torch tensor with the training output data <em>(default: None)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_test</span></code> : A torch tensor with the testing input data <em>(default: None)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_test</span></code> : A torch tensor with the testing output data <em>(default: None)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset_name</span></code> : A string specifying how the results will be logged <em>(default: None)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code> : An integer specifying the population size <em>(default: 100)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter</span></code> : An integer specifying the number of iterations <em>(default: 1000)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elitism</span></code> : A boolean specifying the presence of elitism <em>(default: True)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_elites</span></code> : An integer specifying the number of elites <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init_depth</span></code> : An integer specifying the initial depth of the GP tree
+- <em>default: 6</em> for gp and slim
+- <em>default: 8</em> for gsgp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_path</span></code> : A string specifying where the results are going to be saved
+- <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gp.csv&quot;)</span></code> for slim
+- <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;gsgp.csv&quot;)</span></code> for slim
+- <em>default</em>: <code class="docutils literal notranslate"><span class="pre">os.path.join(os.getcwd(),</span> <span class="pre">&quot;log&quot;,</span> <span class="pre">&quot;slim_gsgp.csv&quot;)</span></code> for slim</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seed</span></code>: An integer specifying the seed for randomness <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_level</span></code>: An integer specifying the Level of detail to utilize in logging <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: An integer specifying whether results are to be displayed on console <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fitness_function</span></code>: A string specifying the fitness function that is to be used <em>(default: “rmse”)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initializer</span></code>: A string specifying the population initialization technique that is to be used <em>(default: “rhh”)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">minimization</span></code>: A bool specifying whether the objective is to minimize the fitness function (True) or to maximize it (False) <em>(default: True)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prob_const</span></code>: A float specifying the probability of a constant being chosen rather than a terminal in trees creation <em>(default: 0.2)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tree_functions</span></code>: A list of strings with the names of the functions that are to be used in the trees <em>(default: [‘add’, ‘subtract’, ‘multiply’, ‘divide’])</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tree_constants</span></code>: A list of floats or integer values representing the constants that are allowed to appear in the trees <em>(default: [2, 3, 4, 5, -1])</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tournament_size</span></code>: An int representing the tournament size to utilize during selection <em>(default: 2)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_elite</span></code>: A bool representing whether to test the elite individual on the test set at each generation <em>(default: True when X_test is not None)</em>.</p></li>
 </ul>
 </section>
 <section id="specific-for-gp">
 <h3>Specific for <em>gp</em><a class="headerlink" href="#specific-for-gp" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>p_xo</strong>: A float specifying the crossover probability <em>(default: 0.8)</em>.</p></li>
-<li><p><strong>max_depth</strong>: An integer specifying the maximum depth of the GP tree <em>(default: 17)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p_xo</span></code> : A float specifying the crossover probability <em>(default: 0.8)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code> : An integer specifying the maximum depth of the GP tree <em>(default: 17)</em>.</p></li>
 </ul>
 </section>
 <section id="specific-for-gsgp">
 <h3>Specific for <em>gsgp</em><a class="headerlink" href="#specific-for-gsgp" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>p_xo</strong>: A float specifying the crossover probability <em>(default: 0.0)</em>.</p></li>
-<li><p><strong>ms_lower</strong>: An integer number representing the lower bound for the function to generate the random mutation step <em>(default: 0)</em>.</p></li>
-<li><p><strong>ms_upper</strong>: An integer number representing the upper bound for the function to generate the random mutation step <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p_xo</span></code> : A float specifying the crossover probability <em>(default: 0.0)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms_lower</span></code>: Lower bound for mutation step <em>(default: 0)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms_upper</span></code>: Upper bound for mutation step <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reconstruct</span></code>: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm <em>(default: False)</em>.</p></li>
 </ul>
 </section>
 <section id="specific-for-slim">
 <h3>Specific for <em>slim</em><a class="headerlink" href="#specific-for-slim" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>slim_version</strong>: A string specifying the version of SLIM-GSGP to run <em>(default: “SLIM+SIG2”)</em>.</p></li>
-<li><p><strong>ms_lower</strong>: An integer number representing the lower bound for the function to generate the random mutation step <em>(default: 0)</em>.</p></li>
-<li><p><strong>ms_upper</strong>: An integer number representing the upper bound for the function to generate the random mutation step <em>(default: 1)</em>.</p></li>
-<li><p><strong>p_inflate</strong>: A float specifying the probability to apply the inflate mutation <em>(default: 0.5)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slim_version</span></code>: A string specifying the version of SLIM-GSGP to run <em>(default: “SLIM+SIG2”)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms_lower</span></code>: A float or int representing the lower bound for mutation step <em>(default: 0)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms_upper</span></code>: A float or int representing the upper bound for mutation step <em>(default: 1)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reconstruct</span></code>: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm <em>(default: False)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">copy_parent</span></code>: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). <em>(default: True)</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p_inflate</span></code>: A float specifying the probability to apply the inflate mutation <em>(default: 0.2)</em>.</p></li>
 </ul>
 </section>
 </section>
@@ -409,7 +421,7 @@ ensuring that the target variable is the last column. They can then call the <co
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+    <p>&#169; Copyright 2024, L. Rosenfeld, et al.,.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

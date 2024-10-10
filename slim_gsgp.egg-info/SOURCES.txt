@@ -5,10 +5,10 @@ setup.py
 slim_gsgp/__init__.py
 slim_gsgp/example_gp.py
 slim_gsgp/example_gsgp.py
-slim_gsgp/example_slim_gsgppy
+slim_gsgp/example_slim.py
 slim_gsgp/main_gp.py
 slim_gsgp/main_gsgp.py
-slim_gsgp/main_slim_gsgppy
+slim_gsgp/main_slim.py
 slim_gsgp.egg-info/PKG-INFO
 slim_gsgp.egg-info/SOURCES.txt
 slim_gsgp.egg-info/dependency_links.txt
@@ -59,6 +59,6 @@ slim_gsgp/utils/utils.py
 tests/__init__.py
 tests/test_gp.py
 tests/test_gsgp.py
-tests/test_slim_gsgppy
+tests/test_slim.py
 tests/test_utils.py
 tests/test_validate_inputs.py

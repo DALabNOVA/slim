@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>slim_gsgp.datasets.data_loader &mdash; Slim 0.0.1 documentation</title>
+  <title>slim_gsgp.datasets.data_loader &mdash; slim_gsgp 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=7ab3649f" />
 
@@ -30,7 +30,7 @@
           
           
           <a href="../../../index.html" class="icon icon-home">
-            Slim
+            slim_gsgp
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -56,7 +56,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Slim</a>
+          <a href="../../../index.html">slim_gsgp</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -255,6 +255,52 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
+
+
+<div class="viewcode-block" id="load_bike_sharing">
+<a class="viewcode-back" href="../../../slim_gsgp.datasets.html#slim_gsgp.datasets.data_loader.load_bike_sharing">[docs]</a>
+<span class="k">def</span> <span class="nf">load_bike_sharing</span><span class="p">(</span><span class="n">X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads and returns the Bike Sharing data set (regression)</span>
+
+<span class="sd">        This dataset contains the hourly and daily count of rental bikes between</span>
+<span class="sd">        years 2011 and 2012 in Capital bikeshare system with the corresponding</span>
+<span class="sd">        weather and seasonal information.</span>
+
+<span class="sd">        Basic information:</span>
+<span class="sd">        - Number of data instances: 17389;</span>
+<span class="sd">        - Number of input features: 13;</span>
+<span class="sd">        - Target&#39;s range: [22, 8714].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_y : bool, optional</span>
+<span class="sd">            Return data as two objects of type torch.Tensor, otherwise as a</span>
+<span class="sd">            pandas.DataFrame.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X, y : torch.Tensor, torch.Tensor</span>
+<span class="sd">            The input data (X) and the target of the prediction (y). The</span>
+<span class="sd">            latter is extracted from the data set as the last column.</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            An object of type pandas.DataFrame which holds the data. The</span>
+<span class="sd">            target is the last column.</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;bike_sharing_day.txt&quot;</span><span class="p">),</span>
+        <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">X_y</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span></div>
 
 
 <div class="viewcode-block" id="load_boston">
@@ -887,7 +933,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Rosenfeld, et al.,.</p>
+    <p>&#169; Copyright 2024, L. Rosenfeld, et al.,.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
