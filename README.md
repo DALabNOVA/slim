@@ -133,6 +133,16 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
   * *default: 
     ``` os.path.join(os.getcwd(), "log", "slim_gsgpcsv")```* for slim
 * `seed`: An integer specifying the seed for randomness *(default: 1)*.
+* `log_level`: An integer specifying the Level of detail to utilize in logging *(default: 1)*.
+*  `verbose`: An integer specifying whether results are to be displayed on console *(default: 1)*.
+*   `fitness_function`: A string specifying the fitness function that is to be used *(default: "rmse")*.
+*   `initializer`: A string specifying the population initialization technique that is to be used *(default: "rhh")*.
+*   `minimization`: A bool specifying whether the objective is to minimize the fitness function (True) or to maximize it (False) *(default: True)*.
+*    `prob_const`: A float specifying the probability of a constant being chosen rather than a terminal in trees creation *(default: 0.2)*.
+*    `tree_functions`: A list of strings with the names of the functions that are to be used in the trees *(default: \['add', 'subtract', 'multiply', 'divide'\])*.
+*    `tree_constants`: A list of floats or integer values representing the constants that are allowed to appear in the trees *(default: \[2, 3, 4,5, -1\])*.
+*    `tournament_size`: An int representing the tournament size to utilize during selection. *(default: 2)*.
+*    `test_elite`: A bool representing whether to test the elite individual on the test set at each generation. *(default: True when X_test is not None)*.
 
 ### Specific for *gp*
 
@@ -141,12 +151,18 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 
 ### Specific for *gsgp*
 * `p_xo` : A float specifying the crossover probability *(default: 0.0)*.
-* * `ms`: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
+* `ms_lower`: Lower bound for mutation step *(default: 0)*.
+* `ms_upperr`: Upper bound for mutation step *(default: 1)*.
+* `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
 
 ### Specific for *slim*
 * `slim_version`: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
-* `ms`: A callable function to generate the mutation step *(default: generate_random_uniform(0, 1))*.
+* `ms_lower`: Lower bound for mutation step *(default: 0)*.
+*  `ms_upperr`: Upper bound for mutation step *(default: 1)*.
 * `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.5)*.
+* `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
+*  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
+*  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
 
 ## Additional Notes
 
