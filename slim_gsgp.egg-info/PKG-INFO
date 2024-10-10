@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: slim_gsgp
-Version: 0.1.7
+Version: 0.1.8
 Summary: Semantic Learning algorithm based on Inflate and deflate Mutation (SLIM GSGP)
 Home-page: https://github.com/DALabNOVA/slim
 Author: Liah Rosenfeld, Davide Farinati, Diogo Rasteiro, Gloria Pietropolli, Karina Brotto Rebulli, Sara Silva, Leonardo Vanneschi
@@ -124,7 +124,7 @@ final_tree = slim(X_train=X_train, y_train=y_train,
 final_tree.print_tree_representation()
 
 # Get the prediction of the best individual on the test set
-predictions = final_tree.predict(X_test, slim_version='SLIM+SIG2')
+predictions = final_tree.predict(X_test)
 
 # Compute and print the RMSE on the test set
 print(float(rmse(y_true=y_test, y_pred=predictions)))
