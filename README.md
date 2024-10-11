@@ -187,27 +187,27 @@ X_val, X_test, y_val, y_test = t
 
 ## License
 
-This libeary is [MIT licensed](https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file).
+This library is [MIT licensed](https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file).
 
 The datasets provided are public. The table below specifies the source and license of each dataset.
 
 | Datset                                            | Source                                                                | License                                                    |
 |---------------------------------------------------|-----------------------------------------------------------------------|------------------------------------------------------------|
-| airfoil                                           | https://archive.ics.uci.edu/dataset/291/airfoil+self+noise            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| bike sharing                                      | https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset          | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| airfoil                                           | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/291/airfoil+self+noise)        | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| bike sharing                                      | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset)          | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 | bioavailability                                   | F. Archetti et al. (2007)*                                            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| breast cancer                                     | https://archive.ics.uci.edu/dataset/14/breast+cancer                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| concrete slump                                    | http://archive.ics.uci.edu/dataset/182/concrete+slump+test            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| concrete strength (different number of instances) | https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| diabetes                                          | https://www4.stat.ncsu.edu/~boos/var.select/diabetes.html             | CC0 License                                                |
-| efficiency_cooling                                | https://archive.ics.uci.edu/dataset/242/energy+efficiency             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| efficiency_heating                                | https://archive.ics.uci.edu/dataset/242/energy+efficiency             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| forest_fires                                      | https://archive.ics.uci.edu/dataset/162/forest+fires                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| istanbul                                          | https://archive.ics.uci.edu/dataset/247/istanbul+stock+exchange       | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| breast cancer                                     | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/14/breast+cancer)                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| concrete slump                                    | [UCI Machine Learning Repository](http://archive.ics.uci.edu/dataset/182/concrete+slump+test)            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| concrete strength (different number of instances) | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength) | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| diabetes                                          | [UCI Machine Learning Repository](https://www4.stat.ncsu.edu/~boos/var.select/diabetes.html)             | CC0 License                                                |
+| efficiency_cooling                                | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/242/energy+efficiency)             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| efficiency_heating                                | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/242/energy+efficiency)             | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| forest_fires                                      | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/162/forest+fires)                  | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| istanbul                                          | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/247/istanbul+stock+exchange)       | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 | ld50                                              | F. Archetti et al. (2007)*                                            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| parkinsons_total_UPDRS                            | https://archive.ics.uci.edu/dataset/189/parkinsons+telemonitoring     | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| parkinsons_total_UPDRS                            | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/189/parkinsons+telemonitoring)     | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 | ppb                                               | F. Archetti et al. (2007)*                                            | Creative Commons Attribution 4.0 International (CC BY 4.0) |
-| resid_build_sale_price                            | https://archive.ics.uci.edu/dataset/437/residential+building+data+set | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| resid_build_sale_price                            | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/437/residential+building+data+set) | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 
 *Archetti, F., Lanzeni, S., Messina, E., Vanneschi, L. (2007). Genetic Programming and Other Machine Learning Approaches to Predict Median Oral Lethal Dose (LD50) and Plasma Protein Binding Levels (%PPB) of Drugs. In: Marchiori, E., Moore, J.H., Rajapakse, J.C. (eds) Evolutionary Computation,Machine Learning and Data Mining in Bioinformatics. EvoBIO 2007. Lecture Notes in Computer Science, vol 4447. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-71783-6_2
 
