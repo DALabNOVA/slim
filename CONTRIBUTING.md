@@ -3,7 +3,7 @@
 
 Given our primary objective of promoting research, as well as the exploration and expansion of the SLIM-GSGP algorithm through the development of a library focused on simplicity and extensibility, this section is intended for researchers interested in extending the `slim_gsgp` library.
 
-The `slim_gsgp` source code is organized into six core modules: `algorithms`, `datasets`, `evaluators`, `initializers`, `selection`, and `utils`. The following subsections provide guidance for developers on expanding the Slim library.
+The `slim_gsgp` source code is organized into six core modules: `algorithms`, `datasets`, `evaluators`, `initializers`, `selection`, and `utils`. The following subsections provide guidance for developers on working on them.
 
 #### Config Files
 
