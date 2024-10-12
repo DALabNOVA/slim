@@ -4,4 +4,4 @@ slim
 .. toctree::
    :maxdepth: 4
 
-   slim
+   slim_gsgp
