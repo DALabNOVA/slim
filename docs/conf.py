@@ -8,6 +8,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
+autodoc_mock_imports = ['scipy', 'scikit-learn']
 
 project = 'slim_gsgp'
 copyright = '2024, L. Rosenfeld, et al.,'
