@@ -28,7 +28,6 @@ from slim_gsgp.evaluators.fitness_functions import *
 from slim_gsgp.utils.utils import (get_best_min, protected_div)
 
 # Define functions and constants
-# todo use only one dictionary for the parameters of each algorithm
 
 FUNCTIONS = {
     'add': {'function': torch.add, 'arity': 2},

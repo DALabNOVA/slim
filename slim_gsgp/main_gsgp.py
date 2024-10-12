@@ -34,7 +34,6 @@ from slim_gsgp.utils.logger import log_settings
 from slim_gsgp.utils.utils import get_terminals, validate_inputs, generate_random_uniform
 from typing import Callable
 
-# todo: would not be better to first log the settings and then perform the algorithm?
 def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
          dataset_name: str = None,
          pop_size: int = gsgp_parameters["pop_size"],
@@ -183,7 +182,7 @@ def gsgp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = No
     # getting a unique run id for the settings logging
     unique_run_id = uuid.uuid1()
 
-    # setting the algorithm name to standard gsgp for logging TODO: do I add this as a changeable thing?
+    # setting the algorithm name to standard gsgp for logging
     algo_name = "StandardGSGP"
 
     #   *************** GSGP_PI_INIT ***************

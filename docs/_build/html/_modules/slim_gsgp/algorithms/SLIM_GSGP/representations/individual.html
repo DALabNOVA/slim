@@ -402,11 +402,11 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Individual.print_tree_representation">
-<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.representations.html#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.print_tree_representation">[docs]</a>
-    <span class="k">def</span> <span class="nf">print_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Individual.get_tree_representation">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.representations.html#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.get_tree_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a string representation of the trees in the Individual.</span>
+<span class="sd">        Returns a string representation of the trees in the Individual.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -441,6 +441,27 @@
                 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span>
             <span class="p">]</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Individual.print_tree_representation">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.SLIM_GSGP.representations.html#slim_gsgp.algorithms.SLIM_GSGP.representations.individual.Individual.print_tree_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints a string representation of the trees in the Individual.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        operator : str, optional</span>
+<span class="sd">            The operator to use in the representation (&quot;sum&quot; or &quot;mul&quot;).</span>
+<span class="sd">            If None, it will be determined based on the version.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Prints a string representing the structure of the trees in the individual.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tree_representation</span><span class="p">())</span></div>
 </div>
 
 </pre></div>

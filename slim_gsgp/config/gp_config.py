@@ -31,8 +31,6 @@ from slim_gsgp.utils.utils import protected_div
 import torch
 
 # Define functions and constants
-# todo use only one dictionary for the parameters of each algorithm
-
 FUNCTIONS = {
     'add': {'function': torch.add, 'arity': 2},
     'subtract': {'function': torch.sub, 'arity': 2},

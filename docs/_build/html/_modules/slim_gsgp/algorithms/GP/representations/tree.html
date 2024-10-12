@@ -245,6 +245,45 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_tree</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Tree.get_tree_representation">
+<a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree.Tree.get_tree_representation">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the tree representation as a string with indentation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indent : str, optional</span>
+<span class="sd">            Indentation for tree structure representation. Default is an empty string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Returns the tree representation with the chosen indentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">representation</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
+            <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">function_name</span><span class="si">}</span><span class="s2">(</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># if the function has an arity of 2, process both left and right subtrees</span>
+            <span class="k">if</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">get_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">))</span>
+                <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">get_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">))</span>
+            <span class="c1"># if the function has an arity of 1, process the left subtree</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">get_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">))</span>
+
+            <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
+            <span class="n">representation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">representation</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Tree.print_tree_representation">
 <a class="viewcode-back" href="../../../../../slim_gsgp.algorithms.GP.representations.html#slim_gsgp.algorithms.GP.representations.tree.Tree.print_tree_representation">[docs]</a>
     <span class="k">def</span> <span class="nf">print_tree_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
@@ -255,22 +294,15 @@
 <span class="sd">        ----------</span>
 <span class="sd">        indent : str, optional</span>
 <span class="sd">            Indentation for tree structure representation. Default is an empty string.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            Prints the tree representation as a string with indentation.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># If it&#39;s a function node</span>
-            <span class="n">function_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">function_name</span><span class="si">}</span><span class="s2">(&quot;</span><span class="p">)</span>
-            <span class="c1"># if the function has an arity of 2, print both left and right subtrees</span>
-            <span class="k">if</span> <span class="n">Tree</span><span class="o">.</span><span class="n">FUNCTIONS</span><span class="p">[</span><span class="n">function_name</span><span class="p">][</span><span class="s2">&quot;arity&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="n">left_subtree</span><span class="p">,</span> <span class="n">right_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
-                <span class="n">Tree</span><span class="p">(</span><span class="n">right_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
-            <span class="c1"># if the function has an arity of 1, print the left subtree</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">left_subtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">Tree</span><span class="p">(</span><span class="n">left_subtree</span><span class="p">)</span><span class="o">.</span><span class="n">print_tree_representation</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># If it&#39;s a terminal node</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repr_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_tree_representation</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">))</span></div>
 </div>
 
 </pre></div>

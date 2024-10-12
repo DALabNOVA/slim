@@ -8,7 +8,7 @@ slim_gsgp.algorithms.GSGP
    slim_gsgp.algorithms.GSGP.representations
 
 
-slim_gsgp.algorithms.GSGP.gsgp module
+slim_gsgp.algorithms.GSGP.gsgp
 --------------------------------
 
 .. automodule:: slim_gsgp.algorithms.GSGP.gsgp
