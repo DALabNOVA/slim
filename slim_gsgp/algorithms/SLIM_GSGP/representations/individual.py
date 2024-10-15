@@ -320,9 +320,6 @@ class Individual:
 
         Parameters
         ----------
-        operator : str, optional
-            The operator to use in the representation ("sum" or "mul").
-            If None, it will be determined based on the version.
 
         Returns
         -------
@@ -358,9 +355,6 @@ class Individual:
 
         Parameters
         ----------
-        operator : str, optional
-            The operator to use in the representation ("sum" or "mul").
-            If None, it will be determined based on the version.
 
         Returns
         -------
