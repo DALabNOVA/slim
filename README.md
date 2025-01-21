@@ -2,6 +2,8 @@
 
 `slim_gsgp` is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly. Slim's documentation can be accessed in [Slim Documentation](https://slim-library.readthedocs.io/en/latest/). Users looking to extend `slim_gsgp` can refer to the [Developer Tutorial](CONTRIBUTING.md) for further guidance.
 
+`slim_gsgp` is built on Python 3.12.
+
 
 ## Installation
 
