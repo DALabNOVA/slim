@@ -184,8 +184,6 @@ X, y = load_pandas_df(df, X_y=True)
 # Split into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
 
-# Split the test set into validation and test sets
-X_val, X_test, y_val, y_test = t
 ```
 
 ## License
