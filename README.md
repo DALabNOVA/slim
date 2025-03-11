@@ -186,6 +186,82 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
 
 ```
 
+## SLIM for binary classification
+
+SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022][https://doi.org/10.1016/j.swevo.2021.101028]).
+During the training process, the user will need to use an adapted version of RMSE(or any other preferred fitness function) that wraps the outputs with a sigmoid to bound them in the interval [0,1].
+While for the predictions on the training set, every negative output will be assigned to the class 0 and every positive output to the class 1.
+An API python tutorial is provided.
+
+```python
+from slim_gsgp.main_slim import slim  # import the slim_gsgp library
+from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
+from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+from sklearn.metrics import accuracy_score
+
+# Defining the new fitness function
+def binarized_rmse(binarizer):
+    def sr(y_true, y_pred):
+        my_pred = binarizer(y_pred)
+        return torch.sqrt(torch.mean(torch.pow(torch.sub(y_true, my_pred), 2), len(y_pred.shape) - 1))
+
+    return sr
+
+def modified_sigmoid( scaling_factor):
+        def ms(tensor):
+            return torch.div(1,torch.add(1,torch.exp(torch.mul(-1,torch.mul(tensor, scaling_factor)))))
+
+        return ms
+
+binarizer = modified_sigmoid(1)
+fitness = binarized_rmse(binarizer)
+
+
+# Defining the converter for the final tree
+def binary_sign_transformer(tensor):
+    """
+    Transforms a tensor such that all negative values become 0,
+    and all non-negative values become 1.
+
+    Args:
+        input_tensor (torch.Tensor): The input tensor to transform.
+
+    Returns:
+        torch.Tensor: The transformed tensor.
+    """
+    transformed_tensor = (tensor >= 0).float()
+    return transformed_tensor
+
+final_binarizer = binary_sign_transformer
+
+
+# Load the PPB dataset
+X, y = load_ppb(X_y=True)
+
+# Split into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
+
+# Split the test set into validation and test sets
+X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
+
+# Apply the SLIM GSGP algorithm
+final_tree = slim(X_train=X_train, y_train=y_train,
+                  X_test=X_val, y_test=y_val,
+                  dataset_name='ppb', slim_version='SLIM+SIG2', pop_size=100, n_iter=100,
+                  ms_lower=0, ms_upper=1, p_inflate=0.5, fitness_function = fitness)
+
+# Show the best individual structure at the last generation
+final_tree.print_tree_representation()
+
+# Get the prediction of the best individual on the test set
+predictions = binary_sign_transformer(final_tree.predict(X_test))
+
+# Compute and print the RMSE on the test set
+print(accuracy_score(y_true=y_test, y_pred=predictions))
+```
+
+
+
 ## License
 
 This library is [MIT licensed](https://github.com/DALabNOVA/slim?tab=MIT-1-ov-file).
