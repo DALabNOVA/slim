@@ -294,17 +294,17 @@ If you use TPOT in a scientific publication, please consider citing the followin
 
 ```latex
 @InProceedings{Vanneschi2024,
-author="Vanneschi, Leonardo",
-editor="Giacobini, Mario
-and Xue, Bing
-and Manzoni, Luca",
-title="{SLIM}{\_}{GSGP}: The Non-bloating Geometric Semantic Genetic Programming",
-booktitle="Genetic Programming",
-year="2024",
-publisher="Springer Nature Switzerland",
-address="Cham",
-pages="125--141",
-isbn="978-3-031-56957-9"
+		author="Vanneschi, Leonardo",
+		editor="Giacobini, Mario
+		and Xue, Bing
+		and Manzoni, Luca",
+		title="{SLIM}{\_}{GSGP}: The Non-bloating Geometric Semantic Genetic Programming",
+		booktitle="Genetic Programming",
+		year="2024",
+		publisher="Springer Nature Switzerland",
+		address="Cham",
+		pages="125--141",
+		isbn="978-3-031-56957-9"
 }
 ```
 
