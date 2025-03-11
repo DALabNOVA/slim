@@ -310,17 +310,17 @@ If you use TPOT in a scientific publication, please consider citing the followin
 
 ```latex
 @article{Vanneschi2025,
-	author = {Vanneschi, Leonardo and Farinati, Davide and Rasteiro, Diogo and Rosenfeld, Liah and Pietropolli, Gloria and Silva, Sara},
-	title = {{Exploring Non-bloating Geometric Semantic Genetic Programming}},
-	booktitle = {{Genetic Programming Theory and Practice XXI}},
-	journal = {SpringerLink},
-	pages = {237--258},
-	year = {2025},
-	month = 2,
-	isbn = {9789819600779},
-	publisher = {Springer},
-	address = {Singapore},
-	doi = {10.1007/978-981-96-0077-9_12}
+	 author = {Vanneschi, Leonardo and Farinati, Davide and Rasteiro, Diogo and Rosenfeld, Liah and Pietropolli, Gloria and Silva, Sara},
+	 title = {{Exploring Non-bloating Geometric Semantic Genetic Programming}},
+	 booktitle = {{Genetic Programming Theory and Practice XXI}},
+	 journal = {SpringerLink},
+	 pages = {237--258},
+	 year = {2025},
+	 month = 2,
+	 isbn = {9789819600779},
+	 publisher = {Springer},
+	 address = {Singapore},
+	 doi = {10.1007/978-981-96-0077-9_12}
 }
 ```
 
