@@ -188,7 +188,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
 
 ## SLIM for binary classification
 
-SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022][https://doi.org/10.1016/j.swevo.2021.101028]).
+SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022](https://doi.org/10.1016/j.swevo.2021.101028)).
 During the training process, the user will need to use an adapted version of RMSE(or any other preferred fitness function) that wraps the outputs with a sigmoid to bound them in the interval [0,1].
 While for the predictions on the training set, every negative output will be assigned to the class 0 and every positive output to the class 1.
 An API python tutorial is provided.
@@ -287,4 +287,36 @@ The datasets provided are public. The table below specifies the source and licen
 | resid_build_sale_price                            | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/437/residential+building+data+set) | Creative Commons Attribution 4.0 International (CC BY 4.0) |
 
 *Archetti, F., Lanzeni, S., Messina, E., Vanneschi, L. (2007). Genetic Programming and Other Machine Learning Approaches to Predict Median Oral Lethal Dose (LD50) and Plasma Protein Binding Levels (%PPB) of Drugs. In: Marchiori, E., Moore, J.H., Rajapakse, J.C. (eds) Evolutionary Computation,Machine Learning and Data Mining in Bioinformatics. EvoBIO 2007. Lecture Notes in Computer Science, vol 4447. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-71783-6_2
+
+## Citing 
+
+If you use TPOT in a scientific publication, please consider citing the following papers:
+
+@InProceedings{Vanneschi2024,
+author="Vanneschi, Leonardo",
+editor="Giacobini, Mario
+and Xue, Bing
+and Manzoni, Luca",
+title="{SLIM}{\_}{GSGP}: The Non-bloating Geometric Semantic Genetic Programming",
+booktitle="Genetic Programming",
+year="2024",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="125--141",
+isbn="978-3-031-56957-9"
+}
+
+@article{Vanneschi2025,
+	author = {Vanneschi, Leonardo and Farinati, Davide and Rasteiro, Diogo and Rosenfeld, Liah and Pietropolli, Gloria and Silva, Sara},
+	title = {{Exploring Non-bloating Geometric Semantic Genetic Programming}},
+	booktitle = {{Genetic Programming Theory and Practice XXI}},
+	journal = {SpringerLink},
+	pages = {237--258},
+	year = {2025},
+	month = 2,
+	isbn = {9789819600779},
+	publisher = {Springer},
+	address = {Singapore},
+	doi = {10.1007/978-981-96-0077-9_12}
+}
 
