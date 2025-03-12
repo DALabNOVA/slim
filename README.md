@@ -232,8 +232,6 @@ def binary_sign_transformer(tensor):
     transformed_tensor = (tensor >= 0).float()
     return transformed_tensor
 
-final_binarizer = binary_sign_transformer
-
 
 # Load the PPB dataset
 X, y = load_ppb(X_y=True)
