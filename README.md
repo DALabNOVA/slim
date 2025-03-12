@@ -290,7 +290,7 @@ The datasets provided are public. The table below specifies the source and licen
 
 ## Citing 
 
-If you use TPOT in a scientific publication, please consider citing the following papers:
+If you use SLIM in a scientific publication, please consider citing the following papers:
 
 ```latex
 @InProceedings{Vanneschi2024,
