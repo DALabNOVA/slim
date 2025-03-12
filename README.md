@@ -198,6 +198,7 @@ from slim_gsgp.main_slim import slim  # import the slim_gsgp library
 from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
 from sklearn.metrics import accuracy_score
+from slim_gsgp.config.slim_config import fitness_function_options
 
 # Defining the new fitness function
 def binarized_rmse(binarizer):
@@ -214,7 +215,7 @@ def modified_sigmoid( scaling_factor):
         return ms
 
 binarizer = modified_sigmoid(1)
-fitness = binarized_rmse(binarizer)
+fitness_function_options['binarized_rmse'] = binarized_rmse(binarized)
 
 
 # Defining the converter for the final tree
@@ -246,7 +247,7 @@ X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
 final_tree = slim(X_train=X_train, y_train=y_train,
                   X_test=X_val, y_test=y_val,
                   dataset_name='ppb', slim_version='SLIM+ABS', pop_size=100, n_iter=100,
-                  ms_lower=0, ms_upper=1, p_inflate=0.5, fitness_function = fitness)
+                  ms_lower=0, ms_upper=1, p_inflate=0.5, fitness_function = 'binarized_rmse')
 
 # Show the best individual structure at the last generation
 final_tree.print_tree_representation()
