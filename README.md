@@ -189,7 +189,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
 ## SLIM for binary classification
 
 SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022](https://doi.org/10.1016/j.swevo.2021.101028)).
-During the training process, the user will need to use an adapted version of RMSE(or any other preferred fitness function) that wraps the outputs with a sigmoid to bound them in the interval [0,1].
+During the training process, the user must use an adapted version of RMSE(or any other preferred fitness function) that wraps the outputs with a sigmoid to bound them in the interval [0,1].
 While for the predictions on the training set, every negative output will be assigned to the class 0 and every positive output to the class 1.
 An API python tutorial is provided.
 
