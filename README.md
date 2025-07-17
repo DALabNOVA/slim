@@ -292,6 +292,23 @@ The datasets provided are public. The table below specifies the source and licen
 If you use SLIM in a scientific publication, please consider citing the following papers:
 
 ```latex
+@inproceedings{rosenfeld2025slimgsgp,
+  author       = {Liah Rosenfeld and Davide Farinati and Diogo Rasteiro and Gloria Pietropolli and Karina Brotto Rebuli and Sara Silva and Leonardo Vanneschi},
+  title        = {Slim\_gsgp: A Python Library for Non-Bloating GSGP},
+  booktitle    = {Genetic and Evolutionary Computation Conference (GECCO ’25)},
+  year         = {2025},
+  month        = {July},
+  day          = {14--18},
+  address      = {Malaga, Spain},
+  publisher    = {ACM},
+  location     = {New York, NY, USA},
+  pages        = {9},
+  doi          = {10.1145/3712256.3726398},
+  url          = {https://doi.org/10.1145/3712256.3726398}
+}
+```
+
+```latex
 @InProceedings{Vanneschi2024,
                author="Vanneschi, Leonardo",
                editor="Giacobini, Mario
