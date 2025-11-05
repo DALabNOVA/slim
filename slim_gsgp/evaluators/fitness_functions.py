@@ -119,3 +119,26 @@ def signed_errors(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
         Signed error values.
     """
     return torch.sub(y_true, y_pred)
+
+def r2_score(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
+    """
+    Compute R-squared (R²) score.
+
+    If using this fitness function, please ensure that you are maximizing the fitness value when
+
+    Parameters
+    ----------
+    y_true : torch.Tensor
+        True values.
+    y_pred : torch.Tensor
+        Predicted values.
+
+    Returns
+    -------
+    torch.Tensor
+        R² score value.
+    """
+    ss_res = torch.sum(torch.square(y_true - y_pred))
+    ss_tot = torch.sum(torch.square(y_true - torch.mean(y_true)))
+    r2 = 1 - (ss_res / ss_tot)
+    return r2
