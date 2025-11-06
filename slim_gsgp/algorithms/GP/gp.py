@@ -305,21 +305,32 @@ class GP:
                     tree2_n_nodes=p2.node_count,
                 )
 
+                offspring = []
+
                 # assuring the offspring do not exceed max_depth
                 if max_depth is not None:
-                    while (
-                        depth_calculator(offs1) > max_depth
-                        or depth_calculator(offs2) > max_depth
-                    ):
-                        offs1, offs2 = self.crossover(
-                            p1.repr_,
-                            p2.repr_,
-                            tree1_n_nodes=p1.node_count,
-                            tree2_n_nodes=p2.node_count,
-                        )
+                    # While we don't have at least one valid offspring
+                    while len(offspring) < 1:
+                        # Check if both offspring exceed max_depth, and if so, redo crossover
+                        if depth_calculator(offs1) > max_depth and depth_calculator(offs2) > max_depth:
+                            offs1, offs2 = self.crossover(
+                                p1.repr_,
+                                p2.repr_,
+                                tree1_n_nodes=p1.node_count,
+                                tree2_n_nodes=p2.node_count,
+                            )
+                        # If either offspring is valid, add them to the list
+                        else:
+                            if depth_calculator(offs1) <= max_depth:
+                                offspring.append(offs1)
+                            if depth_calculator(offs2) <= max_depth and len(offspring) < 2:
+                                offspring.append(offs2)
+                else:
+                    # If no max_depth constraint, add both offspring
+                    offspring = [offs1, offs2]
 
                 # grouping the offspring in a list to be added to the offspring population
-                offspring = [offs1, offs2]
+
 
             else: # if mutation was chosen
                 # choosing a parent
