@@ -186,6 +186,18 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
 
 ```
 
+To save and load individuals created with the `slim_gsgp` library, users can utilize the `save_to_file` and `load_from_file` functions from the `utils.utils` module. Here's an example of how to use these functions, assuming said individual is stored in a variable named 'final_tree':
+
+```python
+# Saving the individual to a file
+final_tree.save_to_file('path/your_file.txt')
+
+# Loading the individual from a file
+loaded_tree = Individual.load_from_file('path/your_file.txt')
+```
+
+
+
 ## SLIM for binary classification
 
 SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022](https://doi.org/10.1016/j.swevo.2021.101028)).
