@@ -115,3 +115,9 @@ def test_slim_immutability():
     print(float(rmse(y_true=y_test, y_pred=predictions)))
     assert float(rmse(y_true=y_test, y_pred=predictions)) == valid_result, "Final result should not change with updates"
 
+def test_slim_saving_and_loading():
+    result_tree = slim(valid_X_train, valid_y_train, n_iter=valid_n_iter, reconstruct=True)
+    result_tree.save_to_file('test_slim_saving.txt')
+    loaded_tree = type(result_tree).load_from_file('test_slim_saving.txt')
+    assert torch.equal(result_tree.predict(valid_X_test), loaded_tree.predict(valid_X_test)), \
+        "Loaded tree should produce the same predictions as the original"
