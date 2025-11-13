@@ -22,6 +22,7 @@
 from slim_gsgp.main_gp import gp  # import the slim_gsgp library
 import pytest
 import torch
+import os
 from slim_gsgp.main_slim import slim  # import the slim_gsgp library
 from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
 from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
@@ -115,3 +116,17 @@ def test_slim_immutability():
     print(float(rmse(y_true=y_test, y_pred=predictions)))
     assert float(rmse(y_true=y_test, y_pred=predictions)) == valid_result, "Final result should not change with updates"
 
+
+def test_slim_saving_and_loading(tmp_path):
+    result_tree = slim(valid_X_train, valid_y_train, n_iter=valid_n_iter, reconstruct=True)
+
+    # Save the individual to a temporary file
+    file_path = tmp_path / "test_slim_saving.pkl"
+    result_tree.save_to_file(file_path)
+
+    # Load the individual back from the file
+    loaded_tree = type(result_tree).load_from_file(file_path)
+
+    # Assert predictions are the same
+    assert torch.equal(result_tree.predict(valid_X_test), loaded_tree.predict(valid_X_test)), \
+        "Loaded tree should produce the same predictions as the original"
