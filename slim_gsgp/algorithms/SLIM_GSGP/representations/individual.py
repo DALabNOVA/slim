@@ -24,6 +24,7 @@ Individual Class and Utility Functions for SLIM GSGP.
 """
 
 import torch
+import dill
 from slim_gsgp.algorithms.GSGP.representations.tree_utils import apply_tree
 from slim_gsgp.utils.utils import check_slim_version
 
@@ -363,3 +364,38 @@ class Individual:
         """
 
         print(self.get_tree_representation())
+
+    def save_to_file(self, file_path):
+        """
+        Save the Individual object to a file.
+
+        Parameters
+        ----------
+        file_path : str
+            The path to the file where the Individual will be saved.
+
+        Returns
+        -------
+        None
+        """
+        with open(file_path, 'wb') as file:
+            dill.dump(self, file)
+
+    @staticmethod
+    def load_from_file(file_path):
+        """
+        Load an Individual object from a file.
+
+        Parameters
+        ----------
+        file_path : str
+            The path to the file from which the Individual will be loaded.
+
+        Returns
+        -------
+        Individual
+            The loaded Individual object.
+        """
+        with open(file_path, 'rb') as file:
+            individual = dill.load(file)
+        return individual
