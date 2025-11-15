@@ -94,7 +94,8 @@ fitness_function_options = {
     "mse": mse,
     "mae": mae,
     "mae_int": mae_int,
-    "signed_errors": signed_errors
+    "signed_errors": signed_errors,
+    "r2": r2_score
 }
 
 initializer_options = {
