@@ -165,3 +165,28 @@ def r2_score(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
     ss_tot = torch.sum(torch.square(y_true - torch.mean(y_true)))
     r2 = 1 - (ss_res / ss_tot)
     return r2
+
+@to_tensor
+def pearson_correlation(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
+    """
+    Compute Pearson Correlation Coefficient.
+
+    Parameters
+    ----------
+    y_true : torch.Tensor
+        True values.
+    y_pred : torch.Tensor
+        Predicted values.
+
+    Returns
+    -------
+    torch.Tensor
+        Pearson correlation coefficient value.
+    """
+    y_true_mean = torch.mean(y_true)
+    y_pred_mean = torch.mean(y_pred)
+
+    numerator = torch.sum((y_true - y_true_mean) * (y_pred - y_pred_mean))
+    denominator = torch.sqrt(torch.sum((y_true - y_true_mean) ** 2) * torch.sum((y_pred - y_pred_mean) ** 2))
+
+    return numerator / denominator
