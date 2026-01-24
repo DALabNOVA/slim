@@ -118,11 +118,11 @@ def logger(
     with open(path, "a", newline="") as file:
         writer = csv.writer(file)
         infos = copy(run_info) if run_info is not None else []
-        infos.extend([seed, generation, *elite_fit, timing, nodes])
+        infos.extend([seed, generation, [float(e) for e in elite_fit], timing, nodes])
 
         if additional_infos is not None:
             try:
-                additional_infos[0] = float(additional_infos[0])
+                additional_infos[0] = [float(add) for add in additional_infos[0]]
             except:
                 additional_infos[0] = "None"
             infos.extend(additional_infos)
