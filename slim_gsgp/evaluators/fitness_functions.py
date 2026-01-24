@@ -191,4 +191,4 @@ def pearson_correlation(y_true: torch.Tensor, y_pred: torch.Tensor, eps: float =
     numerator = torch.sum((y_true - y_true_mean) * (y_pred - y_pred_mean))
     denominator = torch.sqrt(torch.sum((y_true - y_true_mean) ** 2) * torch.sum((y_pred - y_pred_mean) ** 2))
 
-    return (numerator / denominator) + eps
+    return numerator / (denominator + eps)
