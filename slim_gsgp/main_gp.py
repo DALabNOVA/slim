@@ -25,7 +25,6 @@ logging the results for further analysis.
 """
 import uuid
 import os
-import warnings
 from slim_gsgp.algorithms.GP.gp import GP
 from slim_gsgp.algorithms.GP.operators.mutators import mutate_tree_subtree
 from slim_gsgp.algorithms.GP.representations.tree_utils import tree_depth
@@ -36,7 +35,7 @@ from slim_gsgp.utils.utils import (get_terminals, validate_inputs, get_best_max,
 
 
 def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None, y_test: torch.Tensor = None,
-       dataset_name: str = None,
+       dataset_name: str = "dataset_1",
        pop_size: int = gp_parameters["pop_size"],
        n_iter: int = gp_solve_parameters["n_iter"],
        p_xo: float = gp_parameters['p_xo'],
@@ -54,7 +53,8 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
        tree_functions: list = list(FUNCTIONS.keys()),
        tree_constants: list = [float(key.replace("constant_", "").replace("_", "-")) for key in CONSTANTS],
        tournament_size: int = 2,
-       test_elite: bool = gp_solve_parameters["test_elite"]):
+       test_elite: bool = gp_solve_parameters["test_elite"],
+       sigmoid_scaling_factor: float = 1.0):
 
     """
     Main function to execute the StandardGP algorithm on specified datasets
@@ -111,6 +111,9 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
         Tournament size to utilize during selection. Only applicable if using tournament selection. (Default is 2)
     test_elite : bool, optional
         Whether to test the elite individual on the test set after each generation.
+    sigmoid_scaling_factor : float, optional
+        Scaling factor for the sigmoid used in the ``sigmoid_rmse`` fitness function.
+        Only relevant when ``fitness_function="sigmoid_rmse"`` (default is 1.0).
 
     Returns
     -------
@@ -136,8 +139,7 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     assert 0 <= p_xo <= 1, "p_xo must be a number between 0 and 1"
 
     if test_elite and (X_test is None or y_test is None):
-        warnings.warn("If test_elite is True, a test dataset must be provided. test_elite has been set to False")
-        test_elite = False
+        raise ValueError("test_elite=True requires both X_test and y_test")
 
     if not isinstance(max_depth, int) and max_depth is not None:
         raise TypeError("max_depth value must be a int or None")
@@ -145,9 +147,13 @@ def gp(X_train: torch.Tensor, y_train: torch.Tensor, X_test: torch.Tensor = None
     assert max_depth is None or init_depth <= max_depth, f"max_depth must be at least {init_depth}"
 
     if dataset_name is None:
-        warnings.warn("No dataset name set. Using default value of dataset_1.")
         dataset_name = "dataset_1"
 
+
+    # if using sigmoid_rmse, rebuild it with the requested scaling factor
+    if fitness_function.lower() == "sigmoid_rmse":
+        from slim_gsgp.evaluators.fitness_functions import sigmoid_rmse as _sigmoid_rmse
+        fitness_function_options["sigmoid_rmse"] = _sigmoid_rmse(sigmoid_scaling_factor)
 
     # creating a list with the valid available fitness functions
     valid_fitnesses = list(fitness_function_options)

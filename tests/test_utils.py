@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from slim_gsgp.utils.utils import get_best_max, get_best_min
+from slim_gsgp.initializers.initializers import full
+from slim_gsgp.config.slim_config import FUNCTIONS, CONSTANTS
 import random
 
 def test_get_best_max():
@@ -80,3 +82,27 @@ def test_get_best_min():
 
         assert (example1 in result1 and example2 in result1 and example3 in result1 and
                 result2 == example1)
+
+
+def test_get_best_accepts_every_population_member_as_elite():
+    class Individual:
+        def __init__(self, fitness):
+            self.fitness = fitness
+
+    class Population:
+        def __init__(self):
+            self.population = [Individual(3.0), Individual(1.0), Individual(2.0)]
+            self.fit = [individual.fitness for individual in self.population]
+
+    population = Population()
+    min_elites, min_elite = get_best_min(population, 3)
+    max_elites, max_elite = get_best_max(population, 3)
+    assert len(min_elites) == len(max_elites) == 3
+    assert min_elite.fitness == 1.0
+    assert max_elite.fitness == 3.0
+
+
+def test_full_initializer_returns_requested_population_size():
+    terminals = {"x0": 0}
+    assert len(full(1, 2, FUNCTIONS, terminals, CONSTANTS)) == 1
+    assert len(full(5, 2, FUNCTIONS, terminals, CONSTANTS)) == 5

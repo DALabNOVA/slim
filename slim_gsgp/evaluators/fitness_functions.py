@@ -138,7 +138,60 @@ def r2_score(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
     torch.Tensor
         R² score value.
     """
-    ss_res = torch.sum(torch.square(y_true - y_pred))
+    dim = len(y_pred.shape) - 1
+    ss_res = torch.sum(torch.square(y_true - y_pred), dim=dim)
     ss_tot = torch.sum(torch.square(y_true - torch.mean(y_true)))
-    r2 = 1 - (ss_res / ss_tot)
-    return r2
+    # Match the useful finite convention for a constant target: a perfect
+    # prediction scores 1, every other prediction scores 0.
+    return torch.where(
+        ss_tot == 0,
+        torch.where(ss_res == 0, torch.ones_like(ss_res), torch.zeros_like(ss_res)),
+        1 - (ss_res / ss_tot),
+    )
+
+
+def sigmoid_rmse(scaling_factor: float = 1.0):
+    """
+    Create a sigmoid-wrapped RMSE fitness function for binary classification.
+
+    During training, the raw tree outputs are passed through a sigmoid to bound
+    them in [0, 1] before computing RMSE against binary labels. At prediction
+    time, use ``binary_sign_transform`` to convert raw outputs to class labels.
+
+    Parameters
+    ----------
+    scaling_factor : float, optional
+        Controls the steepness of the sigmoid (default is 1.0).
+
+    Returns
+    -------
+    Callable[[torch.Tensor, torch.Tensor], torch.Tensor]
+        A fitness function with signature ``(y_true, y_pred) -> torch.Tensor``.
+    """
+    def _sigmoid_rmse(y_true: torch.Tensor, y_pred: torch.Tensor) -> torch.Tensor:
+        sigmoid_pred = torch.div(1, torch.add(1, torch.exp(torch.mul(-scaling_factor, y_pred))))
+        return torch.sqrt(torch.mean(torch.square(torch.sub(y_true, sigmoid_pred)), dim=len(y_pred.shape) - 1))
+
+    _sigmoid_rmse.__name__ = f"sigmoid_rmse(scaling_factor={scaling_factor})"
+    return _sigmoid_rmse
+
+
+def binary_sign_transform(y_pred: torch.Tensor) -> torch.Tensor:
+    """
+    Convert raw SLIM/GSGP outputs to binary class labels.
+
+    All negative values are mapped to class 0, all non-negative values to class 1.
+    Use this function on the output of ``Individual.predict()`` when the model was
+    trained with a sigmoid-based fitness function (e.g. ``sigmoid_rmse``).
+
+    Parameters
+    ----------
+    y_pred : torch.Tensor
+        Raw predictions from the trained individual.
+
+    Returns
+    -------
+    torch.Tensor
+        Binary tensor of 0s and 1s.
+    """
+    return (y_pred >= 0).float()

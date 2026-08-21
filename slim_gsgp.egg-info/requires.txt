@@ -4,3 +4,4 @@ torch
 scipy
 scikit-learn
 joblib
+dill

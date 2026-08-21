@@ -25,6 +25,7 @@ Individual Class and Utility Functions for SLIM GSGP.
 
 import torch
 import dill
+from types import SimpleNamespace
 from slim_gsgp.algorithms.GSGP.representations.tree_utils import apply_tree
 from slim_gsgp.utils.utils import check_slim_version
 
@@ -97,6 +98,12 @@ class Individual:
         self.fitness = None
         self.test_fitness = None
 
+    def get_train_semantics_collapsed(self, operator, dim=0):
+        return operator(self.train_semantics, dim=dim)
+
+    def get_test_semantics_collapsed(self, operator, dim=0):
+        return operator(self.test_semantics, dim=dim)
+
     def calculate_semantics(self, inputs, testing=False):
         """
         Calculate the semantics for the Individual. Result is stored as an attribute associated with the object.
@@ -113,35 +120,29 @@ class Individual:
         None
         """
 
-        # computing the testing semantics, if not existent
-        if testing and self.test_semantics is None:
-            # getting the semantics for every tree in the collection
-            [tree.calculate_semantics(inputs, testing) for tree in self.collection]
-            self.test_semantics = torch.stack(
-                [
-                    (
-                        tree.test_semantics
-                        if tree.test_semantics.shape != torch.Size([])
-                        else tree.test_semantics.repeat(len(inputs))
-                    )
-                    for tree in self.collection
-                ]
-            )
+        semantics_attribute = "test_semantics" if testing else "train_semantics"
+        if getattr(self, semantics_attribute) is not None:
+            return
 
-        # computing the training semantics
-        elif self.train_semantics is None:
-            # getting the semantics for every tree in the collection
-            [tree.calculate_semantics(inputs, testing) for tree in self.collection]
-            self.train_semantics = torch.stack(
+        for tree in self.collection:
+            tree.calculate_semantics(inputs, testing)
+
+        semantics = [
+            getattr(tree, semantics_attribute)
+            for tree in self.collection
+        ]
+        setattr(
+            self,
+            semantics_attribute,
+            torch.stack(
                 [
-                    (
-                        tree.train_semantics
-                        if tree.train_semantics.shape != torch.Size([])
-                        else tree.train_semantics.repeat(len(inputs))
-                    )
-                    for tree in self.collection
+                    semantic
+                    if semantic.ndim != 0
+                    else semantic.expand(len(inputs))
+                    for semantic in semantics
                 ]
-            )
+            ),
+        )
 
     def __len__(self):
         """
@@ -216,91 +217,41 @@ class Individual:
                 ),
             )
 
+    @staticmethod
+    def _predict_block(tree, data, sig):
+        """Evaluate one reconstructed SLIM block without mutating cached semantics."""
+        if isinstance(tree.structure, tuple):
+            return apply_tree(tree, data)
+
+        if len(tree.structure) == 3:
+            child = apply_tree(tree.structure[1], data)
+            if sig:
+                child = torch.sigmoid(child)
+            return tree.structure[0](
+                SimpleNamespace(train_semantics=child),
+                tree.structure[2],
+                testing=False,
+            )
+
+        left = SimpleNamespace(
+            train_semantics=torch.sigmoid(apply_tree(tree.structure[1], data))
+        )
+        right = SimpleNamespace(
+            train_semantics=torch.sigmoid(apply_tree(tree.structure[2], data))
+        )
+        return tree.structure[0](left, right, tree.structure[3], testing=False)
+
     def predict(self, data):
-        """
-            Predict the output for the given input data using the model's collection of trees
-            and the specified slim_gsgp version.
-
-            Parameters
-            ----------
-            data : array-like or DataFrame
-                The input data to predict. It should be an array-like structure
-                (e.g., list, numpy array) or a pandas DataFrame, where each row represents a
-                different observation and each column represents a feature.
-
-            Returns
-            -------
-            Tensor
-                The predicted output for the input data. The output is a PyTorch Tensor whose values
-                are clamped between -1e12 and 1e12.
-
-            Notes
-            -----
-            The prediction involves several steps:
-
-            1. The `check_slim_version` function is called with the `slim_version` flag to determine
-               the appropriate operator (`sum` or `prod`), whether to apply a sigmoid function (`sig`),
-               and the specific trees to use for prediction.
-
-            2. For each tree in the `self.collection`:
-               - If the tree structure is a tuple, predictions are made using the `apply_tree` function.
-               - If the tree structure is a list:
-                 - For single-tree structures (length 3), predictions are made directly or with a sigmoid
-                   function applied, and training semantics are updated.
-                 - For two-tree structures (length 4), predictions for both trees are made with a sigmoid
-                   function applied, and training semantics are updated for both trees.
-
-            3. The semantics (predicted outputs) of all trees are combined using the specified operator
-               (`sum` or `prod`), and the final output is clamped to be within the range of -1e12 to 1e12.
-
-            This function relies on PyTorch for tensor operations, including `torch.sigmoid`,
-            `torch.sum`, `torch.prod`, `torch.stack`, and `torch.clamp`.
-            """
+        """Predict from reconstructed blocks while preserving their cached semantics."""
 
         # seeing if the tree has the structure attribute
         if not hasattr(self, "collection"):
-            raise Exception("If reconstruct was set to False, .predict() is not available")
+            raise RuntimeError("predict() is unavailable when reconstruct=False")
 
         # getting the relevant variables based on the used slim_gsgp version
         operator, sig, trees = check_slim_version(slim_version=self.version)
 
-        # getting an empty semantics list
-        semantics = []
-
-        # getting the semantics for each tree in the collection
-        for t in self.collection:
-            if isinstance(t.structure, tuple): # if it's a base (gp) tree
-                semantics.append(apply_tree(t, data))
-            else:
-                if len(t.structure) == 3:  # one tree mutation
-                    # seeing if a logistic function is to be used
-                    if sig:
-                        # saving the previous semantics, for safekeeping
-                        t.structure[1].previous_training = t.train_semantics
-                        # getting the new training semantics based on the provided data
-                        t.structure[1].train_semantics = torch.sigmoid(
-                            apply_tree(t.structure[1], data)
-                        )
-                    else:
-                        # saving the previous semantics, for safekeeping
-                        t.structure[1].previous_training = t.train_semantics
-                        # getting the new training semantics based on the provided data
-                        t.structure[1].train_semantics = apply_tree(t.structure[1], data)
-
-                elif len(t.structure) == 4:  # two tree mutation
-                    t.structure[1].previous_training = t.train_semantics
-                    t.structure[1].train_semantics = torch.sigmoid(
-                        apply_tree(t.structure[1], data)
-                    )
-                    # saving the previous semantics, for safekeeping
-                    t.structure[2].previous_training = t.train_semantics
-                    # getting the new training semantics based on the provided data
-                    t.structure[2].train_semantics = torch.sigmoid(
-                        apply_tree(t.structure[2], data)
-                    )
-
-                # getting the semantics by calling the corresponding operator on the structure
-                semantics.append(t.structure[0](*t.structure[1:], testing=False))
+        semantics = [self._predict_block(tree, data, sig) for tree in self.collection]
 
         # getting the correct torch function based on the used operator (mul or sum)
         operator = torch.sum if operator == "sum" else torch.prod
@@ -308,7 +259,7 @@ class Individual:
         # making sure that if the semantics of the collection is solely a constant,
         # the constant value is repeated len(data) number of times to match the remaining semantics' shapes.
 
-        semantics = [ten if ten.numel() == len(data) else ten.repeat(len(data)) for ten in semantics]
+        semantics = [ten if ten.numel() == len(data) else ten.expand(len(data)) for ten in semantics]
 
         # clamping the semantics
         return torch.clamp(

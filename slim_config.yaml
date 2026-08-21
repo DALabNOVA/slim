@@ -1,0 +1,155 @@
+# SLIM-GSGP parameters
+#
+# Every key below is a keyword argument of `slim_gsgp.main_slim.slim()`, with the
+# recommended starting value and the accepted range as a comment. Defaults in
+# parentheses are what `slim()` uses when the argument is omitted; where the
+# recommended value differs from the default, it is called out.
+#
+#   from slim_gsgp.main_slim import slim
+#   model = slim(X_train=X_train, y_train=y_train, **params)
+#
+# Values marked DATASET-DEPENDENT must be set per problem; there is no
+# defensible default.
+
+# ---------------------------------------------------------------------------
+# Population and budget
+# ---------------------------------------------------------------------------
+
+pop_size: 100                # int > 0. (default 100)
+                             # Total cost is pop_size * n_iter; hold that product
+                             # fixed when comparing methods, not pop_size alone.
+
+n_iter: 1000                 # int > 0. Recommended 1000-2000. (default 1000)
+                             # 2000 for hard or large problems. Note the
+                             # classification campaign uses 100 for tractability.
+
+# ---------------------------------------------------------------------------
+# Initialization
+# ---------------------------------------------------------------------------
+
+init_depth: 6                # int >= 1. (default 6)
+                             # Max depth of the initial trees. Interacts with
+                             # max_depth below, which bounds growth thereafter.
+
+initializer: rhh             # "rhh" | "grow" | "full". (default "rhh")
+                             # rhh = Ramped Half-and-Half.
+
+prob_const: 0.2              # float in [0, 1]. (default 0.2)
+                             # Probability a terminal is drawn from tree_constants
+                             # rather than from an input variable.
+
+# ---------------------------------------------------------------------------
+# Selection
+# ---------------------------------------------------------------------------
+
+tournament_size: 2           # int >= 2. (default 2)
+                             # 2 is near-minimal pressure; raise to intensify.
+
+elitism: true                # bool. (default true)
+
+n_elites: 1                  # int >= 1, used only when elitism is true. (default 1)
+
+# ---------------------------------------------------------------------------
+# Variation operators
+# ---------------------------------------------------------------------------
+
+p_inflate: 0.3               # float in [0, 1]. Recommended 0.3. (default 0.2)
+                             # p_deflate is NOT a slim() argument: main_slim.py:282
+                             # sets p_deflate = 1 - p_inflate, so p_inflate 0.3
+                             # yields the recommended p_deflate 0.7. Set only this.
+
+ms_lower: 0                  # float >= 0. (default 0)
+                             # Lower bound of the uniform mutation-step distribution.
+
+ms_upper: 1                  # float >= ms_lower. DATASET-DEPENDENT. (default 1)
+                             # The step scale must match the target's scale, so tune
+                             # per problem. ms_lower == ms_upper fixes the step.
+                             # MS-SLIM's use_adaptive_inflate solves for the step
+                             # instead of sampling it, which is what Q5 tests.
+
+copy_parent: true            # bool. (default true)
+                             # Keep the parent when a mutation would exceed max_depth.
+
+# ---------------------------------------------------------------------------
+# Representation
+# ---------------------------------------------------------------------------
+
+slim_version: SLIM+ABS       # "SLIM+ABS" | "SLIM*ABS" | "SLIM+SIG1" | "SLIM*SIG1"
+                             #  | "SLIM+SIG2" | "SLIM*SIG2".  (default "SLIM+SIG2")
+                             # "+" additive semantics, "*" multiplicative.
+                             # All six work for binary classification and for the
+                             # independent multiclass architecture (fit_multiclass).
+                             # Two paths require "SLIM+" and reject the rest:
+                             # shared-block multiclass (shared_blocks.py:231) and
+                             # use_adaptive_inflate (adaptive_inflate.py:120), both
+                             # because they need semantics linear in a coefficient,
+                             # which a multiplicative (prod) collapse destroys.
+
+max_depth: 15                # int > init_depth, or null for unbounded. (default 15)
+
+tree_functions:              # any subset of: add, subtract, multiply, divide
+  - add                      # "divide" is protected division (protected_div).
+  - subtract
+  - multiply
+  - divide
+
+tree_constants:              # floats usable as terminals. (default [2, 3, 4, 5, -1])
+  - 2.0
+  - 3.0
+  - 4.0
+  - 5.0
+  - -1.0
+
+# ---------------------------------------------------------------------------
+# Fitness
+# ---------------------------------------------------------------------------
+
+fitness_function: rmse       # Regression: "rmse" | "mse" | "mae" | "mae_int"
+                             #             | "signed_errors" | "r2".  (default "rmse")
+                             # Classification: "sigmoid_rmse" | "margin"
+                             #             | "logistic" | "code_regression".
+                             # Label encoding must match the loss. Use
+                             # slim_gsgp.classification.get_strategy(name), which
+                             # binds encoder, loss and decoder as one unit.
+
+minimization: true           # bool. (default true). Set false for "r2".
+
+# ---------------------------------------------------------------------------
+# Classification only (ignored by the regression fitness functions)
+# ---------------------------------------------------------------------------
+
+lam: 0.01                    # float >= 0. (default 0.01)
+                             # Semantic norm penalty, used by "margin". Q3 grid:
+                             # 0, 1e-4, 1e-3, 1e-2, 1e-1, 1. Bounds semantic
+                             # magnitude only -- it is NOT a bloat control.
+
+use_adaptive_inflate: false  # bool. (default false)
+                             # Solve for the inflate coefficient instead of sampling
+                             # it from [ms_lower, ms_upper]. Requires "margin" and an
+                             # additive "SLIM+" version (adaptive_inflate.py:120).
+
+sigmoid_scaling_factor: 1.0  # float > 0. (default 1.0). Used only by "sigmoid_rmse".
+
+# ---------------------------------------------------------------------------
+# Execution and logging
+# ---------------------------------------------------------------------------
+
+seed: 74                     # int. (default 74)
+                             # Controls initialization, and the split where the
+                             # caller derives one from it. Vary across runs; the
+                             # classification campaign uses range(20).
+
+n_jobs: 1                    # int >= 1. (default 1)
+
+reconstruct: true            # bool. (default true)
+                             # Required to use the model after evolution (predict).
+
+test_elite: true             # bool. (default true)
+                             # Needs X_test/y_test. Pass the VALIDATION split there,
+                             # never the held-out test set.
+
+log_level: 1                 # 0 = off, 1..4 = increasing detail. (default 1)
+
+verbose: 1                   # 0 = silent, 1 = per-generation console output. (default 1)
+
+log_path: null               # str, or null for the package default. (default null)

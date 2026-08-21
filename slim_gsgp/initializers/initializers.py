@@ -82,7 +82,7 @@ def full(init_pop_size, init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c=0.3):
 
     return [
         create_full_random_tree(init_depth, FUNCTIONS, TERMINALS, CONSTANTS, p_c)
-        for _ in range(2, init_pop_size + 1)
+        for _ in range(init_pop_size)
     ]
 
 

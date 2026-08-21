@@ -291,7 +291,7 @@ def get_best_min(population, n_elites):
         Best individual from the elites.
     """
     if n_elites > 1:
-        idx = np.argpartition(population.fit, n_elites)
+        idx = np.argpartition(population.fit, n_elites - 1)
         elites = [population.population[i] for i in idx[:n_elites]]
         return elites, elites[np.argmin([elite.fitness for elite in elites])]
 
@@ -319,8 +319,8 @@ def get_best_max(population, n_elites):
         Best individual from the elites.
     """
     if n_elites > 1:
-        idx = np.argpartition(population.fit, -n_elites)
-        elites = [population.population[i] for i in idx[-n_elites:]]
+        idx = np.argpartition(-np.asarray(population.fit), n_elites - 1)
+        elites = [population.population[i] for i in idx[:n_elites]]
         return elites, elites[np.argmax([elite.fitness for elite in elites])]
 
     else:
@@ -551,6 +551,39 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
         raise TypeError("X_test must be a torch.Tensor")
     if y_test is not None and not isinstance(y_test, torch.Tensor):
         raise TypeError("y_test must be a torch.Tensor")
+    if X_train.ndim != 2:
+        raise ValueError("X_train must be a 2-dimensional tensor")
+    if y_train.ndim != 1:
+        raise ValueError("y_train must be a 1-dimensional tensor")
+    if X_train.shape[0] == 0:
+        raise ValueError("X_train and y_train must not be empty")
+    if X_train.shape[0] != y_train.shape[0]:
+        raise ValueError("X_train and y_train must have the same number of samples")
+    if X_train.device != y_train.device:
+        raise ValueError("X_train and y_train must be on the same device")
+    if not X_train.is_floating_point() or X_train.dtype in (torch.float16, torch.bfloat16):
+        raise TypeError("X_train must use float32 or float64")
+    if not torch.isfinite(X_train).all() or not torch.isfinite(y_train).all():
+        raise ValueError("X_train and y_train must contain only finite values")
+    if (X_test is None) != (y_test is None):
+        raise ValueError("X_test and y_test must either both be provided or both be None")
+    if X_test is not None:
+        if X_test.ndim != 2:
+            raise ValueError("X_test must be a 2-dimensional tensor")
+        if y_test.ndim != 1:
+            raise ValueError("y_test must be a 1-dimensional tensor")
+        if X_test.shape[0] == 0:
+            raise ValueError("X_test and y_test must not be empty")
+        if X_test.shape[0] != y_test.shape[0]:
+            raise ValueError("X_test and y_test must have the same number of samples")
+        if X_test.shape[1] != X_train.shape[1]:
+            raise ValueError("X_train and X_test must have the same number of features")
+        if X_test.device != y_test.device:
+            raise ValueError("X_test and y_test must be on the same device")
+        if X_test.dtype != X_train.dtype:
+            raise ValueError("X_train and X_test must have the same dtype")
+        if not torch.isfinite(X_test).all() or not torch.isfinite(y_test).all():
+            raise ValueError("X_test and y_test must contain only finite values")
     if not isinstance(pop_size, int):
         raise TypeError("pop_size must be an int")
     if not isinstance(n_iter, int):
@@ -575,6 +608,10 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
 
     if n_iter < 1:
         raise ValueError("n_iter must be greater than 0")
+    if pop_size < 1:
+        raise ValueError("pop_size must be at least 1")
+    if elitism and not 1 <= n_elites <= pop_size:
+        raise ValueError("n_elites must be between 1 and pop_size when elitism is enabled")
 
     # Ensuring the functions and constants passed are valid
     if not isinstance(tree_functions, list) or len(tree_functions) == 0:
@@ -583,18 +620,20 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     if not isinstance(tree_constants, list) or len(tree_constants) == 0:
         raise TypeError("tree_constants must be a non-empty list")
 
-    assert all(isinstance(elem, (int, float)) and not isinstance(elem, bool) for elem in tree_constants), \
-    "tree_constants must be a list containing only integers and floats"
+    if not all(isinstance(elem, (int, float)) and not isinstance(elem, bool) for elem in tree_constants):
+        raise TypeError("tree_constants must be a list containing only integers and floats")
 
     if not isinstance(log, int):
         raise TypeError("log_level must be an int")
 
-    assert 0 <= log <= 4, "log_level must be between 0 and 4"
+    if not 0 <= log <= 4:
+        raise ValueError("log_level must be between 0 and 4")
 
     if not isinstance(verbose, int):
         raise TypeError("verbose level must be an int")
 
-    assert 0 <= verbose <= 1, "verbose level must be either 0 or 1"
+    if not 0 <= verbose <= 1:
+        raise ValueError("verbose level must be either 0 or 1")
 
     if not isinstance(minimization, bool):
         raise TypeError("minimization must be a bool")
@@ -602,7 +641,8 @@ def validate_inputs(X_train, y_train, X_test, y_test, pop_size, n_iter, elitism,
     if not isinstance(n_jobs, int):
         raise TypeError("n_jobs must be an int")
 
-    assert n_jobs >= 1, "n_jobs must be at least 1"
+    if n_jobs < 1:
+        raise ValueError("n_jobs must be at least 1")
 
     if not isinstance(test_elite, bool):
         raise TypeError("test_elite must be a bool")
@@ -664,20 +704,21 @@ def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator=
         operator = torch.prod
 
     if testing:
-        individual.test_fitness = ffunction(
-            y,
-            torch.clamp(
-                operator(individual.test_semantics, dim=0),
-                -1000000000000.0,
-                1000000000000.0,
-            ),
-        )
+        if individual.test_semantics is not None:
+            individual.test_fitness = ffunction(
+                y,
+                torch.clamp(
+                    individual.get_test_semantics_collapsed(operator, dim=0),
+                    -1000000000000.0,
+                    1000000000000.0,
+                ),
+            )
 
     else:
         individual.fitness = ffunction(
             y,
             torch.clamp(
-                operator(individual.train_semantics, dim=0),
+                individual.get_train_semantics_collapsed(operator, dim=0),
                 -1000000000000.0,
                 1000000000000.0,
             ),
@@ -687,7 +728,7 @@ def _evaluate_slim_individual(individual, ffunction, y, testing=False, operator=
         return ffunction(
                 y,
                 torch.clamp(
-                    operator(individual.train_semantics, dim=0),
+                    individual.get_train_semantics_collapsed(operator, dim=0),
                     -1000000000000.0,
                     1000000000000.0,
                 ),

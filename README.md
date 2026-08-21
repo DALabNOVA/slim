@@ -2,7 +2,7 @@
 
 `slim_gsgp` is a Python library that implements the SLIM algorithm, which is a variant of the Geometric Semantic Genetic Programming (GSGP). This library includes functions for running standard Genetic Programming (GP), GSGP, and all developed versions of the SLIM algorithm. Users can specify the version of SLIM they wish to use and obtain results accordingly. Slim's documentation can be accessed in [Slim Documentation](https://slim-library.readthedocs.io/en/latest/). Users looking to extend `slim_gsgp` can refer to the [Developer Tutorial](CONTRIBUTING.md) for further guidance.
 
-`slim_gsgp` is built on Python 3.12.
+`slim_gsgp` requires Python >=3.10.
 
 
 ## Installation
@@ -82,193 +82,285 @@ print(float(rmse(y_true=y_test, y_pred=predictions)))
 To use the SLIM GSGP algorithm, you can use the following example:
 
 ```python
-from slim_gsgp.main_slim import slim  # import the slim_gsgp library
-from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim_gsgp.evaluators.fitness_functions import rmse  # import the rmse fitness metric
-from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
+from slim_gsgp.main_slim import slim
+from slim_gsgp.datasets.data_loader import load_breast_cancer
+from slim_gsgp.utils.utils import train_test_split
+from slim_gsgp.evaluators.fitness_functions import binary_sign_transform
 
-# Load the PPB dataset
-X, y = load_ppb(X_y=True)
+# Load a binary classification dataset
+X, y = load_breast_cancer(X_y=True)
 
-# Split into train and test sets
+# Split into train, validation and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
+X_val, X_test, y_val, y_test     = train_test_split(X_test, y_test, p_test=0.5)
 
-# Split the test set into validation and test sets
-X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
-
-# Apply the SLIM GSGP algorithm
-final_tree = slim(X_train=X_train, y_train=y_train,
-                  X_test=X_val, y_test=y_val,
-                  dataset_name='ppb', slim_version='SLIM*ABS', pop_size=100, n_iter=100,
-                  ms_lower=0, ms_upper=1, p_inflate=0.5)
+# Apply SLIM with sigmoid_rmse for binary classification
+final_tree = slim(
+    X_train=X_train, y_train=y_train,
+    X_test=X_val,   y_test=y_val,
+    dataset_name='breast_cancer',
+    slim_version='SLIM+ABS', pop_size=100, n_iter=100,
+    ms_lower=0, ms_upper=1, p_inflate=0.5,
+    fitness_function='sigmoid_rmse',
+    sigmoid_scaling_factor=1.0,
+)
 
 # Show the best individual structure at the last generation
 final_tree.print_tree_representation()
 
-# Get the prediction of the best individual on the test set
-predictions = final_tree.predict(X_test)
+# Get predictions and convert raw outputs to binary labels (negative -> 0, non-negative -> 1)
+predictions = binary_sign_transform(final_tree.predict(X_test))
 
-# Compute and print the RMSE on the test set
-print(float(rmse(y_true=y_test, y_pred=predictions)))
+# Compute accuracy (no external dependencies required)
+acc = float((predictions == y_test).float().mean())
+print(f"Accuracy: {acc:.4f}")
 ```
 
-## Arguments for the *gp*, *gsgp* and *slim* function
+### Classification with MS-SLIM (margin loss)
 
-### Common arguments
-* `X_train` : A torch tensor with the training input data *(default: None)*.
-* `y_train` : A torch tensor with the training output data *(default: None)*.
-* `X_test` : A torch tensor with the testing input data *(default: None)*.
-* `y_test` : A torch tensor with the testing output data *(default: None)*. 
-* `dataset_name` : A string specifying how the results will be logged *(default: None)*.
-* `pop_size` : An integer specifying the population size *(default: 100)*.
-* `n_iter` : An integer specifying the number of iterations *(default: 1000)*.
-* `elitism` : A boolean specifying the presence of elitism *(default: True)*.
-* `n_elites` : An integer specifying the number of elites *(default: 1)*.
-* `init_depth` : An integer specifying the initial depth of the GP tree 
-  * *default: 6* for gp and slim
-  * *default: 8* for gsgp
-* `log_path` : A string specifying where the results are going to be saved 
-  * *default: 
-    ``` os.path.join(os.getcwd(), "log", "gp.csv")```* for slim
-  * *default: 
-    ``` os.path.join(os.getcwd(), "log", "gsgp.csv")```* for slim
-  * *default: 
-    ``` os.path.join(os.getcwd(), "log", "slim_gsgpcsv")```* for slim
-* `seed`: An integer specifying the seed for randomness *(default: 1)*.
-* `log_level`: An integer specifying the Level of detail to utilize in logging *(default: 1)*.
-*  `verbose`: An integer specifying whether results are to be displayed on console *(default: 1)*.
-*   `fitness_function`: A string specifying the fitness function that is to be used *(default: "rmse")*.
-*   `initializer`: A string specifying the population initialization technique that is to be used *(default: "rhh")*.
-*   `minimization`: A bool specifying whether the objective is to minimize the fitness function (True) or to maximize it (False) *(default: True)*.
-*    `prob_const`: A float specifying the probability of a constant being chosen rather than a terminal in trees creation *(default: 0.2)*.
-*    `tree_functions`: A list of strings with the names of the functions that are to be used in the trees *(default: \['add', 'subtract', 'multiply', 'divide'\])*.
-*    `tree_constants`: A list of floats or integer values representing the constants that are allowed to appear in the trees *(default: \[2, 3, 4,5, -1\])*.
-*    `tournament_size`: An int representing the tournament size to utilize during selection. *(default: 2)*.
-*    `test_elite`: A bool representing whether to test the elite individual on the test set at each generation. *(default: True when X_test is not None)*.
+For a concise description of the method, implementation limits, and the core
+SLIM speed and memory changes, see
+[`MS_SLIM_overview.md`](MS_SLIM_overview.md).
 
-### Specific for *gp*
+`sigmoid_rmse` above squashes raw outputs through a sigmoid before measuring
+error. The sigmoid saturates where a program is most wrong, so the search feels
+almost no pressure exactly there. **MS-SLIM** removes the sigmoid and measures a
+squared-hinge margin directly on the raw semantics the operators already move:
 
-* `p_xo` : A float specifying the crossover probability *(default: 0.8)*.
-* `max_depth` : An integer specifying the maximum depth of the GP tree *(default: 17)*.
+```
+L(s) = mean( [1 - y*s]_+^2 + lam * s^2 ),   y in {-1, +1}
+```
 
-### Specific for *gsgp*
-* `p_xo` : A float specifying the crossover probability *(default: 0.0)*.
-* `ms_lower`: A float or int representing the lower bound for mutation step *(default: 0)*.
-* `ms_upper`: A float or int representing the upper bound for mutation step *(default: 1)*.
-* `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
+The mismatch this removes: inflate and deflate move the **raw** semantics, but
+the sigmoid path measures error on the **squashed** ones, so the two operate in
+different spaces.
 
-### Specific for *slim*
-* `slim_version`: A string specifying the version of SLIM-GSGP to run *(default: "SLIM+SIG2")*.
-* `ms_lower`: A float or int representing the lower bound for mutation step *(default: 0)*.
-*  `ms_upper`:  A float or int representing the upper bound for mutation step *(default: 1)*.
-* `p_inflate`: A float specifying the probability to apply the inflate mutation *(default: 0.2)*.
-* `reconstruct`: A bool specifying whether to store the structure of individuals. More computationally expensive, but allows usage outside the algorithm *(default: False)*.
-*  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
-*  `copy_parent`: A bool representing whether to copy the original parent when mutation is impossible (due to depth rules or mutation constraints). *(default: True)*.
-*  
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'background':'#ffffff', 'fontSize':'18px', 'primaryTextColor':'#000000', 'secondaryTextColor':'#000000', 'tertiaryTextColor':'#000000', 'textColor':'#000000', 'lineColor':'#000000', 'primaryBorderColor':'#000000', 'secondaryBorderColor':'#000000', 'tertiaryBorderColor':'#000000', 'clusterBkg':'#ffffff', 'clusterBorder':'#000000', 'edgeLabelBackground':'#ffffff'}}}%%
+flowchart TD
+    P["SLIM individual<br/>blocks b = 1..B"] --> S["raw semantics<br/>s = sum_b block_b(x)"]
 
-## Additional Notes
+    S --> SIG["sigmoid(s)"]
+    SIG --> RMSE["RMSE vs {0,1} labels"]
+    RMSE --> FLAT["gradient flattens<br/>where s is most wrong"]
 
-If a user wishes to use their own dataset rather than one of the sixteen benchmarking datasets included with the `slim` library, they can load their data into a Pandas DataFrame, ensuring that the target variable is the last column. They can then call the `load_pandas_df` function from `datasets.data_loader` as follows:
+    S --> HINGE["squared hinge<br/>[1 - y*s]_+^2"]
+    S --> REG["semantic penalty<br/>lam * s^2"]
+    HINGE --> L["fitness L(s)"]
+    REG --> L
+    L --> PRESSURE["pressure grows<br/>with the error"]
+
+    S --> PRED["predict: sign(s)"]
+
+    FLAT -.->|"operators move s,<br/>loss measures sigmoid(s)"| S
+    PRESSURE -.->|"operators and loss<br/>share one space"| S
+
+    classDef old fill:#f8d7da,stroke:#c33,color:#000
+    classDef new fill:#d4edda,stroke:#3a3,color:#000
+    classDef core fill:#e7e7f5,stroke:#559,color:#000
+    class SIG,RMSE,FLAT old
+    class HINGE,REG,L,PRESSURE new
+    class P,S,PRED core
+```
+
+Red is the `sigmoid_rmse` path, green is MS-SLIM. Both start from the same raw
+`s`, but only MS-SLIM scores it in the space the operators actually change.
+`lam > 0` pins the optimum at `s* = y / (1 + lam)`.
+
+Pick a technique with `get_strategy`, which binds the label encoding, the
+fitness function, and the prediction decoding together so they cannot be
+mismatched:
 
 ```python
-from slim_gsgp.datasets.data_loader import load_pandas_df  # import the loader for the dataset PPB
+from slim_gsgp.main_slim import slim
+from slim_gsgp.datasets.data_loader import load_breast_cancer
+from slim_gsgp.utils.utils import train_test_split
+from slim_gsgp.classification import get_strategy
+
+X, y = load_breast_cancer(X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
+X_val,   X_test, y_val,   y_test = train_test_split(X_test, y_test, p_test=0.5)
+
+strategy = get_strategy("margin")          # or "logistic", "code_regression", "sigmoid_rmse"
+
+model = slim(
+    X_train=X_train, y_train=strategy.encode(y_train),
+    X_test=X_val,    y_test=strategy.encode(y_val),
+    dataset_name="breast_cancer",
+    slim_version="SLIM+ABS", pop_size=100, n_iter=100,
+    fitness_function=strategy.fit_string,
+    lam=0.01,                              # semantic regularization strength
+)
+
+predictions = strategy.decode(model.predict(X_test))
+accuracy = float((predictions == strategy.encode(y_test)).float().mean())
+print(f"Accuracy: {accuracy:.4f}")
+```
+
+Available strategies:
+
+| Name | Fitness | Labels | Purpose |
+|---|---|---|---|
+| `margin` | `[1 - y*s]_+^2 + lam*s^2` | `{-1,+1}` | MS-SLIM |
+| `logistic` | `log(1 + exp(-y*s))` | `{-1,+1}` | raw-score baseline |
+| `code_regression` | `(y - s)^2` | `{-1,+1}` | isolates the hinge |
+| `sigmoid_rmse` | `RMSE(sigmoid(s), y)` | `{0,1}` | Bakurov et al. (2022) |
+
+`lam > 0` gives the loss a unique optimum at `s* = y / (1 + lam)`. It bounds the
+semantic magnitude only — it is **not** a program-size penalty; deflate remains
+the size-control mechanism.
+
+### Adaptive inflate
+
+Because the margin loss is convex and inflate is affine in its mutation step,
+the best mutation step for a new block is solved exactly instead of guessed.
+Pass `use_adaptive_inflate=True` (requires `fitness_function="margin"`). It
+works for additive `SLIM+` and opt-in multiplicative `SLIM*` variants; the
+published random-step variants are unchanged by default:
+
+```python
+model = slim(
+    X_train=X_train, y_train=strategy.encode(y_train),
+    X_test=X_val,    y_test=strategy.encode(y_val),
+    dataset_name="breast_cancer", slim_version="SLIM+ABS",
+    pop_size=100, n_iter=100,
+    fitness_function="margin", lam=0.01,
+    use_adaptive_inflate=True,
+)
+```
+
+### Multiclass classification
+
+Classes are placed at the corners of a regular simplex, and a prediction is the
+nearest corner. Two architectures are provided.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'background':'#ffffff', 'fontSize':'18px', 'primaryTextColor':'#000000', 'secondaryTextColor':'#000000', 'tertiaryTextColor':'#000000', 'textColor':'#000000', 'lineColor':'#000000', 'primaryBorderColor':'#000000', 'secondaryBorderColor':'#000000', 'tertiaryBorderColor':'#000000', 'clusterBkg':'#ffffff', 'clusterBorder':'#000000', 'edgeLabelBackground':'#ffffff'}}}%%
+flowchart TD
+    Y["labels y in 1..K"] --> C["simplex codes c_k<br/>K corners in R^(K-1)<br/>unit norm, sum to zero"]
+
+    subgraph IND ["fit_multiclass — independent coordinates"]
+        direction TB
+        I1["program 1"] --> IS["stack outputs<br/>s = (s_1 .. s_K-1)"]
+        I2["program K-1"] --> IS
+        IL["each trained alone on<br/>(s_j - c_y[j])^2"] -.-> I1
+        IL -.-> I2
+    end
+
+    subgraph SHR ["fit_shared_blocks — shared blocks"]
+        direction TB
+        B["one block set<br/>r_1 .. r_B, scalar each"] --> M["S = sum_b r_b * a_b"]
+        A["coefficients a_b in R^(K-1)<br/>solved to optimum, convex"] --> M
+        JL["joint margin loss<br/>m_ik couples all classes"] -.-> M
+    end
+
+    C --> IND
+    C --> SHR
+    IS --> PRED["predict: argmax_k &lt;s, c_k&gt;<br/>= nearest corner"]
+    M --> PRED
+
+    classDef geom fill:#e7e7f5,stroke:#559,color:#000
+    classDef ind fill:#fff3cd,stroke:#c90,color:#000
+    classDef shr fill:#d4edda,stroke:#3a3,color:#000
+    class Y,C,PRED geom
+    class I1,I2,IS,IL ind
+    class B,A,M,JL shr
+```
+
+Both share the class geometry and the prediction rule; they differ in what they
+evolve and what they optimize. Independent coordinates train each program on
+plain squared error, because the hinge has no per-coordinate form — the margin
+`m_ik` is joint across all K-1 coordinates at once. Shared blocks optimize that
+joint objective directly.
+
+**Independent coordinates** — evolves K-1 separate programs, one per simplex
+coordinate. Simple and fast; it reproduces MS-SLIM's class geometry and
+prediction rule, but trains each coordinate with plain squared error, so it does
+**not** optimize the joint margin objective:
+
+```python
+import torch
+from sklearn.datasets import load_iris
+from slim_gsgp.utils.utils import train_test_split
+from slim_gsgp.classification import fit_multiclass
+
+data = load_iris()
+X = torch.tensor(data.data, dtype=torch.float32)
+y = torch.tensor(data.target, dtype=torch.float32)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.3, seed=0)
+X_train, X_val,  y_train, y_val  = train_test_split(X_train, y_train, p_test=0.25, seed=0)
+
+model = fit_multiclass(X_train, y_train, X_val, y_val,
+                       pop_size=100, n_iter=30, slim_version="SLIM+ABS",
+                       log_level=0, verbose=0, seed=0)
+
+accuracy = float((model.predict(X_test) == y_test).float().mean())
+print(f"Accuracy: {accuracy:.4f}")
+```
+
+**Shared blocks** — one set of symbolic blocks serves every class, each with its
+own coefficient vector (`P(x) = sum_b r_b(x) * a_b`). This optimizes the true
+joint margin objective, in which the classes are coupled:
+
+```python
+from slim_gsgp.classification import fit_shared_blocks
+
+model = fit_shared_blocks(X_train, y_train,
+                          slim_version="SLIM+ABS", pop_size=100, n_iter=30,
+                          lam=0.01, seed=0, verbose=1)
+
+accuracy = float((model.predict(X_test) == y_test).float().mean())
+print(f"Accuracy: {accuracy:.4f}  blocks: {model.individual.size}")
+```
+
+Shared blocks require an additive (`SLIM+`) variant and raise `ValueError` otherwise:
+the representation needs semantics linear in the coefficients, and a multiplicative
+operator collapses blocks with `prod`. Binary MS-SLIM and `fit_multiclass` carry no
+such constraint and run on all six variants.
+
+MS-SLIM produces scores and margins, not calibrated probabilities.
+
+### Running experiments
+
+`run_binary_config` trains and scores one strategy on one seed, deriving a
+stratified train/validation/test split from that seed alone — so the same seed
+gives every strategy the identical split and results are directly paired:
+
+```python
 import pandas as pd
+from slim_gsgp.classification.campaign import run_binary_config
 
-# Reading the desired dataset
-df = pd.read_csv("path/your_data.csv")
+results = pd.concat([
+    pd.DataFrame([
+        run_binary_config("breast_cancer", name, seed=seed,
+                          pop_size=100, n_iter=100,
+                          slim_version="SLIM+ABS", lam=0.01)
+        for seed in range(20)
+    ])
+    for name in ("margin", "logistic", "sigmoid_rmse")
+], ignore_index=True)
 
-# Turning df into X and y torch.Tensors
-X, y = load_pandas_df(df, X_y=True)
-
-# Split into train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
-
+print(results.groupby("method")[["accuracy", "balanced_accuracy", "mcc", "auroc"]].mean())
 ```
 
-To save and load individuals created with the `slim_gsgp` library, users can utilize the `save_to_file` and `load_from_file` functions from the `utils.utils` module. Here's an example of how to use these functions, assuming said individual is stored in a variable named 'final_tree':
+Each row carries accuracy, balanced accuracy, F1, MCC, AUROC, AUPRC, node count,
+block count and both timings; margin runs additionally report the semantic norm
+and margin statistics. `paired_comparison` turns those rows into Wilcoxon tests
+with Holm correction and effect sizes.
 
-```python
-# Saving the individual to a file
-final_tree.save_to_file('path/your_file.txt')
+A runnable tour of everything above ships with the package:
 
-# Loading the individual from a file
-loaded_tree = Individual.load_from_file('path/your_file.txt')
+```bash
+python -m slim_gsgp.classification.example_classification
 ```
 
+For the full experimental campaign behind the MS-SLIM manuscript — benchmark
+datasets, the five research questions, paired statistics — see
+[`MS_SLIM_runbook.md`](MS_SLIM_runbook.md):
 
-
-## SLIM for binary classification
-
-SLIM can be adapted for binary classification following what has been done for GSGP by (Bakurov et al., [2022](https://doi.org/10.1016/j.swevo.2021.101028)).
-During the training process, the user must use an adapted version of RMSE(or any other preferred fitness function) that wraps the outputs with a sigmoid to bound them in the interval [0,1].
-While for the predictions on the training set, every negative output will be assigned to the class 0 and every positive output to the class 1.
-An API python tutorial is provided.
-
-```python
-from slim_gsgp.main_slim import slim  # import the slim_gsgp library
-from slim_gsgp.datasets.data_loader import load_ppb  # import the loader for the dataset PPB
-from slim_gsgp.utils.utils import train_test_split  # import the train-test split function
-from sklearn.metrics import accuracy_score
-from slim_gsgp.config.slim_config import fitness_function_options
-
-# Defining the new fitness function
-def binarized_rmse(binarizer):
-    def sr(y_true, y_pred):
-        my_pred = binarizer(y_pred)
-        return torch.sqrt(torch.mean(torch.pow(torch.sub(y_true, my_pred), 2), len(y_pred.shape) - 1))
-
-    return sr
-
-def modified_sigmoid( scaling_factor):
-        def ms(tensor):
-            return torch.div(1,torch.add(1,torch.exp(torch.mul(-1,torch.mul(tensor, scaling_factor)))))
-
-        return ms
-
-binarizer = modified_sigmoid(1)
-fitness_function_options['binarized_rmse'] = binarized_rmse(binarized)
-
-
-# Defining the converter for the final tree
-def binary_sign_transformer(tensor):
-    """
-    Transforms a tensor such that all negative values become 0,
-    and all non-negative values become 1.
-
-    Args:
-        input_tensor (torch.Tensor): The input tensor to transform.
-
-    Returns:
-        torch.Tensor: The transformed tensor.
-    """
-    transformed_tensor = (tensor >= 0).float()
-    return transformed_tensor
-
-
-# Load the PPB dataset
-X, y = load_ppb(X_y=True)
-
-# Split into train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, p_test=0.4)
-
-# Split the test set into validation and test sets
-X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, p_test=0.5)
-
-# Apply the SLIM GSGP algorithm
-final_tree = slim(X_train=X_train, y_train=y_train,
-                  X_test=X_val, y_test=y_val,
-                  dataset_name='ppb', slim_version='SLIM+ABS', pop_size=100, n_iter=100,
-                  ms_lower=0, ms_upper=1, p_inflate=0.5, fitness_function = 'binarized_rmse')
-
-# Show the best individual structure at the last generation
-final_tree.print_tree_representation()
-
-# Get the prediction of the best individual on the test set
-predictions = binary_sign_transformer(final_tree.predict(X_test))
-
-# Compute and print the RMSE on the test set
-print(accuracy_score(y_true=y_test, y_pred=predictions))
+```bash
+python -m slim_gsgp.classification.campaign --question all --seeds 20 --out results/
 ```
 
 

@@ -5,6 +5,7 @@ slim
    :maxdepth: 4
 
    slim_gsgp.algorithms
+   slim_gsgp.classification
    slim_gsgp.config
    slim_gsgp.datasets
    slim_gsgp.evaluators

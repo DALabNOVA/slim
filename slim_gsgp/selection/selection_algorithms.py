@@ -25,10 +25,7 @@ Selection operator implementation.
 
 import random
 
-import numpy as np
-
-
-def tournament_selection_min(pool_size):
+def tournament_selection_min(pool_size, parsimony_tolerance: float = 0.0):
     """
     Returns a function that performs tournament selection to select an individual with the lowest fitness from a
     population.
@@ -58,6 +55,9 @@ def tournament_selection_min(pool_size):
     randomly selected individuals.
     """
 
+    if parsimony_tolerance < 0:
+        raise ValueError("parsimony_tolerance must be non-negative")
+
     def ts(pop):
         """
         Selects the individual with the lowest fitness from a randomly chosen pool.
@@ -73,7 +73,16 @@ def tournament_selection_min(pool_size):
             The individual with the lowest fitness in the pool.
         """
         pool = random.choices(pop.population, k=pool_size)
-        return pool[np.argmin([ind.fitness for ind in pool])]
+        if parsimony_tolerance == 0:
+            return min(pool, key=lambda individual: individual.fitness)
+        best_fitness = min(individual.fitness for individual in pool)
+        limit = best_fitness + parsimony_tolerance * max(1.0, abs(best_fitness))
+        near_best = [individual for individual in pool if individual.fitness <= limit]
+        return min(
+            near_best,
+            key=lambda individual: (getattr(individual, "nodes_count", getattr(individual, "node_count", 0)),
+                                    individual.fitness),
+        )
 
     return ts
 
@@ -122,7 +131,7 @@ def tournament_selection_max(pool_size):
             The individual with the highest fitness in the pool.
         """
         pool = random.choices(pop.population, k=pool_size)
-        return pool[np.argmax([ind.fitness for ind in pool])]
+        return max(pool, key=lambda individual: individual.fitness)
 
     return ts
 

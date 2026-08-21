@@ -8,10 +8,11 @@ setup(
     install_requires=[
         'numpy',
         'pandas',
-        'torch',
+        'torch>=2.4.1,<3',
         'scipy',
         'scikit-learn',
-        'joblib'
+        'joblib',
+        'dill'
     ],
     entry_points={
         'console_scripts': [

@@ -22,8 +22,11 @@
 """
 Population Class for SLIM GSGP using PyTorch.
 """
-from slim_gsgp.utils.utils import _evaluate_slim_individual
-from joblib import Parallel, delayed
+import torch
+
+
+_EVALUATION_BUFFER_BYTES = 64 * 1024 * 1024
+
 
 class Population:
     def __init__(self, population):
@@ -61,24 +64,14 @@ class Population:
         -------
         None
         """
-        # computing the semantics for all the individuals in the population
-        [
+        semantics_attribute = "test_semantics" if testing else "train_semantics"
+        for individual in self.population:
             individual.calculate_semantics(inputs, testing)
-            for individual in self.population
-        ]
-
-        # computing testing semantics, if applicable
-        if testing:
-            # setting the population semantics to be a list with all the semantics of all individuals
-            self.test_semantics = [
-                individual.test_semantics for individual in self.population
-            ]
-
-        else:
-            # setting the population semantics to be a list with all the semantics of all individuals
-            self.train_semantics = [
-                individual.train_semantics for individual in self.population
-            ]
+        setattr(
+            self,
+            semantics_attribute,
+            [getattr(individual, semantics_attribute) for individual in self.population],
+        )
 
     def __len__(self):
         """
@@ -134,7 +127,7 @@ class Population:
         # defining the fitness of the population to be a list with the fitnesses of all individuals in the population
         self.fit = [individual.fitness for individual in self.population]
 
-    def evaluate(self, ffunction, y, operator="sum", n_jobs=1):
+    def evaluate(self, ffunction, y, operator="sum"):
         """
         Evaluate the population using a fitness function.
 
@@ -145,19 +138,55 @@ class Population:
         y : torch.Tensor
             Expected output (target) values.
         operator : str, optional
-            Operator to apply to the semantics ("sum" or "prod"). Default is "sum".
-        n_jobs : int, optional
-            The maximum number of concurrently running jobs for joblib parallelization. Default is 1.
-
+            Operator to apply to the semantics ("sum" or "mul"). Default is "sum".
         Returns
         -------
         None
         """
-        # Evaluates individuals' fitnesses
-        self.fit = Parallel(n_jobs=n_jobs)(
-            delayed(_evaluate_slim_individual)(individual, ffunction=ffunction, y=y, operator=operator
-            ) for individual in self.population)
+        if operator not in ("sum", "mul"):
+            raise ValueError("operator must be 'sum' or 'mul'")
+        if not self.population:
+            self.fit = []
+            return
 
-        # Assigning individuals' fitness as an attribute
-        [self.population[i].__setattr__('fitness', f) for i, f in enumerate(self.fit)]
+        semantics = self.population[0].train_semantics
+        if semantics.ndim != 2:
+            raise ValueError("SLIM train semantics must have shape (blocks, samples)")
+        n_samples = semantics.shape[1]
+        row_bytes = n_samples * semantics.element_size()
+        chunk_size = max(1, min(self.size, _EVALUATION_BUFFER_BYTES // max(1, row_bytes)))
+
+        with torch.no_grad():
+            workspace = torch.empty(
+                (chunk_size, n_samples), dtype=semantics.dtype, device=semantics.device
+            )
+            fit_chunks = []
+            for start in range(0, self.size, chunk_size):
+                stop = min(start + chunk_size, self.size)
+                predictions = workspace[: stop - start]
+                for row, individual in enumerate(self.population[start:stop]):
+                    if individual.train_semantics.shape[0] == 1:
+                        predictions[row].copy_(individual.train_semantics[0])
+                    elif operator == "sum":
+                        torch.sum(individual.train_semantics, dim=0, out=predictions[row])
+                    else:
+                        torch.prod(individual.train_semantics, dim=0, out=predictions[row])
+
+                predictions.clamp_(-1_000_000_000_000.0, 1_000_000_000_000.0)
+                scores = ffunction(y, predictions)
+                if scores.shape != (stop - start,):
+                    raise ValueError(
+                        "SLIM fitness functions must return one scalar per individual; "
+                        f"received shape {tuple(scores.shape)}"
+                    )
+                if not torch.isfinite(scores).all():
+                    raise ValueError("SLIM fitness functions must return finite values")
+                fit_chunks.append(scores)
+
+            fits = torch.cat(fit_chunks)
+            self.fit = fits.detach().cpu().tolist()
+
+        # Assign individuals' fitness as an attribute
+        for ind, f in zip(self.population, self.fit):
+            ind.fitness = f
 

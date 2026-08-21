@@ -122,6 +122,9 @@ class SLIM_GSGP:
         self.settings_dict = settings_dict
         self.find_elit_func = find_elit_func
 
+        if p_xo != 0:
+            raise ValueError("SLIM crossover is not implemented; p_xo must be 0")
+
         Tree.FUNCTIONS = pi_init["FUNCTIONS"]
         Tree.TERMINALS = pi_init["TERMINALS"]
         Tree.CONSTANTS = pi_init["CONSTANTS"]
@@ -130,6 +133,104 @@ class SLIM_GSGP:
         GP_Tree.TERMINALS = pi_init["TERMINALS"]
         GP_Tree.CONSTANTS = pi_init["CONSTANTS"]
 
+    @staticmethod
+    def _copy_individual(parent, reconstruct):
+        """Create the shallow semantic copy used when a mutation cannot run."""
+        offspring = Individual(
+            collection=parent.collection if reconstruct else None,
+            train_semantics=parent.train_semantics,
+            test_semantics=parent.test_semantics,
+            reconstruct=reconstruct,
+        )
+        (
+            offspring.nodes_collection,
+            offspring.nodes_count,
+            offspring.depth_collection,
+            offspring.depth,
+            offspring.size,
+        ) = (
+            parent.nodes_collection,
+            parent.nodes_count,
+            parent.depth_collection,
+            parent.depth,
+            parent.size,
+        )
+        return offspring
+
+    @staticmethod
+    def _discard_structures(population):
+        """Release reconstruction-only state after semantics have been computed."""
+        for individual in population.population:
+            del individual.collection
+            del individual.structure
+
+    def _update_elites(self, population, n_elites, version):
+        self.elites, self.elite = self.find_elit_func(population, n_elites)
+        self.elite.version = version
+
+    def _evaluate_test_elite(self, ffunction, X_test, y_test, reconstruct):
+        if reconstruct:
+            self.elite.test_fitness = ffunction(y_test, self.elite.predict(X_test))
+        else:
+            self.elite.evaluate(
+                ffunction,
+                y=y_test,
+                testing=True,
+                operator=self.operator,
+            )
+
+    def _log_generation(
+        self,
+        log_path,
+        generation,
+        elapsed_time,
+        population,
+        run_info,
+        log,
+    ):
+        """Log one population using the existing log-level payload contract."""
+        if log in (2, 4):
+            reducer = torch.sum if self.operator == "sum" else torch.prod
+            semantics = torch.stack(
+                [
+                    individual.get_train_semantics_collapsed(reducer, dim=0)
+                    for individual in population.population
+                ]
+            )
+            diversity_info = [
+                float(gsgp_pop_div_from_vectors(semantics)),
+                np.std(population.fit),
+            ]
+        else:
+            diversity_info = []
+
+        if log in (3, 4):
+            population_info = [
+                " ".join(str(individual.nodes_count) for individual in population.population),
+                " ".join(str(fitness) for fitness in population.fit),
+            ]
+        else:
+            population_info = []
+
+        additional_infos = [
+            self.elite.test_fitness,
+            self.elite.nodes_count,
+            *diversity_info,
+            *population_info,
+            log,
+        ]
+        logger(
+            log_path,
+            generation,
+            self.elite.fitness,
+            elapsed_time,
+            float(population.nodes_count),
+            additional_infos=additional_infos,
+            run_info=run_info,
+            seed=self.seed,
+        )
+
+    @torch.no_grad()
     def solve(
         self,
         X_train,
@@ -147,8 +248,7 @@ class SLIM_GSGP:
         ffunction=None,
         max_depth=17,
         n_elites=1,
-        reconstruct=True,
-        n_jobs=1):
+        reconstruct=True):
         """
         Solve the optimization problem using SLIM_GSGP.
 
@@ -186,9 +286,6 @@ class SLIM_GSGP:
             Number of elite individuals to retain during selection. Default is True.
         reconstruct : bool
             Indicates if reconstruction of the solution is needed. Default is True.
-        n_jobs : int
-            Maximum number of concurrently running jobs for joblib parallelization. Default is 1.
-
         """
 
         if test_elite and (X_test is None or y_test is None):
@@ -226,102 +323,34 @@ class SLIM_GSGP:
         population.calculate_semantics(X_train)
 
         # evaluating the initial population
-        population.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
+        if test_elite and not reconstruct:
+            population.calculate_semantics(X_test, testing=True)
+
+        population.evaluate(ffunction, y=y_train, operator=self.operator)
 
         end = time.time()
 
         # setting up the elite(s)
-        self.elites, self.elite = self.find_elit_func(population, n_elites)
+        self._update_elites(population, n_elites, run_info[0])
 
         # calculating the testing semantics and the elite's testing fitness if test_elite is true
         if test_elite:
-            population.calculate_semantics(X_test, testing=True)
-            self.elite.evaluate(
-                ffunction, y=y_test, testing=True, operator=self.operator
-            )
+            self._evaluate_test_elite(ffunction, X_test, y_test, reconstruct)
+
+        # Initial trees are needed only to calculate semantics. Keeping them when
+        # reconstruct=False made the returned elite depend on which object won.
+        if not reconstruct:
+            self._discard_structures(population)
 
         # logging the results based on the log level
         if log != 0:
-            if log == 2:
-                gen_diversity = (
-                    gsgp_pop_div_from_vectors(
-                        torch.stack(
-                            [
-                                torch.sum(ind.train_semantics, dim=0)
-                                for ind in population.population
-                            ]
-                        ),
-                    )
-                    if self.operator == "sum"
-                    else gsgp_pop_div_from_vectors(
-                        torch.stack(
-                            [
-                                torch.prod(ind.train_semantics, dim=0)
-                                for ind in population.population
-                            ]
-                        )
-                    )
-                )
-                add_info = [
-                    self.elite.test_fitness,
-                    self.elite.nodes_count,
-                    float(gen_diversity),
-                    np.std(population.fit),
-                    log,
-                ]
-
-            elif log == 3:
-                add_info = [
-                    self.elite.test_fitness,
-                    self.elite.nodes_count,
-                    " ".join([str(ind.nodes_count) for ind in population.population]),
-                    " ".join([str(f) for f in population.fit]),
-                    log,
-                ]
-
-            elif log == 4:
-                gen_diversity = (
-                    gsgp_pop_div_from_vectors(
-                        torch.stack(
-                            [
-                                torch.sum(ind.train_semantics, dim=0)
-                                for ind in population.population
-                            ]
-                        ),
-                    )
-                    if self.operator == "sum"
-                    else gsgp_pop_div_from_vectors(
-                        torch.stack(
-                            [
-                                torch.prod(ind.train_semantics, dim=0)
-                                for ind in population.population
-                            ]
-                        )
-                    )
-                )
-                add_info = [
-                    self.elite.test_fitness,
-                    self.elite.nodes_count,
-                    float(gen_diversity),
-                    np.std(population.fit),
-                    " ".join([str(ind.nodes_count) for ind in population.population]),
-                    " ".join([str(f) for f in population.fit]),
-                    log,
-                ]
-
-            else:
-
-                add_info = [self.elite.test_fitness, self.elite.nodes_count, log]
-
-            logger(
+            self._log_generation(
                 log_path,
                 0,
-                self.elite.fitness,
                 end - start,
-                float(population.nodes_count),
-                additional_infos=add_info,
-                run_info=run_info,
-                seed=self.seed,
+                population,
+                run_info,
+                log,
             )
 
         # displaying the results on console if verbose level is more than 0
@@ -367,25 +396,7 @@ class SLIM_GSGP:
                         if p1.size == 1:
                             # if copy parent is set to true, the parent who cannot be deflated will be copied as the offspring
                             if self.copy_parent:
-                                off1 = Individual(
-                                    collection=p1.collection if reconstruct else None,
-                                    train_semantics=p1.train_semantics,
-                                    test_semantics=p1.test_semantics,
-                                    reconstruct=reconstruct,
-                                )
-                                (
-                                    off1.nodes_collection,
-                                    off1.nodes_count,
-                                    off1.depth_collection,
-                                    off1.depth,
-                                    off1.size,
-                                ) = (
-                                    p1.nodes_collection,
-                                    p1.nodes_count,
-                                    p1.depth_collection,
-                                    p1.depth,
-                                    p1.size,
-                                )
+                                off1 = self._copy_individual(p1, reconstruct)
                             else:
                                 # if we choose to not copy the parent, we inflate it instead
                                 ms_ = self.ms()
@@ -395,7 +406,7 @@ class SLIM_GSGP:
                                     X_train,
                                     max_depth=self.pi_init["init_depth"],
                                     p_c=self.pi_init["p_c"],
-                                    X_test=X_test,
+                                    X_test=X_test if test_elite and not reconstruct else None,
                                     reconstruct=reconstruct,
                                 )
 
@@ -416,25 +427,7 @@ class SLIM_GSGP:
                         if max_depth is not None and p1.depth == max_depth:
                             # if copy parent is set to true, the parent who cannot be inflated will be copied as the offspring
                             if self.copy_parent:
-                                off1 = Individual(
-                                    collection=p1.collection if reconstruct else None,
-                                    train_semantics=p1.train_semantics,
-                                    test_semantics=p1.test_semantics,
-                                    reconstruct=reconstruct,
-                                )
-                                (
-                                    off1.nodes_collection,
-                                    off1.nodes_count,
-                                    off1.depth_collection,
-                                    off1.depth,
-                                    off1.size,
-                                ) = (
-                                    p1.nodes_collection,
-                                    p1.nodes_count,
-                                    p1.depth_collection,
-                                    p1.depth,
-                                    p1.size,
-                                )
+                                off1 = self._copy_individual(p1, reconstruct)
 
                             # if copy parent is false, the parent is deflated instead of inflated
                             else:
@@ -448,7 +441,7 @@ class SLIM_GSGP:
                                 X_train,
                                 max_depth=self.pi_init["init_depth"],
                                 p_c=self.pi_init["p_c"],
-                                X_test=X_test,
+                                X_test=X_test if test_elite and not reconstruct else None,
                                 reconstruct=reconstruct,
                             )
 
@@ -456,25 +449,7 @@ class SLIM_GSGP:
                         if max_depth is not None and off1.depth > max_depth:
                             # if copy parent is set to true, the offspring is discarded and the parent is chosen instead
                             if self.copy_parent:
-                                off1 = Individual(
-                                    collection=p1.collection if reconstruct else None,
-                                    train_semantics=p1.train_semantics,
-                                    test_semantics=p1.test_semantics,
-                                    reconstruct=reconstruct,
-                                )
-                                (
-                                    off1.nodes_collection,
-                                    off1.nodes_count,
-                                    off1.depth_collection,
-                                    off1.depth,
-                                    off1.size,
-                                ) = (
-                                    p1.nodes_collection,
-                                    p1.nodes_count,
-                                    p1.depth_collection,
-                                    p1.depth,
-                                    p1.size,
-                                )
+                                off1 = self._copy_individual(p1, reconstruct)
                             else:
                                 # otherwise, deflate the parent
                                 off1 = self.deflate_mutator(p1, reconstruct=reconstruct)
@@ -490,10 +465,10 @@ class SLIM_GSGP:
             # turning the offspring population into a Population
             offs_pop = Population(offs_pop)
             # calculating the offspring population semantics
-            offs_pop.calculate_semantics(X_train)
+            # offs_pop.calculate_semantics(X_train) - redundant as mutators handle it
 
             # evaluating the offspring population
-            offs_pop.evaluate(ffunction, y=y_train, operator=self.operator, n_jobs=n_jobs)
+            offs_pop.evaluate(ffunction, y=y_train, operator=self.operator)
 
             # replacing the current population with the offspring population P = P'
             population = offs_pop
@@ -502,101 +477,21 @@ class SLIM_GSGP:
             end = time.time()
 
             # setting the new elite(s)
-            self.elites, self.elite = self.find_elit_func(population, n_elites)
+            self._update_elites(population, n_elites, run_info[0])
 
             # calculating the testing semantics and the elite's testing fitness if test_elite is true
             if test_elite:
-                self.elite.calculate_semantics(X_test, testing=True)
-                self.elite.evaluate(
-                    ffunction, y=y_test, testing=True, operator=self.operator
-                )
+                self._evaluate_test_elite(ffunction, X_test, y_test, reconstruct)
 
             # logging the results based on the log level
             if log != 0:
-
-                if log == 2:
-                    gen_diversity = (
-                        gsgp_pop_div_from_vectors(
-                            torch.stack(
-                                [
-                                    torch.sum(ind.train_semantics, dim=0)
-                                    for ind in population.population
-                                ]
-                            ),
-                        )
-                        if self.operator == "sum"
-                        else gsgp_pop_div_from_vectors(
-                            torch.stack(
-                                [
-                                    torch.prod(ind.train_semantics, dim=0)
-                                    for ind in population.population
-                                ]
-                            )
-                        )
-                    )
-                    add_info = [
-                        self.elite.test_fitness,
-                        self.elite.nodes_count,
-                        float(gen_diversity),
-                        np.std(population.fit),
-                        log,
-                    ]
-
-                elif log == 3:
-                    add_info = [
-                        self.elite.test_fitness,
-                        self.elite.nodes_count,
-                        " ".join(
-                            [str(ind.nodes_count) for ind in population.population]
-                        ),
-                        " ".join([str(f) for f in population.fit]),
-                        log,
-                    ]
-
-                elif log == 4:
-                    gen_diversity = (
-                        gsgp_pop_div_from_vectors(
-                            torch.stack(
-                                [
-                                    torch.sum(ind.train_semantics, dim=0)
-                                    for ind in population.population
-                                ]
-                            ),
-                        )
-                        if self.operator == "sum"
-                        else gsgp_pop_div_from_vectors(
-                            torch.stack(
-                                [
-                                    torch.prod(ind.train_semantics, dim=0)
-                                    for ind in population.population
-                                ]
-                            )
-                        )
-                    )
-                    add_info = [
-                        self.elite.test_fitness,
-                        self.elite.nodes_count,
-                        float(gen_diversity),
-                        np.std(population.fit),
-                        " ".join(
-                            [str(ind.nodes_count) for ind in population.population]
-                        ),
-                        " ".join([str(f) for f in population.fit]),
-                        log,
-                    ]
-
-                else:
-                    add_info = [self.elite.test_fitness, self.elite.nodes_count, log]
-
-                logger(
+                self._log_generation(
                     log_path,
                     it,
-                    self.elite.fitness,
                     end - start,
-                    float(population.nodes_count),
-                    additional_infos=add_info,
-                    run_info=run_info,
-                    seed=self.seed,
+                    population,
+                    run_info,
+                    log,
                 )
 
             # displaying the results on console if verbose level is more than 0

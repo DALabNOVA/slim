@@ -569,4 +569,7 @@ def _execute_tree(repr_, X, FUNCTIONS, TERMINALS, CONSTANTS):
         if repr_ in TERMINALS:
             return X[:, TERMINALS[repr_]]
         elif repr_ in CONSTANTS:
-            return CONSTANTS[repr_](None)
+            value = torch.as_tensor(
+                CONSTANTS[repr_](None), dtype=X.dtype, device=X.device
+            )
+            return value.expand(X.shape[0]) if value.ndim == 0 else value

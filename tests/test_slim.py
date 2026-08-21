@@ -62,6 +62,11 @@ def test_slim_valid_inputs():
     result = slim(X_train, y_train, n_iter=3)
     assert result is not None  # Check if function returns valid output
 
+
+def test_slim_test_elite_requires_test_data():
+    with pytest.raises(ValueError, match="test_elite=True requires both X_test and y_test"):
+        slim(valid_X_train, valid_y_train, test_elite=True)
+
 def test_slim_invalid_X_train():
     y_train = torch.tensor([1, 0])
     with pytest.raises(TypeError, match="X_train must be a torch.Tensor"):
@@ -98,9 +103,47 @@ def test_slim_seed_reproducibility():
     assert torch.equal(result1.predict(valid_X_test), result2.predict(valid_X_test)), \
             "Results should be reproducible with the same seed"
 
-def test_slim_n_jobs_parallelism():
-    result = slim(valid_X_train, valid_y_train, n_jobs=4, n_iter=valid_n_iter)
-    assert result is not None, "Function should run successfully in parallel"
+def test_slim_rejects_removed_n_jobs_argument():
+    with pytest.raises(TypeError, match="unexpected keyword argument 'n_jobs'"):
+        slim(valid_X_train, valid_y_train, n_jobs=4, n_iter=valid_n_iter)
+
+
+def test_slim_reconstruct_false_is_consistent():
+    for seed in range(4):
+        result = slim(valid_X_train, valid_y_train, seed=seed, n_iter=valid_n_iter, reconstruct=False)
+        assert not hasattr(result, "collection")
+        with pytest.raises(RuntimeError, match="reconstruct=False"):
+            result.predict(valid_X_test)
+
+
+def test_slim_normalizes_option_case():
+    result = slim(
+        valid_X_train,
+        valid_y_train,
+        slim_version="slim+sig2",
+        fitness_function="RMSE",
+        initializer="RHH",
+        n_iter=valid_n_iter,
+    )
+    assert result is not None
+
+
+def test_evolution_does_not_retain_autograd_graph_but_predict_remains_differentiable():
+    X_train = valid_X_train.clone().requires_grad_()
+    model = slim(X_train, valid_y_train, n_iter=2, log_level=0, verbose=0, seed=4)
+    assert not model.train_semantics.requires_grad
+
+    X_new = valid_X_test.clone().requires_grad_()
+    model.predict(X_new).sum().backward()
+    assert X_new.grad is not None
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is unavailable")
+def test_constant_only_slim_runs_on_cuda():
+    X = torch.randn(12, 2, device="cuda")
+    y = torch.randn(12, device="cuda")
+    model = slim(X, y, prob_const=1.0, pop_size=5, n_iter=2, log_level=0, verbose=0)
+    assert model.predict(X).device.type == "cuda"
 
 def test_slim_immutability():
     X, y = load_ppb(X_y=True)

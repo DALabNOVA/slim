@@ -49,6 +49,9 @@ def log_settings(path: str, settings_dict: list, unique_run_id: UUID) -> None:
 
     infos = [unique_run_id, settings_dict]
 
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
     with open(path, "a", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(infos)
@@ -113,8 +116,9 @@ def logger(
     -------
     None
     """
-    if not os.path.isdir(os.path.dirname(path)):
-        os.mkdir(os.path.dirname(path))
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
     with open(path, "a", newline="") as file:
         writer = csv.writer(file)
         infos = copy(run_info) if run_info is not None else []

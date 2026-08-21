@@ -53,7 +53,7 @@ settings_dict = {"p_test": 0.2}
 gp_solve_parameters = {
     "log": 1,
     "verbose": 1,
-    "test_elite": True,
+    "test_elite": False,
     "run_info": None,
     "ffunction": "rmse",
     "n_jobs": 1,
@@ -86,7 +86,8 @@ fitness_function_options = {
     "mse": mse,
     "mae": mae,
     "mae_int": mae_int,
-    "signed_errors": signed_errors
+    "signed_errors": signed_errors,
+    "sigmoid_rmse": sigmoid_rmse(1.0),
 }
 
 initializer_options = {
